@@ -107,14 +107,36 @@
       "name": "github",
       "type": "registry:lib",
       "title": "GitHub fetchers",
-      "description": "Server-side helpers that fetch repository data for Ovio components, with an optional token.",
+      "description": "Server-side helpers that fetch repository, star history, contributor, release and contribution data for Ovio components, with an optional token.",
       "dependencies": ["server-only"],
-      "registryDependencies": ["@ovio/repository-card"],
+      "registryDependencies": [
+        "@ovio/format",
+        "@ovio/repository-card",
+        "@ovio/star-history",
+        "@ovio/top-contributors",
+        "@ovio/changelog",
+        "@ovio/contribution-graph"
+      ],
       "files": [
         {
           "path": "lib/github.ts",
           "type": "registry:lib",
           "target": "lib/github.ts"
+        }
+      ]
+    },
+    {
+      "name": "npm",
+      "type": "registry:lib",
+      "title": "npm fetchers",
+      "description": "Server-side helpers that fetch weekly downloads from npm and bundle sizes from bundlephobia for Ovio components.",
+      "dependencies": ["server-only"],
+      "registryDependencies": ["@ovio/format", "@ovio/npm-downloads", "@ovio/bundle-size"],
+      "files": [
+        {
+          "path": "lib/npm.ts",
+          "type": "registry:lib",
+          "target": "lib/npm.ts"
         }
       ]
     },

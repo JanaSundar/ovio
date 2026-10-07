@@ -15,6 +15,8 @@ export const ANGLE_MAX = 135;
 const SPAN = ANGLE_MAX - ANGLE_MIN;
 /** How far past the end stop the cap can be pulled, in degrees. */
 const OVERDRAG = 8;
+/** Fastest flick carried into inertia, in degrees per second. */
+const MAX_SPIN = 1600;
 
 export type KnobFeel = {
   /** Number of detents between min and max, inclusive. 101 feels continuous; 11 clicks. */
@@ -154,7 +156,8 @@ export function useKnob({ ref, steps, follow, wheel, index, onIndex, disabled }:
     d.last = a;
     d.t = now;
     d.acc += da;
-    d.av = d.av * 0.6 + (da / dt) * 1000 * 0.4;
+    // Smoothed angular velocity in deg/s, capped so one jumpy event cannot spin it to the stop.
+    d.av = clamp(d.av * 0.6 + (da / dt) * 1000 * 0.4, -MAX_SPIN, MAX_SPIN);
     const raw = d.start + d.acc;
     const over = raw < ANGLE_MIN ? raw - ANGLE_MIN : raw > ANGLE_MAX ? raw - ANGLE_MAX : 0;
     if (over) d.acc -= over;

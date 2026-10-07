@@ -83,7 +83,8 @@ export function ToyGooeyTabs(p: GooeyTabsWorldProps) {
     if (!d || d.pointer !== e.pointerId) return;
     drag.current = null;
     if (!d.moved) return goTo(Math.round(position(d.start)));
-    const velocity = x.getVelocity();
+    // Tabs per second, capped so a jumpy pointer cannot fling the piece across the whole bar.
+    const velocity = Math.max(-12, Math.min(12, x.getVelocity()));
     goTo(Math.round(x.get() + velocity * 0.12), velocity);
   };
 

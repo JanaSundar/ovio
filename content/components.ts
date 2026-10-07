@@ -1,24 +1,17 @@
-/**
- * The component catalogue, typed from the COMPS array in the Docs mockup.
- * Props for built components describe the shipped API; the rest are carried over from the mockup
- * and are revised as each component lands.
- */
+/** The component catalogue. Props of components that are not `ready` yet are provisional. */
 
-export type PropDoc = { name: string; type: string; description: string };
+type PropDoc = { name: string; type: string; description: string };
 
 export type ComponentDoc = {
   slug: string;
   name: string;
-  tag?: "flagship" | "new" | "motion";
   /** What it is drawn with. */
   tech: string;
   description: string;
-  /** Export name. */
   exportName: string;
-  /** Extra lines for the usage snippet, after `variant`. */
+  /** Lines for the usage snippet, after `variant`. */
   usage: string;
   props: PropDoc[];
-  /** Build phase from the library code plan. */
   phase: 1 | 2 | 3;
   /** Whether the component ships in this build. */
   ready: boolean;
@@ -53,33 +46,45 @@ export const COMPONENTS: ComponentDoc[] = [
   {
     slug: "contribution-graph",
     name: "Contribution Graph",
-    tag: "flagship",
-    tech: "CSS grid · Motion for React (Toy: CSS 3D blocks)",
+    tech: "CSS grid · Motion for React (Toy: CSS 3D drum)",
     description:
-      "A year of activity, one cell per day. From an editorial heatmap to physical blocks you can press.",
+      "A year of activity, one cell per day. From an editorial heatmap to a drum you can spin.",
     exportName: "ContributionGraph",
     usage: "  data={contributions}",
     props: [
       {
         name: "data",
         type: "{ date: string; count: number }[]",
-        description: "Daily counts; gaps become zero.",
+        description: "Daily counts as YYYY-MM-DD. Gaps become zero; duplicate dates are summed.",
       },
       V,
-      A,
-      { name: "onDayHover", type: "(day) => void", description: "Hover and keyboard focus." },
+      {
+        name: "animation",
+        type: '"none" | "enter-exit" | "always"',
+        description:
+          'Default "enter-exit". "always" adds the Retro flicker and roll bar. Forced to "none" under reduced motion.',
+      },
+      {
+        name: "endDate",
+        type: "string",
+        description: "Last day shown. Defaults to the latest date in data.",
+      },
+      {
+        name: "onDayHover",
+        type: "(day: ContributionCell | null) => void",
+        description: "Hover and keyboard focus; null when they leave.",
+      },
       CL,
     ],
     phase: 2,
-    ready: false,
-    files: [],
+    ready: true,
+    files: worldFiles("contribution-graph", ["year.ts", "grid.ts"]),
     dependencies: ["motion", "@number-flow/react"],
-    registryDependencies: ["world", "motion", "theme", "rolling-number"],
+    registryDependencies: ["world", "motion", "theme", "rolling-number", "format"],
   },
   {
     slug: "event-ticket",
     name: "Event Ticket",
-    tag: "new",
     tech: "CSS 3D · canvas art",
     description:
       "A pass for launches and conferences. Book on the stub, tear it to check in, flip it for the QR code.",
@@ -109,12 +114,11 @@ export const COMPONENTS: ComponentDoc[] = [
   {
     slug: "gooey-tabs",
     name: "Gooey Tabs",
-    tag: "motion",
     tech: "SVG goo filter · Motion for React (Toy: spring drag)",
     description:
       "A tab bar with a moving indicator and a deploy status. In Toy, the indicator is a piece you can drag and flick.",
     exportName: "GooeyTabs",
-    usage: '  tabs={["Overview", "Commits", "Issues", "Releases"]}\n  status="building"',
+    usage: '  tabs={["Overview", "Commits", "Issues", "Releases"]}',
     props: [
       V,
       { name: "tabs", type: "string[]", description: "Equal-width tabs." },
@@ -141,7 +145,7 @@ export const COMPONENTS: ComponentDoc[] = [
     ready: true,
     files: worldFiles("gooey-tabs", ["goo.tsx"]),
     dependencies: ["motion"],
-    registryDependencies: ["world", "motion", "theme"],
+    registryDependencies: ["world", "motion", "theme", "keys"],
   },
   {
     slug: "star-history",
@@ -151,20 +155,31 @@ export const COMPONENTS: ComponentDoc[] = [
     exportName: "StarHistory",
     usage: "  data={stars}",
     props: [
-      V,
       {
         name: "data",
         type: "{ date: string; stars: number }[]",
-        description: "Cumulative stars by day.",
+        description: "Cumulative stars by day, any order.",
+      },
+      {
+        name: "repo",
+        type: "string",
+        description: '"owner/name", for the title and accessible name.',
       },
       { name: "annotations", type: "{ date; label }[]", description: "Callouts on the curve." },
-      A,
+      V,
+      {
+        name: "animation",
+        type: '"none" | "enter-exit" | "always"',
+        description:
+          'Default "enter-exit". "always" keeps a live marker on the latest point. Forced to "none" under reduced motion.',
+      },
+      CL,
     ],
     phase: 2,
-    ready: false,
-    files: [],
+    ready: true,
+    files: worldFiles("star-history", ["shape.ts", "use-scrubber.ts", "line-plot.tsx"]),
     dependencies: ["motion", "@number-flow/react"],
-    registryDependencies: ["world", "motion", "theme", "rolling-number"],
+    registryDependencies: ["world", "motion", "theme", "rolling-number", "keys", "format"],
   },
   {
     slug: "repository-card",
@@ -172,11 +187,11 @@ export const COMPONENTS: ComponentDoc[] = [
     tech: "CSS · Motion for React",
     description: "A repo at a glance: name, description, stars, forks and language.",
     exportName: "RepositoryCard",
-    usage: "  repo={repo}",
+    usage: "  repository={repository}",
     props: [
       V,
       {
-        name: "repo",
+        name: "repository",
         type: "{ owner; name; description?; language?; stars; forks; issues?; updatedAt? }",
         description: "Repository data. Fetch it on the server with getRepository().",
       },
@@ -204,22 +219,38 @@ export const COMPONENTS: ComponentDoc[] = [
     tech: "CSS · Motion for React",
     description: "The people behind a project, ranked by commits.",
     exportName: "TopContributors",
-    usage: "  contributors={contributors}\n  limit={6}",
+    usage: "  contributors={contributors}",
     props: [
-      V,
       {
         name: "contributors",
-        type: "{ login; avatar; commits }[]",
-        description: "Ranked by commits.",
+        type: "{ login; name?; avatarUrl?; commits; byPeriod? }[]",
+        description: "Ranked by commits in the chosen window.",
       },
-      { name: "limit", type: "number", description: "Max people shown." },
-      { name: "period", type: '"30d" | "90d" | "all"', description: "Time window." },
+      V,
+      { name: "repo", type: "string", description: 'Header label, e.g. "ada-dev/lumen".' },
+      { name: "limit", type: "number", description: "Max people shown. Default 6." },
+      {
+        name: "period / defaultPeriod",
+        type: '"30d" | "90d" | "all"',
+        description: 'Time window, controlled or not. Default "90d".',
+      },
+      {
+        name: "onPeriodChange",
+        type: "(period) => void",
+        description: "Fires when the window changes.",
+      },
+      {
+        name: "periods",
+        type: "ContributorPeriod[]",
+        description: "Windows offered; [] hides the switcher.",
+      },
+      CL,
     ],
     phase: 2,
-    ready: false,
-    files: [],
-    dependencies: ["motion"],
-    registryDependencies: ["world", "motion", "theme"],
+    ready: true,
+    files: worldFiles("top-contributors", ["avatar.tsx"]),
+    dependencies: ["motion", "@number-flow/react"],
+    registryDependencies: ["world", "motion", "theme", "rolling-number", "toy"],
   },
   {
     slug: "npm-downloads",
@@ -227,22 +258,24 @@ export const COMPONENTS: ComponentDoc[] = [
     tech: "CSS · SVG · Motion for React",
     description: "Weekly installs with trend and goal.",
     exportName: "NpmDownloads",
-    usage: '  pkg="lumen"\n  data={downloads}\n  goal={50000}',
+    usage: '  packageName="lumen"\n  data={downloads}',
     props: [
-      V,
-      { name: "pkg", type: "string", description: "Package name." },
+      { name: "packageName", type: "string", description: "npm package name." },
       {
         name: "data",
         type: "{ week: string; downloads: number }[]",
-        description: "Weekly history.",
+        description: "Weekly history, oldest first.",
       },
-      { name: "goal", type: "number", description: "Weekly target." },
+      V,
+      { name: "weeks", type: "number", description: "Latest weeks shown. Default 12." },
+      { name: "goal", type: "number", description: "Weekly target. Hidden when left out." },
+      CL,
     ],
     phase: 2,
-    ready: false,
-    files: [],
+    ready: true,
+    files: worldFiles("npm-downloads"),
     dependencies: ["motion", "@number-flow/react"],
-    registryDependencies: ["world", "motion", "theme", "rolling-number"],
+    registryDependencies: ["world", "motion", "theme", "rolling-number", "keys", "format"],
   },
   {
     slug: "sponsor-wall",
@@ -266,12 +299,11 @@ export const COMPONENTS: ComponentDoc[] = [
   {
     slug: "physical-knob",
     name: "Physical Knob",
-    tag: "new",
     tech: "CSS · Motion for React (spring, drag, inertia)",
     description:
       "A rotary control with tick marks and a value display. Drag, flick, scroll or use the arrow keys.",
     exportName: "PhysicalKnob",
-    usage: "  value={level}\n  onChange={setLevel}",
+    usage: "  onValueChange={setLevel}",
     props: [
       V,
       {
@@ -280,7 +312,11 @@ export const COMPONENTS: ComponentDoc[] = [
         description: "Controlled value, or the starting one (72).",
       },
       { name: "min / max", type: "number", description: "Range, default 0–100." },
-      { name: "onChange", type: "(value: number) => void", description: "Fires while turning." },
+      {
+        name: "onValueChange",
+        type: "(value: number) => void",
+        description: "Fires while turning.",
+      },
       { name: "label", type: "string", description: "Accessible name, printed on the dial." },
       CL,
     ],
@@ -293,7 +329,6 @@ export const COMPONENTS: ComponentDoc[] = [
   {
     slug: "developer-id-card",
     name: "Developer ID Card",
-    tag: "new",
     tech: "CSS · Motion for React (drag)",
     description: "An identity card for a developer: name, role, stack, availability and a QR code.",
     exportName: "DeveloperIdCard",
@@ -314,27 +349,34 @@ export const COMPONENTS: ComponentDoc[] = [
   {
     slug: "bundle-size",
     name: "Bundle Size",
-    tag: "new",
     tech: "CSS · Motion for React",
     description: "Package size with gzip, brotli and the change from the previous version.",
     exportName: "BundleSize",
-    usage: '  pkg="lumen"\n  versions={versions}',
+    usage: '  packageName="lumen"\n  versions={versions}',
     props: [
+      { name: "packageName", type: "string", description: "npm package name." },
+      {
+        name: "versions",
+        type: "{ version; raw; gzip; brotli?; dependencies? }[]",
+        description: "Sizes in bytes, newest first.",
+      },
       V,
-      { name: "pkg", type: "string", description: "Package name." },
-      { name: "versions", type: "{ version; raw; gzip; brotli }[]", description: "Newest first." },
-      { name: "budget", type: "number", description: "Budget in kB." },
+      {
+        name: "budget",
+        type: "number",
+        description: "Budget in kB. The bar scales to the largest version without it.",
+      },
+      CL,
     ],
     phase: 2,
-    ready: false,
-    files: [],
+    ready: true,
+    files: worldFiles("bundle-size"),
     dependencies: ["motion", "@number-flow/react"],
-    registryDependencies: ["world", "motion", "theme", "rolling-number"],
+    registryDependencies: ["world", "motion", "theme", "rolling-number", "toy", "keys"],
   },
   {
     slug: "git-branch-visualizer",
     name: "Git Branch Visualizer",
-    tag: "new",
     tech: "SVG · Motion for React",
     description:
       "Branches and commits as a graph. Hover a commit, pick a branch, merge or branch off.",
@@ -364,20 +406,20 @@ export const COMPONENTS: ComponentDoc[] = [
     exportName: "Changelog",
     usage: "  releases={releases}",
     props: [
-      V,
       {
         name: "releases",
-        type: "{ version; date; title; items[] }[]",
-        description: "Newest first.",
+        type: "{ version; date; title; items: (string | { type?; text })[]; hash? }[]",
+        description: "Newest first. Item types: added, fixed, changed.",
       },
-      { name: "limit", type: "number", description: "Releases shown." },
+      V,
+      { name: "limit", type: "number", description: "Releases shown. All when left out." },
       CL,
     ],
     phase: 2,
-    ready: false,
-    files: [],
+    ready: true,
+    files: worldFiles("changelog"),
     dependencies: ["motion"],
-    registryDependencies: ["world", "motion", "theme"],
+    registryDependencies: ["world", "motion", "theme", "toy", "format"],
   },
   {
     slug: "now-playing",
@@ -401,5 +443,8 @@ export const COMPONENTS: ComponentDoc[] = [
 ];
 
 export const getComponent = (slug: string) => COMPONENTS.find((c) => c.slug === slug);
+
+/** Where "Docs" links land: the first built component. /docs redirects here too. */
+export const DOCS_HREF = `/docs/${COMPONENTS.find((c) => c.ready)!.slug}`;
 
 export const installCommand = (slug: string) => `npx shadcn add @ovio/${slug}`;

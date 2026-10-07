@@ -22,7 +22,7 @@
 <div style="display:flex;min-height:400px;border-radius:16px;overflow:hidden;border:1px solid rgba(22,22,20,.1)">
   <sc-if value="{{ is.minimal }}" hint-placeholder-val="{{ true }}">
     <div style="flex:1;background:#fff;padding:32px 36px;display:flex;flex-direction:column;gap:18px;animation:{{ stageAnim }};font-family:Geist,sans-serif;color:#161614">
-      <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#77756e">Star history · lumen</span><span style="font-size:24px;letter-spacing:-.03em"><nayam-num value="{{ star.total }}" from="0"></nayam-num></span></div>
+      <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#77756e">Star history · lumen</span><span style="font-size:24px;letter-spacing:-.03em"><ovio-num value="{{ star.total }}" from="0"></ovio-num></span></div>
       <div style="position:relative;flex:1;min-height:240px;background:repeating-linear-gradient(180deg,#f0eee9 0 1px,transparent 1px 25%)">
         <svg viewBox="0 0 600 220" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%;overflow:visible"><path d="{{ star.line }}" pathLength="1" fill="none" stroke="#161614" stroke-width="1.5" vector-effect="non-scaling-stroke" style="stroke-dasharray:1;animation:{{ drawAnim }}"></path></svg>
       </div>
@@ -31,7 +31,7 @@
   </sc-if>
   <sc-if value="{{ is.retro }}" hint-placeholder-val="{{ false }}">
     <div style="flex:1;position:relative;background:#061108;padding:28px 32px;display:flex;flex-direction:column;gap:14px;font-family:VT323,monospace;color:#6dff8a;text-shadow:0 0 6px rgba(80,255,120,.55);animation:{{ stageAnim }}">
-      <div style="display:flex;justify-content:space-between;font-size:22px"><span>STAR_HISTORY.DAT</span><span><nayam-num value="{{ star.total }}" from="0"></nayam-num> ★</span></div>
+      <div style="display:flex;justify-content:space-between;font-size:22px"><span>STAR_HISTORY.DAT</span><span><ovio-num value="{{ star.total }}" from="0"></ovio-num> ★</span></div>
       <div style="flex:1;min-height:240px;display:flex;align-items:flex-end;gap:4px;border-bottom:3px solid #3fae55;border-left:3px solid #3fae55;padding:0 0 0 4px">
         <sc-for list="{{ star.bars }}" as="b" hint-placeholder-count="24">
           <div style="flex:1;height:{{ b.h }};background:repeating-linear-gradient(0deg,#4fdc68 0 6px,transparent 6px 8px);box-shadow:0 0 6px rgba(80,255,120,.35);animation:{{ b.anim }}"></div>
@@ -44,7 +44,7 @@
   <sc-if value="{{ is.craft }}" hint-placeholder-val="{{ false }}">
     <div style="flex:1;background:#efe7d8;padding:32px;display:flex;font-family:'Bricolage Grotesque',sans-serif;color:#2a1f14;animation:{{ stageAnim }}">
       <div style="position:relative;flex:1;display:flex;flex-direction:column;gap:12px;padding:22px 24px;background-color:#fdfbf5;background-image:linear-gradient(rgba(49,120,198,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(49,120,198,.12) 1px,transparent 1px);background-size:16px 16px;border-radius:4px;transform:rotate(-.8deg);box-shadow:0 2px 4px rgba(70,45,20,.12),0 16px 30px -12px rgba(70,45,20,.4)">
-        <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-weight:800;font-size:20px;letter-spacing:-.02em">Stars over time</span><span style="font-family:Caveat,cursive;font-size:28px;color:#2b4a9b"><nayam-num value="{{ star.total }}" from="0"></nayam-num></span></div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-weight:800;font-size:20px;letter-spacing:-.02em">Stars over time</span><span style="font-family:Caveat,cursive;font-size:28px;color:#2b4a9b"><ovio-num value="{{ star.total }}" from="0"></ovio-num></span></div>
         <div style="position:relative;flex:1;min-height:220px">
           <svg viewBox="0 0 600 220" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%;overflow:visible"><path d="{{ star.smooth }}" pathLength="1" fill="none" stroke="#2b4a9b" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" style="stroke-dasharray:1;animation:{{ drawAnim }}"></path></svg>
           <div style="position:absolute;left:{{ star.spikeX }};top:{{ star.spikeY }};transform:translate(-30%,-125%) rotate(-5deg);padding:8px 12px;background:#ffe27a;font-family:Caveat,cursive;font-size:21px;line-height:1;white-space:nowrap;box-shadow:0 5px 10px -3px rgba(90,60,0,.35)">hit the HN front page!</div>
@@ -58,7 +58,7 @@
         <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
           <div><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#6b665b">Star history · lumen</div><div style="font-weight:800;font-stretch:118%;font-size:24px;letter-spacing:-.02em">Stacked month by month</div></div>
           <div style="display:flex;gap:4px;padding:6px;background:#2a2925;border-radius:10px;box-shadow:inset 0 2px 5px rgba(0,0,0,.6)">
-            <span style="padding:2px 12px;background:#f8f5ef;border-radius:4px;font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:22px;line-height:32px;box-shadow:inset 0 -7px 6px -5px rgba(0,0,0,.25),inset 0 7px 6px -5px rgba(0,0,0,.25)"><nayam-num value="{{ star.total }}" from="0"></nayam-num></span>
+            <span style="padding:2px 12px;background:#f8f5ef;border-radius:4px;font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:22px;line-height:32px;box-shadow:inset 0 -7px 6px -5px rgba(0,0,0,.25),inset 0 7px 6px -5px rgba(0,0,0,.25)"><ovio-num value="{{ star.total }}" from="0"></ovio-num></span>
           </div>
         </div>
         <div style="flex:1;min-height:220px;display:flex;align-items:flex-end;gap:4px;padding:8px;background:#ebe6db;border-radius:12px;box-shadow:inset 0 3px 6px rgba(40,28,10,.2)">

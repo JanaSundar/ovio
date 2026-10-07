@@ -20,7 +20,6 @@ const look: GooLook = {
     { duration: 0.72, ease: ease.glide },
   ],
   dots: ["#c9c6bf", "#97938a", "#161614"],
-  orbitEase: [0.5, 0, 0.5, 1],
   colorDelay: 0.12,
 };
 

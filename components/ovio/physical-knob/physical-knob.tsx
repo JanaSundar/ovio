@@ -9,14 +9,13 @@ import { ToyKnob } from "./worlds/toy";
 
 export type PhysicalKnobProps = {
   variant?: World;
-  /** Controlled value. */
   value?: number;
   defaultValue?: number;
   /** Range, default 0–100. */
   min?: number;
   max?: number;
   /** Fires while turning. */
-  onChange?: (value: number) => void;
+  onValueChange?: (value: number) => void;
   /** Accessible name, also printed on the knob. */
   label?: string;
   disabled?: boolean;
@@ -99,7 +98,7 @@ export function PhysicalKnob({
   defaultValue = 72,
   min = 0,
   max = 100,
-  onChange,
+  onValueChange,
   label = "Level",
   disabled,
   className,
@@ -110,7 +109,7 @@ export function PhysicalKnob({
 
   const setValue = (next: number) => {
     if (valueProp === undefined) setInner(next);
-    onChange?.(next);
+    onValueChange?.(next);
   };
 
   const props: KnobWorldProps = {

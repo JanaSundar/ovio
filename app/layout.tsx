@@ -35,16 +35,6 @@ export const metadata: Metadata = {
   title: { default: "Ovio · The motion layer for developer websites", template: "%s · Ovio" },
   description,
   applicationName: "Ovio",
-  manifest: "/favicon/site.webmanifest",
-  icons: {
-    icon: [
-      { url: "/favicon/favicon.svg", type: "image/svg+xml" },
-      { url: "/favicon/favicon-32x32.png", type: "image/png", sizes: "32x32" },
-      { url: "/favicon/favicon-16x16.png", type: "image/png", sizes: "16x16" },
-    ],
-    apple: "/favicon/apple-touch-icon.png",
-    other: [{ rel: "mask-icon", url: "/favicon/safari-pinned-tab.svg", color: "#000000" }],
-  },
   openGraph: {
     type: "website",
     siteName: "Ovio",
@@ -52,7 +42,6 @@ export const metadata: Metadata = {
     description,
   },
   twitter: { card: "summary_large_image" },
-  other: { "msapplication-config": "/favicon/browserconfig.xml" },
 };
 
 export const viewport: Viewport = { themeColor: "#000000" };

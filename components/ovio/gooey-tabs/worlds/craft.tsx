@@ -1,8 +1,9 @@
 "use client";
 
-import { ease } from "@/lib/motion";
 import { GooTabs, type GooLook } from "../goo";
 import type { GooeyTabsWorldProps } from "../gooey-tabs";
+
+const OVERSHOOT = [0.34, 1.56, 0.64, 1] as const;
 
 const look: GooLook = {
   world: "craft",
@@ -18,14 +19,13 @@ const look: GooLook = {
   tab: "py-[13px] text-[15px] font-bold tracking-[-0.01em]",
   label: "text-[13px]",
   statusText: "text-xl font-bold",
-  // Paper settles: the Craft ease, each blob a beat behind the last.
+  // Paper settles with a springy overshoot, each blob a beat behind the last.
   trail: [
-    { duration: 0.5, ease: ease.craft },
-    { duration: 0.6, ease: ease.craft },
-    { duration: 0.72, ease: ease.craft },
+    { duration: 0.55, ease: OVERSHOOT },
+    { duration: 0.7, ease: OVERSHOOT },
+    { duration: 0.85, ease: OVERSHOOT },
   ],
   dots: ["#c9b9a0", "#ee9f63", "#2f9a45"],
-  orbitEase: [0.5, 0, 0.5, 1],
   colorDelay: 0.12,
 };
 

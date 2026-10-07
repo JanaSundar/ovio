@@ -3,15 +3,14 @@ import path from "node:path";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import {
-  ComponentPreview,
-  MotionInfo,
-  UsageSnippet,
-  type SourceFile,
-} from "@/components/site/component-doc";
+import { CodeBlock } from "@/components/site/code-block";
+import type { SourceFile } from "@/components/site/code-explorer";
+import { ComponentPreview, MotionInfo, UsageSnippet } from "@/components/site/component-doc";
 import { CopyCommand } from "@/components/site/copy-command";
+import { highlight } from "@/components/site/highlight";
 import { WorldSwitcher } from "@/components/site/world-switcher";
-import { COMPONENTS, getComponent, installCommand } from "@/content/components";
+import { COMPONENTS, getComponent, installCommand, type ComponentDoc } from "@/content/components";
+import { WORLDS, type World } from "@/lib/world";
 
 export const dynamicParams = false;
 
@@ -24,18 +23,39 @@ export async function generateMetadata({ params }: PageProps<"/docs/[slug]">): P
   return c ? { title: c.name, description: c.description } : {};
 }
 
-/** Reads a component's source for the Code tab. Scoped to components/ so tracing stays small. */
+/**
+ * Reads and highlights a component's source for the Code tab, here on the server so no highlighter
+ * ships for it. Scoped to components/ so tracing stays small.
+ */
 async function readSources(files: string[]): Promise<SourceFile[]> {
   return Promise.all(
     files.map(async (f) => ({
       path: f,
-      code: await readFile(
-        path.join(process.cwd(), "components", f.replace(/^components\//, "")),
-        "utf8",
+      html: highlight(
+        await readFile(
+          path.join(process.cwd(), "components", f.replace(/^components\//, "")),
+          "utf8",
+        ),
       ),
     })),
   );
 }
+
+const REGISTRY = highlight(
+  '{\n  "registries": {\n    "@ovio": "https://ovio.dev/r/{name}.json"\n  }\n}',
+  "json",
+);
+
+/** The usage snippet for each world, highlighted here so no highlighter ships to the client. */
+const usageSnippets = (c: ComponentDoc) =>
+  Object.fromEntries(
+    WORLDS.map((w) => [
+      w,
+      highlight(
+        `import { ${c.exportName} } from "@/components/ovio/${c.slug}/${c.slug}"\n\n<${c.exportName}\n  variant="${w}"\n${c.usage}\n/>`,
+      ),
+    ]),
+  ) as Record<World, string>;
 
 const h2 = "m-0 text-[22px] font-medium tracking-[-0.025em]";
 
@@ -47,6 +67,7 @@ export default async function ComponentPage({ params }: PageProps<"/docs/[slug]"
   const prev = COMPONENTS[(i - 1 + COMPONENTS.length) % COMPONENTS.length];
   const next = COMPONENTS[(i + 1) % COMPONENTS.length];
   const files = c.ready ? await readSources(c.files) : [];
+  const install = installCommand(c.slug);
 
   return (
     <div className="flex flex-col gap-11">
@@ -69,7 +90,12 @@ export default async function ComponentPage({ params }: PageProps<"/docs/[slug]"
       <div className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,420px),1fr))] gap-10">
         <section className="flex min-w-0 flex-col gap-3.5">
           <h2 className={h2}>Installation</h2>
-          <CopyCommand command={installCommand(c.slug)} />
+          <p className="m-0 text-[13px] leading-normal text-muted">
+            Ovio is a shadcn registry. Add it to <code className="font-mono">components.json</code>{" "}
+            once:
+          </p>
+          <CodeBlock html={REGISTRY} className="rounded-[10px] py-3.5 text-[12.5px]" />
+          <CopyCommand command={install} html={highlight(install, "shell")} />
           <p className="m-0 text-[13px] leading-normal text-muted">
             Installs{" "}
             {c.dependencies.map((d, k) => (
@@ -81,7 +107,7 @@ export default async function ComponentPage({ params }: PageProps<"/docs/[slug]"
             , plus the Ovio {c.registryDependencies.join(", ")} items.
           </p>
           <h2 className={`${h2} mt-4`}>Usage</h2>
-          <UsageSnippet exportName={c.exportName} slug={c.slug} usage={c.usage} />
+          <UsageSnippet html={usageSnippets(c)} />
           <MotionInfo tech={c.tech} />
         </section>
         <section className="flex min-w-0 flex-col gap-3.5">

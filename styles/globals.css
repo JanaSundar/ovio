@@ -42,3 +42,37 @@
     outline-offset: 3px;
   }
 }
+
+/* Syntax colours for @tanstack/highlight's th-* token classes, on the ink code blocks. */
+@layer components {
+  .th-comment,
+  .th-meta {
+    color: var(--color-code-muted);
+  }
+  .th-keyword,
+  .th-deleted {
+    color: #e3a07e;
+  }
+  .th-string,
+  .th-inserted {
+    color: #b9c78f;
+  }
+  .th-number,
+  .th-literal,
+  .th-command {
+    color: #e6c27f;
+  }
+  .th-type,
+  .th-tag,
+  .th-selector {
+    color: #93c1d4;
+  }
+  .th-attr,
+  .th-property,
+  .th-variable {
+    color: #c7b5e2;
+  }
+  .th-function {
+    color: #ebd9ae;
+  }
+}

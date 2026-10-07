@@ -1,15 +1,15 @@
-// <nayam-num value="1234.5" decimals="1" prefix="$" suffix="/mo" trend="0|auto"> — NumberFlow-style animated number (mockup).
+// <ovio-num value="1234.5" decimals="1" prefix="$" suffix="/mo" trend="0|auto"> — NumberFlow-style animated number (mockup).
 // Timings follow NumberFlow's customization defaults: transform/spin 900ms spring easing, opacity 450ms ease-out,
 // 0.25em / 0.5em edge fade masks, tabular-nums, trend-aware digit spin, FLIP for width changes, reduced-motion respected.
 // Production: use @number-flow/react with the same transformTiming / opacityTiming.
 (function () {
-  if (customElements.get('nayam-num')) return;
+  if (customElements.get('ovio-num')) return;
   const RMq = matchMedia('(prefers-reduced-motion: reduce)');
   const spring = (dur = .9, w = 7.5) => { const k = 40, p = []; for (let i = 0; i <= k; i++) { const t = dur * i / k; p.push((1 - Math.exp(-w * t) * (1 + w * t)).toFixed(4)); } p[k] = 1; return 'linear(' + p.join(',') + ')'; };
   const T = { transform: { duration: 900, easing: spring(), fill: 'both' }, opacity: { duration: 450, easing: 'ease-out', fill: 'both' } };
   const LH = 'calc(var(--nf-lh,1) * 1em)';
   const isD = c => c >= '0' && c <= '9';
-  class NayamNum extends HTMLElement {
+  class OvioNum extends HTMLElement {
     static get observedAttributes() { return ['value']; }
     connectedCallback() {
       if (this._init) return; this._init = 1; this._chars = new Map();
@@ -78,5 +78,5 @@
       });
     }
   }
-  customElements.define('nayam-num', NayamNum);
+  customElements.define('ovio-num', OvioNum);
 })();

@@ -38,7 +38,7 @@ a{color:#161614;text-decoration:none}a:hover{color:#6b6a64}
       <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:32px;flex-wrap:wrap">
         <div>
           <div style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#77756e;margin-bottom:14px">Contribution activity · last 12 months</div>
-          <div style="display:flex;align-items:baseline;gap:14px"><span style="font-size:56px;font-weight:400;letter-spacing:-.04em;line-height:1"><nayam-num value="{{ s.total }}" from="0"></nayam-num></span><span style="font-size:15px;color:#77756e">contributions</span></div>
+          <div style="display:flex;align-items:baseline;gap:14px"><span style="font-size:56px;font-weight:400;letter-spacing:-.04em;line-height:1"><ovio-num value="{{ s.total }}" from="0"></ovio-num></span><span style="font-size:15px;color:#77756e">contributions</span></div>
         </div>
         <div style="display:flex;gap:0">
           <div style="padding:0 28px;border-left:1px solid #e6e4df"><div style="font-size:11px;color:#77756e;margin-bottom:6px">Longest streak</div><div style="font-size:22px;letter-spacing:-.02em">{{ s.longest }} days</div></div>
@@ -61,7 +61,7 @@ a{color:#161614;text-decoration:none}a:hover{color:#6b6a64}
         </div>
       </div>
       <div style="display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;border-top:1px solid #eeece8;padding-top:18px;font-size:13px">
-        <div style="display:flex;gap:10px;align-items:baseline"><span style="color:#77756e">{{ ro.prefix }}</span><span style="font-weight:500"><nayam-num value="{{ ro.count }}"></nayam-num> {{ ro.unit }}</span><span style="color:#77756e">on {{ ro.date }}</span></div>
+        <div style="display:flex;gap:10px;align-items:baseline"><span style="color:#77756e">{{ ro.prefix }}</span><span style="font-weight:500"><ovio-num value="{{ ro.count }}"></ovio-num> {{ ro.unit }}</span><span style="color:#77756e">on {{ ro.date }}</span></div>
         <div style="display:flex;gap:4px;align-items:center;font-size:11px;color:#77756e">Less
           <span style="width:12px;height:12px;border-radius:2px;background:#ebe9e4;margin-left:4px"></span><span style="width:12px;height:12px;border-radius:2px;background:#c9c6bf"></span><span style="width:12px;height:12px;border-radius:2px;background:#97938a"></span><span style="width:12px;height:12px;border-radius:2px;background:#5d5a53"></span><span style="width:12px;height:12px;border-radius:2px;background:#1d1c1a;margin-right:4px"></span>More</div>
       </div>
@@ -77,7 +77,7 @@ a{color:#161614;text-decoration:none}a:hover{color:#6b6a64}
         </div>
         <div style="height:2px;background:repeating-linear-gradient(90deg,#3fae55 0 8px,transparent 8px 12px);margin:18px 0 22px;box-shadow:0 0 6px rgba(80,255,120,.5)"></div>
         <div style="display:flex;gap:40px;flex-wrap:wrap;font-size:22px;margin-bottom:26px;line-height:1.1">
-          <div>TOTAL.......<span style="color:#c9ffd2"><nayam-num value="{{ s.total }}" from="0"></nayam-num></span></div>
+          <div>TOTAL.......<span style="color:#c9ffd2"><ovio-num value="{{ s.total }}" from="0"></ovio-num></span></div>
           <div>MAX_STREAK..<span style="color:#c9ffd2">{{ s.longest }}D</span></div>
           <div>CUR_STREAK..<span style="color:#c9ffd2">{{ s.current }}D</span></div>
         </div>
@@ -110,7 +110,7 @@ a{color:#161614;text-decoration:none}a:hover{color:#6b6a64}
         </div>
         <div style="display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:6px">
           <h3 style="margin:0;font-size:34px;font-weight:800;letter-spacing:-.035em">A year of making things</h3>
-          <span style="font-family:Caveat,cursive;font-size:26px;color:#b8471f;transform:rotate(-3deg);display:inline-block"><nayam-num value="{{ s.total }}" from="0"></nayam-num> of them!</span>
+          <span style="font-family:Caveat,cursive;font-size:26px;color:#b8471f;transform:rotate(-3deg);display:inline-block"><ovio-num value="{{ s.total }}" from="0"></ovio-num> of them!</span>
         </div>
         <p style="margin:0 0 28px;font-size:15px;color:#6e5a45">Every tile is a day. Taller tiles, busier days.</p>
         <div style="overflow-x:auto;overflow-y:hidden;padding:10px 6px 14px;scrollbar-width:thin;scrollbar-color:#d9c9ad transparent">
@@ -138,7 +138,7 @@ a{color:#161614;text-decoration:none}a:hover{color:#6b6a64}
       <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap">
         <div>
           <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#6b665b">Contributions · last 12 months</div>
-          <div style="font-weight:800;font-stretch:120%;font-size:clamp(48px,6vw,72px);letter-spacing:-.04em;line-height:.95;margin-top:6px"><nayam-num value="{{ s.total }}" from="0"></nayam-num></div>
+          <div style="font-weight:800;font-stretch:120%;font-size:clamp(48px,6vw,72px);letter-spacing:-.04em;line-height:.95;margin-top:6px"><ovio-num value="{{ s.total }}" from="0"></ovio-num></div>
         </div>
         <div style="display:flex;gap:12px;flex-wrap:wrap">
           <div style="padding:12px 16px;border-radius:14px;background:#f8f5ef;box-shadow:inset 0 1px 0 #fff,0 5px 0 #d2ccbf,0 12px 14px -8px rgba(40,28,10,.4)"><div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em;color:#6b665b">STREAK</div><div style="font-weight:800;font-size:24px;letter-spacing:-.02em">{{ s.longest }} days</div></div>
@@ -160,7 +160,7 @@ a{color:#161614;text-decoration:none}a:hover{color:#6b6a64}
         </sc-for>
         <div style="grid-column:span 2;padding:12px 14px;background:#2a2925;border-radius:12px;box-shadow:inset 0 3px 6px rgba(0,0,0,.6);color:#f8f5ef;display:flex;flex-direction:column;justify-content:center;gap:4px">
           <div style="display:flex;gap:6px;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em;color:#bdb6a8;text-transform:uppercase"><span>{{ ro.prefix }}</span><span>{{ ro.dowShort }}</span></div>
-          <div style="display:flex;align-items:baseline;gap:8px"><span style="font-weight:800;font-size:30px;letter-spacing:-.02em;line-height:1"><nayam-num value="{{ ro.count }}"></nayam-num></span><span style="font-size:13px;color:#bdb6a8">{{ ro.unit }}</span></div>
+          <div style="display:flex;align-items:baseline;gap:8px"><span style="font-weight:800;font-size:30px;letter-spacing:-.02em;line-height:1"><ovio-num value="{{ ro.count }}"></ovio-num></span><span style="font-size:13px;color:#bdb6a8">{{ ro.unit }}</span></div>
           <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#bdb6a8">{{ ro.date }}</div>
         </div>
       </div>

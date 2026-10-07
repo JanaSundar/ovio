@@ -94,6 +94,11 @@
   --ovio-mono: var(--ovio-font-plex-mono);
 }
 
+/* Keyboard focus shows no outline or highlight inside a component. */
+[data-ovio-world] :focus-visible {
+  outline: none;
+}
+
 /* World stages: the surface a component sits on in demos. */
 .ovio-stage[data-ovio-world="toy"] {
   background-image: radial-gradient(circle, rgba(60, 45, 20, 0.09) 2px, transparent 2.5px);

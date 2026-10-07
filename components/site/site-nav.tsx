@@ -2,10 +2,11 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { DOCS_HREF } from "@/content/components";
 import { cn } from "@/lib/utils";
 import { LogoLink } from "./logo";
 
-export const GITHUB_URL = "https://github.com/JanaSundar/ovio";
+const GITHUB_URL = "https://github.com/JanaSundar/ovio";
 
 export function SiteNav() {
   const pathname = usePathname();
@@ -22,7 +23,7 @@ export function SiteNav() {
           About
         </Link>
         <Link
-          href="/docs"
+          href={DOCS_HREF}
           className={cn("hover:text-ink", inDocs && "font-medium text-ink")}
           aria-current={inDocs ? "page" : undefined}
         >

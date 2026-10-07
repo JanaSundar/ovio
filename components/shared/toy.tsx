@@ -21,7 +21,13 @@ type ToyKeyProps = Omit<HTMLMotionProps<"button">, "style"> & {
  * A raised plastic key. Hover lifts it, press compresses it into its surface,
  * release springs back (Toy key spring, k900 c22). Space and Enter press it too.
  */
-export function ToyKey({ depth = 6, side = "rgba(0,0,0,.25)", style, ...props }: ToyKeyProps) {
+export function ToyKey({
+  depth = 6,
+  side = "rgba(0,0,0,.25)",
+  style,
+  className,
+  ...props
+}: ToyKeyProps) {
   const transition = useOvioTransition(motionTokens.toy.key);
   const y = useMotionValue(0);
   const boxShadow = useTransform(y, (v) => {
@@ -36,6 +42,7 @@ export function ToyKey({ depth = 6, side = "rgba(0,0,0,.25)", style, ...props }:
       whileTap={{ y: depth - 1 }}
       transition={transition}
       {...props}
+      className={className}
       style={{ ...style, y, boxShadow }}
     />
   );

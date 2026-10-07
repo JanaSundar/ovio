@@ -2,6 +2,7 @@
 
 import { useCallback, useId, useRef, useState, type KeyboardEvent, type ReactNode } from "react";
 import { useWorld, type World } from "@/components/shared/world-provider";
+import { keyToIndex } from "@/lib/keys";
 import { MinimalGooeyTabs } from "./worlds/minimal";
 import { CraftGooeyTabs } from "./worlds/craft";
 import { RetroGooeyTabs } from "./worlds/retro";
@@ -12,7 +13,6 @@ export type GooeyStatus = "offline" | "building" | "online";
 export type GooeyTabsProps = {
   tabs: string[];
   variant?: World;
-  /** Controlled index. */
   value?: number;
   defaultValue?: number;
   onValueChange?: (index: number) => void;
@@ -45,7 +45,7 @@ export type GooeyTabsWorldProps = {
   className?: string;
 };
 
-export const STATUS_LABEL: Record<GooeyStatus, string> = {
+const STATUS_LABEL: Record<GooeyStatus, string> = {
   offline: "Offline",
   building: "Building…",
   online: "Online",
@@ -81,17 +81,7 @@ export function GooeyTabs({
   );
 
   const onKeyDown = (event: KeyboardEvent<HTMLElement>) => {
-    const last = tabs.length - 1;
-    const next =
-      event.key === "ArrowRight"
-        ? Math.min(last, index + 1)
-        : event.key === "ArrowLeft"
-          ? Math.max(0, index - 1)
-          : event.key === "Home"
-            ? 0
-            : event.key === "End"
-              ? last
-              : null;
+    const next = keyToIndex(event.key, index, tabs.length);
     if (next === null) return;
     event.preventDefault();
     select(next);

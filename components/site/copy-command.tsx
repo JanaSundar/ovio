@@ -3,11 +3,12 @@
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 
-function useCopy(text: string) {
+/** Copies text to the clipboard; `copied` stays true for a moment after. */
+export function useCopy() {
   const [copied, setCopied] = useState(false);
   const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
   useEffect(() => () => clearTimeout(timer.current), []);
-  const copy = () => {
+  const copy = (text: string) => {
     navigator.clipboard?.writeText(text).catch(() => {});
     setCopied(true);
     clearTimeout(timer.current);
@@ -18,11 +19,11 @@ function useCopy(text: string) {
 
 /** The hero's install button: the whole command is the button. */
 export function InstallButton({ command }: { command: string }) {
-  const { copied, copy } = useCopy(command);
+  const { copied, copy } = useCopy();
   return (
     <button
       type="button"
-      onClick={copy}
+      onClick={() => copy(command)}
       className="flex cursor-pointer items-center gap-3 rounded-lg border-0 bg-ink px-4 py-3 font-mono text-[13px] text-paper transition-colors hover:bg-[#2c2b28]"
     >
       <span className="text-code-muted">$</span>
@@ -34,9 +35,17 @@ export function InstallButton({ command }: { command: string }) {
   );
 }
 
-/** A dark command box with a Copy button, as on the docs pages. */
-export function CopyCommand({ command, className }: { command: string; className?: string }) {
-  const { copied, copy } = useCopy(command);
+/** A dark command box with a Copy button, as on the docs pages. `html` is the highlighted command. */
+export function CopyCommand({
+  command,
+  html,
+  className,
+}: {
+  command: string;
+  html: string;
+  className?: string;
+}) {
+  const { copied, copy } = useCopy();
   return (
     <div
       className={cn(
@@ -46,11 +55,11 @@ export function CopyCommand({ command, className }: { command: string; className
     >
       <span className="overflow-x-auto whitespace-nowrap">
         <span className="text-code-muted">$ </span>
-        {command}
+        <code dangerouslySetInnerHTML={{ __html: html }} />
       </span>
       <button
         type="button"
-        onClick={copy}
+        onClick={() => copy(command)}
         className="flex-none cursor-pointer rounded-md border border-[#3a3935] bg-transparent px-2.5 py-[5px] font-[inherit] text-[11px] text-[#d8d6cf]"
         aria-live="polite"
       >

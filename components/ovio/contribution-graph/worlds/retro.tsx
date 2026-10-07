@@ -1,0 +1,159 @@
+"use client";
+
+import { motion } from "motion/react";
+import { memo } from "react";
+import { RollingNumber } from "@/components/shared/rolling-number";
+import { motionTokens, steps } from "@/lib/motion";
+import { cn } from "@/lib/utils";
+import type { ContributionGraphWorldProps } from "../contribution-graph";
+import { dayCellProps, useScrollEnd } from "../grid";
+import type { ContributionCell } from "../year";
+
+const SCALE = ["#0f2414", "#1d5a2b", "#2f9a45", "#4fdc68", "#b8ffc4"];
+const PAD3 = { minimumIntegerDigits: 3, useGrouping: false } as const;
+
+type CellProps = { cell: ContributionCell; tabbable: boolean; active: boolean; enter: boolean };
+
+/** A phosphor pixel: switches on in one hard frame, column by column, and burns white when hovered. */
+const Cell = memo(function Cell({ cell, tabbable, active, enter }: CellProps) {
+  const p = dayCellProps(cell, tabbable);
+  const lvl = cell.level;
+
+  return (
+    <motion.div
+      {...p}
+      initial={enter ? { opacity: 0 } : false}
+      animate={{ opacity: 1 }}
+      transition={{
+        ...motionTokens.retro.frames(1, 0.01),
+        delay: cell.week * 0.026 + cell.weekday * 0.005,
+      }}
+      style={{
+        ...p.style,
+        background: active ? "#ffffff" : SCALE[lvl],
+        boxShadow: active
+          ? "0 0 10px #8dffa3"
+          : lvl >= 3
+            ? `0 0 ${lvl * 3}px rgba(80,255,120,.7)`
+            : "none",
+      }}
+    />
+  );
+});
+
+/** Retro: a CRT running ACTIVITY.EXE. Pixels light in scan order; "always" adds flicker and a roll bar. */
+export function RetroContributionGraph({
+  year,
+  active,
+  focusIndex,
+  animation,
+  grid,
+  className,
+}: ContributionGraphWorldProps) {
+  const scroller = useScrollEnd<HTMLDivElement>();
+  const enter = animation !== "none";
+  const always = animation === "always";
+  const day = active ?? year.best;
+
+  return (
+    <section
+      data-ovio-world="retro"
+      className={cn(
+        "w-full min-w-0 bg-[#0b0d0a] p-4 font-(family-name:--ovio-font) sm:p-7",
+        className,
+      )}
+    >
+      <motion.div
+        className="relative overflow-hidden rounded-[22px] border-[6px] border-[#1c2a1d] bg-[radial-gradient(ellipse_at_50%_45%,#0c2412_0%,#061108_70%,#030803_100%)] px-6 pt-[34px] pb-[30px] text-(--ovio-ink) outline-2 outline-[#0f1a10] [text-shadow:var(--ovio-glow)] sm:px-[38px]"
+        animate={always ? { opacity: [1, 0.94] } : { opacity: 1 }}
+        transition={
+          always
+            ? { duration: 0.12, repeat: Infinity, repeatType: "reverse", ease: steps(2) }
+            : { duration: 0 }
+        }
+      >
+        <div className="flex flex-wrap justify-between gap-4 text-2xl leading-none">
+          <span>
+            C:\&gt; ACTIVITY.EXE /YEAR:{year.days[year.days.length - 1].date.slice(0, 4)}
+            <motion.span
+              aria-hidden
+              animate={enter ? { opacity: [1, 0] } : undefined}
+              transition={motionTokens.retro.blink}
+            >
+              █
+            </motion.span>
+          </span>
+          <span className="text-(--ovio-ink-2)">STATUS: ONLINE</span>
+        </div>
+        <div
+          aria-hidden
+          className="mt-[18px] mb-[22px] h-0.5 bg-[repeating-linear-gradient(90deg,#3fae55_0_8px,transparent_8px_12px)] shadow-[0_0_6px_rgba(80,255,120,.5)]"
+        />
+        <div className="mb-[26px] flex flex-wrap gap-x-10 gap-y-1 text-[22px] leading-[1.1]">
+          <div>
+            TOTAL.......
+            <RollingNumber className="text-[#c9ffd2]" value={year.total} />
+          </div>
+          <div>
+            MAX_STREAK..<span className="text-[#c9ffd2]">{year.longest}D</span>
+          </div>
+          <div>
+            CUR_STREAK..<span className="text-[#c9ffd2]">{year.current}D</span>
+          </div>
+        </div>
+
+        <div
+          ref={scroller}
+          className="overflow-x-auto overflow-y-hidden [scrollbar-color:#2f9a45_transparent] [scrollbar-width:thin]"
+        >
+          <div
+            {...grid}
+            className="grid w-max auto-cols-[13px] grid-flow-col grid-rows-[repeat(7,13px)] gap-[3px] p-1"
+          >
+            {year.rows.map((row, r) => (
+              <div key={r} role="row" className="contents">
+                {row.map((cell) => (
+                  <Cell
+                    key={cell.date}
+                    cell={cell}
+                    tabbable={cell.index === focusIndex}
+                    active={cell.index === active?.index}
+                    enter={enter}
+                  />
+                ))}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-6 flex flex-wrap justify-between gap-4 text-2xl leading-none">
+          <span>
+            &gt; {day.date} {day.label.slice(0, 3).toUpperCase()} ::{" "}
+            <RollingNumber value={day.count} format={PAD3} /> COMMITS{" "}
+            <span aria-hidden className="text-(--ovio-ink-2)">
+              {"█".repeat(day.level) + "░".repeat(4 - day.level)}
+            </span>
+          </span>
+          <span aria-hidden className="text-(--ovio-ink-2)">
+            LOW ░▒▓█ HIGH
+          </span>
+        </div>
+
+        <div aria-hidden className="ovio-scanlines" />
+        {always && (
+          <motion.div
+            aria-hidden
+            className="pointer-events-none absolute inset-x-0 top-0 h-[14%] bg-[linear-gradient(180deg,transparent,rgba(120,255,150,.06),transparent)]"
+            initial={{ y: "-100%" }}
+            animate={{ y: "900%" }}
+            transition={{ duration: 6, ease: "linear", repeat: Infinity }}
+          />
+        )}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 rounded-2xl shadow-[inset_0_0_90px_rgba(0,0,0,.8)]"
+        />
+      </motion.div>
+    </section>
+  );
+}

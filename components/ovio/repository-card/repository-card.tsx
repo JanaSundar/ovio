@@ -26,7 +26,7 @@ export type Repository = {
 export type RepositoryStat = "stars" | "forks" | "issues";
 
 export type RepositoryCardProps = {
-  repo: Repository;
+  repository: Repository;
   variant?: World;
   /** Which counts to show, in order. Defaults to stars and forks (and issues in Craft). */
   stats?: RepositoryStat[];
@@ -75,7 +75,7 @@ const LANGUAGE_SHORT: Record<string, string> = {
 };
 
 /** "2h ago", "3d ago". */
-export function relativeTime(iso: string, now = Date.now()): string {
+function relativeTime(iso: string, now = Date.now()): string {
   const s = Math.max(0, (now - new Date(iso).getTime()) / 1000);
   if (s < 60) return "just now";
   const units: [number, string][] = [
@@ -95,7 +95,7 @@ export function relativeTime(iso: string, now = Date.now()): string {
 }
 
 export function RepositoryCard({
-  repo,
+  repository: repo,
   variant,
   stats,
   starred: starredProp,

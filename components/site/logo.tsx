@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 /** The Ovio mark: an open ring with a tail, white on black. */
-export function OvioMark({ size = 26, className }: { size?: number; className?: string }) {
+function OvioMark({ size = 26, className }: { size?: number; className?: string }) {
   return (
     <svg
       viewBox="0 0 96 96"

@@ -4,7 +4,7 @@
 //   drag   — object follows the pointer with weight, then resists and returns to its seat.
 //   knob   — rotary control: vertical/horizontal drag, rotational inertia, snaps to data-steps ticks. Emits "toychange".
 (function () {
-  if (window.NayamToy) return;
+  if (window.OvioToy) return;
   const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const K = { press: [900, 22], drag: [240, 14], knob: [95, 22] };
   const M = new WeakMap();
@@ -91,5 +91,5 @@
       if (Math.abs(v) < 0.002 && Math.abs(x - o.to) < 0.002) { o.onStep(o.to, 0); o.onDone && o.onDone(); return; } o.onStep(x, v); raf = requestAnimationFrame(tick); };
     raf = requestAnimationFrame(tick); return () => cancelAnimationFrame(raf);
   }
-  window.NayamToy = { RM, spring, knobSet };
+  window.OvioToy = { RM, spring, knobSet };
 })();

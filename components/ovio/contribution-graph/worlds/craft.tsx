@@ -6,7 +6,7 @@ import { RollingNumber } from "@/components/shared/rolling-number";
 import { motionTokens, useOvioTransition } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import type { ContributionGraphWorldProps } from "../contribution-graph";
-import { dayCellProps, useScrollEnd } from "../grid";
+import { dayCellProps, weekColumns } from "../grid";
 import { unit, type ContributionCell } from "../year";
 
 const SCALE = ["#e6dcc8", "#f2c9a0", "#ee9f63", "#e0713a", "#b8471f"];
@@ -28,7 +28,7 @@ const Cell = memo(function Cell({ cell, tabbable, active, enter }: CellProps) {
       initial={enter ? { opacity: 0, y: -16 } : false}
       animate={{ opacity: 1, y: 0 }}
       transition={{ ...motionTokens.craft.slow, delay: cell.week * 0.014 + cell.weekday * 0.012 }}
-      className="rounded-[3px]"
+      className="aspect-square rounded-[3px]"
     >
       <motion.span
         aria-hidden
@@ -62,7 +62,6 @@ export function CraftContributionGraph({
   grid,
   className,
 }: ContributionGraphWorldProps) {
-  const scroller = useScrollEnd<HTMLDivElement>();
   const enter = animation !== "none";
   const day = active ?? year.best;
 
@@ -70,7 +69,7 @@ export function CraftContributionGraph({
     <section
       data-ovio-world="craft"
       className={cn(
-        "relative mx-auto w-full min-w-0 max-w-max -rotate-[0.6deg] rounded-md bg-(--ovio-surface) px-6 pt-10 pb-9 font-(family-name:--ovio-font) text-(--ovio-ink) shadow-[inset_0_1px_0_rgba(255,255,255,.8),0_2px_4px_rgba(70,45,20,.12),0_18px_40px_-12px_rgba(70,45,20,.35)] sm:px-11",
+        "relative mx-auto w-full min-w-0 -rotate-[0.6deg] rounded-md bg-(--ovio-surface) px-6 pt-10 pb-9 font-(family-name:--ovio-font) text-(--ovio-ink) shadow-[inset_0_1px_0_rgba(255,255,255,.8),0_2px_4px_rgba(70,45,20,.12),0_18px_40px_-12px_rgba(70,45,20,.35)] sm:px-11",
         className,
       )}
     >
@@ -78,7 +77,7 @@ export function CraftContributionGraph({
         aria-hidden
         className="absolute -top-3.5 left-1/2 -ml-[60px] h-7 w-[120px] rotate-2 bg-(--ovio-tape) shadow-[0_1px_2px_rgba(0,0,0,.08)]"
       />
-      <div className="absolute -top-[26px] -right-[18px] flex size-[104px] rotate-12 flex-col items-center justify-center rounded-full bg-(--ovio-accent) text-(--ovio-on-accent) shadow-[0_6px_14px_-4px_rgba(120,50,10,.5),inset_0_-3px_0_rgba(0,0,0,.12)]">
+      <div className="absolute -top-[26px] -right-1 sm:-right-[18px] flex size-[104px] rotate-12 flex-col items-center justify-center rounded-full bg-(--ovio-accent) text-(--ovio-on-accent) shadow-[0_6px_14px_-4px_rgba(120,50,10,.5),inset_0_-3px_0_rgba(0,0,0,.12)]">
         <RollingNumber
           className="text-[30px] leading-none font-extrabold tracking-[-0.03em]"
           value={year.longest}
@@ -98,14 +97,8 @@ export function CraftContributionGraph({
         Every tile is a day. Taller tiles, busier days.
       </p>
 
-      <div
-        ref={scroller}
-        className="overflow-x-auto overflow-y-hidden px-1.5 pt-2.5 pb-3.5 [scrollbar-color:#d9c9ad_transparent] [scrollbar-width:thin]"
-      >
-        <div
-          {...grid}
-          className="grid w-max auto-cols-[13px] grid-flow-col grid-rows-[repeat(7,13px)] gap-1"
-        >
+      <div className="@container px-1.5 pt-2.5 pb-3.5">
+        <div {...grid} className="grid gap-[0.45cqw]" style={weekColumns(year.weeks)}>
           {year.rows.map((row, r) => (
             <div key={r} role="row" className="contents">
               {row.map((cell) => (
@@ -122,7 +115,7 @@ export function CraftContributionGraph({
         </div>
       </div>
 
-      <div className="mt-[18px] flex flex-wrap items-end justify-between gap-4">
+      <div className="mt-[18px] flex flex-wrap items-end justify-between gap-4 px-1">
         <div className="relative -rotate-[1.5deg] rounded bg-white py-2.5 pr-4 pl-[26px] text-sm shadow-[0_4px_10px_-3px_rgba(70,45,20,.3)]">
           <span
             aria-hidden
@@ -135,7 +128,7 @@ export function CraftContributionGraph({
         </div>
         <div
           aria-hidden
-          className="flex items-center gap-[5px] font-(family-name:--ovio-hand) text-xl text-(--ovio-ink-2)"
+          className="flex flex-wrap items-center gap-[5px] font-(family-name:--ovio-hand) text-xl text-(--ovio-ink-2)"
         >
           quiet
           {SCALE.map((c) => (

@@ -6,7 +6,7 @@ import { RollingNumber } from "@/components/shared/rolling-number";
 import { motionTokens, steps } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import type { ContributionGraphWorldProps } from "../contribution-graph";
-import { dayCellProps, useScrollEnd } from "../grid";
+import { dayCellProps, weekColumns } from "../grid";
 import type { ContributionCell } from "../year";
 
 const SCALE = ["#0f2414", "#1d5a2b", "#2f9a45", "#4fdc68", "#b8ffc4"];
@@ -24,6 +24,7 @@ const Cell = memo(function Cell({ cell, tabbable, active, enter }: CellProps) {
       {...p}
       initial={enter ? { opacity: 0 } : false}
       animate={{ opacity: 1 }}
+      className="aspect-square"
       transition={{
         ...motionTokens.retro.frames(1, 0.01),
         delay: cell.week * 0.026 + cell.weekday * 0.005,
@@ -50,7 +51,6 @@ export function RetroContributionGraph({
   grid,
   className,
 }: ContributionGraphWorldProps) {
-  const scroller = useScrollEnd<HTMLDivElement>();
   const enter = animation !== "none";
   const always = animation === "always";
   const day = active ?? year.best;
@@ -59,12 +59,12 @@ export function RetroContributionGraph({
     <section
       data-ovio-world="retro"
       className={cn(
-        "w-full min-w-0 bg-[#0b0d0a] p-4 font-(family-name:--ovio-font) sm:p-7",
+        "w-full min-w-0 bg-[#0b0d0a] p-2 font-(family-name:--ovio-font) sm:p-7",
         className,
       )}
     >
       <motion.div
-        className="relative overflow-hidden rounded-[22px] border-[6px] border-[#1c2a1d] bg-[radial-gradient(ellipse_at_50%_45%,#0c2412_0%,#061108_70%,#030803_100%)] px-6 pt-[34px] pb-[30px] text-(--ovio-ink) outline-2 outline-[#0f1a10] [text-shadow:var(--ovio-glow)] sm:px-[38px]"
+        className="relative overflow-hidden rounded-[22px] border-[6px] border-[#1c2a1d] bg-[radial-gradient(ellipse_at_50%_45%,#0c2412_0%,#061108_70%,#030803_100%)] px-4 pt-[34px] pb-[30px] text-(--ovio-ink) outline-2 outline-[#0f1a10] [text-shadow:var(--ovio-glow)] sm:px-[38px]"
         animate={always ? { opacity: [1, 0.94] } : { opacity: 1 }}
         transition={
           always
@@ -72,7 +72,7 @@ export function RetroContributionGraph({
             : { duration: 0 }
         }
       >
-        <div className="flex flex-wrap justify-between gap-4 text-2xl leading-none">
+        <div className="flex flex-wrap justify-between gap-4 text-lg leading-none sm:text-2xl">
           <span>
             C:\&gt; ACTIVITY.EXE /YEAR:{year.days[year.days.length - 1].date.slice(0, 4)}
             <motion.span
@@ -89,7 +89,7 @@ export function RetroContributionGraph({
           aria-hidden
           className="mt-[18px] mb-[22px] h-0.5 bg-[repeating-linear-gradient(90deg,#3fae55_0_8px,transparent_8px_12px)] shadow-[0_0_6px_rgba(80,255,120,.5)]"
         />
-        <div className="mb-[26px] flex flex-wrap gap-x-10 gap-y-1 text-[22px] leading-[1.1]">
+        <div className="mb-[26px] flex flex-wrap items-baseline gap-x-10 gap-y-1 text-base leading-[1.1] sm:text-[22px]">
           <div>
             TOTAL.......
             <RollingNumber className="text-[#c9ffd2]" value={year.total} />
@@ -102,14 +102,8 @@ export function RetroContributionGraph({
           </div>
         </div>
 
-        <div
-          ref={scroller}
-          className="overflow-x-auto overflow-y-hidden [scrollbar-color:#2f9a45_transparent] [scrollbar-width:thin]"
-        >
-          <div
-            {...grid}
-            className="grid w-max auto-cols-[13px] grid-flow-col grid-rows-[repeat(7,13px)] gap-[3px] p-1"
-          >
+        <div className="@container">
+          <div {...grid} className="grid gap-[0.36cqw] p-1" style={weekColumns(year.weeks)}>
             {year.rows.map((row, r) => (
               <div key={r} role="row" className="contents">
                 {row.map((cell) => (
@@ -126,7 +120,7 @@ export function RetroContributionGraph({
           </div>
         </div>
 
-        <div className="mt-6 flex flex-wrap justify-between gap-4 text-2xl leading-none">
+        <div className="mt-6 flex flex-wrap justify-between gap-4 text-lg leading-none sm:text-2xl">
           <span>
             &gt; {day.date} {day.label.slice(0, 3).toUpperCase()} ::{" "}
             <RollingNumber value={day.count} format={PAD3} /> COMMITS{" "}

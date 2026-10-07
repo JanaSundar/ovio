@@ -36,6 +36,10 @@ const PLASTIC = [
 
 /** Drum radius in px: 53 faces of 24px make the circumference. */
 const RADIUS = 202;
+/** Width the drum needs at full size: its rims plus a margin. Narrower stages scale it down. */
+const FIT_WIDTH = 400;
+/** Stage height at full size. */
+const STAGE_HEIGHT = 250;
 /** Degrees per px of horizontal drag. */
 const DRAG = 0.32;
 /** Inertia decay in ms; power matches it so a flick keeps its speed as it is released. */
@@ -153,6 +157,7 @@ export function ToyContributionGraph({
     cell: number | null;
   } | null>(null);
   const stage = useRef<HTMLDivElement>(null);
+  const [fit, setFit] = useState(1);
   /** The wheel gesture in progress: the unrounded angle it aims for and its last tick. */
   const wheel = useRef({ aim: 0, t: 0 });
   /** Where the drum is heading (or resting). */
@@ -210,6 +215,17 @@ export function ToyContributionGraph({
     return () => spin.stop();
   }, [angle, last, animation]);
   useEffect(() => () => run.current?.stop(), []);
+
+  useLayoutEffect(() => {
+    const el = stage.current;
+    if (!el) return;
+    const ro = new ResizeObserver(([entry]) => {
+      const { width } = entry.contentRect;
+      if (width) setFit(Math.min(1, width / FIT_WIDTH));
+    });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
 
   // The pointer flicks each time a new week passes under it.
   useMotionValueEvent(angle, "change", (a) => {
@@ -333,50 +349,61 @@ export function ToyContributionGraph({
           onPointerMove={move}
           onPointerUp={up}
           onPointerCancel={up}
-          className="relative flex h-[250px] cursor-grab touch-pan-y items-center justify-center select-none perspective-[900px] active:cursor-grabbing"
+          className="relative cursor-grab touch-pan-y select-none active:cursor-grabbing"
+          style={{ height: STAGE_HEIGHT * fit }}
         >
-          <motion.div
-            {...grid}
-            onFocus={(e) => {
-              grid.onFocus(e);
-              const i = dayIndexOf(e.target);
-              if (i !== null && !drag.current) spinTo(year.days[i].week);
+          <div
+            className="absolute top-0 left-1/2 flex origin-top items-center justify-center perspective-[900px]"
+            style={{
+              width: FIT_WIDTH,
+              height: STAGE_HEIGHT,
+              marginLeft: -FIT_WIDTH / 2,
+              scale: fit,
             }}
-            className="relative h-[184px] w-6 transform-3d"
-            style={{ transform: drum }}
           >
-            <span
-              aria-hidden
-              className="absolute top-1/2 left-1/2 -m-[210px] size-[420px] rounded-full bg-[radial-gradient(circle,#e3dbc8_0_55%,#d2c9b3_56%_62%,#efe8d8_63%)] shadow-[0_0_0_6px_#c7bea8]"
-              style={{ transform: "rotateX(90deg) translateZ(92px)" }}
-            />
-            <span
-              aria-hidden
-              className="absolute top-1/2 left-1/2 -m-[210px] size-[420px] rounded-full bg-[#c7bea8]"
-              style={{ transform: "rotateX(90deg) translateZ(-92px)" }}
-            />
-            {Array.from({ length: n }, (_, w) => (
-              <Face
-                key={w}
-                week={w}
-                step={step}
-                cells={weeks[w]}
-                month={months.get(w)}
-                angle={angle}
-                active={active?.week === w ? active.index : null}
-                tabbable={Math.floor(focusIndex / 7) === w ? focusIndex : null}
+            <motion.div
+              {...grid}
+              onFocus={(e) => {
+                grid.onFocus(e);
+                const i = dayIndexOf(e.target);
+                if (i !== null && !drag.current) spinTo(year.days[i].week);
+              }}
+              className="relative h-[184px] w-6 transform-3d"
+              style={{ transform: drum }}
+            >
+              <span
+                aria-hidden
+                className="absolute top-1/2 left-1/2 -m-[210px] size-[420px] rounded-full bg-[radial-gradient(circle,#e3dbc8_0_55%,#d2c9b3_56%_62%,#efe8d8_63%)] shadow-[0_0_0_6px_#c7bea8]"
+                style={{ transform: "rotateX(90deg) translateZ(92px)" }}
               />
-            ))}
-          </motion.div>
-          <motion.div
-            aria-hidden
-            className="pointer-events-none absolute top-0 left-1/2 z-[5] -ml-[13px] h-10 w-[26px] origin-[50%_9px] drop-shadow-[0_3px_2px_rgba(40,28,10,.35)]"
-            style={{ rotate: tick }}
-          >
-            <span className="absolute top-[22px] left-1/2 -ml-2 border-x-8 border-t-16 border-x-transparent border-t-[#e0432a]" />
-            <span className="absolute top-0 left-1/2 -ml-3 size-6 rounded-full bg-[radial-gradient(circle_at_38%_32%,#ff8a6a,#e0432a_60%)] shadow-[inset_0_-2px_0_rgba(0,0,0,.2)]" />
-            <span className="absolute top-2 left-1/2 -ml-1 size-2 rounded-full bg-[#f8f5ef] shadow-[inset_0_1px_1px_rgba(0,0,0,.3)]" />
-          </motion.div>
+              <span
+                aria-hidden
+                className="absolute top-1/2 left-1/2 -m-[210px] size-[420px] rounded-full bg-[#c7bea8]"
+                style={{ transform: "rotateX(90deg) translateZ(-92px)" }}
+              />
+              {Array.from({ length: n }, (_, w) => (
+                <Face
+                  key={w}
+                  week={w}
+                  step={step}
+                  cells={weeks[w]}
+                  month={months.get(w)}
+                  angle={angle}
+                  active={active?.week === w ? active.index : null}
+                  tabbable={Math.floor(focusIndex / 7) === w ? focusIndex : null}
+                />
+              ))}
+            </motion.div>
+            <motion.div
+              aria-hidden
+              className="pointer-events-none absolute top-0 left-1/2 z-[5] -ml-[13px] h-10 w-[26px] origin-[50%_9px] drop-shadow-[0_3px_2px_rgba(40,28,10,.35)]"
+              style={{ rotate: tick }}
+            >
+              <span className="absolute top-[22px] left-1/2 -ml-2 border-x-8 border-t-16 border-x-transparent border-t-[#e0432a]" />
+              <span className="absolute top-0 left-1/2 -ml-3 size-6 rounded-full bg-[radial-gradient(circle_at_38%_32%,#ff8a6a,#e0432a_60%)] shadow-[inset_0_-2px_0_rgba(0,0,0,.2)]" />
+              <span className="absolute top-2 left-1/2 -ml-1 size-2 rounded-full bg-[#f8f5ef] shadow-[inset_0_1px_1px_rgba(0,0,0,.3)]" />
+            </motion.div>
+          </div>
         </div>
 
         <div className="mt-2.5 flex justify-center px-4">

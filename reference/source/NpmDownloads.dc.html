@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&family=VT323&family=Chakra+Petch:wght@500;600;700&family=JetBrains+Mono:wght@400;600&family=Instrument+Sans:ital,wght@0,300;0,400;0,500;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Caveat:wght@600;700&family=Big+Shoulders+Display:wght@500;700;900&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+@keyframes world-in{from{opacity:0;transform:scale(.988);filter:blur(8px)}to{opacity:1;transform:none;filter:none}}
+@keyframes grow{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@keyframes px-on{from{opacity:0}to{opacity:1}}
+@keyframes gauge{from{stroke-dashoffset:339.3}}
+@keyframes drift-a{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(8%,6%) scale(1.15)}}
+@keyframes print{from{transform:translateY(-40px);clip-path:inset(0 0 100% 0)}to{transform:none;clip-path:inset(0 0 0 0)}}
+@keyframes toy-drop{from{opacity:0;transform:translateY(-48px)}40%{opacity:1}to{opacity:1;transform:none}}
+</style>
+<script src="./toy.js"></script>
+<script src="./numberflow.js"></script>
+</helmet>
+<div style="display:flex;min-height:400px;border-radius:16px;overflow:hidden;border:1px solid rgba(22,22,20,.1)">
+  <sc-if value="{{ is.minimal }}" hint-placeholder-val="{{ true }}">
+    <div style="flex:1;background:#fff;padding:36px 40px;display:flex;flex-direction:column;justify-content:center;gap:24px;font-family:Geist,sans-serif;color:#161614;animation:{{ stageAnim }}">
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap">
+        <div><div style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#77756e;margin-bottom:10px">Weekly downloads · lumen</div><div style="font-size:52px;letter-spacing:-.045em;line-height:1"><nayam-num value="{{ d.last }}" from="0"></nayam-num></div></div>
+        <div style="font-size:13px;color:#2f7a45">↑ {{ d.delta }}% <span style="color:#77756e">vs last week</span></div>
+      </div>
+      <div style="display:flex;align-items:flex-end;gap:4px;height:150px;border-bottom:1px solid #e6e4df">
+        <sc-for list="{{ d.bars }}" as="b" hint-placeholder-count="26"><div style="flex:1;height:{{ b.h }};background:{{ b.min }};transform-origin:bottom;animation:{{ b.growAnim }}"></div></sc-for>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:11px;color:#77756e"><span>26 weeks ago</span><span>This week</span></div>
+    </div>
+  </sc-if>
+  <sc-if value="{{ is.retro }}" hint-placeholder-val="{{ false }}">
+    <div style="flex:1;position:relative;background:#061108;padding:32px;display:flex;flex-direction:column;justify-content:center;gap:20px;font-family:VT323,monospace;color:#6dff8a;text-shadow:0 0 6px rgba(80,255,120,.55);animation:{{ stageAnim }}">
+      <div style="display:flex;justify-content:space-between;font-size:22px"><span>NPM://LUMEN</span><span style="color:#3fae55">DL/WK</span></div>
+      <div style="display:flex;gap:6px">
+        <span style="padding:0 14px;border:2px solid #1d5a2b;background:#0a1f0e;font-size:66px;line-height:72px;color:#c9ffd2"><nayam-num value="{{ d.last }}" from="0"></nayam-num></span>
+      </div>
+      <div style="display:flex;align-items:flex-end;gap:3px;height:120px">
+        <sc-for list="{{ d.bars }}" as="b" hint-placeholder-count="26"><div style="flex:1;height:{{ b.h }};background:repeating-linear-gradient(0deg,#4fdc68 0 5px,transparent 5px 7px);animation:{{ b.pxAnim }}"></div></sc-for>
+      </div>
+      <div style="font-size:20px;color:#3fae55">&gt; +{{ d.delta }}% WOW · PEAK {{ d.peakFmt }}</div>
+      <div style="position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(0,0,0,.3) 0 1px,transparent 1px 3px)"></div>
+    </div>
+  </sc-if>
+  <sc-if value="{{ is.craft }}" hint-placeholder-val="{{ false }}">
+    <div style="flex:1;background:#efe7d8;padding:36px;display:flex;align-items:center;justify-content:center;font-family:'Geist Mono',monospace;color:#2a1f14;animation:{{ stageAnim }}">
+      <div style="animation:{{ printAnim }};transform:rotate(-1.5deg);filter:drop-shadow(0 14px 18px rgba(70,45,20,.3))">
+        <div style="width:280px;background:#fffdf8;padding:22px 22px 14px;font-size:12px;line-height:1.7">
+          <div style="text-align:center;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:20px;letter-spacing:-.02em">npm · lumen</div>
+          <div style="text-align:center;color:#7d6650;margin-bottom:12px">weekly downloads receipt</div>
+          <div style="border-top:1px dashed #b9a88f;padding-top:8px">
+            <sc-for list="{{ d.recent }}" as="r" hint-placeholder-count="6"><div style="display:flex;justify-content:space-between"><span>{{ r.k }}</span><span>{{ r.v }}</span></div></sc-for>
+          </div>
+          <div style="display:flex;justify-content:space-between;border-top:1px dashed #b9a88f;margin-top:8px;padding-top:8px;font-weight:500;font-size:14px"><span>THIS WEEK</span><span><nayam-num value="{{ d.last }}" from="0"></nayam-num></span></div>
+          <div style="text-align:center;font-family:Caveat,cursive;font-size:26px;color:#b8471f;margin-top:10px;transform:rotate(-4deg)">up {{ d.delta }}%, nice!</div>
+          <div style="height:30px;margin-top:8px;background:repeating-linear-gradient(90deg,#2a1f14 0 2px,transparent 2px 4px,#2a1f14 4px 5px,transparent 5px 8px)"></div>
+        </div>
+        <div style="width:280px;height:12px;background:linear-gradient(-45deg,transparent 6px,#fffdf8 0) 0 0/12px 12px repeat-x,linear-gradient(45deg,transparent 6px,#fffdf8 0) 0 0/12px 12px repeat-x"></div>
+      </div>
+    </div>
+  </sc-if>
+  <sc-if value="{{ is.toy }}" hint-placeholder-val="{{ false }}">
+    <div style="flex:1;background:#e3dfd5;background-image:radial-gradient(circle,rgba(60,45,20,.09) 2px,transparent 2.5px);background-size:22px 22px;padding:34px;display:flex;align-items:center;justify-content:center;font-family:Archivo,sans-serif;color:#1e1d1a;animation:{{ stageAnim }}">
+      <div style="width:100%;max-width:580px;padding:22px;background:#f8f5ef;border-radius:22px;box-shadow:inset 0 1px 0 #fff,0 7px 0 #d2ccbf,0 22px 30px -16px rgba(40,28,10,.45);display:flex;flex-wrap:wrap;gap:24px;align-items:center">
+        <div style="flex:1 1 280px;display:flex;flex-direction:column;gap:14px;min-width:0">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#6b665b">npm · lumen · downloads / week</div>
+          <div style="display:flex;padding:10px 18px;background:#2a2925;border-radius:12px;box-shadow:inset 0 3px 6px rgba(0,0,0,.6);width:max-content;color:#f8f5ef;font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:40px"><nayam-num value="{{ wkVal }}" from="0" style="--nf-lh:.9"></nayam-num></div>
+          <div style="display:flex;align-items:flex-end;gap:3px;height:54px"><sc-for list="{{ toyBars }}" as="b" hint-placeholder-count="26"><div style="flex:1;height:{{ b.h }};border-radius:3px;background:{{ b.c }};transition:background .15s"></div></sc-for></div>
+          <div style="display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:11px;color:#6b665b"><span>{{ wkLabel }}</span><span style="color:{{ wkCol }}">{{ wkDelta }}</span></div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:10px;margin:0 auto">
+          <div data-toy="knob" data-steps="26" data-min="-135" data-max="135" data-angle="135" role="slider" aria-label="Week" aria-valuemin="0" aria-valuemax="25" aria-valuenow="25" tabindex="0" ref="{{ knobRef }}" style="position:relative;width:128px;height:128px;border-radius:50%;cursor:grab;touch-action:none;outline-offset:4px">
+            <sc-for list="{{ ticks }}" as="t" hint-placeholder-count="14"><span style="position:absolute;left:63px;top:0;width:2px;height:9px;border-radius:1px;background:#a69e90;transform-origin:1px 64px;transform:rotate({{ t }})"></span></sc-for>
+            <div style="position:absolute;inset:16px;border-radius:50%;background:#ef4f2b;box-shadow:0 7px 0 #b5311a,0 16px 18px -8px rgba(40,28,10,.5),inset 0 2px 0 rgba(255,255,255,.3)"></div>
+            <div data-cap style="position:absolute;inset:16px;border-radius:50%;transform:rotate(135deg)"><span style="position:absolute;left:50%;top:8px;width:7px;height:24px;margin-left:-3.5px;border-radius:4px;background:#f8f5ef;box-shadow:inset 0 2px 2px rgba(0,0,0,.2)"></span></div>
+          </div>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.1em;color:#6b665b">TURN · WEEK</span>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:720,&quot;height&quot;:420},&quot;variant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;minimal&quot;,&quot;craft&quot;,&quot;retro&quot;,&quot;toy&quot;],&quot;default&quot;:&quot;minimal&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+const RM = typeof matchMedia !== 'undefined' && matchMedia('(prefers-reduced-motion: reduce)').matches;
+const W5 = ['minimal', 'craft', 'retro', 'toy'];
+function build() {
+  let seed = 4821; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  const vals = Array.from({ length: 26 }, (_, i) => Math.round(20000 * Math.pow(1.034, i) * (0.9 + rnd() * 0.2)));
+  vals[25] = 48210; vals[24] = 42890;
+  const max = Math.max(...vals), last = vals[25];
+  const pts = vals.map((v, i) => [i / 25 * 600, 196 - v / max * 180]);
+  const line = pts.map((p, i) => `${i ? 'L' : 'M'}${p[0].toFixed(1)} ${p[1].toFixed(1)}`).join(' ');
+  let smooth = `M0 ${pts[0][1].toFixed(1)}`;
+  for (let i = 0; i < 25; i++) { const p0 = pts[i - 1] || pts[i], p1 = pts[i], p2 = pts[i + 1], p3 = pts[i + 2] || p2; smooth += ` C${(p1[0] + (p2[0] - p0[0]) / 6).toFixed(1)} ${(p1[1] + (p2[1] - p0[1]) / 6).toFixed(1)} ${(p2[0] - (p3[0] - p1[0]) / 6).toFixed(1)} ${(p2[1] - (p3[1] - p1[1]) / 6).toFixed(1)} ${p2[0].toFixed(1)} ${p2[1].toFixed(1)}`; }
+  const goal = last / 50000;
+  const digits = String(last).padStart(7, '0').split('');
+  const firstNZ = digits.findIndex(c => c !== '0');
+  return {
+    last, lastFmt: last.toLocaleString('en-US'), peakFmt: max.toLocaleString('en-US'), delta: ((last / vals[24] - 1) * 100).toFixed(1),
+    goalPct: Math.round(goal * 100), goalW: Math.round(goal * 100) + '%', gaugeOff: (339.3 * (1 - goal)).toFixed(1), line, smooth, area: smooth + ' L600 200 L0 200 Z',
+    bars: vals.map((v, i) => ({ h: (v / max * 100).toFixed(1) + '%', min: i === 25 ? '#161614' : '#d6d3cc', growAnim: RM ? 'none' : `grow .6s cubic-bezier(.2,.7,.2,1) ${i * 25}ms both`, pxAnim: RM ? 'none' : `px-on 10ms steps(1,end) ${i * 50}ms both` })),
+    digits: digits.map((ch, i) => ({ ch, col: i < firstNZ ? '#1d5a2b' : '#c9ffd2', anim: RM ? 'none' : `px-on 10ms steps(1,end) ${i * 120}ms both` })),
+    vals,
+    recent: vals.slice(19, 25).map((v, i) => ({ k: `WK ${20 + i}`, v: v.toLocaleString('en-US') })),
+  };
+}
+const D = build();
+function injectGoo() {
+  if (document.getElementById('dc-goo-defs')) return;
+  const d = document.createElement('div'); d.id = 'dc-goo-defs';
+  d.innerHTML = '<svg width="0" height="0" style="position:absolute"><defs><filter id="dc-goo" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur in="SourceGraphic" stdDeviation="9" result="b"/><feColorMatrix in="b" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -9"/></filter></defs></svg>';
+  document.body.appendChild(d);
+}
+const TEN = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+const TICKS = Array.from({ length: 14 }, (_, i) => (-135 + i * 270 / 13).toFixed(1) + 'deg');
+class Component extends DCLogic {
+  state = { wk: 25 };
+  knobRef = el => { if (el && !el._l) { el._l = true; el.addEventListener('toychange', e => this.setState({ wk: e.detail.value })); } };
+  renderVals() {
+    const v = this.props.variant ?? 'minimal', w = this.state.wk, val = D.vals[w], max = Math.max(...D.vals);
+    const dl = w ? (val / D.vals[w - 1] - 1) * 100 : 0;
+    return {
+      wkVal: val, ticks: TICKS, knobRef: this.knobRef,
+      toyBars: D.vals.map((x, i) => ({ h: (x / max * 100).toFixed(1) + '%', c: i === w ? '#ef4f2b' : '#d6cfc0' })),
+      wkLabel: w === 25 ? 'THIS WEEK' : `${25 - w} WK AGO`, wkDelta: (dl >= 0 ? '▲ ' : '▼ ') + Math.abs(dl).toFixed(1) + '%', wkCol: dl >= 0 ? '#1f7c52' : '#b5311a',
+      is: Object.fromEntries(W5.map(w => [w, w === v])), d: D,
+      stageAnim: RM ? 'none' : 'world-in .5s cubic-bezier(.2,.7,.2,1) both',
+      lavaA: RM ? 'none' : 'lava-a 11s ease-in-out infinite', lavaB: RM ? 'none' : 'lava-b 13s ease-in-out infinite', lavaC: RM ? 'none' : 'lava-c 9s ease-in-out infinite',
+      gridAnim: RM ? 'none' : 'grid-run 1.4s linear infinite', flickAnim: RM ? 'none' : 'flick 4s steps(1,end) infinite',
+      gaugeAnim: RM ? 'none' : 'gauge .8s cubic-bezier(.2,.9,.1,1) both',
+      driftA: RM ? 'none' : 'drift-a 14s ease-in-out infinite',
+      printAnim: RM ? 'none' : 'print 1.4s steps(14,end) both',
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&family=VT323&family=Chakra+Petch:wght@500;600;700&family=JetBrains+Mono:wght@400;600&family=Instrument+Sans:ital,wght@0,300;0,400;0,500;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Caveat:wght@600;700&family=Big+Shoulders+Display:wght@500;700;900&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+@keyframes world-in{from{opacity:0;transform:scale(.988);filter:blur(8px)}to{opacity:1;transform:none;filter:none}}
+@keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}
+@keyframes px-on{from{opacity:0}to{opacity:1}}
+@keyframes row-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes ping{0%{box-shadow:0 0 0 0 rgba(255,61,139,.7)}100%{box-shadow:0 0 0 14px rgba(255,61,139,0)}}
+@keyframes toy-drop{from{opacity:0;transform:translateY(-48px)}40%{opacity:1}to{opacity:1;transform:none}}
+</style>
+<script src="./toy.js"></script>
+</helmet>
+<div style="display:flex;min-height:440px;border-radius:16px;overflow:hidden;border:1px solid rgba(22,22,20,.1)">
+  <sc-if value="{{ is.minimal }}" hint-placeholder-val="{{ true }}">
+    <div style="flex:1;background:#fff;padding:36px 40px;display:flex;flex-direction:column;gap:6px;font-family:Geist,sans-serif;color:#161614;animation:{{ stageAnim }}">
+      <div style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#77756e;margin-bottom:12px">Changelog</div>
+      <sc-for list="{{ rel }}" as="r" hint-placeholder-count="4">
+        <div style="display:grid;grid-template-columns:120px minmax(0,1fr);gap:24px;padding:16px 0;border-top:1px solid #eeece8;animation:{{ r.rowAnim }}">
+          <div><div style="font-family:'Geist Mono',monospace;font-size:13px">v{{ r.v }}</div><div style="font-size:12px;color:#77756e;margin-top:2px">{{ r.date }}</div></div>
+          <div><div style="font-size:15px;font-weight:500;margin-bottom:6px">{{ r.title }}</div><sc-for list="{{ r.items }}" as="it" hint-placeholder-count="2"><div style="font-size:13px;line-height:1.6;color:#55534d">— {{ it }}</div></sc-for></div>
+        </div>
+      </sc-for>
+    </div>
+  </sc-if>
+  <sc-if value="{{ is.retro }}" hint-placeholder-val="{{ false }}">
+    <div style="flex:1;position:relative;background:#061108;padding:28px 32px;font-family:VT323,monospace;font-size:21px;line-height:1.25;color:#6dff8a;text-shadow:0 0 6px rgba(80,255,120,.55);animation:{{ stageAnim }}">
+      <div style="color:#c9ffd2">$ git log --oneline --decorate</div>
+      <sc-for list="{{ rel }}" as="r" hint-placeholder-count="4">
+        <div style="margin-top:10px;animation:{{ r.pxAnim }}">
+          <div><span style="color:#ffd34d">{{ r.hash }}</span> <span style="color:#3fae55">(tag: v{{ r.v }})</span> {{ r.type }}: {{ r.titleUp }}</div>
+          <sc-for list="{{ r.items }}" as="it" hint-placeholder-count="2"><div style="color:#3fae55;padding-left:24px">+ {{ it }}</div></sc-for>
+        </div>
+      </sc-for>
+      <div style="margin-top:12px;color:#c9ffd2">$ <span style="animation:{{ blinkAnim }}">█</span></div>
+      <div style="position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(0,0,0,.3) 0 1px,transparent 1px 3px)"></div>
+    </div>
+  </sc-if>
+  <sc-if value="{{ is.craft }}" hint-placeholder-val="{{ false }}">
+    <div style="flex:1;background:#efe7d8;padding:40px;display:flex;align-items:center;justify-content:center;font-family:'Bricolage Grotesque',sans-serif;color:#2a1f14;animation:{{ stageAnim }}">
+      <div onClick="{{ next }}" style="position:relative;width:420px;max-width:100%;height:300px;cursor:pointer">
+        <sc-for list="{{ cards }}" as="r" hint-placeholder-count="4">
+          <div style="position:absolute;inset:0;padding:24px 26px;background-color:#fdfbf5;background-image:linear-gradient(transparent 31px,rgba(49,120,198,.18) 32px);background-size:100% 32px;background-position:0 18px;border-radius:6px;border-top:6px solid {{ r.tab }};box-shadow:0 2px 4px rgba(70,45,20,.12),0 16px 28px -12px rgba(70,45,20,.4);transform:{{ r.tf }};z-index:{{ r.z }};transition:transform .6s cubic-bezier(.34,1.5,.5,1)">
+            <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-size:24px;font-weight:800;letter-spacing:-.03em">v{{ r.v }}</span><span style="font-family:Caveat,cursive;font-size:22px;color:#7d6650">{{ r.date }}</span></div>
+            <div style="font-size:17px;font-weight:700;margin:14px 0 6px">{{ r.title }}</div>
+            <sc-for list="{{ r.items }}" as="it" hint-placeholder-count="2"><div style="font-size:14px;line-height:32px;color:#4a3a2a">• {{ it }}</div></sc-for>
+          </div>
+        </sc-for>
+        <div style="position:absolute;right:-6px;bottom:-34px;font-family:Caveat,cursive;font-size:22px;color:#b8471f;transform:rotate(-3deg)">tap to flip through →</div>
+      </div>
+    </div>
+  </sc-if>
+  <sc-if value="{{ is.toy }}" hint-placeholder-val="{{ false }}">
+    <div style="flex:1;background:#e3dfd5;background-image:radial-gradient(circle,rgba(60,45,20,.09) 2px,transparent 2.5px);background-size:22px 22px;padding:34px;display:flex;align-items:center;justify-content:center;font-family:Archivo,sans-serif;color:#1e1d1a;animation:{{ stageAnim }}">
+      <div style="width:100%;max-width:500px;display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px"><span style="font-weight:800;font-stretch:118%;font-size:26px;letter-spacing:-.02em">Changelog</span><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;color:#6b665b">PRESS TO OPEN</span></div>
+        <sc-for list="{{ toyRel }}" as="r" hint-placeholder-count="4">
+          <div style="animation:{{ r.toyAnim }}">
+            <button data-toy="press" data-depth="6" data-shadow="#d2ccbf" onClick="{{ r.open }}" aria-expanded="{{ r.isOpen }}" style="display:block;width:100%;text-align:left;border:0;padding:0;border-radius:16px;background:#f8f5ef;color:#1e1d1a;font-family:Archivo,sans-serif;cursor:pointer;box-shadow:0 6px 0 #d2ccbf,0 11px 12px -5px rgba(40,28,10,.32)">
+              <span style="display:flex;align-items:center;gap:12px;padding:12px 14px">
+                <span style="padding:6px 10px;border-radius:9px;background:{{ r.tc }};color:{{ r.ti }};font-weight:800;font-stretch:110%;font-size:14px;box-shadow:inset 0 -3px 0 rgba(0,0,0,.2)">v{{ r.v }}</span>
+                <span style="flex:1;min-width:0;font-weight:700;font-size:16px">{{ r.title }}</span>
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#6b665b">{{ r.date }}</span>
+              </span>
+              <span style="display:grid;grid-template-rows:{{ r.rows }};transition:grid-template-rows .5s cubic-bezier(.3,1.3,.5,1)"><span style="overflow:hidden;min-height:0"><span style="display:flex;flex-direction:column;gap:4px;padding:2px 16px 14px"><sc-for list="{{ r.items }}" as="it" hint-placeholder-count="2"><span style="font-size:14px;line-height:1.45;color:#55524a">+ {{ it }}</span></sc-for></span></span></span>
+            </button>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:720,&quot;height&quot;:460},&quot;variant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;minimal&quot;,&quot;craft&quot;,&quot;retro&quot;,&quot;toy&quot;],&quot;default&quot;:&quot;minimal&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+const RM = typeof matchMedia !== 'undefined' && matchMedia('(prefers-reduced-motion: reduce)').matches;
+const W5 = ['minimal', 'craft', 'retro', 'toy'];
+const REL = [
+  { v: '2.4.0', date: 'Sep 30, 2026', iso: '2026-09-30', title: 'Toy world', type: 'feat', hash: 'a3f9c21', items: ['New Toy variation with spring physics', 'Craft replaces Tactile; Cyber and Fluid retired'] },
+  { v: '2.3.1', date: 'Sep 12, 2026', iso: '2026-09-12', title: 'Fixes', type: 'fix', hash: '7be04d8', items: ['CRT overlay no longer blocks clicks', 'Ticket stub drag works on touch'] },
+  { v: '2.3.0', date: 'Aug 21, 2026', iso: '2026-08-21', title: 'Event Ticket', type: 'feat', hash: 'e1c5a90', items: ['New Event Ticket component', 'Shared spring presets'] },
+  { v: '2.2.0', date: 'Jul 28, 2026', iso: '2026-07-28', title: 'Gooey motion', type: 'feat', hash: '4d2b7f3', items: ['Gooey Tabs and status indicator', 'One SVG goo filter shared by every world'] },
+];
+const TABS = ['#e0713a', '#3178c6', '#2f9a45', '#ffe27a'];
+const TOYC = [['#ef4f2b', '#fff'], ['#f4b52a', '#1e1d1a'], ['#2c55e0', '#fff'], ['#33b07a', '#fff']];
+function injectGoo() {
+  if (document.getElementById('dc-goo-defs')) return;
+  const d = document.createElement('div'); d.id = 'dc-goo-defs';
+  d.innerHTML = '<svg width="0" height="0" style="position:absolute"><defs><filter id="dc-goo" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur in="SourceGraphic" stdDeviation="9" result="b"/><feColorMatrix in="b" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -9"/></filter></defs></svg>';
+  document.body.appendChild(d);
+}
+class Component extends DCLogic {
+  componentDidMount() { injectGoo(); }
+  state = { top: 0, open: 0 };
+  renderVals() {
+    const v = this.props.variant ?? 'minimal', n = REL.length;
+    const rel = REL.map((r, i) => ({
+      ...r, hc: i === 0 ? '#ff7a2a' : '#efffb0', ry: (8 - i * 4) + 'deg', titleUp: r.title.toUpperCase(), typeUp: r.type === 'feat' ? 'FEATURE' : 'PATCH', typeCol: r.type === 'feat' ? '#3dffb0' : '#ffd34d', first: r.items[0],
+      chip: i === 0 ? '#ff3d8b' : '#14b8d4', nodeBg: i === 0 ? '#ff3d8b' : '#14b8d4', ping: !RM && i === 0 ? 'ping 1.4s ease-out infinite' : 'none', indent: (i * 18) + 'px',
+      rowAnim: RM ? 'none' : `row-in .6s cubic-bezier(.2,.7,.2,1) ${i * 90}ms both`,
+      pxAnim: RM ? 'none' : `px-on 10ms steps(1,end) ${300 + i * 350}ms both`,
+      cyAnim: RM ? 'none' : `px-on .25s steps(3,end) ${i * 100}ms both`,
+    }));
+    const cards = rel.map((r, i) => { const d = (i - this.state.top + n) % n; return { ...r, tab: TABS[i], z: 10 - d, tf: `translate(${d * 12}px,${d * -10}px) rotate(${d === 0 ? -1 : d * 2.5}deg)` }; });
+    const toyRel = rel.map((r, i) => ({ ...r, tc: TOYC[i][0], ti: TOYC[i][1], isOpen: this.state.open === i, rows: this.state.open === i ? '1fr' : '0fr', open: () => this.setState(s => ({ open: s.open === i ? -1 : i })), toyAnim: RM ? 'none' : `toy-drop .6s cubic-bezier(.3,1.6,.5,1) ${i * 80}ms both` }));
+    return {
+      is: Object.fromEntries(W5.map(w => [w, w === v])), rel, cards, toyRel,
+      next: () => this.setState(s => ({ top: (s.top + 1) % n })),
+      stageAnim: RM ? 'none' : 'world-in .5s cubic-bezier(.2,.7,.2,1) both',
+      lavaA: RM ? 'none' : 'lava-a 11s ease-in-out infinite', lavaB: RM ? 'none' : 'lava-b 13s ease-in-out infinite', lavaC: RM ? 'none' : 'lava-c 9s ease-in-out infinite',
+      gridAnim: RM ? 'none' : 'grid-run 1.4s linear infinite', flickAnim: RM ? 'none' : 'flick 4s steps(1,end) infinite',
+      blinkAnim: RM ? 'none' : 'blink 1s steps(1,end) infinite',
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+"use client";
+
+import { motion } from "motion/react";
+import { RollingNumber } from "@/components/shared/rolling-number";
+import { motionTokens, useOvioTransition } from "@/lib/motion";
+import { cn } from "@/lib/utils";
+import type { RepositoryCardWorldProps } from "../repository-card";
+
+const COMPACT = { notation: "compact", maximumFractionDigits: 1 } as const;
+
+export function CraftRepositoryCard({
+  repo,
+  stats,
+  starCount,
+  language,
+  className,
+}: RepositoryCardWorldProps) {
+  const lift = useOvioTransition(motionTokens.craft.base);
+
+  return (
+    <motion.article
+      data-ovio-world="craft"
+      initial={false}
+      animate={{ rotate: 1.4, y: 0 }}
+      whileHover={{ rotate: 0, y: -6 }}
+      transition={lift}
+      className={cn(
+        "relative w-full max-w-[380px] rounded-(--ovio-radius) bg-(--ovio-surface) px-7 py-[26px] font-(family-name:--ovio-font) text-(--ovio-ink) shadow-(--ovio-shadow)",
+        className,
+      )}
+    >
+      <span
+        aria-hidden
+        className="absolute -top-3 left-7 h-6 w-[84px] -rotate-4 bg-(--ovio-tape)"
+      />
+      {language && (
+        <span
+          title={language.name}
+          className="absolute -top-[18px] -right-3.5 flex size-[58px] -rotate-10 items-center justify-center rounded-full text-xl font-extrabold text-white shadow-[0_4px_10px_-3px_rgba(20,40,90,.5)]"
+          style={{ background: language.color }}
+        >
+          {language.short}
+        </span>
+      )}
+      <div className="text-[13px] text-(--ovio-muted)">{repo.owner} /</div>
+      <h3 className="m-0 text-[32px] leading-tight font-extrabold tracking-[-0.035em]">
+        {repo.name}
+      </h3>
+      {repo.description && (
+        <p className="mt-2 mb-[18px] text-[15px] leading-[1.45] text-(--ovio-ink-2)">
+          {repo.description}
+        </p>
+      )}
+      <div className="flex flex-wrap items-center gap-2.5">
+        {stats.map((stat) =>
+          stat === "stars" ? (
+            <span
+              key={stat}
+              className="font-(family-name:--ovio-hand) text-[30px] leading-none text-(--ovio-accent-deep)"
+            >
+              ★ <RollingNumber className="lowercase" value={starCount} format={COMPACT} />
+            </span>
+          ) : (
+            <span
+              key={stat}
+              className="rounded-full bg-(--ovio-surface-2) px-2.5 py-[5px] text-[13px]"
+            >
+              <RollingNumber value={stat === "forks" ? repo.forks : (repo.issues ?? 0)} /> {stat}
+            </span>
+          ),
+        )}
+      </div>
+    </motion.article>
+  );
+}

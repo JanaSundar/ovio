@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>body{margin:0;background:#e3dfd5}a{color:#1e1d1a}a:hover{color:#ef4f2b}</style>
+<script src="./numberflow.js"></script>
+</helmet>
+<div style="min-height:100vh;box-sizing:border-box;display:flex;align-items:center;justify-content:center;padding:32px 16px;background:#e3dfd5;background-image:radial-gradient(circle,rgba(60,45,20,.09) 2px,transparent 2.5px);background-size:22px 22px;font-family:Archivo,sans-serif;color:#1e1d1a">
+  <div style="width:100%;max-width:720px;display:flex;flex-direction:column;gap:18px">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap">
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#6b665b">Contributions · last 12 months · drag to spin</div>
+        <div style="font-weight:800;font-stretch:120%;font-size:clamp(44px,6vw,64px);letter-spacing:-.04em;line-height:.95;margin-top:6px"><nayam-num value="{{ total }}" from="0"></nayam-num></div>
+      </div>
+      <div style="display:flex;gap:10px">
+        <button onClick="{{ prev }}" aria-label="Previous week" style="width:46px;height:46px;border:0;border-radius:12px;background:#fff;font-family:Archivo,sans-serif;font-weight:800;font-size:18px;cursor:pointer;box-shadow:0 5px 0 #cfc8b8,0 10px 12px -6px rgba(40,28,10,.35);transition:transform .15s,box-shadow .15s" style-active="transform:translateY(4px);box-shadow:0 1px 0 #cfc8b8">‹</button>
+        <button onClick="{{ next }}" aria-label="Next week" style="width:46px;height:46px;border:0;border-radius:12px;background:#ef4f2b;color:#fff;font-family:Archivo,sans-serif;font-weight:800;font-size:18px;cursor:pointer;box-shadow:0 5px 0 #b5311a,0 10px 12px -6px rgba(40,28,10,.35);transition:transform .15s,box-shadow .15s" style-active="transform:translateY(4px);box-shadow:0 1px 0 #b5311a">›</button>
+      </div>
+    </div>
+    <div style="position:relative;padding:22px 0 26px;background:#efe8d8;border-radius:24px;box-shadow:inset 0 0 0 2px #e2d9c3,inset 0 1px 0 rgba(255,255,255,.85),0 10px 0 #c7bea8,0 28px 34px -16px rgba(40,28,10,.5);overflow:hidden">
+      <div tabindex="0" role="slider" aria-label="Week" aria-valuemin="1" aria-valuemax="53" aria-valuenow="{{ frontN }}" aria-valuetext="{{ frontText }}" onPointerDown="{{ down }}" onKeyDown="{{ key }}" onWheel="{{ wheel }}" style="position:relative;height:250px;perspective:900px;display:flex;align-items:center;justify-content:center;cursor:grab;touch-action:pan-y;user-select:none;outline-offset:-6px">
+        <div ref="{{ drumRef }}" style="position:relative;width:24px;height:184px;transform-style:preserve-3d;transform:translateZ(-202px)">
+          <span style="position:absolute;left:50%;top:50%;width:420px;height:420px;margin:-210px 0 0 -210px;border-radius:50%;background:radial-gradient(circle,#e3dbc8 0 55%,#d2c9b3 56% 62%,#efe8d8 63%);box-shadow:0 0 0 6px #c7bea8;transform:rotateX(90deg) translateZ(92px)"></span>
+          <span style="position:absolute;left:50%;top:50%;width:420px;height:420px;margin:-210px 0 0 -210px;border-radius:50%;background:#c7bea8;transform:rotateX(90deg) translateZ(-92px)"></span>
+          <sc-for list="{{ faces }}" as="f" hint-placeholder-count="53">
+            <div ref="{{ f.faceRef }}" style="position:absolute;left:0;top:0;width:24px;height:184px;box-sizing:border-box;padding:4px 3px;background:#f8f5ef;box-shadow:inset 1px 0 0 rgba(60,45,20,.12);transform:{{ f.tf }};backface-visibility:hidden;display:flex;flex-direction:column;gap:3px">
+              <span style="height:12px;font-family:'IBM Plex Mono',monospace;font-size:8px;font-weight:600;line-height:12px;text-align:center;color:#6b665b;overflow:visible;white-space:nowrap">{{ f.m }}</span>
+              <sc-for list="{{ f.days }}" as="d" hint-placeholder-count="7">
+                <button aria-label="{{ d.aria }}" onMouseEnter="{{ d.enter }}" onMouseLeave="{{ d.leave }}" tabindex="-1" style="position:relative;flex:1;min-height:0;padding:0;border:0;border-radius:3px;background:#ddd4bf;box-shadow:inset 0 1px 2px rgba(70,50,20,.38);cursor:pointer">
+                  <span style="position:absolute;inset:0;border-radius:3px;background:linear-gradient(180deg,{{ d.hi }},{{ d.col }} 65%);opacity:{{ d.op }};transform:translateY(-{{ d.lip }});box-shadow:0 {{ d.lip }} 0 {{ d.dk }},inset 0 1px 0 rgba(255,255,255,.5);transition:transform .35s cubic-bezier(.22,1,.36,1)" style-hover="transform:translateY(-5px)"></span>
+                </button>
+              </sc-for>
+              <span ref="{{ f.shadeRef }}" style="position:absolute;inset:0;background:#2a2925;opacity:0;pointer-events:none"></span>
+            </div>
+          </sc-for>
+        </div>
+        <div aria-hidden="true" ref="{{ tickRef }}" style="position:absolute;left:50%;top:0;width:26px;height:40px;margin-left:-13px;transform-origin:50% 9px;pointer-events:none;z-index:5;filter:drop-shadow(0 3px 2px rgba(40,28,10,.35))"><span style="position:absolute;left:50%;top:22px;width:0;height:0;margin-left:-8px;border-left:8px solid transparent;border-right:8px solid transparent;border-top:16px solid #e0432a"></span><span style="position:absolute;left:50%;top:0;width:24px;height:24px;margin-left:-12px;border-radius:50%;background:radial-gradient(circle at 38% 32%,#ff8a6a,#e0432a 60%);box-shadow:inset 0 -2px 0 rgba(0,0,0,.2)"></span><span style="position:absolute;left:50%;top:8px;width:8px;height:8px;margin-left:-4px;border-radius:50%;background:#f8f5ef;box-shadow:inset 0 1px 1px rgba(0,0,0,.3)"></span></div>
+      </div>
+      <div style="display:flex;justify-content:center;margin-top:10px">
+        <div style="display:flex;align-items:center;gap:16px;padding:10px 16px;background:#2a2925;border-radius:12px;box-shadow:inset 0 3px 6px rgba(0,0,0,.6);color:#f8f5ef">
+          <div style="display:flex;align-items:baseline;gap:7px"><span style="font-weight:800;font-size:26px;letter-spacing:-.02em;line-height:1"><nayam-num value="{{ ro.count }}"></nayam-num></span><span style="font-size:12px;color:#bdb6a8">{{ ro.unit }}</span></div>
+          <div style="display:flex;flex-direction:column;gap:2px;font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#bdb6a8;line-height:1.2"><span style="text-transform:uppercase;letter-spacing:.08em">{{ ro.kind }}</span><span>{{ ro.date }}</span></div>
+        </div>
+      </div>
+    </div>
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#6b665b;text-align:center">Drag or flick to spin · arrows step a week · hover a piece for its day</div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'], DOW = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const TOY = ['#ddd4bf', '#f6d77a', '#f4b52a', '#ef7a2b', '#e0432a'];
+const shade = (hex, f) => { const n = parseInt(hex.slice(1), 16); return `rgb(${Math.min(255, ((n >> 16) & 255) * f) | 0},${Math.min(255, ((n >> 8) & 255) * f) | 0},${Math.min(255, (n & 255) * f) | 0})`; };
+const N = 53, STEP = 360 / N, R = 202;
+const RM = typeof matchMedia !== 'undefined' && matchMedia('(prefers-reduced-motion: reduce)').matches;
+function build() {
+  let seed = 20261006; const rnd = () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+  const start = new Date(2025, 9, 5), weeks = [];
+  for (let i = 0; i < 371; i++) {
+    const d = new Date(start); d.setDate(start.getDate() + i); const w = Math.floor(i / 7), dow = i % 7;
+    let act = dow === 0 || dow === 6 ? 0.3 : 0.6; if (w >= 9 && w <= 16) act += 0.35; if (w >= 31 && w <= 35) act += 0.3; if (w >= 44) act += 0.15; if (w >= 21 && w <= 23) act = 0.05;
+    rnd(); const count = rnd() < act ? Math.max(1, Math.round(Math.pow(rnd(), 1.5) * act * 22)) : 0; rnd();
+    const lvl = count === 0 ? 0 : count <= 3 ? 1 : count <= 7 ? 2 : count <= 12 ? 3 : 4;
+    if (!weeks[w]) weeks[w] = { days: [], total: 0, m: '', start: `${MON[d.getMonth()]} ${d.getDate()}` };
+    if (d.getDate() <= 7 && dow === 0) weeks[w].m = MON[d.getMonth()].toUpperCase();
+    weeks[w].total += count; weeks[w].end = `${MON[d.getMonth()]} ${d.getDate()}`;
+    weeks[w].days.push({ count, lvl, date: `${DOW[dow]}, ${MON[d.getMonth()]} ${d.getDate()}` });
+  }
+  return weeks;
+}
+const WEEKS = build(), TOTAL = WEEKS.reduce((a, w) => a + w.total, 0);
+class Component extends DCLogic {
+  state = { front: N - 1, hov: null };
+  a = (N - 1) * STEP; v = 0; shades = []; facesEl = [];
+  drumRef = el => { this.drum = el; this.paint(); };
+  tickRef = el => { this.tick = el; };
+  paint() {
+    if (!this.drum) return;
+    this.drum.style.transform = `translateZ(-${R}px) rotateY(${(-this.a).toFixed(3)}deg)`;
+    this.facesEl.forEach((fe, i) => { if (!fe) return; const d = ((i * STEP - this.a) % 360 + 540) % 360 - 180, vis = Math.abs(d) < 88; fe.style.visibility = vis ? 'visible' : 'hidden'; const s = this.shades[i]; if (s && vis) s.style.opacity = Math.min(.5, (1 - Math.cos(d * Math.PI / 180)) * .6).toFixed(3); });
+    const f = ((Math.round(this.a / STEP) % N) + N) % N; if (f !== this.state.front) { const dir = Math.sign(this.v || 1); if (this.tick && !RM) this.tick.animate([{ transform: 'rotate(0deg)' }, { transform: `rotate(${dir * 22}deg)`, offset: .25 }, { transform: `rotate(${-dir * 6}deg)`, offset: .6 }, { transform: 'rotate(0deg)' }], { duration: 320, easing: 'cubic-bezier(.22,1,.36,1)' }); this.setState({ front: f }); }
+  }
+  loop(mode) {
+    cancelAnimationFrame(this.raf); let last = performance.now();
+    const tick = t => {
+      const dt = Math.min(.032, (t - last) / 1000); last = t;
+      if (this.mode === 'coast') { this.a += this.v * dt; this.v *= Math.pow(.04, dt); if (Math.abs(this.v) < 40) { this.mode = 'snap'; this.target = Math.round(this.a / STEP) * STEP; } }
+      if (this.mode === 'snap') { this.v += (-170 * (this.a - this.target) - 24 * this.v) * dt; this.a += this.v * dt; if (Math.abs(this.v) < .05 && Math.abs(this.a - this.target) < .01) { this.a = this.target; this.v = 0; this.mode = null; this.paint(); return; } }
+      this.paint(); this.raf = requestAnimationFrame(tick);
+    };
+    this.mode = mode; if (RM) { this.a = Math.round(this.a / STEP) * STEP; if (this.target != null && mode === 'snap') this.a = this.target; this.v = 0; this.mode = null; this.paint(); return; }
+    this.raf = requestAnimationFrame(tick);
+  }
+  goTo(k) { this.target = Math.round(this.a / STEP + k) * STEP; this.loop('snap'); }
+  componentWillUnmount() { cancelAnimationFrame(this.raf); }
+  down = e => {
+    if (e.target.closest('button')) { /* allow drags that start on pieces */ }
+    cancelAnimationFrame(this.raf); this.mode = null; const el = e.currentTarget; el.setPointerCapture && el.setPointerCapture(e.pointerId); el.style.cursor = 'grabbing';
+    let lx = e.clientX, lt = performance.now(); this.v = 0;
+    const move = ev => { const now = performance.now(), dx = ev.clientX - lx, dt = Math.max(1, now - lt) / 1000; this.a -= dx * .32; this.v = this.v * .5 + (-dx * .32 / dt) * .5; lx = ev.clientX; lt = now; this.paint(); };
+    const up = () => { el.style.cursor = 'grab'; removeEventListener('pointermove', move); removeEventListener('pointerup', up); removeEventListener('pointercancel', up); if (performance.now() - lt > 90) this.v = 0; this.loop('coast'); };
+    addEventListener('pointermove', move); addEventListener('pointerup', up); addEventListener('pointercancel', up);
+  };
+  key = e => { const d = { ArrowRight: 1, ArrowLeft: -1, ArrowUp: 1, ArrowDown: -1 }[e.key]; if (d) { e.preventDefault(); this.goTo(d); } };
+  wheel = e => { if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) { e.preventDefault(); this.goTo(e.deltaX > 0 ? 1 : -1); } };
+  renderVals() {
+    const f = this.state.front, w = WEEKS[f], h = this.state.hov;
+    if (!this._faces) this._faces = WEEKS.map((wk, i) => ({ m: wk.m, tf: `rotateY(${(i * STEP).toFixed(3)}deg) translateZ(${R}px)`, shadeRef: el => { this.shades[i] = el; }, faceRef: el => { this.facesEl[i] = el; if (el) this.paint(); },
+      days: wk.days.map(d => { const col = TOY[d.lvl]; return { aria: `${d.count} contributions on ${d.date}`, col, hi: shade(col, 1.12), dk: shade(col, .72), op: d.lvl ? 1 : 0, lip: d.lvl ? (d.lvl + 1) + 'px' : '0px', enter: () => this.setState({ hov: d }), leave: () => this.setState({ hov: null }) }; }) }));
+    return {
+      total: TOTAL, faces: this._faces, drumRef: this.drumRef, tickRef: this.tickRef, down: this.down, key: this.key, wheel: this.wheel,
+      prev: () => this.goTo(-1), next: () => this.goTo(1), frontN: f + 1, frontText: `Week of ${w.start}`,
+      ro: h ? { count: h.count, unit: h.count === 1 ? 'contribution' : 'contributions', kind: 'Day', date: h.date } : { count: w.total, unit: 'this week', kind: 'Week ' + (f + 1) + ' of 53', date: `${w.start} – ${w.end}` },
+    };
+  }
+}
+</script>
+</body>
+</html>

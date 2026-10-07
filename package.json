@@ -4,14 +4,22 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "pnpm registry:build && next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "registry:build": "shadcn build && node scripts/check-registry.mjs",
+    "format": "prettier --write .",
+    "typecheck": "next typegen && tsc --noEmit"
   },
   "dependencies": {
+    "@number-flow/react": "^0.6.2",
+    "clsx": "^2.1.1",
+    "motion": "^14.0.0",
     "next": "16.3.8",
     "react": "19.2.8",
-    "react-dom": "19.2.8"
+    "react-dom": "19.2.8",
+    "server-only": "^0.0.1",
+    "tailwind-merge": "^3.7.0"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
@@ -20,6 +28,8 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.3.8",
+    "prettier": "^3.9.9",
+    "shadcn": "^4.21.3",
     "tailwindcss": "^4",
     "typescript": "^5"
   },

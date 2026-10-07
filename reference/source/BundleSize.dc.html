@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500;600&family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&family=VT323&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>@keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}</style>
+<script src="./toy.js"></script>
+<script src="./numberflow.js"></script>
+</helmet>
+<div style="display:flex;min-height:440px;border-radius:16px;overflow:hidden;border:1px solid rgba(22,22,20,.1)">
+  <sc-if value="{{ is.minimal }}" hint-placeholder-val="{{ true }}">
+    <div style="flex:1;background:#fafaf8;display:flex;align-items:center;justify-content:center;padding:40px 20px;font-family:Geist,sans-serif;color:#161614">
+      <article style="width:100%;max-width:400px;background:#fff;border:1px solid #e6e4df;border-radius:10px;padding:26px 28px;display:flex;flex-direction:column;gap:22px">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:12px"><span style="font-family:'Geist Mono',monospace;font-size:13px">bundle-size</span>
+          <div role="tablist" aria-label="Version" style="display:flex;gap:2px;padding:2px;background:#f0eee9;border-radius:7px"><sc-for list="{{ vers }}" as="x" hint-placeholder-count="3"><button role="tab" aria-selected="{{ x.on }}" onClick="{{ x.pick }}" style="padding:4px 9px;border:0;border-radius:5px;background:{{ x.bg }};color:{{ x.fg }};font-family:'Geist Mono',monospace;font-size:11px;cursor:pointer;transition:background .2s,color .2s">{{ x.n }}</button></sc-for></div></div>
+        <div style="display:flex;align-items:baseline;gap:6px"><span style="font-size:52px;letter-spacing:-.045em;line-height:1"><nayam-num value="{{ b.raw }}" decimals="1"></nayam-num></span><span style="font-size:18px;color:#77756e">kB</span></div>
+        <div><div style="position:relative;height:6px;background:#eeece8;border-radius:3px"><div style="position:absolute;left:0;top:0;bottom:0;width:{{ b.barW }};background:#161614;border-radius:3px;transition:width .6s cubic-bezier(.3,.9,.3,1)"></div><div style="position:absolute;top:-4px;bottom:-4px;left:{{ b.prevW }};width:1.5px;background:#99968e;transition:left .6s cubic-bezier(.3,.9,.3,1);display:{{ b.prevShow }}"></div></div>
+          <div style="display:flex;justify-content:space-between;margin-top:8px;font-size:11px;color:#77756e"><span>0</span><span>{{ b.prevNote }}</span><span>40 kB budget</span></div></div>
+        <div style="display:flex;flex-direction:column;font-size:13px">
+          <div style="display:flex;justify-content:space-between;padding:10px 0;border-top:1px solid #eeece8"><span style="color:#77756e">gzip</span><span style="font-family:'Geist Mono',monospace"><nayam-num value="{{ b.gz }}" decimals="1"></nayam-num> kB</span></div>
+          <div style="display:flex;justify-content:space-between;padding:10px 0;border-top:1px solid #eeece8"><span style="color:#77756e">brotli</span><span style="font-family:'Geist Mono',monospace"><nayam-num value="{{ b.br }}" decimals="1"></nayam-num> kB</span></div>
+          <div style="display:flex;justify-content:space-between;padding:10px 0;border-top:1px solid #eeece8"><span style="color:#77756e">dependencies</span><span style="font-family:'Geist Mono',monospace"><nayam-num value="{{ b.deps }}"></nayam-num></span></div></div>
+        <div style="font-size:13px;color:{{ b.dc }}">{{ b.dArrow }} <nayam-num value="{{ b.dPct }}" decimals="1"></nayam-num>% <span style="color:#77756e">{{ b.dText }}</span></div>
+      </article>
+    </div>
+  </sc-if>
+  <sc-if value="{{ is.craft }}" hint-placeholder-val="{{ false }}">
+    <div style="flex:1;background:#efe7d8;display:flex;align-items:center;justify-content:center;padding:44px 20px;font-family:'Bricolage Grotesque',sans-serif;color:#2a1f14">
+      <div style="position:relative;width:100%;max-width:380px;padding:26px 28px 22px;background:#fbf7ef;border-radius:6px;transform:rotate(-1deg);box-shadow:0 2px 4px rgba(70,45,20,.12),0 20px 34px -14px rgba(70,45,20,.4)">
+        <div style="position:absolute;top:-12px;left:34px;width:84px;height:24px;background:rgba(240,220,160,.82);transform:rotate(-3deg)"></div>
+        <div style="position:absolute;top:18px;right:20px;padding:6px 10px;border:3px solid #b8471f;color:#b8471f;font-weight:800;font-size:18px;letter-spacing:.02em;transform:rotate(9deg);border-radius:4px">{{ b.stamp }}</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#7d6650">Package label · lumen</div>
+        <div style="display:flex;align-items:baseline;gap:6px;margin:14px 0 6px"><span style="font-weight:800;font-size:60px;letter-spacing:-.05em;line-height:.95"><nayam-num value="{{ b.raw }}" decimals="1"></nayam-num></span><span style="font-weight:700;font-size:20px;color:#7d6650">kB</span></div>
+        <div style="position:relative;height:18px;margin:10px 0 4px;border-bottom:2px solid #2a1f14;background:repeating-linear-gradient(90deg,#2a1f14 0 1px,transparent 1px 10%) 0 100%/100% 8px no-repeat"><div style="position:absolute;left:0;bottom:0;height:12px;width:{{ b.barW }};background:#e0713a;transition:width .7s cubic-bezier(.34,1.4,.5,1)"></div></div>
+        <div style="display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:10px;color:#7d6650"><span>0</span><span>20</span><span>40 kB</span></div>
+        <div style="margin-top:14px;border-top:1px dashed #b9a88f;padding-top:8px;font-family:'IBM Plex Mono',monospace;font-size:12.5px;line-height:1.8"><div style="display:flex;justify-content:space-between"><span>gzip</span><span><nayam-num value="{{ b.gz }}" decimals="1"></nayam-num> kB</span></div><div style="display:flex;justify-content:space-between"><span>brotli</span><span><nayam-num value="{{ b.br }}" decimals="1"></nayam-num> kB</span></div><div style="display:flex;justify-content:space-between"><span>deps</span><span>{{ b.deps }}</span></div></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px"><span style="font-family:Caveat,cursive;font-size:25px;color:#2b4a9b;transform:rotate(-3deg);display:inline-block">{{ b.hand }}</span>
+          <div style="display:flex;gap:6px"><sc-for list="{{ vers }}" as="x" hint-placeholder-count="3"><button onClick="{{ x.pick }}" aria-pressed="{{ x.on }}" style="padding:4px 9px;border:0;background:{{ x.cbg }};color:#2a1f14;font-family:'IBM Plex Mono',monospace;font-size:11px;cursor:pointer;transform:rotate({{ x.rot }});box-shadow:0 3px 6px -2px rgba(70,45,20,.4);transition:transform .4s cubic-bezier(.34,1.7,.5,1)" style-hover="transform:rotate(0deg) translateY(-3px)">{{ x.n }}</button></sc-for></div></div>
+      </div>
+    </div>
+  </sc-if>
+  <sc-if value="{{ is.retro }}" hint-placeholder-val="{{ false }}">
+    <div style="flex:1;position:relative;background:#061108;display:flex;align-items:center;justify-content:center;padding:36px 24px;font-family:VT323,monospace;color:#6dff8a;text-shadow:0 0 5px rgba(80,255,120,.45)">
+      <div style="width:100%;max-width:440px;font-size:23px;line-height:1.2">
+        <div style="color:#c9ffd2">C:\&gt; bundle-size lumen@{{ b.ver }}</div>
+        <div style="margin:10px 0;color:#3fae55">----------------------------</div>
+        <div>RAW........<span style="color:#c9ffd2"><nayam-num value="{{ b.raw }}" decimals="1"></nayam-num> KB</span></div>
+        <div>GZIP.......<nayam-num value="{{ b.gz }}" decimals="1"></nayam-num> KB</div>
+        <div>BROTLI.....<nayam-num value="{{ b.br }}" decimals="1"></nayam-num> KB</div>
+        <div>DEPS.......{{ b.deps }}</div>
+        <div style="margin:12px 0;font-size:26px;letter-spacing:.02em;color:#4fdc68">[{{ b.ascii }}] {{ b.pct }}%</div>
+        <div style="color:{{ b.rc }}">{{ b.dArrow }} {{ b.dRetro }}</div>
+        <div style="display:flex;gap:10px;margin-top:14px"><sc-for list="{{ vers }}" as="x" hint-placeholder-count="3"><button onClick="{{ x.pick }}" style="font:inherit;font-size:22px;color:{{ x.rfg }};background:{{ x.rbg }};border:1px solid #3fae55;padding:0 8px;cursor:pointer;text-shadow:none">[{{ x.n }}]</button></sc-for></div>
+        <div style="margin-top:10px">&gt; <span style="animation:{{ blink }}">█</span></div>
+      </div>
+      <div style="position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(0,0,0,.26) 0 1px,transparent 1px 3px)"></div>
+    </div>
+  </sc-if>
+  <sc-if value="{{ is.toy }}" hint-placeholder-val="{{ false }}">
+    <div style="flex:1;background:#e3dfd5;background-image:radial-gradient(circle,rgba(60,45,20,.09) 2px,transparent 2.5px);background-size:22px 22px;display:flex;align-items:center;justify-content:center;padding:40px 20px;font-family:Archivo,sans-serif;color:#1e1d1a">
+      <div style="width:100%;max-width:420px;padding:20px;background:#f8f5ef;border-radius:24px;box-shadow:inset 0 1px 0 #fff,0 8px 0 #d2ccbf,0 26px 32px -16px rgba(40,28,10,.45);display:flex;flex-direction:column;gap:16px">
+        <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;color:#6b665b">BUNDLE SIZE</span><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#6b665b">{{ b.dRetro }}</span></div>
+        <div style="display:flex;align-items:baseline;gap:8px;padding:10px 18px;background:#2a2925;border-radius:14px;box-shadow:inset 0 3px 6px rgba(0,0,0,.6);color:#f8f5ef;font-family:'IBM Plex Mono',monospace;font-weight:600"><span style="font-size:44px;line-height:1"><nayam-num value="{{ b.raw }}" decimals="1" style="--nf-lh:.95"></nayam-num></span><span style="font-size:18px;color:#bdb6a8">kB</span></div>
+        <div style="display:grid;grid-template-columns:repeat(20,minmax(0,1fr));gap:3px;padding:8px;background:#ebe6db;border-radius:12px;box-shadow:inset 0 3px 6px rgba(40,28,10,.2)"><sc-for list="{{ b.blocks }}" as="k" hint-placeholder-count="20"><span style="height:26px;border-radius:4px;background:{{ k.bg }};box-shadow:{{ k.sh }};transform:translateY({{ k.y }});transition:transform .5s cubic-bezier(.34,1.7,.5,1) {{ k.d }},background .2s {{ k.d }}"></span></sc-for></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-family:'IBM Plex Mono',monospace;font-size:12px"><div style="padding:8px 12px;background:#fff;border-radius:11px;box-shadow:0 4px 0 #cfc8b8">gzip <b><nayam-num value="{{ b.gz }}" decimals="1"></nayam-num></b></div><div style="padding:8px 12px;background:#fff;border-radius:11px;box-shadow:0 4px 0 #cfc8b8">brotli <b><nayam-num value="{{ b.br }}" decimals="1"></nayam-num></b></div></div>
+        <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px"><sc-for list="{{ vers }}" as="x" hint-placeholder-count="3"><button data-toy="press" data-depth="6" data-shadow="{{ x.tsh }}" onClick="{{ x.pick }}" aria-pressed="{{ x.on }}" style="padding:12px 0;border:0;border-radius:12px;background:{{ x.tbg }};color:{{ x.tfg }};font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:13px;cursor:pointer;box-shadow:0 6px 0 {{ x.tsh }},0 11px 12px -5px rgba(40,28,10,.32)">{{ x.n }}</button></sc-for></div>
+      </div>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:720,&quot;height&quot;:460},&quot;variant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;minimal&quot;,&quot;craft&quot;,&quot;retro&quot;,&quot;toy&quot;],&quot;default&quot;:&quot;minimal&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+const W4 = ['minimal', 'craft', 'retro', 'toy'];
+const RM = typeof matchMedia !== 'undefined' && matchMedia('(prefers-reduced-motion: reduce)').matches;
+const VERS = [{ n: '1.2.0', raw: 24.8, gz: 7.2, br: 6.1, deps: 0 }, { n: '1.1.0', raw: 27.07, gz: 7.9, br: 6.7, deps: 1 }, { n: '1.0.0', raw: 30.4, gz: 9.1, br: 7.8, deps: 2 }];
+class Component extends DCLogic {
+  state = { ver: 0 };
+  renderVals() {
+    const v = this.props.variant ?? 'minimal', i = this.state.ver, x = VERS[i], pv = VERS[i + 1], d = pv ? (pv.raw - x.raw) / pv.raw * 100 : 0, pct = Math.round(x.raw / 40 * 100), n = Math.round(x.raw / 40 * 20);
+    const b = {
+      raw: x.raw, gz: x.gz, br: x.br, deps: x.deps, ver: x.n, pct, barW: (x.raw / 40 * 100).toFixed(1) + '%', prevW: pv ? (pv.raw / 40 * 100).toFixed(1) + '%' : '0%', prevShow: pv ? 'block' : 'none',
+      prevNote: pv ? `${pv.n}: ${pv.raw.toFixed(1)} kB` : '', dPct: d, dArrow: pv ? '↓' : '·', dc: pv ? '#2f7a45' : '#77756e', dText: pv ? `from ${pv.n}` : 'first release', rc: pv ? '#6dff8a' : '#3fae55',
+      dRetro: pv ? `-${d.toFixed(1)}% VS ${pv.n}` : 'FIRST RELEASE', stamp: pv ? `-${d.toFixed(1)}%` : 'NEW', hand: pv ? 'lighter than before!' : 'where it began',
+      ascii: '█'.repeat(n) + '░'.repeat(20 - n),
+      blocks: Array.from({ length: 20 }, (_, k) => { const on = k < n; return { bg: on ? (k > 15 ? '#ef4f2b' : '#2c55e0') : '#d6d0c3', sh: on ? '0 3px 0 rgba(0,0,0,.25),inset 0 2px 0 rgba(255,255,255,.3)' : 'none', y: on ? '-3px' : '2px', d: RM ? '0ms' : k * 18 + 'ms' }; }),
+    };
+    const TB = [['#2c55e0', '#fff', '#1a36a3'], ['#ef4f2b', '#fff', '#b5311a'], ['#f4b52a', '#1e1d1a', '#b9821a']];
+    const vers = VERS.map((q, k) => ({ n: q.n, on: k === i, bg: k === i ? '#fff' : 'transparent', fg: k === i ? '#161614' : '#77756e', cbg: k === i ? '#ffe27a' : '#efe3c8', rot: [-3, 2, -1][k] + 'deg', rbg: k === i ? '#4fdc68' : 'transparent', rfg: k === i ? '#061108' : '#6dff8a', tbg: k === i ? TB[k][0] : '#fff', tfg: k === i ? TB[k][1] : '#1e1d1a', tsh: k === i ? TB[k][2] : '#cfc8b8', pick: () => this.setState({ ver: k }) }));
+    return { is: Object.fromEntries(W4.map(w => [w, w === v])), b, vers, blink: RM ? 'none' : 'blink 1s steps(1,end) infinite' };
+  }
+}
+</script>
+</body>
+</html>

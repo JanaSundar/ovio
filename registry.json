@@ -1,0 +1,212 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "ovio",
+  "homepage": "https://ovio.dev",
+  "items": [
+    {
+      "name": "theme",
+      "type": "registry:item",
+      "title": "Ovio theme",
+      "description": "The four worlds' colours, radii, shadows and fonts as CSS variables under [data-ovio-world]. Import styles/ovio.css from your global stylesheet.",
+      "files": [
+        { "path": "styles/ovio.css", "type": "registry:file", "target": "styles/ovio.css" }
+      ]
+    },
+    {
+      "name": "world",
+      "type": "registry:lib",
+      "title": "Ovio world",
+      "description": "The World type, OvioProvider for a site-wide default world, and useWorld().",
+      "files": [
+        { "path": "lib/world.ts", "type": "registry:lib", "target": "lib/world.ts" },
+        {
+          "path": "components/shared/world-provider.tsx",
+          "type": "registry:component",
+          "target": "components/shared/world-provider.tsx"
+        }
+      ]
+    },
+    {
+      "name": "motion",
+      "type": "registry:lib",
+      "title": "Ovio motion tokens",
+      "description": "Per-world motion tokens as Motion transitions (Minimal eases, Craft lift, Retro steps, Toy springs) and a reduced-motion hook that resolves springs instantly.",
+      "dependencies": ["motion"],
+      "files": [{ "path": "lib/motion.ts", "type": "registry:lib", "target": "lib/motion.ts" }]
+    },
+    {
+      "name": "rolling-number",
+      "type": "registry:ui",
+      "title": "Rolling Number",
+      "description": "NumberFlow tuned to the Ovio spec: 0.9s spring spin, 0.45s fade, fixed width, continues when interrupted.",
+      "dependencies": ["@number-flow/react"],
+      "files": [
+        {
+          "path": "components/shared/rolling-number.tsx",
+          "type": "registry:component",
+          "target": "components/shared/rolling-number.tsx"
+        }
+      ]
+    },
+    {
+      "name": "toy",
+      "type": "registry:ui",
+      "title": "Toy primitives",
+      "description": "A raised key that compresses when pressed and a loose piece that springs back to its seat.",
+      "dependencies": ["motion"],
+      "registryDependencies": ["@ovio/motion"],
+      "files": [
+        {
+          "path": "components/shared/toy.tsx",
+          "type": "registry:component",
+          "target": "components/shared/toy.tsx"
+        }
+      ]
+    },
+    {
+      "name": "github",
+      "type": "registry:lib",
+      "title": "GitHub fetchers",
+      "description": "Server-side helpers that fetch repository data for Ovio components, with an optional token.",
+      "dependencies": ["server-only"],
+      "registryDependencies": ["@ovio/repository-card"],
+      "files": [{ "path": "lib/github.ts", "type": "registry:lib", "target": "lib/github.ts" }]
+    },
+    {
+      "name": "repository-card",
+      "type": "registry:ui",
+      "title": "Repository Card",
+      "description": "A repo at a glance: name, description, stars, forks and language, in four worlds.",
+      "dependencies": ["motion", "@number-flow/react"],
+      "registryDependencies": [
+        "utils",
+        "@ovio/theme",
+        "@ovio/world",
+        "@ovio/motion",
+        "@ovio/rolling-number",
+        "@ovio/toy"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/repository-card/repository-card.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/repository-card/repository-card.tsx"
+        },
+        {
+          "path": "components/ovio/repository-card/worlds/minimal.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/repository-card/worlds/minimal.tsx"
+        },
+        {
+          "path": "components/ovio/repository-card/worlds/craft.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/repository-card/worlds/craft.tsx"
+        },
+        {
+          "path": "components/ovio/repository-card/worlds/retro.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/repository-card/worlds/retro.tsx"
+        },
+        {
+          "path": "components/ovio/repository-card/worlds/toy.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/repository-card/worlds/toy.tsx"
+        }
+      ]
+    },
+    {
+      "name": "gooey-tabs",
+      "type": "registry:ui",
+      "title": "Gooey Tabs",
+      "description": "Tab bar with a moving indicator and a deploy status. In Toy, the indicator is a piece you can drag and flick.",
+      "dependencies": ["motion"],
+      "registryDependencies": ["utils", "@ovio/theme", "@ovio/world", "@ovio/motion"],
+      "files": [
+        {
+          "path": "components/ovio/gooey-tabs/gooey-tabs.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/gooey-tabs/gooey-tabs.tsx"
+        },
+        {
+          "path": "components/ovio/gooey-tabs/goo.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/gooey-tabs/goo.tsx"
+        },
+        {
+          "path": "components/ovio/gooey-tabs/worlds/minimal.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/gooey-tabs/worlds/minimal.tsx"
+        },
+        {
+          "path": "components/ovio/gooey-tabs/worlds/craft.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/gooey-tabs/worlds/craft.tsx"
+        },
+        {
+          "path": "components/ovio/gooey-tabs/worlds/retro.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/gooey-tabs/worlds/retro.tsx"
+        },
+        {
+          "path": "components/ovio/gooey-tabs/worlds/toy.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/gooey-tabs/worlds/toy.tsx"
+        }
+      ]
+    },
+    {
+      "name": "physical-knob",
+      "type": "registry:ui",
+      "title": "Physical Knob",
+      "description": "A rotary control with tick marks and a value display. Drag, flick, scroll or use the arrow keys.",
+      "dependencies": ["motion", "@number-flow/react"],
+      "registryDependencies": [
+        "utils",
+        "@ovio/theme",
+        "@ovio/world",
+        "@ovio/motion",
+        "@ovio/rolling-number"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/physical-knob/physical-knob.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/physical-knob/physical-knob.tsx"
+        },
+        {
+          "path": "components/ovio/physical-knob/use-knob.ts",
+          "type": "registry:hook",
+          "target": "components/ovio/physical-knob/use-knob.ts"
+        },
+        {
+          "path": "components/ovio/physical-knob/worlds/minimal.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/physical-knob/worlds/minimal.tsx"
+        },
+        {
+          "path": "components/ovio/physical-knob/worlds/craft.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/physical-knob/worlds/craft.tsx"
+        },
+        {
+          "path": "components/ovio/physical-knob/worlds/retro.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/physical-knob/worlds/retro.tsx"
+        },
+        {
+          "path": "components/ovio/physical-knob/worlds/toy.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/physical-knob/worlds/toy.tsx"
+        }
+      ]
+    },
+    {
+      "name": "all",
+      "type": "registry:item",
+      "title": "All Ovio components",
+      "description": "Every Ovio component at once.",
+      "registryDependencies": ["@ovio/repository-card", "@ovio/gooey-tabs", "@ovio/physical-knob"],
+      "files": []
+    }
+  ]
+}

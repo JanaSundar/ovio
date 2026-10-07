@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500;600&family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&family=VT323&family=Chakra+Petch:wght@500;600;700&family=JetBrains+Mono:wght@400;600&family=Instrument+Sans:ital,wght@0,300;0,400;0,500;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#f5f4f0;color:#161614;font-family:Geist,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#161614;text-decoration:none}a:hover{color:#6b6a64}
+*{box-sizing:border-box}
+</style>
+</helmet>
+
+<div style="max-width:1320px;margin:0 auto;padding:0 32px">
+<nav style="display:flex;align-items:center;justify-content:space-between;gap:24px;padding:22px 0;border-bottom:1px solid rgba(22,22,20,.1);flex-wrap:wrap">
+  <a href="Developer Components.dc.html" style="display:flex;align-items:center;gap:10px;font-weight:600;font-size:15px;letter-spacing:-.01em">
+    <img src="ovio-logo.svg" alt="" width="26" height="26" style="display:block;border-radius:7px">
+    Ovio
+  </a>
+  <div style="display:flex;gap:28px;font-size:14px;color:#6b6a64;flex-wrap:wrap"><a href="Developer Components.dc.html#styles">Styles</a><a href="Developer Components.dc.html#about">About</a><a href="Docs.dc.html" style="color:#161614;font-weight:500">Docs</a><a href="#">GitHub ↗</a></div>
+  <span style="font-family:'Geist Mono',monospace;font-size:12px;color:#6b6a64">v0.1 · MIT</span>
+</nav>
+
+<div style="display:grid;grid-template-columns:{{ cols }};gap:48px;padding:40px 0 96px;align-items:start">
+  <aside style="position:sticky;top:24px;display:{{ sideDisplay }};flex-direction:column;gap:28px;font-size:14px">
+    <div style="display:flex;flex-direction:column;gap:2px">
+      <div style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#6b6a64;margin-bottom:8px">Getting started</div>
+      <a href="#intro" onClick="{{ goIntro }}" style="padding:6px 10px;margin:0 -10px;border-radius:6px;background:{{ introBg }};color:#161614">Introduction</a>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:2px">
+      <div style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#6b6a64;margin-bottom:8px">Components</div>
+      <sc-for list="{{ nav }}" as="n" hint-placeholder-count="14">
+        <a href="#{{ n.id }}" onClick="{{ n.select }}" style="display:flex;justify-content:space-between;align-items:baseline;padding:6px 10px;margin:0 -10px;border-radius:6px;background:{{ n.bg }};color:{{ n.fg }}">{{ n.name }}<span style="font-family:'Geist Mono',monospace;font-size:10px;color:#99968e">{{ n.tag }}</span></a>
+      </sc-for>
+    </div>
+  </aside>
+
+  <main style="min-width:0">
+    <sc-if value="{{ isIntro }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-direction:column;gap:48px;max-width:760px">
+        <header style="display:flex;flex-direction:column;gap:16px">
+          <div style="font-size:13px;color:#6b6a64">Docs / Getting started</div>
+          <h1 style="margin:0;font-size:52px;font-weight:500;letter-spacing:-.045em;line-height:1">Introduction</h1>
+          <p style="margin:0;font-size:17px;line-height:1.6;color:#4a4944;text-wrap:pretty">Ovio is a set of components for developer websites. Each one ships with four renderers — four design worlds — over the same data, logic and accessibility. A world is not a colour theme: it changes material, type, shape, interaction and motion. You install the source and own it.</p>
+        </header>
+        <section style="display:flex;flex-direction:column;gap:14px">
+          <h2 style="margin:0;font-size:24px;font-weight:500;letter-spacing:-.025em">Installation</h2>
+          <div style="padding:16px 18px;background:#161614;color:#f5f4f0;border-radius:10px;font-family:'Geist Mono',monospace;font-size:13px;line-height:1.8;overflow-x:auto;white-space:pre"><span style="color:#8d8b83"># any component, by name</span>
+$ npx shadcn add ovio/contribution-graph</div>
+        </section>
+        <section style="display:flex;flex-direction:column;gap:14px">
+          <h2 style="margin:0;font-size:24px;font-weight:500;letter-spacing:-.025em">The four worlds</h2>
+          <div style="border-top:1px solid rgba(22,22,20,.15)">
+            <sc-for list="{{ worlds }}" as="w" hint-placeholder-count="4">
+              <div style="display:grid;grid-template-columns:120px minmax(0,1fr) minmax(0,1fr);gap:8px 20px;padding:18px 0;border-bottom:1px solid rgba(22,22,20,.1);font-size:14px;line-height:1.5">
+                <span style="font-family:{{ w.font }};font-size:{{ w.size }};letter-spacing:{{ w.track }};font-weight:{{ w.weight }}">{{ w.label }}</span>
+                <span style="display:flex;flex-direction:column;gap:4px"><span style="font-weight:500">“{{ w.want }}”</span><span style="color:#4a4944">{{ w.desc }}</span></span>
+                <span style="color:#6b6a64">{{ w.motion }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </section>
+        <section style="display:flex;flex-direction:column;gap:14px">
+          <h2 style="margin:0;font-size:24px;font-weight:500;letter-spacing:-.025em">Motion</h2>
+          <p style="margin:0;font-size:15px;line-height:1.6;color:#4a4944;text-wrap:pretty">Every component animates with Motion for React, but each world moves for a different reason. Minimal moves to show state. Craft moves like paper and card settling. Retro moves in steps, like old hardware. Toy is driven by physics: springs, drag, inertia, snap and resistance. Every press, drag and flick has a physical cause.</p>
+          <p style="margin:0;font-size:15px;line-height:1.6;color:#4a4944;text-wrap:pretty">Numbers roll like NumberFlow: digits spin in the direction of the change on a 900ms spring, characters fade over 450ms, and neighbours slide to make room. Under prefers-reduced-motion, springs resolve instantly and nothing loops. Every control still works by keyboard: knobs and tabs take the arrow keys, keys take Space and Enter.</p>
+          <a href="#gooey-tabs" onClick="{{ goGooey }}" style="font-size:14px">See the tabs in Toy →</a>
+        </section>
+        <section style="display:flex;flex-direction:column;gap:14px">
+          <h2 style="margin:0;font-size:24px;font-weight:500;letter-spacing:-.025em">3D</h2>
+          <p style="margin:0;font-size:15px;line-height:1.6;color:#4a4944">3D renderers (the Toy contribution blocks) are built with React Three Fiber and drei. They're lazy-loaded, so components without 3D never pull in three.js.</p>
+        </section>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isComp }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;flex-direction:column;gap:44px">
+        <header style="display:flex;flex-direction:column;gap:14px">
+          <div style="font-size:13px;color:#6b6a64">Docs / Components</div>
+          <h1 style="margin:0;font-size:48px;font-weight:500;letter-spacing:-.045em;line-height:1">{{ c.name }}</h1>
+          <p style="margin:0;font-size:17px;line-height:1.55;color:#4a4944;max-width:62ch;text-wrap:pretty">{{ c.desc }}</p>
+        </header>
+
+        <section style="display:flex;flex-direction:column;gap:14px">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap">
+            <div style="position:relative;width:min(100%,460px);padding:4px;background:#e9e7e1;border-radius:13px">
+              <div style="position:absolute;inset:4px;filter:url(#dc-goo)">
+                <div style="position:absolute;top:0;bottom:0;width:25%;left:{{ gooLeft }};background:#161614;border-radius:9px;transition:left {{ gooT1 }}"></div>
+                <div style="position:absolute;top:12%;bottom:12%;width:20%;margin-left:2.5%;left:{{ gooLeft }};background:#161614;border-radius:999px;transition:left {{ gooT2 }}"></div>
+                <div style="position:absolute;top:26%;bottom:26%;width:12%;margin-left:6.5%;left:{{ gooLeft }};background:#161614;border-radius:999px;transition:left {{ gooT3 }}"></div>
+              </div>
+              <div role="tablist" aria-label="Design world" style="position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr))">
+                <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="4">
+                  <button role="tab" aria-selected="{{ t.active }}" onClick="{{ t.select }}" style="padding:10px 4px;border:0;background:transparent;cursor:pointer;color:{{ t.fg }};font-family:{{ t.font }};font-size:{{ t.size }};letter-spacing:{{ t.track }};line-height:1;transition:color .25s .12s">{{ t.label }}</button>
+                </sc-for>
+              </div>
+            </div>
+            <span style="font-family:'Geist Mono',monospace;font-size:12px;color:#6b6a64">Press 1–4</span>
+          </div>
+          <div>
+            <sc-if value="{{ show.graph }}" hint-placeholder-val="{{ true }}"><dc-import name="ContributionGraph" variant="{{ variant }}" hint-size="100%,560px"></dc-import></sc-if>
+            <sc-if value="{{ show.ticket }}" hint-placeholder-val="{{ false }}"><dc-import name="Ticket" variant="{{ variant }}" hint-size="100%,720px"></dc-import></sc-if>
+            <sc-if value="{{ show.gooey }}" hint-placeholder-val="{{ false }}"><dc-import name="GooeyTabs" variant="{{ variant }}" hint-size="100%,420px"></dc-import></sc-if>
+            <sc-if value="{{ show.star }}" hint-placeholder-val="{{ false }}"><dc-import name="StarHistory" variant="{{ variant }}" hint-size="100%,420px"></dc-import></sc-if>
+            <sc-if value="{{ show.repo }}" hint-placeholder-val="{{ false }}"><dc-import name="RepoCard" variant="{{ variant }}" hint-size="100%,400px"></dc-import></sc-if>
+            <sc-if value="{{ show.contrib }}" hint-placeholder-val="{{ false }}"><dc-import name="TopContributors" variant="{{ variant }}" hint-size="100%,440px"></dc-import></sc-if>
+            <sc-if value="{{ show.npm }}" hint-placeholder-val="{{ false }}"><dc-import name="NpmDownloads" variant="{{ variant }}" hint-size="100%,400px"></dc-import></sc-if>
+            <sc-if value="{{ show.sponsor }}" hint-placeholder-val="{{ false }}"><dc-import name="SponsorWall" variant="{{ variant }}" hint-size="100%,420px"></dc-import></sc-if>
+            <sc-if value="{{ show.changelog }}" hint-placeholder-val="{{ false }}"><dc-import name="Changelog" variant="{{ variant }}" hint-size="100%,440px"></dc-import></sc-if>
+            <sc-if value="{{ show.knob }}" hint-placeholder-val="{{ false }}"><dc-import name="Knob" variant="{{ variant }}" hint-size="100%,480px"></dc-import></sc-if>
+            <sc-if value="{{ show.idcard }}" hint-placeholder-val="{{ false }}"><dc-import name="IdCard" variant="{{ variant }}" hint-size="100%,560px"></dc-import></sc-if>
+            <sc-if value="{{ show.bundle }}" hint-placeholder-val="{{ false }}"><dc-import name="BundleSize" variant="{{ variant }}" hint-size="100%,440px"></dc-import></sc-if>
+            <sc-if value="{{ show.git }}" hint-placeholder-val="{{ false }}"><dc-import name="GitGraph" variant="{{ variant }}" hint-size="100%,560px"></dc-import></sc-if>
+            <sc-if value="{{ show.playing }}" hint-placeholder-val="{{ false }}"><dc-import name="NowPlaying" variant="{{ variant }}" hint-size="100%,380px"></dc-import></sc-if>
+          </div>
+        </section>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:40px">
+          <section style="display:flex;flex-direction:column;gap:14px;min-width:0">
+            <h2 style="margin:0;font-size:22px;font-weight:500;letter-spacing:-.025em">Installation</h2>
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 16px;background:#161614;color:#f5f4f0;border-radius:10px;font-family:'Geist Mono',monospace;font-size:13px">
+              <span style="overflow-x:auto;white-space:nowrap"><span style="color:#8d8b83">$ </span>{{ c.cmd }}</span>
+              <button onClick="{{ copy }}" style="flex:none;padding:5px 10px;border:1px solid #3a3935;background:transparent;color:#d8d6cf;border-radius:6px;font-family:inherit;font-size:11px;cursor:pointer">{{ copyLabel }}</button>
+            </div>
+            <h2 style="margin:16px 0 0;font-size:22px;font-weight:500;letter-spacing:-.025em">Usage</h2>
+            <pre style="margin:0;padding:18px 20px;background:#161614;color:#e6e4dd;border-radius:10px;font-family:'Geist Mono',monospace;font-size:13px;line-height:1.7;overflow-x:auto">{{ usage }}</pre>
+            <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border:1px solid rgba(22,22,20,.12);border-radius:10px;background:#fff">
+              <div style="padding:14px 16px;border-right:1px solid rgba(22,22,20,.08)"><div style="font-size:11px;color:#6b6a64;margin-bottom:6px">Renders with</div><div style="font-size:13px">{{ c.tech }}</div></div>
+              <div style="padding:14px 16px"><div style="font-size:11px;color:#6b6a64;margin-bottom:6px">Motion in {{ curLabel }}</div><div style="font-size:13px">{{ curMotion }}</div></div>
+            </div>
+          </section>
+          <section style="display:flex;flex-direction:column;gap:14px;min-width:0">
+            <h2 style="margin:0;font-size:22px;font-weight:500;letter-spacing:-.025em">Props</h2>
+            <div style="border-top:1px solid rgba(22,22,20,.15);font-size:13px">
+              <sc-for list="{{ c.props }}" as="p" hint-placeholder-count="5">
+                <div style="display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.3fr) minmax(0,1.4fr);gap:14px;padding:13px 0;border-bottom:1px solid rgba(22,22,20,.1)">
+                  <span style="font-family:'Geist Mono',monospace;font-weight:500">{{ p.name }}</span>
+                  <span style="font-family:'Geist Mono',monospace;color:#6b6a64;font-size:12px;word-break:break-word">{{ p.type }}</span>
+                  <span style="color:#4a4944">{{ p.desc }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </section>
+        </div>
+
+        <div style="display:flex;justify-content:space-between;gap:16px;padding-top:24px;border-top:1px solid rgba(22,22,20,.1);font-size:14px">
+          <a href="#{{ prev.id }}" onClick="{{ prev.go }}" style="display:flex;flex-direction:column;gap:4px"><span style="font-size:12px;color:#6b6a64">Previous</span>{{ prev.name }}</a>
+          <a href="#{{ next.id }}" onClick="{{ next.go }}" style="display:flex;flex-direction:column;gap:4px;text-align:right"><span style="font-size:12px;color:#6b6a64">Next</span>{{ next.name }}</a>
+        </div>
+      </div>
+    </sc-if>
+  </main>
+</div>
+
+<footer style="display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:28px 0 40px;border-top:1px solid rgba(22,22,20,.1);font-size:13px;color:#6b6a64">
+  <span>One component. Four worlds.</span><span>MIT · Built on the shadcn registry</span>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const RM = typeof matchMedia !== 'undefined' && matchMedia('(prefers-reduced-motion: reduce)').matches;
+const VARIANTS = [
+  { id: 'minimal', label: 'Minimal', font: 'Geist, sans-serif', size: '13px', track: '0', weight: 500, want: 'I want it clean.', desc: 'Clean digital objects. Whitespace, thin rules, neutral colour and clear type hierarchy.', motion: 'Small springs, opacity and layout shifts that show state.' },
+  { id: 'craft', label: 'Craft', font: "'Bricolage Grotesque', sans-serif", size: '15px', track: '-.01em', weight: 800, want: 'I want it beautifully made.', desc: 'Crafted physical artefacts. Cream paper, tape, printed labels, soft layered shadows.', motion: 'Material motion: cards lift, paper slides, pieces settle.' },
+  { id: 'retro', label: 'RETRO', font: 'VT323, monospace', size: '18px', track: '.04em', weight: 400, want: 'I want it nostalgic.', desc: 'Nostalgic digital artefacts. Phosphor, pixel borders, terminal output, old windows.', motion: 'Stepped frames, typing, blinking cursors.' },
+  { id: 'toy', label: 'Toy', font: 'Archivo, sans-serif', size: '15px', track: '-.01em', weight: 800, want: 'I want to play with it.', desc: 'Playful physical objects. Molded plastic, raised keys, knobs, pegs and blocks.', motion: 'Physics: spring, drag, inertia, snap, compression, overshoot.' },
+];
+const V = { name: 'variant', type: '"minimal" | "craft" | "retro" | "toy"', desc: 'Which world to render.' };
+const A = { name: 'animation', type: '"none" | "enter-exit" | "always"', desc: 'Forced to "none" under reduced motion.' };
+const CL = { name: 'className', type: 'string', desc: 'Merged onto the root.' };
+const COMPS = [
+  { id: 'contribution-graph', key: 'graph', name: 'Contribution Graph', tag: 'flagship', tech: 'CSS grid · canvas (Toy: R3F + drei)', desc: 'A year of activity, one cell per day. From an editorial heatmap to physical blocks you can press.', tagName: 'ContributionGraph', extra: '  data={contributions}', props: [{ name: 'data', type: '{ date: string; count: number }[]', desc: 'Daily counts; gaps become zero.' }, V, A, { name: 'onDayHover', type: '(day) => void', desc: 'Hover and keyboard focus.' }, CL] },
+  { id: 'event-ticket', key: 'ticket', name: 'Event Ticket', tag: 'new', tech: 'CSS 3D · canvas art', desc: 'A pass for launches and conferences. Book on the stub, tear it to check in, flip it for the QR code.', tagName: 'EventTicket', extra: '  layout="horizontal"\n  onBook={reserve}\n  onTear={checkIn}', props: [V, { name: 'layout', type: '"horizontal" | "vertical"', desc: 'Side stub or tear-off bottom.' }, { name: 'event', type: '{ name; date; venue? }', desc: 'Printed on the ticket.' }, { name: 'onBook', type: '(attendee) => Promise<void>', desc: 'The book button waits on it.' }, { name: 'onTear', type: '() => void', desc: 'Fires when the stub tears off.' }] },
+  { id: 'gooey-tabs', key: 'gooey', name: 'Gooey Tabs', tag: 'motion', tech: 'CSS + SVG goo filter · Toy: spring physics', desc: 'A tab bar with a moving indicator and a deploy status. In Toy, the indicator is a piece you can drag and flick.', tagName: 'GooeyTabs', extra: '  tabs={["Overview", "Commits", "Issues", "Releases"]}\n  status="building"', props: [V, { name: 'tabs', type: 'string[]', desc: 'Equal-width tabs.' }, { name: 'value', type: 'number', desc: 'Controlled index.' }, { name: 'status', type: '"offline" | "building" | "online"', desc: 'Deploy indicator state.' }, { name: 'goo', type: 'number', desc: 'Blur strength of the filter.' }] },
+  { id: 'star-history', key: 'star', name: 'Star History', tech: 'SVG', desc: 'Stargazers over time, with annotated spikes.', tagName: 'StarHistory', extra: '  repo="ada-dev/lumen"', props: [V, { name: 'repo', type: 'string', desc: 'owner/name.' }, { name: 'annotations', type: '{ date; label }[]', desc: 'Callouts on the curve.' }, A] },
+  { id: 'repository-card', key: 'repo', name: 'Repository Card', tech: 'CSS', desc: 'A repo at a glance: name, description, stars, forks and language.', tagName: 'RepositoryCard', extra: '  repo="ada-dev/lumen"', props: [V, { name: 'repo', type: 'string', desc: 'owner/name.' }, { name: 'stats', type: '("stars" | "forks" | "issues")[]', desc: 'Which counts to show.' }, CL] },
+  { id: 'top-contributors', key: 'contrib', name: 'Top Contributors', tech: 'CSS', desc: 'The people behind a project, ranked by commits.', tagName: 'TopContributors', extra: '  repo="ada-dev/lumen"\n  limit={6}', props: [V, { name: 'repo', type: 'string', desc: 'owner/name.' }, { name: 'limit', type: 'number', desc: 'Max people shown.' }, { name: 'period', type: '"30d" | "90d" | "all"', desc: 'Time window.' }] },
+  { id: 'npm-downloads', key: 'npm', name: 'npm Downloads', tech: 'CSS · SVG', desc: 'Weekly installs with trend and goal.', tagName: 'NpmDownloads', extra: '  pkg="lumen"\n  goal={50000}', props: [V, { name: 'pkg', type: 'string', desc: 'Package name.' }, { name: 'weeks', type: 'number', desc: 'History length.' }, { name: 'goal', type: 'number', desc: 'Weekly target.' }] },
+  { id: 'sponsor-wall', key: 'sponsor', name: 'Sponsor Wall', tech: 'CSS', desc: 'Sponsors by tier, from a logo wall to blocks on a pegboard.', tagName: 'SponsorWall', extra: '  sponsors={sponsors}', props: [V, { name: 'sponsors', type: '{ name; tier; url? }[]', desc: 'Tier decides size.' }, { name: 'cta', type: 'string', desc: 'Become-a-sponsor link.' }, A] },
+  { id: 'physical-knob', key: 'knob', name: 'Physical Knob', tag: 'new', tech: 'CSS · Motion for React (spring, drag)', desc: 'A rotary control with tick marks and a value display. Drag, flick, scroll or use the arrow keys.', tagName: 'PhysicalKnob', extra: '  value={72}\n  onChange={setLevel}', props: [V, { name: 'value', type: 'number', desc: 'Controlled value.' }, { name: 'min / max', type: 'number', desc: 'Range, default 0–100.' }, { name: 'onChange', type: '(value: number) => void', desc: 'Fires while turning.' }] },
+  { id: 'developer-id-card', key: 'idcard', name: 'Developer ID Card', tag: 'new', tech: 'CSS · Motion for React (drag)', desc: 'An identity card for a developer: name, role, stack, availability and a QR code.', tagName: 'DeveloperIdCard', extra: '  name="Jana Sundar"\n  role="Senior Software Engineer"', props: [V, { name: 'name', type: 'string', desc: 'Printed name.' }, { name: 'role', type: 'string', desc: 'Job title.' }, { name: 'stack', type: 'string[]', desc: 'Technologies.' }, { name: 'github', type: 'string', desc: 'Profile for the QR code.' }] },
+  { id: 'bundle-size', key: 'bundle', name: 'Bundle Size', tag: 'new', tech: 'CSS', desc: 'Package size with gzip, brotli and the change from the previous version.', tagName: 'BundleSize', extra: '  pkg="lumen"', props: [V, { name: 'pkg', type: 'string', desc: 'Package name.' }, { name: 'versions', type: '{ version; raw; gzip; brotli }[]', desc: 'Newest first.' }, { name: 'budget', type: 'number', desc: 'Budget in kB.' }] },
+  { id: 'git-branch-visualizer', key: 'git', name: 'Git Branch Visualizer', tag: 'new', tech: 'SVG', desc: 'Branches and commits as a graph. Hover a commit, pick a branch, merge or branch off.', tagName: 'GitBranchVisualizer', extra: '  commits={commits}\n  head="main"', props: [V, { name: 'commits', type: '{ id; branch; message; author; date; parents[] }[]', desc: 'Commit list.' }, { name: 'head', type: 'string', desc: 'Checked-out branch.' }, { name: 'onSelect', type: '(commit) => void', desc: 'Commit selected.' }] },
+  { id: 'changelog', key: 'changelog', name: 'Changelog', tech: 'CSS', desc: 'Releases with dates and notes.', tagName: 'Changelog', extra: '  releases={releases}', props: [V, { name: 'releases', type: '{ version; date; title; items[] }[]', desc: 'Newest first.' }, { name: 'limit', type: 'number', desc: 'Releases shown.' }, CL] },
+  { id: 'now-playing', key: 'playing', name: 'Now Playing', tech: 'CSS', desc: 'What you’re listening to, live.', tagName: 'NowPlaying', extra: '  track={track}', props: [V, { name: 'track', type: '{ title; artist; album; duration }', desc: 'Current track.' }, { name: 'progress', type: 'number', desc: 'Seconds elapsed.' }, A] },
+];
+class Component extends DCLogic {
+  state = { page: 'contribution-graph', variant: 'minimal', copied: false, w: 1280 };
+  componentDidMount() {
+    const h = location.hash.slice(1);
+    if (h === 'intro' || COMPS.some(c => c.id === h)) this.setState({ page: h });
+    this.onR = () => this.setState({ w: window.innerWidth }); this.onR(); window.addEventListener('resize', this.onR);
+    this.onKey = e => { if (/input|textarea/i.test(e.target.tagName)) return; const k = parseInt(e.key, 10); if (k >= 1 && k <= 4) this.setState({ variant: VARIANTS[k - 1].id }); };
+    window.addEventListener('keydown', this.onKey);
+    if (!document.getElementById('dc-goo-defs')) {
+      const d = document.createElement('div'); d.id = 'dc-goo-defs';
+      d.innerHTML = '<svg width="0" height="0" style="position:absolute"><defs><filter id="dc-goo" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur in="SourceGraphic" stdDeviation="9" result="b"/><feColorMatrix in="b" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -9"/></filter></defs></svg>';
+      document.body.appendChild(d);
+    }
+  }
+  componentWillUnmount() { window.removeEventListener('resize', this.onR); window.removeEventListener('keydown', this.onKey); }
+  go(page) { return e => { e && e.preventDefault(); history.replaceState(null, '', '#' + page); this.setState({ page }); window.scrollTo(0, 0); }; }
+  renderVals() {
+    const { page, variant, w } = this.state;
+    const ci = COMPS.findIndex(c => c.id === page), c = COMPS[Math.max(0, ci)];
+    const vi = VARIANTS.findIndex(x => x.id === variant), cur = VARIANTS[vi];
+    const side = w >= 820;
+    const pv = COMPS[(ci - 1 + COMPS.length) % COMPS.length], nx = COMPS[(ci + 1) % COMPS.length];
+    return {
+      cols: side ? '200px minmax(0,1fr)' : 'minmax(0,1fr)', sideDisplay: side ? 'flex' : 'none',
+      isIntro: page === 'intro', isComp: page !== 'intro', introBg: page === 'intro' ? '#e9e7e1' : 'transparent',
+      goIntro: this.go('intro'), goGooey: this.go('gooey-tabs'),
+      worlds: VARIANTS,
+      nav: COMPS.map(x => ({ id: x.id, name: x.name, tag: x.tag || '', bg: x.id === page ? '#e9e7e1' : 'transparent', fg: x.id === page ? '#161614' : '#4a4944', select: this.go(x.id) })),
+      c: { ...c, cmd: `npx shadcn add ovio/${c.id}` },
+      show: Object.fromEntries(COMPS.map(x => [x.key, x.id === c.id])),
+      variant, curLabel: cur.label, curMotion: cur.motion,
+      tabs: VARIANTS.map(x => ({ ...x, active: x.id === variant, fg: x.id === variant ? '#f5f4f0' : '#4a4944', select: () => this.setState({ variant: x.id }) })),
+      gooLeft: (vi * 25) + '%', gooT1: RM ? '0s' : '.4s cubic-bezier(.6,0,.2,1)', gooT2: RM ? '0s' : '.6s cubic-bezier(.6,0,.2,1)', gooT3: RM ? '0s' : '.8s cubic-bezier(.6,0,.2,1)',
+      usage: `import { ${c.tagName} } from "@/components/${c.id}"\n\n<${c.tagName}\n  variant="${variant}"\n${c.extra}\n/>`,
+      copyLabel: this.state.copied ? 'Copied' : 'Copy',
+      copy: () => { navigator.clipboard?.writeText(`npx shadcn add ovio/${c.id}`).catch(() => {}); this.setState({ copied: true }); clearTimeout(this.t); this.t = setTimeout(() => this.setState({ copied: false }), 1500); },
+      prev: { id: pv.id, name: pv.name, go: this.go(pv.id) }, next: { id: nx.id, name: nx.name, go: this.go(nx.id) },
+    };
+  }
+}
+</script>
+</body>
+</html>

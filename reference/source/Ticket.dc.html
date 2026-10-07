@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500;600&family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&family=VT323&family=Chakra+Petch:wght@500;600;700&family=JetBrains+Mono:wght@400;600&family=Instrument+Sans:wght@300;400;500&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Caveat:wght@700&family=Unbounded:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#f5f4f0;color:#161614;font-family:Geist,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#161614;text-decoration:none}a:hover{color:#6b6a64}
+*{box-sizing:border-box}
+input::placeholder{color:inherit;opacity:.55}
+@keyframes scan-x{0%{left:0%}50%{left:100%}100%{left:0%}}
+@keyframes goo-drop{0%,100%{transform:translate(0,0) scale(.5)}50%{transform:translate(var(--dx),var(--dy)) scale(1)}}
+@keyframes stamp-in{from{opacity:0;transform:rotate(-14deg) scale(1.8)}to{opacity:1;transform:rotate(-14deg) scale(1)}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+</style>
+<script src="./toy.js"></script>
+</helmet>
+
+<div style="width:100%">
+<div style="display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;padding:0 0 14px">
+  <sc-if value="{{ showTabs }}" hint-placeholder-val="{{ true }}"><div role="tablist" aria-label="Visual world" style="display:flex;gap:4px;padding:4px;background:#e9e7e1;border-radius:12px;flex-wrap:wrap">
+    <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="5">
+      <button role="tab" aria-selected="{{ t.active }}" onClick="{{ t.select }}" style="display:flex;align-items:baseline;gap:8px;padding:10px 16px;border:0;border-radius:9px;cursor:pointer;background:{{ t.bg }};color:{{ t.fg }};transition:background .25s,color .25s">
+        <span style="font-family:'Geist Mono',monospace;font-size:10px;opacity:.5">{{ t.key }}</span>
+        <span style="font-family:{{ t.font }};font-size:{{ t.size }};letter-spacing:{{ t.track }};line-height:1">{{ t.label }}</span>
+      </button>
+    </sc-for>
+  </div></sc-if>
+  <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+    <div style="display:flex;border:1px solid rgba(22,22,20,.15);border-radius:8px;overflow:hidden">
+      <sc-for list="{{ layouts }}" as="l" hint-placeholder-count="2">
+        <button onClick="{{ l.select }}" style="padding:8px 13px;border:0;font-family:Geist,sans-serif;font-size:12px;cursor:pointer;background:{{ l.bg }};color:{{ l.fg }}">{{ l.label }}</button>
+      </sc-for>
+    </div>
+    <button onClick="{{ flip }}" style="padding:8px 13px;border:1px solid rgba(22,22,20,.15);border-radius:8px;background:transparent;font-family:Geist,sans-serif;font-size:12px;cursor:pointer" style-hover="background:#e9e7e1">Flip ↻</button>
+    <button onClick="{{ reset }}" style="padding:8px 13px;border:1px solid rgba(22,22,20,.15);border-radius:8px;background:transparent;font-family:Geist,sans-serif;font-size:12px;cursor:pointer" style-hover="background:#e9e7e1">Reset</button>
+  </div>
+</div>
+
+<section ref="{{ setStage }}" aria-label="Event Ticket preview" onMouseMove="{{ tiltMove }}" onMouseLeave="{{ tiltLeave }}" style="position:relative;border-radius:18px;overflow:hidden;border:1px solid rgba(22,22,20,.1);min-height:640px;padding:72px 48px;display:flex;align-items:center;background:{{ T.stage }};background-size:{{ T.stageSize }};transition:background .4s">
+  <div ref="{{ setFit }}" style="position:relative;z-index:1;perspective:1600px;flex:none;margin:auto">
+    <div ref="{{ setCard }}" style="position:relative;transform-style:preserve-3d;transition:transform .7s cubic-bezier(.3,1.25,.5,1)">
+
+      <sc-if value="{{ isH }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;gap:4px;backface-visibility:hidden;-webkit-backface-visibility:hidden;filter:{{ T.drop }};transform:{{ frontTfH }};transition:transform .9s cubic-bezier(.3,1.2,.4,1) .25s">
+          <div style="position:relative;display:flex;width:610px;min-height:380px;background:{{ T.card }};border-radius:{{ T.radius }};box-shadow:{{ T.shadow }};border:{{ T.border }};clip-path:{{ T.clipMain }};overflow:hidden;color:{{ T.ink }};font-family:{{ T.body }};text-shadow:{{ T.glow }}">
+            <div style="position:relative;flex:none;width:{{ T.artW }};order:{{ T.artOrder }};margin:{{ T.artInset }};border-radius:{{ T.artRadius }};clip-path:{{ T.artClip }};overflow:hidden">
+              <canvas ref="{{ setArt }}" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;display:block"></canvas>
+              <div style="position:absolute;left:12px;bottom:12px;writing-mode:vertical-rl;transform:rotate(180deg);font-family:{{ T.mono }};font-size:11px;letter-spacing:.14em;color:{{ T.artInk }}">{{ ticketId }}</div>
+            </div>
+            <div style="flex:1;display:flex;flex-direction:column;gap:20px;padding:30px 32px 26px 30px;min-width:0">
+              <div style="display:flex;justify-content:space-between;gap:12px;font-family:{{ T.mono }};font-size:{{ T.label }};letter-spacing:{{ T.labelTrack }};color:{{ T.muted }};text-transform:uppercase"><span>{{ T.kicker }}</span><span>No. 0918</span></div>
+              <h2 style="margin:0;font-family:{{ T.display }};font-size:{{ T.h1 }};font-weight:{{ T.h1w }};letter-spacing:{{ T.h1t }};line-height:.95;text-transform:{{ T.case }}">Get early<br>access</h2>
+              <div style="display:grid;grid-template-columns:1.3fr 1.2fr .8fr;border-top:1px solid {{ T.rule }};border-bottom:1px solid {{ T.rule }}">
+                <div style="padding:10px 12px 10px 0;border-right:1px solid {{ T.rule }}"><div style="font-family:{{ T.mono }};font-size:{{ T.label }};letter-spacing:{{ T.labelTrack }};color:{{ T.muted }};text-transform:uppercase;margin-bottom:6px">What</div><div style="font-size:{{ T.bodySize }};font-weight:500">Early bird</div></div>
+                <div style="padding:10px 12px;border-right:1px solid {{ T.rule }}"><div style="font-family:{{ T.mono }};font-size:{{ T.label }};letter-spacing:{{ T.labelTrack }};color:{{ T.muted }};text-transform:uppercase;margin-bottom:6px">Where</div><div style="font-size:{{ T.bodySize }};font-weight:500">Lisbon + online</div></div>
+                <div style="padding:10px 0 10px 12px;text-align:right"><div style="font-family:{{ T.mono }};font-size:{{ T.label }};letter-spacing:{{ T.labelTrack }};color:{{ T.muted }};text-transform:uppercase;margin-bottom:6px">Price</div><div style="font-size:{{ T.bodySize }};font-weight:500">$179</div></div>
+              </div>
+              <p style="margin:0;font-size:{{ T.small }};line-height:1.5;color:{{ T.muted }};max-width:44ch">FRAME/26 — two days on interface engineering: motion, rendering and the craft of building things that feel right.</p>
+              <div style="margin-top:auto;display:flex;align-items:baseline;gap:10px;font-size:{{ T.bodySize }}"><span style="font-family:{{ T.mono }};font-size:{{ T.label }};letter-spacing:{{ T.labelTrack }};color:{{ T.muted }};text-transform:uppercase">Admit</span><span style="font-weight:600">{{ attendee }}</span></div>
+            </div>
+            <sc-if value="{{ is.retro }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(0,0,0,.28) 0 1px,transparent 1px 3px)"></div></sc-if>
+            <sc-if value="{{ torn }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;right:30px;top:120px;padding:8px 16px;border:3px solid {{ T.stamp }};color:{{ T.stamp }};font-family:{{ T.display }};font-size:26px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;border-radius:6px;animation:{{ stampAnim }};transform:rotate(-14deg);text-shadow:none;opacity:.9">Admitted</div></sc-if>
+            <div style="position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at var(--mx,50%) var(--my,50%),{{ T.shine }},transparent 45%);mix-blend-mode:{{ T.shineBlend }}"></div>
+          </div>
+          <div style="width:0;border-left:{{ T.perf }};margin:14px 0"></div>
+          <div ref="{{ setStub }}" onPointerDown="{{ stubDown }}" onPointerMove="{{ stubMove }}" onPointerUp="{{ stubUp }}" onPointerCancel="{{ stubUp }}" style="position:relative;width:290px;display:flex;flex-direction:column;gap:16px;padding:22px 20px 20px;background:{{ T.card }};border-radius:{{ T.radius }};box-shadow:{{ T.shadow }};border:{{ T.border }};clip-path:{{ T.clipStub }};color:{{ T.ink }};font-family:{{ T.body }};text-shadow:{{ T.glow }};cursor:grab;touch-action:none;transform-origin:0% 100%">
+            <div style="display:flex;justify-content:space-between;font-family:{{ T.mono }};font-size:{{ T.label }};letter-spacing:{{ T.labelTrack }};color:{{ T.muted }};text-transform:uppercase"><span># {{ ticketId }}</span><span>28 Oct 2026</span></div>
+            <sc-if value="{{ showForm }}" hint-placeholder-val="{{ true }}">
+              <div style="display:flex;flex-direction:column;gap:14px;flex:1;animation:{{ errAnim }}">
+                <input value="{{ name }}" onChange="{{ onName }}" placeholder="Full name" aria-label="Full name" style="width:100%;padding:12px 2px;border:0;border-bottom:{{ T.inputLine }};background:transparent;color:{{ T.ink }};font-family:{{ T.mono }};font-size:{{ T.inputSize }};outline:none">
+                <input value="{{ email }}" onChange="{{ onEmail }}" placeholder="Email" aria-label="Email" type="email" style="width:100%;padding:12px 2px;border:0;border-bottom:{{ T.inputLine }};background:transparent;color:{{ T.ink }};font-family:{{ T.mono }};font-size:{{ T.inputSize }};outline:none">
+                <div style="min-height:16px;font-size:12px;color:{{ T.stamp }}">{{ err }}</div>
+              </div>
+              <button onClick="{{ book }}" onMouseEnter="{{ btnIn }}" onMouseLeave="{{ btnOut }}" aria-label="Book your spot" data-toy="{{ T.toyAttr }}" data-depth="6" data-shadow="{{ T.btnShadow }}" style="position:relative;height:104px;border:0;padding:0;background:transparent;cursor:pointer;text-align:left;border-radius:{{ T.btnRad }};box-shadow:{{ goo.btnBox }}">
+                <div style="position:absolute;inset:0;filter:{{ T.gooFilter }};transform:translateZ(0)">
+                  <div style="position:absolute;top:0;bottom:0;left:{{ goo.pillL }};right:{{ goo.pillR }};border-radius:{{ goo.pillRad }};background:{{ T.accent }};transition:left .45s cubic-bezier(.5,0,.2,1),right .45s cubic-bezier(.5,0,.2,1),border-radius .45s"></div>
+                  <div style="position:absolute;width:60px;height:60px;border-radius:50%;background:{{ T.knob }};top:{{ goo.knobT }};right:{{ goo.knobR }};transform:translate3d(calc(var(--hov,0) * 40px),calc(var(--hov,0) * -48px),0);will-change:transform;transition:transform .5s cubic-bezier(.34,1.45,.5,1),top .55s cubic-bezier(.34,1.6,.5,1),right .55s cubic-bezier(.34,1.6,.5,1)"></div>
+                  <sc-for list="{{ goo.drops }}" as="d" hint-placeholder-count="0">
+                    <div style="position:absolute;left:50%;top:50%;width:30px;height:30px;margin:-15px 0 0 -15px;border-radius:50%;background:{{ T.accent }};--dx:{{ d.dx }};--dy:{{ d.dy }};animation:goo-drop .9s cubic-bezier(.5,0,.5,1) {{ d.delay }} infinite"></div>
+                  </sc-for>
+                </div>
+                <div style="position:absolute;left:18px;top:50%;transform:translateY(-50%);font-family:{{ T.display }};font-size:{{ T.btnSize }};font-weight:{{ T.btnW }};line-height:1.05;letter-spacing:{{ T.h1t }};color:{{ T.accentInk }};text-transform:{{ T.case }};opacity:{{ goo.textOp }};transition:opacity .2s;text-shadow:none">Book<br>your spot</div>
+                <div style="position:absolute;width:60px;height:60px;top:{{ goo.knobT }};right:{{ goo.knobR }};display:flex;align-items:center;justify-content:center;font-size:26px;color:{{ T.knobInk }};opacity:{{ goo.textOp }};transform:translate3d(calc(var(--hov,0) * 40px),calc(var(--hov,0) * -48px),0);will-change:transform;transition:transform .5s cubic-bezier(.34,1.45,.5,1),top .55s cubic-bezier(.34,1.6,.5,1),right .55s cubic-bezier(.34,1.6,.5,1),opacity .2s;text-shadow:none">↗</div>
+              </button>
+            </sc-if>
+            <sc-if value="{{ booked }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;flex-direction:column;gap:6px;flex:1;justify-content:center">
+                <div style="font-family:{{ T.display }};font-size:{{ T.btnSize }};font-weight:{{ T.btnW }};letter-spacing:{{ T.h1t }};text-transform:{{ T.case }};line-height:1.05">You're in,<br>{{ firstName }}.</div>
+                <div style="font-size:{{ T.small }};color:{{ T.muted }}">Confirmation sent to {{ email }}</div>
+              </div>
+              <div style="position:relative;overflow:hidden;padding:10px 0;display:flex;align-items:stretch;height:84px">
+                <sc-for list="{{ bars }}" as="b" hint-placeholder-count="40"><span style="flex:none;width:{{ b.w }};margin-right:{{ b.g }};background:{{ T.ink }}"></span></sc-for>
+                <div style="position:absolute;top:0;bottom:0;width:3px;margin-left:-1px;background:{{ T.laser }};box-shadow:0 0 12px 2px {{ T.laser }};animation:{{ scanAnim }}"></div>
+              </div>
+              <div style="font-family:{{ T.mono }};font-size:{{ T.label }};letter-spacing:{{ T.labelTrack }};color:{{ T.muted }};text-transform:uppercase">Drag stub → to check in</div>
+            </sc-if>
+            <sc-if value="{{ is.craft }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;top:-12px;right:40px;width:80px;height:24px;background:rgba(240,220,160,.8);transform:rotate(6deg)"></div></sc-if>
+          </div>
+        </div>
+        <div style="position:absolute;inset:0;display:flex;gap:28px;padding:30px 34px;backface-visibility:hidden;-webkit-backface-visibility:hidden;transform:rotateY(180deg);background:{{ T.card }};border-radius:{{ T.radius }};box-shadow:{{ T.shadow }};border:{{ T.border }};color:{{ T.ink }};font-family:{{ T.body }};text-shadow:{{ T.glow }}">
+          <div style="flex:none;display:flex;flex-direction:column;gap:12px;align-items:flex-start">
+            <canvas ref="{{ setQr }}" aria-label="QR code for {{ ticketId }}" style="width:180px;height:180px;display:block;image-rendering:pixelated"></canvas>
+            <div style="font-family:{{ T.mono }};font-size:{{ T.label }};letter-spacing:{{ T.labelTrack }};color:{{ T.muted }};text-transform:uppercase">Show at the door</div>
+          </div>
+          <div style="flex:1;display:flex;flex-direction:column;gap:0;min-width:0">
+            <div style="font-family:{{ T.display }};font-size:{{ T.btnSize }};font-weight:{{ T.btnW }};letter-spacing:{{ T.h1t }};text-transform:{{ T.case }};margin-bottom:16px">Day one</div>
+            <sc-for list="{{ schedule }}" as="s" hint-placeholder-count="4">
+              <div style="display:grid;grid-template-columns:70px 1fr;gap:12px;padding:11px 0;border-top:1px solid {{ T.rule }};font-size:{{ T.bodySize }}"><span style="font-family:{{ T.mono }};color:{{ T.muted }}">{{ s.t }}</span><span>{{ s.what }}</span></div>
+            </sc-for>
+            <div style="margin-top:auto;font-size:11px;color:{{ T.muted }}">Non-transferable. One scan per day. {{ ticketId }}</div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isV }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;width:360px;backface-visibility:hidden;-webkit-backface-visibility:hidden;filter:{{ T.drop }};transform:{{ frontTfV }};transition:transform .9s cubic-bezier(.3,1.2,.4,1) .25s">
+          <div style="position:relative;background:{{ T.card }};border-radius:{{ T.radiusTop }};box-shadow:{{ T.shadow }};border:{{ T.border }};clip-path:{{ T.clipTop }};color:{{ T.ink }};font-family:{{ T.body }};text-shadow:{{ T.glow }}">
+            <div style="position:relative;height:220px;margin:{{ T.artInset }};border-radius:{{ T.artRadius }};overflow:hidden">
+              <canvas ref="{{ setArt }}" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;display:block"></canvas>
+              <div style="position:absolute;left:24px;right:24px;bottom:20px;display:flex;justify-content:space-between;align-items:flex-end;color:{{ T.artInk }}">
+                <span style="font-family:{{ T.display }};font-size:{{ T.vTitle }};font-weight:{{ T.h1w }};letter-spacing:{{ T.h1t }};line-height:1;text-transform:{{ T.case }}">FRAME/26</span>
+                <span style="font-family:{{ T.mono }};font-size:11px;letter-spacing:.12em">LISBON</span>
+              </div>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:22px 12px;padding:26px 28px 30px">
+              <sc-for list="{{ vFacts }}" as="f" hint-placeholder-count="6">
+                <div><div style="font-family:{{ T.mono }};font-size:{{ T.label }};letter-spacing:{{ T.labelTrack }};color:{{ T.muted }};text-transform:uppercase;margin-bottom:4px">{{ f.k }}</div><div style="font-family:{{ T.display }};font-size:{{ f.size }};font-weight:{{ f.w }};letter-spacing:{{ T.h1t }};line-height:1.05">{{ f.v }}</div></div>
+              </sc-for>
+            </div>
+            <sc-if value="{{ torn }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;right:24px;top:236px;padding:6px 12px;border:3px solid {{ T.stamp }};color:{{ T.stamp }};font-family:{{ T.display }};font-size:20px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;border-radius:6px;animation:{{ stampAnim }};transform:rotate(-14deg);text-shadow:none">Admitted</div></sc-if>
+            <sc-if value="{{ is.retro }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(0,0,0,.28) 0 1px,transparent 1px 3px)"></div></sc-if>
+            <div style="position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at var(--mx,50%) var(--my,50%),{{ T.shine }},transparent 45%);mix-blend-mode:{{ T.shineBlend }}"></div>
+          </div>
+          <div style="position:relative;height:0;border-top:{{ T.perf }};margin:0 16px"></div>
+          <div ref="{{ setStub }}" onPointerDown="{{ stubDown }}" onPointerMove="{{ stubMove }}" onPointerUp="{{ stubUp }}" onPointerCancel="{{ stubUp }}" style="position:relative;display:flex;flex-direction:column;gap:10px;align-items:center;padding:20px 28px 18px;background:{{ T.cardAlt }};border-radius:{{ T.radiusBot }};box-shadow:{{ T.shadow }};border:{{ T.border }};clip-path:{{ T.clipBot }};color:{{ T.ink }};font-family:{{ T.body }};text-shadow:{{ T.glow }};cursor:grab;touch-action:none;transform-origin:0% 0%">
+            <div style="position:relative;overflow:hidden;display:flex;align-items:stretch;height:64px;width:100%;justify-content:center">
+              <sc-for list="{{ bars }}" as="b" hint-placeholder-count="40"><span style="flex:none;width:{{ b.w }};margin-right:{{ b.g }};background:{{ T.ink }}"></span></sc-for>
+              <div style="position:absolute;top:0;bottom:0;width:3px;background:{{ T.laser }};box-shadow:0 0 12px 2px {{ T.laser }};animation:{{ scanAnimV }}"></div>
+            </div>
+            <div style="font-family:{{ T.mono }};font-size:{{ T.label }};letter-spacing:{{ T.labelTrack }};color:{{ T.muted }};text-transform:uppercase">Confirmation # {{ ticketId }} · {{ attendee }}</div>
+          </div>
+        </div>
+        <div style="position:absolute;inset:0;display:flex;flex-direction:column;gap:16px;align-items:center;justify-content:center;padding:28px;backface-visibility:hidden;-webkit-backface-visibility:hidden;transform:rotateY(180deg);background:{{ T.card }};border-radius:{{ T.radius }};box-shadow:{{ T.shadow }};border:{{ T.border }};color:{{ T.ink }};font-family:{{ T.body }};text-shadow:{{ T.glow }}">
+          <canvas ref="{{ setQr }}" aria-label="QR code for {{ ticketId }}" style="width:200px;height:200px;display:block;image-rendering:pixelated"></canvas>
+          <div style="font-family:{{ T.display }};font-size:{{ T.btnSize }};font-weight:{{ T.btnW }};letter-spacing:{{ T.h1t }};text-transform:{{ T.case }}">{{ attendee }}</div>
+          <div style="font-family:{{ T.mono }};font-size:{{ T.label }};letter-spacing:{{ T.labelTrack }};color:{{ T.muted }};text-transform:uppercase">Show at the door · {{ ticketId }}</div>
+        </div>
+      </sc-if>
+    </div>
+  </div>
+</section>
+
+<div style="display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:14px 2px 0;font-size:12px;color:#6b6a64">
+  <span>&lt;EventTicket variant="{{ variant }}" layout="{{ layoutKey }}" /&gt;</span>
+  <span>{{ hint }}</span>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;defaultVariant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;minimal&quot;,&quot;craft&quot;,&quot;retro&quot;,&quot;toy&quot;],&quot;default&quot;:&quot;minimal&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+const VARIANTS = [
+  { id: 'minimal', label: 'Minimal', font: 'Geist, sans-serif', size: '14px', track: '-.01em' },
+  { id: 'craft', label: 'Craft', font: "'Bricolage Grotesque', sans-serif", size: '15px', track: '-.01em' },
+  { id: 'retro', label: 'RETRO', font: 'VT323, monospace', size: '19px', track: '.04em' },
+  { id: 'toy', label: 'Toy', font: 'Archivo, sans-serif', size: '15px', track: '-.01em' },
+];
+const CUT = 18;
+const THEMES = {
+  minimal: {
+    artW: '156px', artOrder: 0, artClip: 'none', drop: 'none',
+    stage: '#eceeee', stageSize: 'auto', card: '#ffffff', cardAlt: '#ffffff', ink: '#111111', muted: '#6f6e69', rule: 'rgba(17,17,17,.16)',
+    accent: '#c6f432', accentInk: '#111111', knob: '#111111', knobInk: '#c6f432', laser: '#ff3b30', stamp: '#e5484d',
+    display: 'Geist, sans-serif', body: 'Geist, sans-serif', mono: "'Geist Mono', monospace",
+    radius: '16px', radiusTop: '16px', radiusBot: '16px', artInset: '10px', artRadius: '10px', artInk: '#111111',
+    shadow: '0 1px 2px rgba(0,0,0,.05), 0 24px 48px -24px rgba(0,0,0,.25)', border: '0', glow: 'none',
+    h1: '58px', h1w: 500, h1t: '-.045em', case: 'none', vTitle: '30px', bigSize: '46px', bigW: 300,
+    label: '10.5px', labelTrack: '.08em', bodySize: '14px', small: '12px', inputSize: '14px', inputLine: '1px solid rgba(17,17,17,.4)',
+    btnSize: '22px', btnW: 500, perf: '3px dotted #c4c4c0', rot: '0deg',
+    clipMain: 'none', clipStub: 'none', clipTop: 'none', clipBot: 'none', shine: 'rgba(255,255,255,.55)', shineBlend: 'soft-light', kicker: 'FRAME/26 · Conference',
+  },
+  retro: {
+    artW: '156px', artOrder: 0, artClip: 'none', drop: 'none',
+    stage: '#0b0d0a', stageSize: 'auto', card: '#061108', cardAlt: '#071509', ink: '#6dff8a', muted: '#3fae55', rule: 'rgba(109,255,138,.35)',
+    accent: '#4fdc68', accentInk: '#061108', knob: '#c9ffd2', knobInk: '#061108', laser: '#ffffff', stamp: '#ffd34d',
+    display: 'VT323, monospace', body: 'VT323, monospace', mono: 'VT323, monospace',
+    radius: '0', radiusTop: '0', radiusBot: '0', artInset: '0', artRadius: '0', artInk: '#c9ffd2',
+    shadow: '0 0 0 4px #1c2a1d, 0 0 40px rgba(80,255,120,.15)', border: '3px double #4fdc68', glow: '0 0 6px rgba(80,255,120,.55)',
+    h1: '72px', h1w: 400, h1t: '0', case: 'uppercase', vTitle: '40px', bigSize: '52px', bigW: 400,
+    label: '17px', labelTrack: '.04em', bodySize: '21px', small: '18px', inputSize: '22px', inputLine: '2px dashed #3fae55',
+    btnSize: '28px', btnW: 400, perf: '3px dashed #3fae55', rot: '0deg',
+    clipMain: 'none', clipStub: 'none', clipTop: 'none', clipBot: 'none', shine: 'rgba(120,255,150,.18)', shineBlend: 'screen', kicker: '> TICKET.SYS / FRAME26',
+  },
+  craft: {
+    artW: '156px', artOrder: 0, artClip: 'none', drop: 'none',
+    stage: "#efe7d8 url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/><feColorMatrix values='0 0 0 0 .35 0 0 0 0 .25 0 0 0 0 .15 0 0 0 .09 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>\")", stageSize: 'auto', card: '#fbf7ef', cardAlt: '#f4ecdd', ink: '#2a1f14', muted: '#7d6650', rule: 'rgba(42,31,20,.16)',
+    accent: '#e0713a', accentInk: '#fff6ea', knob: '#2a1f14', knobInk: '#ffd9b8', laser: '#e0713a', stamp: '#b8471f',
+    display: "'Bricolage Grotesque', sans-serif", body: "'Bricolage Grotesque', sans-serif", mono: "'Geist Mono', monospace",
+    radius: '10px', radiusTop: '10px', radiusBot: '10px', artInset: '10px', artRadius: '6px', artInk: '#2a1f14',
+    shadow: 'inset 0 1px 0 rgba(255,255,255,.8), 0 2px 4px rgba(70,45,20,.12), 0 22px 40px -14px rgba(70,45,20,.4)', border: '0', glow: 'none',
+    h1: '56px', h1w: 800, h1t: '-.045em', case: 'none', vTitle: '32px', bigSize: '46px', bigW: 800,
+    label: '10.5px', labelTrack: '.06em', bodySize: '15px', small: '12.5px', inputSize: '14px', inputLine: '2px solid rgba(42,31,20,.2)',
+    btnSize: '23px', btnW: 800, perf: '2px dashed rgba(42,31,20,.28)', rot: '-1deg',
+    clipMain: 'none', clipStub: 'none', clipTop: 'none', clipBot: 'none', shine: 'rgba(255,255,255,.45)', shineBlend: 'soft-light', kicker: 'Admit one!',
+  },
+  toy: {
+    artW: '156px', artOrder: 0, artClip: 'none', drop: 'none',
+    stage: 'radial-gradient(circle,rgba(60,45,20,.09) 2px,transparent 2.5px), #e3dfd5', stageSize: '22px 22px', card: '#f8f5ef', cardAlt: '#efeae0', ink: '#1e1d1a', muted: '#6b665b', rule: 'rgba(30,29,26,.14)',
+    accent: '#ef4f2b', accentInk: '#ffffff', knob: '#2c55e0', knobInk: '#ffffff', laser: '#ef4f2b', stamp: '#2c55e0',
+    display: 'Archivo, sans-serif', body: 'Archivo, sans-serif', mono: "'IBM Plex Mono', monospace",
+    radius: '22px', radiusTop: '22px', radiusBot: '22px', artInset: '12px', artRadius: '14px', artInk: '#1e1d1a',
+    shadow: 'inset 0 1px 0 #fff, 0 8px 0 #d2ccbf, 0 26px 34px -16px rgba(40,28,10,.5)', border: '0', glow: 'none',
+    h1: '54px', h1w: 800, h1t: '-.035em', case: 'none', vTitle: '30px', bigSize: '46px', bigW: 800,
+    label: '10.5px', labelTrack: '.08em', bodySize: '14px', small: '12px', inputSize: '14px', inputLine: '2px solid rgba(30,29,26,.18)',
+    btnSize: '22px', btnW: 800, perf: '4px dotted #cfc8b8', rot: '0deg',
+    clipMain: 'none', clipStub: 'none', clipTop: 'none', clipBot: 'none', shine: 'rgba(255,255,255,.5)', shineBlend: 'soft-light', kicker: 'FRAME/26 · Admit one',
+    gooFilter: 'none', btnRad: '16px', btnBox: '0 6px 0 #b5311a, 0 12px 14px -6px rgba(40,28,10,.4)', toyAttr: 'press', btnShadow: '#b5311a',
+  },
+};
+const hashStr = s => { let h = 2166136261; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; };
+const rngFrom = seed => () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+const BAYER = [0, 8, 2, 10, 12, 4, 14, 6, 3, 11, 1, 9, 15, 7, 13, 5];
+const TICKET_ID = 'FRM-260918';
+const CUBE_V = [[-1,-1,-1],[1,-1,-1],[1,1,-1],[-1,1,-1],[-1,-1,1],[1,-1,1],[1,1,1],[-1,1,1]];
+const CUBE_F = [[0,1,2,3],[4,5,6,7],[0,1,5,4],[2,3,7,6],[1,2,6,5],[0,3,7,4]];
+const FACE_C = ['120,140,255','200,120,255','150,200,255','255,140,210','170,150,255','110,180,255'];
+function drawCube(ctx, cx, cy, s, ax, ay, a) {
+  const ca = Math.cos(ay), sa = Math.sin(ay), cb = Math.cos(ax), sb = Math.sin(ax);
+  const P = CUBE_V.map(([x, y, z]) => { const x1 = x * ca + z * sa, z1 = -x * sa + z * ca; return [cx + x1 * s, cy + (y * cb - z1 * sb) * s, y * sb + z1 * cb]; });
+  const faces = CUBE_F.map((f, i) => ({ f, i, z: f.reduce((m, k) => m + P[k][2], 0) / 4 })).sort((p, q) => q.z - p.z);
+  ctx.save(); ctx.globalCompositeOperation = 'lighter'; ctx.lineJoin = 'round';
+  for (const { f, i, z } of faces) {
+    ctx.beginPath(); f.forEach((k, j) => j ? ctx.lineTo(P[k][0], P[k][1]) : ctx.moveTo(P[k][0], P[k][1])); ctx.closePath();
+    const g = ctx.createLinearGradient(P[f[0]][0], P[f[0]][1], P[f[2]][0], P[f[2]][1]);
+    g.addColorStop(0, `rgba(${FACE_C[i]},${(a * .42).toFixed(3)})`); g.addColorStop(1, `rgba(255,255,255,${(a * .1).toFixed(3)})`);
+    ctx.fillStyle = g; ctx.fill();
+    ctx.strokeStyle = `rgba(235,230,255,${(a * (z < 0 ? .95 : .35)).toFixed(3)})`; ctx.lineWidth = Math.max(1, s * .035);
+    ctx.shadowColor = 'rgba(170,140,255,.9)'; ctx.shadowBlur = s * .3; ctx.stroke(); ctx.shadowBlur = 0;
+  }
+  ctx.restore();
+}
+const FX_CUBES = [[.07,.8,46,.3],[.13,.3,22,1.4],[.36,.1,16,2.2],[.86,.12,34,.9],[.92,.8,24,2.8],[.62,.9,13,1.9]];
+
+class Component extends DCLogic {
+  state = { variant: null, layout: 'h', flipped: false, torn: false, name: '', email: '', stage: 'form', err: '', errKey: 0, btnHover: false };
+
+  componentDidMount() {
+    this.reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!document.getElementById('dc-goo-defs')) {
+      const d = document.createElement('div'); d.id = 'dc-goo-defs';
+      d.innerHTML = '<svg width="0" height="0" style="position:absolute"><defs><filter id="dc-goo" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur in="SourceGraphic" stdDeviation="9" result="b"/><feColorMatrix in="b" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -9"/></filter></defs></svg>';
+      document.body.appendChild(d);
+    }
+    this.onKey = e => { if (/input|textarea/i.test(e.target.tagName)) return; const k = parseInt(e.key, 10); if (k >= 1 && k <= 5) this.setState({ variant: VARIANTS[k - 1].id }); };
+    window.addEventListener('keydown', this.onKey);
+  }
+  componentWillUnmount() { this.fitRO?.disconnect(); window.removeEventListener('keydown', this.onKey); cancelAnimationFrame(this.raf); clearTimeout(this.bt); }
+  componentDidUpdate(_, prev) {
+    if (prev.flipped !== this.state.flipped) this.applyTilt(0, 0);
+    this.drawQr(); this.kickArt(); this.fxKick();
+    if (prev.layout !== this.state.layout) this.fit();
+  }
+
+  variant() { return this.props.variant ?? this.state.variant ?? this.props.defaultVariant ?? 'minimal'; }
+  seed() { return hashStr((this.state.name.trim() || 'guest') + '|' + this.variant()); }
+
+  // fit-to-stage (no scrollbars)
+  setStage = el => { this.stageEl = el; this.fitRO?.disconnect(); if (el) { this.fitRO = new ResizeObserver(() => this.fit()); this.fitRO.observe(el); } };
+  setFit = el => { this.fitEl = el; this.fit(); };
+  fit() {
+    const s = this.stageEl, f = this.fitEl; if (!s || !f) return;
+    f.style.zoom = 1;
+    const cs = getComputedStyle(s), avail = s.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight) - 16;
+    const k = Math.min(1, avail / f.offsetWidth);
+    if (k < 0.75 && this.state.layout === 'h' && !this.autoV) { this.autoV = true; this.setState({ layout: 'v' }); return; }
+    f.style.zoom = k > 0 ? Math.max(k, 0.45) : 1;
+  }
+
+  // tilt + flip
+  setCard = el => { this.card = el; if (el) this.applyTilt(0, 0); };
+  applyTilt(rx, ry) {
+    if (!this.card) return;
+    const f = this.state.flipped ? 180 : 0;
+    this.card.style.transform = `rotateX(${rx}deg) rotateY(${f + ry}deg)`;
+  }
+
+  // generative art
+  setArt = el => { this.art = el; this.artT0 = performance.now(); if (el) { this.artRO?.disconnect(); this.artRO = new ResizeObserver(() => this.kickArt()); this.artRO.observe(el); this.kickArt(); } };
+  kickArt() { if (!this.raf && this.art) this.raf = requestAnimationFrame(t => this.drawArt(t)); }
+  drawArt(t) {
+    this.raf = null;
+    const c = this.art; if (!c) return;
+    const dpr = Math.min(2, devicePixelRatio || 1), W = c.clientWidth, H = c.clientHeight;
+    if (!W || !H) return;
+    if (c.width !== Math.round(W * dpr) || c.height !== Math.round(H * dpr)) { c.width = Math.round(W * dpr); c.height = Math.round(H * dpr); }
+    const ctx = c.getContext('2d'); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const v = this.variant(), r = rngFrom(this.seed()), still = this.reduced;
+    const tt = still ? 0 : t / 1000;
+    let animate = !still && v === 'retro';
+    ctx.globalCompositeOperation = 'source-over'; ctx.shadowBlur = 0; ctx.shadowOffsetY = 0;
+    if (v === 'minimal') {
+      ctx.fillStyle = '#c6f432'; ctx.fillRect(0, 0, W, H);
+      const step = 13, f1 = .02 + r() * .05, f2 = .02 + r() * .05, p1 = r() * 6, p2 = r() * 6, cx = r() * W, cy = r() * H;
+      ctx.fillStyle = '#111';
+      for (let y = step / 2; y < H; y += step) for (let x = step / 2; x < W; x += step) {
+        const d = Math.hypot(x - cx, y - cy);
+        const val = .5 + .5 * Math.sin(d * f1 + p1) * Math.cos(x * f2 + p2 + y * .01);
+        const rad = val * step * .5;
+        if (rad > .6) { ctx.beginPath(); ctx.arc(x, y, rad, 0, Math.PI * 2); ctx.fill(); }
+      }
+    } else if (v === 'retro') {
+      ctx.fillStyle = '#061108'; ctx.fillRect(0, 0, W, H);
+      const px = 5, a = r() * 6, b = .02 + r() * .04, k = .03 + r() * .04;
+      for (let y = 0; y < H; y += px) for (let x = 0; x < W; x += px) {
+        const n = .5 + .35 * Math.sin(x * b + a + tt * .8) * Math.cos(y * k - tt * .5) + .3 * Math.sin((x + y) * .03 + a * 2) - (1 - y / H) * .35;
+        const th = (BAYER[((y / px) % 4) * 4 + ((x / px) % 4)] + .5) / 16;
+        if (n > th) { ctx.fillStyle = n > .85 ? '#c9ffd2' : '#4fdc68'; ctx.fillRect(x, y, px - 1, px - 1); }
+      }
+    } else if (v === 'toy') {
+      ctx.fillStyle = '#2c55e0'; ctx.fillRect(0, 0, W, H);
+      const cols = ['#ef4f2b', '#f4b52a', '#f8f5ef', '#33b07a', '#1e1d1a'], cs = W / 2, pd = cs * .12;
+      ctx.shadowColor = 'rgba(10,20,70,.35)'; ctx.shadowBlur = 0; ctx.shadowOffsetY = 4;
+      for (let y = 0; y < H; y += cs) for (let x = 0; x < W; x += cs) {
+        const k = Math.floor(r() * 4), s = cs - pd * 2, cx = x + cs / 2, cy = y + cs / 2; ctx.fillStyle = cols[Math.floor(r() * cols.length)];
+        ctx.save(); ctx.translate(cx, cy); ctx.rotate(Math.floor(r() * 4) * Math.PI / 2); ctx.beginPath();
+        if (k === 0) ctx.arc(0, 0, s / 2, 0, Math.PI * 2);
+        else if (k === 1) { ctx.arc(0, s / 4, s / 2, Math.PI, 0); }
+        else if (k === 2) { ctx.roundRect ? ctx.roundRect(-s / 2, -s / 2, s, s, s * .18) : ctx.rect(-s / 2, -s / 2, s, s); }
+        else { ctx.moveTo(-s / 2, s / 2); ctx.arc(-s / 2, s / 2, s, -Math.PI / 2, 0); ctx.closePath(); }
+        ctx.fill(); ctx.restore();
+      }
+      ctx.shadowOffsetY = 0;
+    } else {
+      ctx.fillStyle = '#f1e6d2'; ctx.fillRect(0, 0, W, H);
+      const cols = ['#e0713a', '#2a1f14', '#f2c9a0', '#3178c6', '#ee9f63', '#b8471f', '#ffe27a'];
+      ctx.shadowColor = 'rgba(70,45,20,.3)'; ctx.shadowBlur = 6; ctx.shadowOffsetY = 3;
+      for (let i = 0; i < 11; i++) {
+        const x = r() * W, y = r() * H, s = 18 + r() * Math.min(W, H) * .35, kind = Math.floor(r() * 3);
+        ctx.save(); ctx.translate(x, y); ctx.rotate((r() - .5) * 1.6); ctx.fillStyle = cols[Math.floor(r() * cols.length)];
+        ctx.beginPath();
+        if (kind === 0) ctx.arc(0, 0, s / 2, 0, Math.PI * 2); else if (kind === 1) ctx.arc(0, 0, s / 2, 0, Math.PI); else ctx.rect(-s / 2, -s / 5, s, s / 2.5);
+        ctx.fill(); ctx.restore();
+      }
+    }
+    if (animate) this.kickArt();
+  }
+
+  // fluid stage fx
+  setFx = el => {
+    this.fx = el; cancelAnimationFrame(this.fxRaf); this.fxRaf = null;
+    if (el) { this.fxRO?.disconnect(); this.fxRO = new ResizeObserver(() => this.fxKick()); this.fxRO.observe(el); this.fxKick(); } else this.fxRO?.disconnect();
+  };
+  fxKick() { if (!this.fxRaf && this.fx) this.fxRaf = requestAnimationFrame(t => this.fxFrame(t)); }
+  fxFrame(t) {
+    this.fxRaf = null; const c = this.fx; if (!c) return;
+    const dpr = Math.min(2, devicePixelRatio || 1), W = c.clientWidth, H = c.clientHeight; if (!W || !H) return;
+    if (c.width !== Math.round(W * dpr) || c.height !== Math.round(H * dpr)) { c.width = Math.round(W * dpr); c.height = Math.round(H * dpr); }
+    const ctx = c.getContext('2d'); ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
+    const tt = this.reduced ? 0 : t / 1000;
+    const fl = ctx.createLinearGradient(0, H * .72, 0, H); fl.addColorStop(0, 'rgba(120,90,255,0)'); fl.addColorStop(1, 'rgba(120,90,255,.18)');
+    ctx.fillStyle = fl; ctx.fillRect(0, H * .72, W, H * .28);
+    ctx.save(); ctx.translate(W / 2, H / 2); ctx.rotate(-.12);
+    const rg = ctx.createLinearGradient(-W * .42, 0, W * .42, 0); rg.addColorStop(0, 'rgba(110,180,255,.55)'); rg.addColorStop(.5, 'rgba(200,170,255,.2)'); rg.addColorStop(1, 'rgba(255,140,210,.6)');
+    ctx.strokeStyle = rg; ctx.lineWidth = 12; ctx.shadowColor = 'rgba(160,130,255,.8)'; ctx.shadowBlur = 24;
+    ctx.beginPath(); ctx.ellipse(0, 0, W * .42, H * .3, 0, 0, Math.PI * 2); ctx.stroke();
+    ctx.lineWidth = 1.5; ctx.strokeStyle = 'rgba(255,255,255,.55)'; ctx.shadowBlur = 8; ctx.beginPath(); ctx.ellipse(0, 0, W * .42, H * .3, 0, 0, Math.PI * 2); ctx.stroke();
+    ctx.restore();
+    for (const [fx, fy, s, ph] of FX_CUBES) drawCube(ctx, fx * W, fy * H + Math.sin(tt * .8 + ph) * 6, s, .5 + ph * .2 + tt * .2, ph + tt * .35, .9);
+    if (!this.reduced && this.variant() === 'fluid') this.fxKick();
+  }
+
+  // QR
+  setQr = el => { this.qr = el; this.drawQr(); };
+  drawQr() {
+    const c = this.qr; if (!c) return;
+    const N = 25, sz = 8, T = THEMES[this.variant()];
+    c.width = N * sz; c.height = N * sz;
+    const ctx = c.getContext('2d'), r = rngFrom(hashStr(TICKET_ID + this.state.name));
+    ctx.fillStyle = T.card.startsWith('#') ? T.card : '#f3f4fa'; ctx.fillRect(0, 0, c.width, c.height);
+    ctx.fillStyle = T.ink;
+    const finder = (fx, fy) => (x, y) => x >= fx && x < fx + 7 && y >= fy && y < fy + 7;
+    const fs = [finder(0, 0), finder(N - 7, 0), finder(0, N - 7)];
+    for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) {
+      const f = fs.find(fn => fn(x, y)); let on;
+      if (f) { const lx = x % (N - 7) === 0 || x === 6 || x === N - 1 || x === N - 7, ly = y === 0 || y === 6 || y === N - 7 || y === N - 1;
+        const fx = x < 7 ? 0 : N - 7, fy = y < 7 ? 0 : N - 7, dx = x - fx, dy = y - fy;
+        on = dx === 0 || dx === 6 || dy === 0 || dy === 6 || (dx >= 2 && dx <= 4 && dy >= 2 && dy <= 4); }
+      else if ((x < 8 && y < 8) || (x > N - 9 && y < 8) || (x < 8 && y > N - 9)) on = false;
+      else on = r() > .52;
+      if (on) ctx.fillRect(x * sz, y * sz, sz, sz);
+    }
+  }
+
+  // tear
+  setStub = el => { this.stub = el; if (el && this.state.torn) this.applyTorn(false); };
+  axis() { return this.state.layout === 'h' ? 'x' : 'y'; }
+  applyTorn(animate) {
+    const s = this.stub; if (!s) return;
+    s.style.transition = animate ? 'transform .7s cubic-bezier(.4,0,.6,1), opacity .5s .2s' : 'none';
+    s.style.transform = this.axis() === 'x' ? 'translate(220px,60px) rotate(18deg)' : 'translate(40px,240px) rotate(-14deg)';
+    s.style.opacity = '0'; s.style.pointerEvents = 'none';
+  }
+
+  renderVals() {
+    const variant = this.variant(), T = { gooFilter: 'url(#dc-goo)', btnRad: '0', btnBox: 'none', toyAttr: '', btnShadow: '', ...(THEMES[variant] || THEMES.minimal) };
+    const { stage, layout, torn, name, email, btnHover } = this.state;
+    const motionOff = this.reduced;
+    const r = rngFrom(hashStr(TICKET_ID));
+    const bars = []; let total = 0;
+    while (total < 230) { const w = [1, 1, 2, 3, 2, 4][Math.floor(r() * 6)], g = [1, 2, 2, 3][Math.floor(r() * 4)]; bars.push({ w: w + 'px', g: g + 'px' }); total += w + g; }
+    const sending = stage === 'sending';
+    const first = name.trim().split(/\s+/)[0] || 'friend';
+    setTimeout(() => { this.kickArt(); this.drawQr(); }, 0);
+    return {
+      setCard: this.setCard, setArt: this.setArt, setQr: this.setQr, setStub: this.setStub, setFx: this.setFx, showTabs: this.props.variant == null, setStage: this.setStage, setFit: this.setFit,
+      frontTfH: torn ? `rotate(${T.rot}) translateX(149px) scale(1.04)` : `rotate(${T.rot})`,
+      frontTfV: torn ? `rotate(${T.rot}) translateY(62px) scale(1.04)` : `rotate(${T.rot})`,
+      T, variant, is: Object.fromEntries(VARIANTS.map(v => [v.id, v.id === variant])),
+      isH: layout === 'h', isV: layout === 'v', layoutKey: layout === 'h' ? 'horizontal' : 'vertical',
+      torn, ticketId: TICKET_ID, name, email, firstName: first,
+      attendee: name.trim() || 'Your name',
+      showForm: stage !== 'booked', booked: stage === 'booked',
+      err: this.state.err, errAnim: this.state.err ? `shake .3s ${this.state.errKey % 2 ? '' : 'linear'}` : 'none',
+      bars,
+      scanAnim: motionOff ? 'none' : 'scan-x 2.4s cubic-bezier(.45,0,.55,1) infinite',
+      scanAnimV: motionOff ? 'none' : 'scan-x 3s cubic-bezier(.45,0,.55,1) infinite',
+      stampAnim: motionOff ? 'none' : 'stamp-in .35s cubic-bezier(.3,1.6,.5,1) both',
+      goo: {
+        pillL: sending ? 'calc(50% - 52px)' : '0', pillR: sending ? 'calc(50% - 52px)' : '0', pillRad: sending ? '52px' : (T.radius === '0' ? '0' : '16px'),
+        knobT: '22px', knobR: sending ? 'calc(50% - 30px)' : '18px',
+        textOp: sending ? 0 : 1, btnBox: sending ? 'none' : T.btnBox,
+        drops: sending && !motionOff ? [{ dx: '-58px', dy: '-10px', delay: '0s' }, { dx: '52px', dy: '18px', delay: '.15s' }, { dx: '6px', dy: '-58px', delay: '.3s' }, { dx: '-12px', dy: '56px', delay: '.45s' }] : [],
+      },
+      tabs: VARIANTS.map((v, i) => { const a = v.id === variant; return { ...v, key: i + 1, active: a, bg: a ? '#161614' : 'transparent', fg: a ? '#f5f4f0' : '#4a4944', select: () => this.setState({ variant: v.id }) }; }),
+      layouts: [{ id: 'h', label: 'Horizontal' }, { id: 'v', label: 'Vertical' }].map(l => ({ ...l, bg: l.id === layout ? '#161614' : 'transparent', fg: l.id === layout ? '#f5f4f0' : '#4a4944', select: () => this.setState({ layout: l.id }) })),
+      flip: () => this.setState(s => ({ flipped: !s.flipped })),
+      reset: () => {
+        clearTimeout(this.bt);
+        if (this.stub) { this.stub.style.transition = 'transform .6s cubic-bezier(.34,1.5,.5,1), opacity .3s'; this.stub.style.transform = ''; this.stub.style.opacity = ''; this.stub.style.pointerEvents = ''; }
+        this.setState({ torn: false, flipped: false, stage: 'form', err: '' });
+      },
+      hint: this.state.flipped ? 'Flip again to see the front' : layout === 'h' && stage !== 'booked' ? 'Book on the stub, then drag it to tear' : 'Drag the stub to tear it off · hover to tilt',
+      onName: e => this.setState({ name: e.target.value, err: '' }),
+      onEmail: e => this.setState({ email: e.target.value, err: '' }),
+      btnIn: e => { if (this.state.stage === 'form') e.currentTarget.style.setProperty('--hov', '1'); }, btnOut: e => e.currentTarget.style.setProperty('--hov', '0'),
+      book: e => {
+        e.stopPropagation();
+        if (stage !== 'form') return;
+        if (!name.trim() || !/^\S+@\S+\.\S+$/.test(email)) { this.setState(s => ({ err: !name.trim() ? 'Add your name' : 'That email looks off', errKey: s.errKey + 1 })); return; }
+        e.currentTarget.style.setProperty('--hov', '0'); this.setState({ stage: 'sending' });
+        this.bt = setTimeout(() => this.setState({ stage: 'booked' }), motionOff ? 200 : 1500);
+      },
+      tiltMove: e => {
+        if (this.drag || !this.card || motionOff) return;
+        const rc = this.card.getBoundingClientRect();
+        const nx = (e.clientX - rc.left) / rc.width, ny = (e.clientY - rc.top) / rc.height;
+        this.card.style.transition = 'transform .12s linear';
+        this.applyTilt((0.5 - ny) * 10, (nx - 0.5) * 14 * (this.state.flipped ? -1 : 1));
+        this.card.style.setProperty('--mx', (nx * 100).toFixed(1) + '%'); this.card.style.setProperty('--my', (ny * 100).toFixed(1) + '%');
+      },
+      tiltLeave: () => { if (!this.card) return; this.card.style.transition = 'transform .7s cubic-bezier(.3,1.25,.5,1)'; this.applyTilt(0, 0); },
+      stubDown: e => {
+        if (torn || this.state.flipped || e.target.closest('input,button')) return;
+        e.currentTarget.setPointerCapture(e.pointerId);
+        this.drag = { x: e.clientX, y: e.clientY, d: 0 };
+        this.stub.style.transition = 'none'; this.stub.style.cursor = 'grabbing';
+      },
+      stubMove: e => {
+        if (!this.drag) return;
+        const ax = this.axis(), raw = ax === 'x' ? e.clientX - this.drag.x : e.clientY - this.drag.y;
+        const d = Math.max(0, raw); this.drag.d = d;
+        const resist = d < 30 ? d * 0.4 : 12 + (d - 30);
+        this.stub.style.transform = ax === 'x' ? `translateX(${resist}px) rotate(${resist * 0.05}deg)` : `translateY(${resist}px) rotate(${-resist * 0.03}deg)`;
+      },
+      stubUp: () => {
+        if (!this.drag) return;
+        const d = this.drag.d; this.drag = null; this.stub.style.cursor = '';
+        if (d > 110) { this.applyTorn(!motionOff); this.setState({ torn: true }); }
+        else { this.stub.style.transition = 'transform .55s cubic-bezier(.34,1.8,.5,1)'; this.stub.style.transform = ''; }
+      },
+      vFacts: [
+        { k: 'Track', v: 'Motion', size: T.btnSize, w: T.btnW },
+        { k: 'Room', v: 'B', size: T.bigSize, w: T.bigW },
+        { k: 'Seat', v: '15', size: T.bigSize, w: T.bigW },
+        { k: 'Price', v: '$179', size: T.bodySize, w: 500 },
+        { k: 'Date', v: '28 Oct', size: T.bodySize, w: 500 },
+        { k: 'Doors', v: '09:30', size: T.bodySize, w: 500 },
+      ],
+      schedule: [{ t: '09:30', what: 'Doors & coffee' }, { t: '10:15', what: 'Keynote — Motion as material' }, { t: '13:00', what: 'Workshops: shaders, springs, type' }, { t: '18:30', what: 'Afterparty at the river' }],
+      features: [
+        { n: '01', t: 'Tilt', d: 'Follows the pointer with a light sheen. Turned off under reduced motion.' },
+        { n: '02', t: 'Flip', d: 'The back holds a QR code generated from the ticket ID.' },
+        { n: '03', t: 'Book', d: 'Name and email on the stub. The gooey button merges, splits and lands.' },
+        { n: '04', t: 'Scan', d: 'A laser sweeps the barcode once you’re booked.' },
+        { n: '05', t: 'Tear', d: 'Drag the stub past the perforation to check in.' },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

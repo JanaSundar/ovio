@@ -1,0 +1,97 @@
+"use client";
+
+import { motion } from "motion/react";
+import { RollingNumber } from "@/components/shared/rolling-number";
+import { ToyKey, ToyPiece } from "@/components/shared/toy";
+import { motionTokens, useOvioTransition } from "@/lib/motion";
+import { cn } from "@/lib/utils";
+import type { RepositoryCardWorldProps } from "../repository-card";
+
+const keyClass =
+  "flex items-center justify-center gap-2 rounded-xl border-0 px-2.5 py-3.5 font-(family-name:--ovio-font) text-base font-extrabold text-(--ovio-ink) cursor-pointer touch-manipulation";
+
+export function ToyRepositoryCard({
+  repo,
+  stats,
+  starred,
+  starCount,
+  toggleStar,
+  language,
+  className,
+}: RepositoryCardWorldProps) {
+  const led = useOvioTransition(motionTokens.minimal.fast);
+  const counts = stats.filter((s) => s !== "stars");
+
+  return (
+    <article
+      data-ovio-world="toy"
+      className={cn(
+        "flex w-full max-w-[400px] flex-col gap-3.5 rounded-[22px] bg-(--ovio-surface) p-3.5 font-(family-name:--ovio-font) text-(--ovio-ink) shadow-[inset_0_1px_0_#fff,0_7px_0_#d2ccbf,0_22px_30px_-16px_rgba(40,28,10,.45)]",
+        className,
+      )}
+    >
+      <div className="relative rounded-(--ovio-radius) bg-(--ovio-accent) px-5 pt-[18px] pb-5 text-white shadow-[inset_0_-4px_0_rgba(0,0,0,.2),inset_0_2px_0_rgba(255,255,255,.2)]">
+        <div className="font-(family-name:--ovio-mono) text-[11px] tracking-[0.08em] uppercase">
+          {repo.owner} /
+        </div>
+        <h3
+          className="m-0 mt-1 text-[46px] leading-none font-extrabold tracking-[-0.03em]"
+          style={{ fontStretch: "118%" }}
+        >
+          {repo.name}
+        </h3>
+        <div aria-hidden className="absolute top-3.5 right-3.5 flex gap-1.5">
+          <span className="size-[11px] rounded-full bg-(--ovio-accent-deep) shadow-[inset_0_2px_2px_rgba(0,0,0,.4)]" />
+          <span className="size-[11px] rounded-full bg-(--ovio-accent-deep) shadow-[inset_0_2px_2px_rgba(0,0,0,.4)]" />
+        </div>
+      </div>
+      {repo.description && (
+        <p className="mx-1.5 my-0 text-sm leading-[1.45] text-(--ovio-ink-2)">{repo.description}</p>
+      )}
+      <div className="grid grid-cols-[1.4fr_1fr_64px] items-stretch gap-2.5">
+        {stats.includes("stars") && (
+          <ToyKey
+            depth={6}
+            side="var(--ovio-yellow-deep)"
+            aria-pressed={starred}
+            aria-label={starred ? "Unstar" : "Star"}
+            onClick={toggleStar}
+            className={cn(keyClass, "bg-(--ovio-yellow)")}
+          >
+            <motion.span
+              aria-hidden
+              className="size-2 rounded-full shadow-[inset_0_1px_1px_rgba(0,0,0,.3)]"
+              animate={{ backgroundColor: starred ? "#ef4f2b" : "#9c7414" }}
+              transition={led}
+            />
+            ★ <RollingNumber value={starCount} />
+          </ToyKey>
+        )}
+        {counts.slice(0, 1).map((stat) => (
+          <ToyKey
+            key={stat}
+            depth={6}
+            side="#cfc8b8"
+            className={cn(keyClass, "bg-white")}
+            aria-label={`${stat === "forks" ? repo.forks : (repo.issues ?? 0)} ${stat}`}
+          >
+            {stat === "forks" ? "⑂" : "◎"}{" "}
+            <RollingNumber value={stat === "forks" ? repo.forks : (repo.issues ?? 0)} />
+          </ToyKey>
+        ))}
+        <div className="flex items-center justify-center rounded-xl bg-[#e6e1d6] shadow-[inset_0_3px_5px_rgba(40,28,10,.25)]">
+          {language && (
+            <ToyPiece
+              title={language.name}
+              aria-label={language.name}
+              role="img"
+              className="flex size-[38px] items-center justify-center rounded-full bg-(--ovio-accent) text-[13px] font-extrabold text-white shadow-[0_4px_0_var(--ovio-accent-deep),0_8px_10px_-4px_rgba(40,28,10,.4)]"
+            >
+              {language.short}
+            </ToyPiece>
+          )}
+        </div>
+      </div>
+    </article>
+  );
+}

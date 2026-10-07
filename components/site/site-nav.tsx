@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { LogoLink } from "./logo";
 
-export const GITHUB_URL = "https://github.com/JanaSundar/ovio";
+const GITHUB_URL = "https://github.com/JanaSundar/ovio";
 
 export function SiteNav() {
   const pathname = usePathname();

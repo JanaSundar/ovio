@@ -10,8 +10,8 @@ import {
 import { useEffect, useRef, type KeyboardEvent, type PointerEvent, type RefObject } from "react";
 import { useReducedMotionSafe } from "@/lib/motion";
 
-export const ANGLE_MIN = -135;
-export const ANGLE_MAX = 135;
+const ANGLE_MIN = -135;
+const ANGLE_MAX = 135;
 const SPAN = ANGLE_MAX - ANGLE_MIN;
 /** How far past the end stop the cap can be pulled, in degrees. */
 const OVERDRAG = 8;
@@ -49,7 +49,7 @@ export type Knob = {
 
 const clamp = (v: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, v));
 
-export function indexToAngle(index: number, steps: number) {
+function indexToAngle(index: number, steps: number) {
   return ANGLE_MIN + (index * SPAN) / (steps - 1);
 }
 

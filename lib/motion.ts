@@ -26,7 +26,7 @@ export const ease = {
   stage: [0.2, 0.7, 0.2, 1],
 } as const satisfies Record<string, Ease>;
 
-export const spring = (stiffness: number, damping: number, mass = 1) =>
+const spring = (stiffness: number, damping: number, mass = 1) =>
   ({ type: "spring", stiffness, damping, mass }) as const;
 
 export const motionTokens = {
@@ -80,5 +80,3 @@ export function useReducedMotionSafe(): boolean {
 export function useOvioTransition(transition: Transition): Transition {
   return useReducedMotionSafe() ? INSTANT : transition;
 }
-
-export { INSTANT as instant };

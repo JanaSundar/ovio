@@ -4,6 +4,7 @@ import { motion } from "motion/react";
 import { useId, useRef, type KeyboardEvent } from "react";
 import { GooFilter } from "@/components/ovio/gooey-tabs/goo";
 import { WORLD_INFO } from "@/content/worlds";
+import { keyToIndex } from "@/lib/keys";
 import { ease, useReducedMotionSafe } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { useSiteWorld } from "./site-world";
@@ -27,10 +28,9 @@ export function WorldSwitcher({
   );
 
   const onKeyDown = (e: KeyboardEvent) => {
-    const d = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
-    if (!d) return;
+    const next = keyToIndex(e.key, index, WORLD_INFO.length, { wrap: true });
+    if (next === null) return;
     e.preventDefault();
-    const next = (index + d + 4) % 4;
     setWorld(WORLD_INFO[next].id);
     refs.current[next]?.focus();
   };

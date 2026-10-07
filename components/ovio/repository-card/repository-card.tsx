@@ -75,7 +75,7 @@ const LANGUAGE_SHORT: Record<string, string> = {
 };
 
 /** "2h ago", "3d ago". */
-export function relativeTime(iso: string, now = Date.now()): string {
+function relativeTime(iso: string, now = Date.now()): string {
   const s = Math.max(0, (now - new Date(iso).getTime()) / 1000);
   if (s < 60) return "just now";
   const units: [number, string][] = [

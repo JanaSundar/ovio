@@ -17,7 +17,7 @@ const STEPS = [
   {
     title: "Own the source",
     body: "The shadcn CLI copies TypeScript into your repo. No lock-in: edit anything.",
-    code: "npx shadcn add @ovio/…",
+    code: "npx shadcn add JanaSundar/ovio/…",
   },
 ];
 

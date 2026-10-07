@@ -4,10 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "pnpm registry:build && next build",
+    "build": "next build",
     "start": "next start",
     "lint": "oxlint",
-    "registry:build": "shadcn build && node scripts/check-registry.mjs",
+    "registry:validate": "shadcn registry validate",
     "format": "oxfmt --write .",
     "typecheck": "next typegen && tsc --noEmit",
     "format:check": "oxfmt --check ."

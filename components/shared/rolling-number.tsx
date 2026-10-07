@@ -13,8 +13,10 @@ function springEasing(duration = 0.9, w = 7.5, samples = 40) {
   return `linear(${points.join(",")})`;
 }
 
-const SPRING = springEasing();
-const TRANSFORM_TIMING = { duration: 900, easing: SPRING };
+const SPIN_TIMING = { duration: 900, easing: springEasing() };
+// NumberFlow eases its width and every digit's x position on transformTiming. Zero means a digit
+// added or dropped resizes the number at once, so neighbours never slide and digits roll in place.
+const LAYOUT_TIMING = { duration: 0, easing: "linear" };
 const OPACITY_TIMING = { duration: 450, easing: "ease-out" };
 
 export type RollingNumberProps = {
@@ -30,8 +32,9 @@ export type RollingNumberProps = {
 };
 
 /**
- * A number whose digits roll on change: 0.9s spring spin, 0.45s fade, tabular width,
- * and it continues from where it is when interrupted. Static under prefers-reduced-motion.
+ * A number whose digits roll in place on change: 0.9s spring spin, 0.45s fade, tabular width
+ * that snaps to the new value so neighbours never slide, and it continues from where it is
+ * when interrupted. Static under prefers-reduced-motion.
  */
 export function RollingNumber({
   value,
@@ -51,8 +54,8 @@ export function RollingNumber({
       prefix={prefix}
       suffix={suffix}
       {...(trend !== undefined && { trend })}
-      transformTiming={TRANSFORM_TIMING}
-      spinTiming={TRANSFORM_TIMING}
+      transformTiming={LAYOUT_TIMING}
+      spinTiming={SPIN_TIMING}
       opacityTiming={OPACITY_TIMING}
       respectMotionPreference
       className={className}

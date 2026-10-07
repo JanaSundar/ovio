@@ -25,7 +25,7 @@ const STATS = [
   { value: COMPONENTS.length, label: "Components at launch" },
   { value: 4, label: "Design worlds each" },
   { value: COMPONENTS.length * 4, label: "Distinct experiences" },
-  { value: 1, label: "Runtime dependency: Motion. three.js only if you add 3D" },
+  { value: 2, label: "Runtime dependencies: Motion and NumberFlow" },
 ];
 
 const BUILT_WITH = [
@@ -34,7 +34,7 @@ const BUILT_WITH = [
   "Motion for React",
   "Tailwind CSS",
   "shadcn registry",
-  "React Three Fiber + drei",
+  "NumberFlow",
 ];
 
 export default function HomePage() {

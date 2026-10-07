@@ -116,8 +116,8 @@ export default function IntroductionPage() {
       <section className="flex flex-col gap-3.5">
         <h2 className={h2}>3D</h2>
         <p className={p}>
-          The Toy contribution blocks ship as CSS 3D animated with Motion. A React Three Fiber
-          version is a separate, lazy-loaded item, so components without 3D never pull in three.js.
+          Nothing in Ovio needs WebGL. The Toy contribution blocks are CSS 3D transforms animated
+          with Motion, so no component pulls in three.js.
         </p>
       </section>
     </div>

@@ -1,6 +1,3 @@
-"use client";
-
-import { useLayoutEffect, useRef } from "react";
 import { unit, type ContributionCell } from "./year";
 import { formatNumber } from "@/lib/format";
 
@@ -23,12 +20,7 @@ export function dayIndexOf(target: EventTarget): number | null {
   return el ? Number(el.getAttribute("data-index")) : null;
 }
 
-/** A horizontal scroller that starts at its right end, so the latest weeks show first on narrow screens. */
-export function useScrollEnd<T extends HTMLElement>() {
-  const ref = useRef<T>(null);
-  useLayoutEffect(() => {
-    const el = ref.current;
-    if (el) el.scrollLeft = el.scrollWidth;
-  }, []);
-  return ref;
-}
+/** One equal, shrinkable column per week, so the grid always fits its container. */
+export const weekColumns = (weeks: number) => ({
+  gridTemplateColumns: `repeat(${weeks}, minmax(0, 1fr))`,
+});

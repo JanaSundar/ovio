@@ -65,7 +65,8 @@ export const motionTokens = {
 /** Entrance used by demo stages when the world changes. */
 export const worldIn = {
   initial: { opacity: 0, scale: 0.988, filter: "blur(8px)" },
-  animate: { opacity: 1, scale: 1, filter: "blur(0px)" },
+  // Clear the filter once in, so it never sits above an SVG goo filter (Safari drops nested filters).
+  animate: { opacity: 1, scale: 1, filter: "blur(0px)", transitionEnd: { filter: "none" } },
   transition: { duration: 0.55, ease: ease.stage },
 } as const;
 

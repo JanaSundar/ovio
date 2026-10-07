@@ -1,7 +1,7 @@
 "use client";
 
-import { motion, type Transition } from "motion/react";
-import type { CSSProperties } from "react";
+import { motion, useAnimate, type Transition } from "motion/react";
+import { useEffect, type CSSProperties } from "react";
 import { useReducedMotionSafe } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { STATUS_INDEX, type GooeyTabsWorldProps } from "./gooey-tabs";
@@ -22,10 +22,77 @@ export type GooLook = {
   trail: [Transition, Transition, Transition];
   /** Status dot colours: offline, building, online. */
   dots: [string, string, string];
-  /** Easing for the building orbit. */
-  orbitEase: Transition["ease"];
   colorDelay: number;
 };
+
+/**
+ * The deploy status: a dot with two satellites under the goo filter. Building swings the satellites
+ * out and back (the second a beat late) so they pull away from the dot; Online breathes the dot.
+ * Leaving a state snaps back to rest, as a CSS animation does when it is removed.
+ */
+const STATUS_DOTS = [
+  { size: 34, orbit: 0, delay: 0 },
+  { size: 20, orbit: 38, delay: 0 },
+  { size: 16, orbit: -38, delay: 0.3 },
+];
+const ORBIT: Transition = { duration: 1.2, ease: [0.5, 0, 0.5, 1], repeat: Infinity };
+const BREATHE: Transition = { duration: 2.4, ease: "easeInOut", repeat: Infinity };
+
+/**
+ * Runs the loops from an effect rather than as mount animations: a parent `AnimatePresence
+ * initial={false}` would otherwise skip them when the bar first renders already building.
+ */
+function StatusDots({
+  status,
+  colors,
+  filterId,
+}: {
+  status: number;
+  colors: GooLook["dots"];
+  filterId: string;
+}) {
+  const reduced = useReducedMotionSafe();
+  const [scope, run] = useAnimate<HTMLDivElement>();
+
+  useEffect(() => {
+    if (reduced) return;
+    const dots = [...scope.current.children] as HTMLElement[];
+    const loops =
+      status === 1
+        ? STATUS_DOTS.flatMap((d, j) =>
+            d.orbit ? [run(dots[j], { x: [0, d.orbit, 0] }, { ...ORBIT, delay: d.delay })] : [],
+          )
+        : status === 2
+          ? [run(dots[0], { scale: [1, 1.18, 1] }, BREATHE)]
+          : [];
+    return () => {
+      loops.forEach((l) => l.stop());
+      run(dots, { x: 0, scale: 1 }, { duration: 0 });
+    };
+  }, [status, reduced, run, scope]);
+
+  return (
+    <div
+      ref={scope}
+      aria-hidden
+      className="relative h-11 w-[120px]"
+      style={{ filter: `url(#${filterId})` }}
+    >
+      {STATUS_DOTS.map((d, j) => (
+        <div
+          key={j}
+          className="absolute top-1/2 left-1/2 rounded-full transition-[background-color] duration-600 motion-reduce:transition-none"
+          style={{
+            width: d.size,
+            height: d.size,
+            margin: `${-d.size / 2}px 0 0 ${-d.size / 2}px`,
+            backgroundColor: colors[status],
+          }}
+        />
+      ))}
+    </div>
+  );
+}
 
 /** The goo filter: blur the blobs together, then cut the alpha back to a hard edge. */
 export function GooFilter({ id, blur }: { id: string; blur: number }) {
@@ -55,9 +122,7 @@ export function GooTabs({ look, ...p }: GooeyTabsWorldProps & { look: GooLook })
     { top: "10%", width: w * 0.8, ml: w * 0.1, radius: "999px" },
     { top: "24%", width: w * 0.48, ml: w * 0.26, radius: "999px" },
   ];
-  const s = p.status ? STATUS_INDEX[p.status] : 0;
-  const dot = look.dots[s];
-  const loop = (t: Transition): Transition => (reduced ? { duration: 0 } : t);
+  const st = p.status ? STATUS_INDEX[p.status] : 0;
 
   return (
     <div
@@ -122,43 +187,7 @@ export function GooTabs({ look, ...p }: GooeyTabsWorldProps & { look: GooLook })
 
       {p.status && (
         <div className="flex flex-wrap items-center justify-center gap-[22px]">
-          <div
-            aria-hidden
-            className="relative h-11 w-[120px]"
-            style={{ filter: `url(#${p.filterId})` }}
-          >
-            {[
-              { size: 34, x: 0, delay: 0 },
-              { size: 20, x: 38, delay: 0 },
-              { size: 16, x: -38, delay: 0.3 },
-            ].map((d, j) => (
-              <motion.div
-                key={j}
-                className="absolute top-1/2 left-1/2 rounded-full"
-                style={{
-                  width: d.size,
-                  height: d.size,
-                  margin: `${-d.size / 2}px 0 0 ${-d.size / 2}px`,
-                }}
-                initial={false}
-                animate={{
-                  backgroundColor: dot,
-                  x: j > 0 && s === 1 && !reduced ? [0, d.x, 0] : 0,
-                  scale: j === 0 && s === 2 && !reduced ? [1, 1.18, 1] : 1,
-                }}
-                transition={{
-                  backgroundColor: loop({ duration: 0.6 }),
-                  x: loop({
-                    duration: 1.2,
-                    ease: look.orbitEase,
-                    delay: d.delay,
-                    repeat: Infinity,
-                  }),
-                  scale: loop({ duration: 2.4, ease: "easeInOut", repeat: Infinity }),
-                }}
-              />
-            ))}
-          </div>
+          <StatusDots status={st} colors={look.dots} filterId={p.filterId} />
           <div className="flex min-w-[150px] flex-col gap-0.5" role="status">
             <span className={cn("opacity-65", look.label)}>Deploy status</span>
             <span className={look.statusText}>{p.statusLabel}</span>

@@ -4,7 +4,12 @@ import { motion } from "motion/react";
 import { ToyKey } from "@/components/shared/toy";
 import { motionTokens, useOvioTransition, useReducedMotionSafe } from "@/lib/motion";
 import { cn } from "@/lib/utils";
-import { TYPE_LABEL, type ChangeType, type ChangelogWorldProps } from "../changelog";
+import {
+  TYPE_LABEL,
+  type ChangeType,
+  type ChangelogEntry,
+  type ChangelogWorldProps,
+} from "../changelog";
 
 /** Version chip colours, in turn: [plastic, ink]. */
 const CHIPS = [
@@ -51,72 +56,109 @@ export function ToyChangelog({ releases, open, toggle, className }: ChangelogWor
           PRESS TO OPEN
         </span>
       </div>
-      <ol className="m-0 flex list-none flex-col gap-3 p-0">
-        {releases.map((r, i) => {
-          const isOpen = open === i;
-          const [chip, chipInk] = CHIPS[i % CHIPS.length];
-          return (
-            <motion.li
-              key={r.version}
-              initial={reduced ? false : { opacity: 0, y: -48 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                y: { ...drop, delay: i * 0.08 },
-                opacity: { duration: reduced ? 0 : 0.2, delay: i * 0.08 },
-              }}
-            >
-              <ToyKey
-                depth={6}
-                side="var(--ovio-line)"
-                aria-expanded={isOpen}
-                onClick={() => toggle(i)}
-                className="block w-full cursor-pointer rounded-2xl border-0 bg-(--ovio-surface) p-0 text-left font-[inherit] text-(--ovio-ink) touch-manipulation outline-none focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-(--ovio-accent)"
+      {/*
+        The list sits over an invisible sizer: every header plus every release's notes stacked in one
+        grid cell, so the component is always as tall as its tallest open state. Opening or closing a
+        release moves the keys inside, never the page around it.
+      */}
+      <div className="relative">
+        <div aria-hidden className="invisible flex flex-col gap-3">
+          {releases.map((r, i) => (
+            <div key={r.version}>
+              <Header release={r} index={i} />
+              {i === releases.length - 1 && (
+                <div className="grid">
+                  {releases.map((rr) => (
+                    <Notes key={rr.version} release={rr} className="[grid-area:1/1]" />
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+        <ol className="absolute inset-x-0 top-0 m-0 flex list-none flex-col gap-3 p-0">
+          {releases.map((r, i) => {
+            const isOpen = open === i;
+            return (
+              <motion.li
+                key={r.version}
+                initial={reduced ? false : { opacity: 0, y: -48 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  y: { ...drop, delay: i * 0.08 },
+                  opacity: { duration: reduced ? 0 : 0.2, delay: i * 0.08 },
+                }}
               >
-                <span className="flex items-center gap-3 px-3.5 py-3">
-                  <span
-                    className="rounded-[9px] px-2.5 py-1.5 text-sm font-extrabold shadow-[inset_0_-3px_0_rgba(0,0,0,.2)]"
-                    style={{ background: chip, color: chipInk, fontStretch: "110%" }}
-                  >
-                    v{r.version}
-                  </span>
-                  <span className="min-w-0 flex-1 text-base font-bold">{r.title}</span>
-                  <time
-                    dateTime={r.dateTime}
-                    className="font-(family-name:--ovio-mono) text-[11px] text-(--ovio-muted)"
-                  >
-                    {r.date}
-                  </time>
-                </span>
-                <motion.span
-                  aria-hidden={!isOpen}
-                  className="block overflow-hidden"
-                  initial={false}
-                  animate={{ height: isOpen ? "auto" : 0, opacity: isOpen ? 1 : 0 }}
-                  transition={slide}
+                <ToyKey
+                  depth={6}
+                  side="var(--ovio-line)"
+                  aria-expanded={isOpen}
+                  onClick={() => toggle(i)}
+                  className="block w-full cursor-pointer rounded-2xl border-0 bg-(--ovio-surface) p-0 text-left font-[inherit] text-(--ovio-ink) touch-manipulation outline-none focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-(--ovio-accent)"
                 >
-                  <span className="flex flex-col gap-1 px-4 pt-0.5 pb-3.5">
-                    {r.items.map((item) => (
-                      <span key={item.text} className="text-sm leading-[1.45] text-(--ovio-ink-2)">
-                        {item.type ? (
-                          <span
-                            className="mr-1.5 rounded-[5px] px-1.5 py-px align-[1px] font-(family-name:--ovio-mono) text-[10px] font-semibold tracking-[0.06em] text-white uppercase"
-                            style={{ background: TYPE_CHIP[item.type] }}
-                          >
-                            {TYPE_LABEL[item.type]}
-                          </span>
-                        ) : (
-                          <span aria-hidden>+ </span>
-                        )}
-                        {item.text}
-                      </span>
-                    ))}
-                  </span>
-                </motion.span>
-              </ToyKey>
-            </motion.li>
-          );
-        })}
-      </ol>
+                  <Header release={r} index={i} />
+                  <motion.span
+                    aria-hidden={!isOpen}
+                    className="block overflow-hidden"
+                    initial={false}
+                    animate={{ height: isOpen ? "auto" : 0, opacity: isOpen ? 1 : 0 }}
+                    transition={slide}
+                  >
+                    <Notes release={r} />
+                  </motion.span>
+                </ToyKey>
+              </motion.li>
+            );
+          })}
+        </ol>
+      </div>
     </section>
+  );
+}
+
+type RowProps = { release: ChangelogEntry; index: number };
+
+/** The key cap: version chip, title and date. */
+function Header({ release: r, index }: RowProps) {
+  const [chip, chipInk] = CHIPS[index % CHIPS.length];
+  return (
+    <span className="flex items-center gap-3 px-3.5 py-3">
+      <span
+        className="rounded-[9px] px-2.5 py-1.5 text-sm font-extrabold shadow-[inset_0_-3px_0_rgba(0,0,0,.2)]"
+        style={{ background: chip, color: chipInk, fontStretch: "110%" }}
+      >
+        v{r.version}
+      </span>
+      <span className="min-w-0 flex-1 text-base font-bold">{r.title}</span>
+      <time
+        dateTime={r.dateTime}
+        className="font-(family-name:--ovio-mono) text-[11px] text-(--ovio-muted)"
+      >
+        {r.date}
+      </time>
+    </span>
+  );
+}
+
+/** The notes revealed under an open key. */
+function Notes({ release: r, className }: { release: ChangelogEntry; className?: string }) {
+  return (
+    <span className={cn("flex flex-col gap-1 px-4 pt-0.5 pb-3.5", className)}>
+      {r.items.map((item) => (
+        <span key={item.text} className="text-sm leading-[1.45] text-(--ovio-ink-2)">
+          {item.type ? (
+            <span
+              className="mr-1.5 rounded-[5px] px-1.5 py-px align-[1px] font-(family-name:--ovio-mono) text-[10px] font-semibold tracking-[0.06em] text-white uppercase"
+              style={{ background: TYPE_CHIP[item.type] }}
+            >
+              {TYPE_LABEL[item.type]}
+            </span>
+          ) : (
+            <span aria-hidden>+ </span>
+          )}
+          {item.text}
+        </span>
+      ))}
+    </span>
   );
 }

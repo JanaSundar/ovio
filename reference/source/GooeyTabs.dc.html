@@ -84,7 +84,7 @@ class Component extends DCLogic {
   goTo(target, v) {
     target = Math.max(0, Math.min(3, target)); this.cancel && this.cancel();
     this.setState({ idx: target });
-    if (window.NayamToy) this.cancel = NayamToy.spring({ from: this.state.x, to: target, v: v || 0, k: 420, c: 20, onStep: (x, xv) => this.setState({ x, xv }) });
+    if (window.OvioToy) this.cancel = OvioToy.spring({ from: this.state.x, to: target, v: v || 0, k: 420, c: 20, onStep: (x, xv) => this.setState({ x, xv }) });
     else this.setState({ x: target, xv: 0 });
   }
   tDown = e => {

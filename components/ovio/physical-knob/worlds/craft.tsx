@@ -84,7 +84,7 @@ export function CraftKnob({
           aria-valuetext={`${Math.round(percent)}%`}
           aria-disabled={disabled || undefined}
           {...handlers}
-          className="absolute inset-5 cursor-grab touch-none rounded-full outline-offset-[6px] active:cursor-grabbing"
+          className="absolute inset-5 cursor-grab touch-none rounded-full active:cursor-grabbing"
         >
           <KnobTicks s={TICKS} percent={percent} />
           <div className="absolute inset-8 rounded-full border-2 border-(--ovio-ink) bg-[#f4ecdd] shadow-[inset_0_0_0_5px_#fbf7ef,inset_0_0_0_6px_rgba(42,31,20,.25),0_3px_6px_rgba(70,45,20,.3),0_14px_18px_-8px_rgba(70,45,20,.45)]" />

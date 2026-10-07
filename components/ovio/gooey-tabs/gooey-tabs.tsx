@@ -13,7 +13,6 @@ export type GooeyStatus = "offline" | "building" | "online";
 export type GooeyTabsProps = {
   tabs: string[];
   variant?: World;
-  /** Controlled index. */
   value?: number;
   defaultValue?: number;
   onValueChange?: (index: number) => void;

@@ -30,7 +30,7 @@ const Cell = memo(function Cell({ cell, tabbable, active, enter }: CellProps) {
         boxShadow: active ? "0 0 0 1.5px #161614" : "0 0 0 0px #161614",
       }}
       transition={{ opacity: fade, y: fade, boxShadow: ring }}
-      className="rounded-[2px] outline-none"
+      className="rounded-[2px]"
       style={{ ...p.style, background: SCALE[cell.level] }}
     />
   );

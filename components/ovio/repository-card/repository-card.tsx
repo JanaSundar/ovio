@@ -26,7 +26,7 @@ export type Repository = {
 export type RepositoryStat = "stars" | "forks" | "issues";
 
 export type RepositoryCardProps = {
-  repo: Repository;
+  repository: Repository;
   variant?: World;
   /** Which counts to show, in order. Defaults to stars and forks (and issues in Craft). */
   stats?: RepositoryStat[];
@@ -95,7 +95,7 @@ function relativeTime(iso: string, now = Date.now()): string {
 }
 
 export function RepositoryCard({
-  repo,
+  repository: repo,
   variant,
   stats,
   starred: starredProp,

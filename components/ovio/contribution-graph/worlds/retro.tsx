@@ -28,7 +28,6 @@ const Cell = memo(function Cell({ cell, tabbable, active, enter }: CellProps) {
         ...motionTokens.retro.frames(1, 0.01),
         delay: cell.week * 0.026 + cell.weekday * 0.005,
       }}
-      className="outline-none focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-[#c9ffd2]"
       style={{
         ...p.style,
         background: active ? "#ffffff" : SCALE[lvl],

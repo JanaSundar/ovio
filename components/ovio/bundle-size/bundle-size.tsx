@@ -20,8 +20,7 @@ export type BundleVersion = {
 };
 
 export type BundleSizeProps = {
-  /** Package name. */
-  pkg: string;
+  packageName: string;
   /** Newest first. */
   versions: BundleVersion[];
   /** Size budget in kB. Leave out and the bar scales to the largest version. */
@@ -58,7 +57,7 @@ export type BundleReading = {
 
 /** Everything a world needs to draw the panel. Worlds only render; state lives here. */
 export type BundleSizeWorldProps = {
-  pkg: string;
+  packageName: string;
   versions: string[];
   index: number;
   reading: BundleReading;
@@ -115,10 +114,9 @@ export function deltaLabel(r: BundleReading) {
 
 export const ARROW: Record<BundleTrend, string> = { down: "↓", up: "↑", same: "=", first: "·" };
 
-/** Shared number format: kB to one decimal. */
 export const KB_FORMAT = { minimumFractionDigits: 1, maximumFractionDigits: 1 } as const;
 
-export function BundleSize({ pkg, versions, budget, variant, className }: BundleSizeProps) {
+export function BundleSize({ packageName, versions, budget, variant, className }: BundleSizeProps) {
   const world = useWorld(variant);
   const [selected, setSelected] = useState(0);
   const index = Math.max(0, Math.min(versions.length - 1, selected));
@@ -130,7 +128,6 @@ export function BundleSize({ pkg, versions, budget, variant, className }: Bundle
     [versions.length],
   );
 
-  // Arrow keys move along the version tabs and wrap; Home and End jump to the ends.
   const onKeyDown = (event: KeyboardEvent<HTMLElement>) => {
     const next = keyToIndex(event.key, index, versions.length, { wrap: true });
     if (next === null) return;
@@ -142,7 +139,7 @@ export function BundleSize({ pkg, versions, budget, variant, className }: Bundle
   if (versions.length === 0) return null;
 
   const props: BundleSizeWorldProps = {
-    pkg,
+    packageName,
     versions: versions.map((v) => v.version),
     index,
     reading: readBundle(versions, index, budget),

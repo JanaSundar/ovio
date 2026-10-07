@@ -15,7 +15,7 @@ const dots = (label: string, width = 11) => label + ".".repeat(Math.max(1, width
 const TREND_COLOR = { down: "#6dff8a", up: "#ffd34d", same: "#3fae55", first: "#3fae55" };
 
 export function RetroBundleSize({
-  pkg,
+  packageName,
   versions,
   index,
   reading: r,
@@ -51,7 +51,7 @@ export function RetroBundleSize({
       )}
     >
       <h3 className="m-0 font-normal text-[#c9ffd2]">
-        C:\&gt; bundle-size {pkg}@{r.version}
+        C:\&gt; bundle-size {packageName}@{r.version}
       </h3>
       <div aria-hidden className="my-2.5 text-(--ovio-muted)">
         ----------------------------
@@ -99,7 +99,7 @@ export function RetroBundleSize({
 
       <div
         role="tablist"
-        aria-label={`${pkg} version`}
+        aria-label={`${packageName} version`}
         onKeyDown={onKeyDown}
         className="mt-3.5 flex flex-wrap gap-2.5"
       >
@@ -115,7 +115,7 @@ export function RetroBundleSize({
             tabIndex={i === index ? 0 : -1}
             onClick={() => select(i)}
             className={cn(
-              "cursor-pointer border border-(--ovio-muted) px-2 font-[inherit] text-[22px] [text-shadow:none] outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dashed focus-visible:outline-(--ovio-ink)",
+              "cursor-pointer border border-(--ovio-muted) px-2 font-[inherit] text-[22px] [text-shadow:none]",
               i === index
                 ? "bg-(--ovio-accent) text-(--ovio-on-accent)"
                 : "bg-transparent text-(--ovio-ink)",

@@ -19,7 +19,7 @@ function note(delta: number | null, hit: boolean) {
 }
 
 export function CraftNpmDownloads({
-  pkg,
+  packageName,
   points,
   latest,
   total,
@@ -55,7 +55,7 @@ export function CraftNpmDownloads({
       >
         <div className="px-[22px] pt-[22px] pb-3.5" style={{ background: PAPER }}>
           <div className="text-center font-(family-name:--ovio-font) text-xl font-extrabold tracking-[-0.02em]">
-            npm · {pkg}
+            npm · {packageName}
           </div>
           <div className="mb-3 text-center text-[#7d6650]">weekly downloads receipt</div>
 

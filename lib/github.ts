@@ -54,7 +54,7 @@ type RepoResponse = {
   html_url: string;
 };
 
-/** Repository data for <RepositoryCard repo={...} />, from "owner/name". */
+/** Repository data for <RepositoryCard repository={...} />, from "owner/name". */
 export async function getRepository(fullName: string, options?: FetchOptions): Promise<Repository> {
   const r = await gh<RepoResponse>(`/repos/${fullName}`, options);
   return {
@@ -131,7 +131,6 @@ type ContributorResponse = { login: string; avatar_url: string; contributions: n
 
 const DAY = 86_400_000;
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-/** Commits in the weeks that start within the last `days` days. */
 const commitsSince = (days: number, weeks: ContributorStats["weeks"]) =>
   weeks.reduce((sum, w) => (w.w * 1000 >= Date.now() - days * DAY ? sum + w.c : sum), 0);
 

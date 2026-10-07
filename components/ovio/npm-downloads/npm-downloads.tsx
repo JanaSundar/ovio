@@ -17,7 +17,7 @@ export type DownloadWeek = {
 
 export type NpmDownloadsProps = {
   /** Package name, used as the label. */
-  pkg: string;
+  packageName: string;
   /** Weekly history, oldest first. */
   data: DownloadWeek[];
   /** How many of the latest weeks to show. */
@@ -28,7 +28,6 @@ export type NpmDownloadsProps = {
   className?: string;
 };
 
-/** A week as the worlds draw it. */
 type WeekPoint = {
   week: string;
   /** "Sep 28". */
@@ -44,13 +43,11 @@ type WeekPoint = {
 
 /** Everything a world needs to draw the chart. Worlds only render; state lives here. */
 export type NpmDownloadsWorldProps = {
-  pkg: string;
+  packageName: string;
   points: WeekPoint[];
-  /** The latest week. */
   latest: WeekPoint;
   /** The week being inspected (hover, focus, keys or the Toy knob). Defaults to the latest. */
   selected: number;
-  /** The selected week's point. */
   current: WeekPoint;
   /** "Week of Sep 28: 48,210 downloads", for screen readers. */
   currentText: string;
@@ -79,7 +76,7 @@ export function formatDelta(delta: number | null, marks: [string, string] = ["+"
 }
 
 export function NpmDownloads({
-  pkg,
+  packageName,
   data,
   weeks = 12,
   goal,
@@ -123,14 +120,14 @@ export function NpmDownloads({
   const total = shown.reduce((sum, w) => sum + w.downloads, 0);
   const summary =
     points.length > 0
-      ? `${pkg} weekly downloads, ${points.length} weeks from ${points[0].label} to ${latest.label}: ` +
+      ? `${packageName} weekly downloads, ${points.length} weeks from ${points[0].label} to ${latest.label}: ` +
         `latest ${formatNumber(latest.downloads)} (${formatDelta(latest.delta)} on the week before), ` +
         `peak ${formatNumber(peak)}` +
         (goal ? `, goal ${formatNumber(goal)}.` : ".")
-      : `${pkg} weekly downloads: no data.`;
+      : `${packageName} weekly downloads: no data.`;
 
   const props: NpmDownloadsWorldProps = {
-    pkg,
+    packageName,
     points,
     latest,
     selected,

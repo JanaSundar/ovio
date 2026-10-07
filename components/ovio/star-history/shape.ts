@@ -144,7 +144,6 @@ export function monthTicks(shape: StarHistoryShape): ShapedMonth[] {
 
 type XY = [number, number];
 
-/** Straight segments through every point. */
 export function linePath(pts: XY[]): string {
   return pts.map((p, i) => `${i ? "L" : "M"}${p[0].toFixed(1)} ${p[1].toFixed(1)}`).join(" ");
 }

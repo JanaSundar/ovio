@@ -18,7 +18,6 @@ export function dayCellProps(cell: ContributionCell, tabbable: boolean) {
   } as const;
 }
 
-/** The day index of the cell an event came from, through data-index. */
 export function dayIndexOf(target: EventTarget): number | null {
   const el = (target as HTMLElement).closest?.("[data-index]");
   return el ? Number(el.getAttribute("data-index")) : null;

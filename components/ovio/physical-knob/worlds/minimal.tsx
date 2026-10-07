@@ -63,7 +63,7 @@ export function MinimalKnob({
           aria-valuetext={`${Math.round(percent)}%`}
           aria-disabled={disabled || undefined}
           {...handlers}
-          className="absolute inset-0 cursor-grab touch-none rounded-full outline-offset-[6px] active:cursor-grabbing"
+          className="absolute inset-0 cursor-grab touch-none rounded-full active:cursor-grabbing"
         >
           <KnobTicks s={TICKS} percent={percent} />
           <div className="absolute inset-[26px] rounded-full border border-(--ovio-line) bg-(--ovio-surface) shadow-[0_1px_2px_rgba(0,0,0,.04),0_10px_24px_-14px_rgba(0,0,0,.22)]" />

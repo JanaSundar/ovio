@@ -53,7 +53,7 @@ export function MinimalTopContributors({
                   aria-label={PERIOD_LABEL[p]}
                   onClick={() => setPeriod(p)}
                   className={cn(
-                    "relative cursor-pointer rounded-full px-3 py-1 text-xs font-medium outline-offset-2",
+                    "relative cursor-pointer rounded-full px-3 py-1 text-xs font-medium",
                     p === period ? "text-(--ovio-ink)" : "text-(--ovio-muted)",
                   )}
                 >

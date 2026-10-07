@@ -28,7 +28,7 @@ const Cell = memo(function Cell({ cell, tabbable, active, enter }: CellProps) {
       initial={enter ? { opacity: 0, y: -16 } : false}
       animate={{ opacity: 1, y: 0 }}
       transition={{ ...motionTokens.craft.slow, delay: cell.week * 0.014 + cell.weekday * 0.012 }}
-      className="rounded-[3px] outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--ovio-accent-deep)"
+      className="rounded-[3px]"
     >
       <motion.span
         aria-hidden

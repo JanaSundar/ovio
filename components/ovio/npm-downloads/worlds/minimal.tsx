@@ -8,7 +8,7 @@ import { formatNumber } from "@/lib/format";
 import { formatDelta, type NpmDownloadsWorldProps } from "../npm-downloads";
 
 export function MinimalNpmDownloads({
-  pkg,
+  packageName,
   points,
   latest,
   selected,
@@ -31,7 +31,7 @@ export function MinimalNpmDownloads({
   return (
     <section
       data-ovio-world="minimal"
-      aria-label={`${pkg} weekly downloads`}
+      aria-label={`${packageName} weekly downloads`}
       className={cn(
         "flex w-full max-w-[640px] flex-col gap-6 rounded-(--ovio-radius) border border-(--ovio-line) bg-(--ovio-surface) px-10 py-9 font-(family-name:--ovio-font) text-(--ovio-ink)",
         className,
@@ -40,7 +40,7 @@ export function MinimalNpmDownloads({
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <div className="mb-2.5 text-[11px] tracking-[0.12em] text-(--ovio-muted) uppercase">
-            {current.ago === 0 ? "Weekly downloads" : `Week of ${current.label}`} · {pkg}
+            {current.ago === 0 ? "Weekly downloads" : `Week of ${current.label}`} · {packageName}
           </div>
           <RollingNumber
             className="text-[52px] leading-none tracking-[-0.045em]"
@@ -66,7 +66,7 @@ export function MinimalNpmDownloads({
         onKeyDown={onKeyDown}
         onPointerLeave={reset}
         onBlur={reset}
-        className="relative flex h-[150px] items-end gap-1 border-b border-(--ovio-line) outline-offset-4 focus-visible:outline-2 focus-visible:outline-(--ovio-ink)"
+        className="relative flex h-[150px] items-end gap-1 border-b border-(--ovio-line)"
       >
         {points.map((p, i) => (
           <div

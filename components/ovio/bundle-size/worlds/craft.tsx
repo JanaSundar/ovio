@@ -18,7 +18,7 @@ const NOTE = {
 };
 
 export function CraftBundleSize({
-  pkg,
+  packageName,
   versions,
   index,
   reading: r,
@@ -63,7 +63,7 @@ export function CraftBundleSize({
       </AnimatePresence>
 
       <h3 className="m-0 font-(family-name:--ovio-mono) text-[10.5px] font-normal tracking-[0.14em] text-[#7d6650] uppercase">
-        Package label · {pkg}
+        Package label · {packageName}
       </h3>
 
       <div id={panelId} role="tabpanel" aria-labelledby={tabId(index)}>
@@ -134,7 +134,7 @@ export function CraftBundleSize({
         </span>
         <div
           role="tablist"
-          aria-label={`${pkg} version`}
+          aria-label={`${packageName} version`}
           onKeyDown={onKeyDown}
           className="flex flex-wrap gap-1.5"
         >
@@ -158,7 +158,7 @@ export function CraftBundleSize({
               whileHover={{ rotate: 0, y: -3 }}
               whileFocus={{ rotate: 0, y: -3 }}
               transition={settle}
-              className="cursor-pointer border-0 px-[9px] py-1 font-(family-name:--ovio-mono) text-[11px] text-(--ovio-ink) shadow-[0_3px_6px_-2px_rgba(70,45,20,.4)] outline-none focus-visible:ring-2 focus-visible:ring-(--ovio-accent-deep)"
+              className="cursor-pointer border-0 px-[9px] py-1 font-(family-name:--ovio-mono) text-[11px] text-(--ovio-ink) shadow-[0_3px_6px_-2px_rgba(70,45,20,.4)]"
             >
               {v}
             </motion.button>

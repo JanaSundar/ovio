@@ -71,10 +71,7 @@ export function RetroStarHistory({
             )}
           </motion.div>
         ))}
-        <div
-          {...scrub.props}
-          className="absolute inset-0 cursor-crosshair touch-pan-y outline-offset-4 focus-visible:outline-2 focus-visible:outline-dashed focus-visible:outline-(--ovio-ink)"
-        />
+        <div {...scrub.props} className="absolute inset-0 cursor-crosshair touch-pan-y" />
       </div>
       <div aria-hidden className="flex justify-between gap-3 text-lg text-(--ovio-ink-2)">
         <span>{first && formatMonthDot(first)}</span>

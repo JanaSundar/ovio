@@ -72,7 +72,7 @@ export function ToyKnob({
           aria-valuetext={`${Math.round(percent)}%`}
           aria-disabled={disabled || undefined}
           {...handlers}
-          className="absolute inset-2.5 cursor-grab touch-none rounded-full outline-offset-[6px] active:cursor-grabbing"
+          className="absolute inset-2.5 cursor-grab touch-none rounded-full active:cursor-grabbing"
         >
           <KnobTicks s={TICKS} percent={percent} />
           <div className="absolute inset-[30px] rounded-full bg-(--ovio-surface) shadow-[inset_0_1px_0_#fff,0_10px_0_#d2ccbf,0_26px_30px_-12px_rgba(40,28,10,.5)]" />

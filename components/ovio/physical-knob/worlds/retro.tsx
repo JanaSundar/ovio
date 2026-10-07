@@ -86,7 +86,7 @@ export function RetroKnob({
           aria-valuetext={`${index} of 10`}
           aria-disabled={disabled || undefined}
           {...handlers}
-          className="absolute inset-[34px] cursor-grab touch-none rounded-full outline-offset-[6px] active:cursor-grabbing"
+          className="absolute inset-[34px] cursor-grab touch-none rounded-full active:cursor-grabbing"
         >
           <KnobTicks s={TICKS} percent={percent} />
           <div className="absolute inset-3.5 rounded-full bg-[#15171a] shadow-[0_0_0_3px_#3b3f3a,0_8px_10px_rgba(0,0,0,.6),inset_0_2px_0_#3a3d41]" />

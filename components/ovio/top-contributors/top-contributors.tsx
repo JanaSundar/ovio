@@ -29,7 +29,6 @@ export type TopContributorsProps = {
   repo?: string;
   /** Max people shown. */
   limit?: number;
-  /** Controlled time window. */
   period?: ContributorPeriod;
   defaultPeriod?: ContributorPeriod;
   onPeriodChange?: (period: ContributorPeriod) => void;
@@ -38,7 +37,6 @@ export type TopContributorsProps = {
   className?: string;
 };
 
-/** One ranked person, shaped for drawing. */
 export type RankedContributor = {
   login: string;
   name: string;

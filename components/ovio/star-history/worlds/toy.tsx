@@ -88,10 +88,7 @@ export function ToyStarHistory({
             </motion.div>
           );
         })}
-        <div
-          {...scrub.props}
-          className="absolute inset-0 cursor-pointer touch-pan-y rounded-xl outline-offset-4 focus-visible:outline-3 focus-visible:outline-(--ovio-accent)"
-        />
+        <div {...scrub.props} className="absolute inset-0 cursor-pointer touch-pan-y rounded-xl" />
       </div>
       <div
         aria-hidden

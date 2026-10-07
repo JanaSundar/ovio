@@ -57,10 +57,10 @@ export function CraftTopContributors({
                   initial={false}
                   animate={{ rotate: p === period ? 0 : i % 2 ? 2 : -2, y: p === period ? -2 : 0 }}
                   whileHover={{ y: -3 }}
-                  whileFocus={{ y: -3 }}
+                  whileFocus={{ rotate: 0, y: -3 }}
                   transition={settle}
                   className={cn(
-                    "cursor-pointer rounded-[4px] border-0 px-2.5 py-1 text-xs font-bold shadow-[0_1px_2px_rgba(70,45,20,.18)] outline-offset-2",
+                    "cursor-pointer rounded-[4px] border-0 px-2.5 py-1 text-xs font-bold shadow-[0_1px_2px_rgba(70,45,20,.18)]",
                     p === period
                       ? "bg-(--ovio-accent) text-(--ovio-on-accent)"
                       : "bg-(--ovio-surface) text-(--ovio-ink-2)",

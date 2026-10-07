@@ -68,7 +68,7 @@ export function RetroTopContributors({
                 aria-label={PERIOD_LABEL[p]}
                 onClick={() => setPeriod(p)}
                 className={cn(
-                  "cursor-pointer border-0 px-1.5 font-(family-name:--ovio-font) text-xl leading-tight uppercase outline-offset-2 focus-visible:outline-2 focus-visible:outline-(--ovio-ink)",
+                  "cursor-pointer border-0 px-1.5 font-(family-name:--ovio-font) text-xl leading-tight uppercase",
                   p === period
                     ? "bg-(--ovio-accent) text-(--ovio-on-accent) [text-shadow:none]"
                     : "bg-transparent text-(--ovio-ink-2)",

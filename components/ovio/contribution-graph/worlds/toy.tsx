@@ -93,7 +93,7 @@ const Face = memo(function Face({ week, step, cells, month, angle, active, tabba
             {...p}
             // Faces stack their days in a column, so the grid placement in p.style does not apply.
             style={undefined}
-            className="relative min-h-0 flex-1 cursor-pointer rounded-[3px] bg-[#ddd4bf] shadow-[inset_0_1px_2px_rgba(70,50,20,.38)] outline-none focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-1 focus-visible:outline-(--ovio-accent)"
+            className="relative min-h-0 flex-1 cursor-pointer rounded-[3px] bg-[#ddd4bf] shadow-[inset_0_1px_2px_rgba(70,50,20,.38)]"
           >
             <motion.span
               aria-hidden
@@ -287,7 +287,7 @@ export function ToyContributionGraph({
   const count = active ? active.count : weekTotal;
 
   const arrow =
-    "size-[38px] rounded-[10px] text-base font-extrabold transition-[translate,box-shadow] duration-150 active:translate-y-[3px]";
+    " size-[38px] rounded-[10px] text-base font-extrabold transition-[translate,box-shadow] duration-150 active:translate-y-[3px]";
 
   return (
     <section

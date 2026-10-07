@@ -31,10 +31,7 @@ export type StarHistoryProps = {
   repo?: string;
   annotations?: StarHistoryAnnotation[];
   variant?: World;
-  /**
-   * "enter-exit" draws the chart in on mount and when the data changes; "always" also keeps a
-   * live marker on the latest point moving. Forced to "none" under reduced motion.
-   */
+  /** "always" adds a live marker on the latest point. Forced to "none" under reduced motion. */
   animation?: StarHistoryAnimation;
   className?: string;
 };

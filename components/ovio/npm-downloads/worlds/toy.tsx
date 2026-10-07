@@ -72,7 +72,6 @@ function WeekKnob({
   const release = (e: PointerEvent<HTMLDivElement>) => {
     if (drag.current?.pointer !== e.pointerId) return;
     drag.current = null;
-    // Settle into the nearest detent.
     target.set(angleOf(toIndex(target.get()), count));
   };
 
@@ -91,7 +90,7 @@ function WeekKnob({
         onPointerMove={onPointerMove}
         onPointerUp={release}
         onPointerCancel={release}
-        className="relative size-32 cursor-grab touch-none rounded-full outline-offset-4 focus-visible:outline-2 focus-visible:outline-(--ovio-accent) active:cursor-grabbing"
+        className="relative size-32 cursor-grab touch-none rounded-full active:cursor-grabbing"
       >
         {Array.from({ length: TICKS }, (_, i) => (
           <span
@@ -118,7 +117,7 @@ function WeekKnob({
 }
 
 export function ToyNpmDownloads({
-  pkg,
+  packageName,
   points,
   selected,
   current,
@@ -137,7 +136,7 @@ export function ToyNpmDownloads({
   return (
     <section
       data-ovio-world="toy"
-      aria-label={`${pkg} weekly downloads`}
+      aria-label={`${packageName} weekly downloads`}
       className={cn(
         "flex w-full max-w-[580px] flex-wrap items-center gap-6 rounded-[22px] bg-(--ovio-surface) p-[22px] font-(family-name:--ovio-font) text-(--ovio-ink) shadow-[inset_0_1px_0_#fff,0_7px_0_#d2ccbf,0_22px_30px_-16px_rgba(40,28,10,.45)]",
         className,
@@ -145,7 +144,7 @@ export function ToyNpmDownloads({
     >
       <div className="flex min-w-0 flex-[1_1_280px] flex-col gap-3.5">
         <div className="font-(family-name:--ovio-mono) text-[11px] tracking-[0.08em] text-(--ovio-muted) uppercase">
-          npm · {pkg} · downloads / week
+          npm · {packageName} · downloads / week
         </div>
         <div className="flex w-max rounded-xl bg-[#2a2925] px-[18px] py-2.5 font-(family-name:--ovio-mono) text-[40px] leading-none font-semibold text-(--ovio-surface) shadow-[inset_0_3px_6px_rgba(0,0,0,.6)]">
           <RollingNumber value={current.downloads} />

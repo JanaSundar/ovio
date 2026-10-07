@@ -133,5 +133,4 @@ export function buildContributionYear(
   };
 }
 
-/** The noun after a count: "contribution" or "contributions". */
 export const unit = (count: number) => plural(count, "contribution");

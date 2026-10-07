@@ -30,7 +30,7 @@ type RangeResponse = { downloads: { day: string; downloads: number }[] };
  * week npm has not reported in full yet. npm serves at most 18 months, about 78 weeks.
  */
 export async function getWeeklyDownloads(
-  pkg: string,
+  packageName: string,
   weeks = 26,
   options?: FetchOptions,
 ): Promise<DownloadWeek[]> {
@@ -38,7 +38,7 @@ export async function getWeeklyDownloads(
   const start = isoDate(monday - weeks * 7 * DAY);
   const end = isoDate(monday - DAY);
   const { downloads } = await getJson<RangeResponse>(
-    `https://api.npmjs.org/downloads/range/${start}:${end}/${pkg}`,
+    `https://api.npmjs.org/downloads/range/${start}:${end}/${packageName}`,
     options,
   );
 
@@ -83,7 +83,7 @@ function compareVersions(a: string, b: string) {
  * measure brotli, so that row stays hidden.
  */
 export async function getBundleSizes(
-  pkg: string,
+  packageName: string,
   versions?: string[],
   options?: FetchOptions,
 ): Promise<BundleVersion[]> {
@@ -92,7 +92,7 @@ export async function getBundleSizes(
     const sizes = await Promise.all(
       versions.map((v) =>
         getJson<BundlephobiaSize>(
-          `${api}/size?package=${encodeURIComponent(`${pkg}@${v}`)}`,
+          `${api}/size?package=${encodeURIComponent(`${packageName}@${v}`)}`,
           options,
         ),
       ),
@@ -100,7 +100,7 @@ export async function getBundleSizes(
     return sizes.flatMap((s, i) => measured(versions[i], s));
   }
   const history = await getJson<Record<string, BundlephobiaSize>>(
-    `${api}/package-history?package=${encodeURIComponent(pkg)}`,
+    `${api}/package-history?package=${encodeURIComponent(packageName)}`,
     options,
   );
   return Object.keys(history)

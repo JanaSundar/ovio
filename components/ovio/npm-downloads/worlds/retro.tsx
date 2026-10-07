@@ -13,7 +13,7 @@ const CELLS = 20;
 const bar = (color: string) => `repeating-linear-gradient(0deg,${color} 0 5px,transparent 5px 7px)`;
 
 export function RetroNpmDownloads({
-  pkg,
+  packageName,
   points,
   selected,
   current,
@@ -43,14 +43,14 @@ export function RetroNpmDownloads({
   return (
     <section
       data-ovio-world="retro"
-      aria-label={`${pkg} weekly downloads`}
+      aria-label={`${packageName} weekly downloads`}
       className={cn(
         "relative flex w-full max-w-[640px] flex-col gap-5 bg-(--ovio-stage) p-8 font-(family-name:--ovio-font) text-(--ovio-ink) [text-shadow:var(--ovio-glow)]",
         className,
       )}
     >
       <div className="flex justify-between text-[22px]">
-        <span>NPM://{pkg.toUpperCase()}</span>
+        <span>NPM://{packageName.toUpperCase()}</span>
         <span className="text-(--ovio-ink-2)">
           {current.ago === 0 ? "DL/WK" : `${current.label.toUpperCase()} · -${current.ago}WK`}
         </span>
@@ -72,7 +72,7 @@ export function RetroNpmDownloads({
         onKeyDown={onKeyDown}
         onPointerLeave={reset}
         onBlur={reset}
-        className="flex h-[120px] items-end gap-[3px] outline-offset-4 focus-visible:outline-2 focus-visible:outline-dashed focus-visible:outline-(--ovio-ink)"
+        className="flex h-[120px] items-end gap-[3px]"
       >
         {points.map((p, i) => (
           <div

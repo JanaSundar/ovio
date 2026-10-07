@@ -21,9 +21,9 @@ const PILE = [
 ];
 /** How far the front card lifts before it is tucked under the pile, in px. */
 const LIFT = 130;
-/** The tuck: lift off quickly, hang for a beat while it drops behind, then settle on the craft ease. */
 /** Keyframe times of the tuck: lift, hang (where it is re-stacked), settle. */
 const TIMES = [0, 0.4, 0.46, 1];
+/** The tuck: lift off quickly, hang for a beat while it drops behind, then settle on the craft ease. */
 const FLIP: Transition = {
   duration: motionTokens.craft.slow.duration + 0.25,
   ease: ["easeOut", "linear", [...ease.craft]],
@@ -135,7 +135,7 @@ export function CraftChangelog({ releases, top, next, className }: ChangelogWorl
             type="button"
             onClick={flip}
             aria-label={`Next release (${((top + 1) % n) + 1} of ${n})`}
-            className="absolute inset-0 z-50 cursor-pointer rounded-[6px] border-0 bg-transparent p-0 outline-none focus-visible:outline-2 focus-visible:outline-offset-8 focus-visible:outline-(--ovio-accent-deep)"
+            className="group absolute inset-0 z-50 cursor-pointer rounded-[6px] border-0 bg-transparent p-0"
           >
             <span
               aria-hidden

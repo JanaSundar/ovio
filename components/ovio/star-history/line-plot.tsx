@@ -137,7 +137,7 @@ export function LinePlot({
       {children(at, active)}
       <div
         {...scrub.props}
-        className="absolute inset-0 cursor-crosshair touch-pan-y rounded-(--ovio-radius) outline-offset-4 focus-visible:outline-2 focus-visible:outline-(--ovio-accent)"
+        className="absolute inset-0 cursor-crosshair touch-pan-y rounded-(--ovio-radius)"
       />
     </div>
   );

@@ -19,7 +19,7 @@ const KEYS = [
 ];
 
 export function ToyBundleSize({
-  pkg,
+  packageName,
   versions,
   index,
   reading: r,
@@ -43,7 +43,7 @@ export function ToyBundleSize({
       )}
     >
       <div className="flex items-center justify-between gap-3 font-(family-name:--ovio-mono) text-[11px] text-(--ovio-muted)">
-        <h3 className="m-0 font-normal tracking-[0.08em] uppercase">Bundle size · {pkg}</h3>
+        <h3 className="m-0 font-normal tracking-[0.08em] uppercase">Bundle size · {packageName}</h3>
         <span>{deltaLabel(r)}</span>
       </div>
 
@@ -105,7 +105,7 @@ export function ToyBundleSize({
 
       <div
         role="tablist"
-        aria-label={`${pkg} version`}
+        aria-label={`${packageName} version`}
         onKeyDown={onKeyDown}
         className="grid gap-2.5"
         style={{ gridTemplateColumns: `repeat(${Math.min(versions.length, 4)}, minmax(0, 1fr))` }}
@@ -126,7 +126,7 @@ export function ToyBundleSize({
               depth={6}
               side={side}
               style={{ background: cap, color: text }}
-              className="cursor-pointer touch-manipulation rounded-xl border-0 py-3 font-(family-name:--ovio-mono) text-[13px] font-semibold outline-none focus-visible:ring-3 focus-visible:ring-(--ovio-accent)/50"
+              className="cursor-pointer touch-manipulation rounded-xl border-0 py-3 font-(family-name:--ovio-mono) text-[13px] font-semibold"
             >
               {v}
             </ToyKey>

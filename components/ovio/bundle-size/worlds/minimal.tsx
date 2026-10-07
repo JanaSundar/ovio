@@ -9,7 +9,7 @@ import { ARROW, barLabel, KB_FORMAT, type BundleSizeWorldProps } from "../bundle
 const TREND_COLOR = { down: "#2f7a45", up: "#b4432a", same: "#77756e", first: "#77756e" };
 
 export function MinimalBundleSize({
-  pkg,
+  packageName,
   versions,
   index,
   reading: r,
@@ -32,10 +32,12 @@ export function MinimalBundleSize({
       )}
     >
       <div className="flex items-center justify-between gap-3">
-        <h3 className="m-0 font-(family-name:--ovio-mono) text-[13px] font-normal">{pkg}</h3>
+        <h3 className="m-0 font-(family-name:--ovio-mono) text-[13px] font-normal">
+          {packageName}
+        </h3>
         <div
           role="tablist"
-          aria-label={`${pkg} version`}
+          aria-label={`${packageName} version`}
           onKeyDown={onKeyDown}
           className="flex flex-wrap gap-0.5 rounded-[7px] bg-[#f0eee9] p-0.5"
         >
@@ -50,7 +52,7 @@ export function MinimalBundleSize({
               aria-controls={panelId}
               tabIndex={i === index ? 0 : -1}
               onClick={() => select(i)}
-              className="relative cursor-pointer rounded-[5px] border-0 bg-transparent px-[9px] py-1 font-(family-name:--ovio-mono) text-[11px] outline-none focus-visible:ring-2 focus-visible:ring-(--ovio-ink)/40"
+              className="relative cursor-pointer rounded-[5px] border-0 bg-transparent px-[9px] py-1 font-(family-name:--ovio-mono) text-[11px]"
             >
               {i === index && (
                 <motion.span

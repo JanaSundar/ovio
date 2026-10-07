@@ -40,7 +40,6 @@ export const motionTokens = {
     slow: { duration: 0.6, ease: ease.craft },
   },
   retro: {
-    /** A stepped frame: n hard frames over the duration. */
     frames: (n: number, duration: number) => ({ duration, ease: steps(n) }),
     /** 1s blink: on for half, off for half. Animate opacity [1, 0]. */
     blink: {
@@ -72,7 +71,6 @@ export const worldIn = {
 
 const INSTANT: Transition = { duration: 0 };
 
-/** True when the user asked for reduced motion. */
 export function useReducedMotionSafe(): boolean {
   return useReducedMotion() ?? false;
 }

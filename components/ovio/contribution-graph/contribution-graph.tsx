@@ -35,7 +35,7 @@ export type ContributionGraphProps = {
   /** Entrances, plus ambient loops with "always". Forced to "none" under reduced motion. */
   animation?: ContributionAnimation;
   /** Last day shown, "YYYY-MM-DD". Defaults to the latest date in `data`. */
-  end?: string;
+  endDate?: string;
   /** Fires with the day under the pointer or keyboard focus, and null when it leaves. */
   onDayHover?: (day: ContributionCell | null) => void;
   className?: string;
@@ -69,13 +69,13 @@ export function ContributionGraph({
   data,
   variant,
   animation = "enter-exit",
-  end,
+  endDate,
   onDayHover,
   className,
 }: ContributionGraphProps) {
   const world = useWorld(variant);
   const reduced = useReducedMotionSafe();
-  const year = useMemo(() => buildContributionYear(data, { end }), [data, end]);
+  const year = useMemo(() => buildContributionYear(data, { end: endDate }), [data, endDate]);
   const lastIndex = year.days.length - 1;
 
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
@@ -109,7 +109,6 @@ export function ContributionGraph({
       focusWithin.current = false;
       activate(null);
     },
-    // Up and down step a day, left and right a week, Home and End jump to the ends of the year.
     onKeyDown: (e) => {
       const step: Record<string, number> = {
         ArrowUp: -1,

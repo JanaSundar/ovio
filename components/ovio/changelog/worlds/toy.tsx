@@ -94,7 +94,7 @@ export function ToyChangelog({ releases, open, toggle, className }: ChangelogWor
                   side="var(--ovio-line)"
                   aria-expanded={isOpen}
                   onClick={() => toggle(i)}
-                  className="block w-full cursor-pointer rounded-2xl border-0 bg-(--ovio-surface) p-0 text-left font-[inherit] text-(--ovio-ink) touch-manipulation outline-none focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-(--ovio-accent)"
+                  className="block w-full cursor-pointer rounded-2xl border-0 bg-(--ovio-surface) p-0 text-left font-[inherit] text-(--ovio-ink) touch-manipulation"
                 >
                   <Header release={r} index={i} />
                   <motion.span
@@ -118,7 +118,6 @@ export function ToyChangelog({ releases, open, toggle, className }: ChangelogWor
 
 type RowProps = { release: ChangelogEntry; index: number };
 
-/** The key cap: version chip, title and date. */
 function Header({ release: r, index }: RowProps) {
   const [chip, chipInk] = CHIPS[index % CHIPS.length];
   return (
@@ -140,7 +139,6 @@ function Header({ release: r, index }: RowProps) {
   );
 }
 
-/** The notes revealed under an open key. */
 function Notes({ release: r, className }: { release: ChangelogEntry; className?: string }) {
   return (
     <span className={cn("flex flex-col gap-1 px-4 pt-0.5 pb-3.5", className)}>

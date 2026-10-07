@@ -4,144 +4,124 @@ import {
   animate,
   motion,
   useMotionValue,
+  useMotionValueEvent,
   useTransform,
   type AnimationPlaybackControls,
+  type MotionValue,
 } from "motion/react";
-import { memo, useEffect, useRef, useState, type KeyboardEvent } from "react";
+import {
+  memo,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+  type PointerEvent,
+} from "react";
 import { RollingNumber } from "@/components/shared/rolling-number";
-import { motionTokens, useOvioTransition } from "@/lib/motion";
+import { motionTokens, useOvioTransition, useReducedMotionSafe } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import type { ContributionGraphWorldProps } from "../contribution-graph";
-import { dayCellProps, dayIndexOf, useScrollEnd } from "../grid";
+import { dayCellProps, dayIndexOf } from "../grid";
 import { unit, type ContributionCell } from "../year";
 
-/** Plastic colours by level: top, side and stud. Level 0 is a low grey stub. */
+/** Plastic by level: top colour, highlight and the darker lip under it. Level 0 is an empty socket. */
 const PLASTIC = [
-  { top: "#cfc8b6", side: "#a9a291", stud: "#ddd6c4" },
-  { top: "#f6d77a", side: "#c7a745", stud: "#fbe6a6" },
-  { top: "#f4b52a", side: "#b9821a", stud: "#f9cd66" },
-  { top: "#ef7a2b", side: "#b5541a", stud: "#f59d5f" },
-  { top: "#e0432a", side: "#a52a16", stud: "#ec6f5a" },
+  { top: "#ddd4bf", hi: "#f7edd5", lip: "#9f9889" },
+  { top: "#f6d77a", hi: "#fff088", lip: "#b19a57" },
+  { top: "#f4b52a", hi: "#ffca2f", lip: "#af821e" },
+  { top: "#ef7a2b", hi: "#ff8830", lip: "#ac571e" },
+  { top: "#e0432a", hi: "#fa4b2f", lip: "#a1301e" },
 ];
-const HOT = { top: "#2c55e0", side: "#1a36a3", stud: "#5b7cf0" };
 
-/** Block height in px by level. */
-const HEIGHT = [2, 8.5, 13, 17.5, 22];
-/** Tallest a block can get (a level 4 block fully lifted); the side face is drawn at this height and scaled. */
-const MAX = 32;
-/** Peak lift under the pointer; neighbours rise less with distance. */
-const LIFT = 9;
-/** How far down a pressed block goes: nearly flush with the board. */
-const PRESSED = 1;
+/** Drum radius in px: 53 faces of 24px make the circumference. */
+const RADIUS = 202;
+/** Degrees per px of horizontal drag. */
+const DRAG = 0.32;
+/** Inertia decay in ms; power matches it so a flick keeps its speed as it is released. */
+const DECAY = 700;
+/** Fastest spin in deg/s, so a hard flick or a long swipe stays readable. */
+const MAX_SPIN = 1400;
 
-type BlockProps = {
-  cell: ContributionCell;
-  tabbable: boolean;
-  active: boolean;
-  pressed: boolean;
-  /** Extra height from a nearby pointer, in px. */
-  lift: number;
-  enter: boolean;
-  /** Breathe while idle ("always"). */
-  wave: boolean;
+/** Signed distance in degrees from angle `a` to angle `b`, in -180..180. */
+const toward = (a: number, b: number) => ((((b - a) % 360) + 540) % 360) - 180;
+
+type FaceProps = {
+  week: number;
+  step: number;
+  cells: ContributionCell[];
+  month?: string;
+  angle: MotionValue<number>;
+  /** Index of the active day when it is in this week. */
+  active: number | null;
+  /** Index of the tab stop when it is in this week. */
+  tabbable: number | null;
 };
 
-/**
- * A plastic block on the board: a top face raised by translateZ and a side face scaled to the same height,
- * both driven by one motion value. It rises in on entry (slide spring), wobbles up near the pointer
- * (piece spring) and pushes into the board when pressed (key spring).
- */
-const Block = memo(function Block({
-  cell,
-  tabbable,
-  active,
-  pressed,
-  lift,
-  enter,
-  wave,
-}: BlockProps) {
-  const rise = useOvioTransition(motionTokens.toy.slide);
-  const wobble = useOvioTransition(motionTokens.toy.piece);
-  const key = useOvioTransition(motionTokens.toy.key);
-  const base = HEIGHT[cell.level];
-  const target = pressed ? PRESSED : base + lift;
-  const h = useMotionValue(enter ? 0 : target);
-  const scaleY = useTransform(h, (v) => v / MAX);
-  const entered = useRef(false);
-
-  useEffect(() => {
-    let stopped = false;
-    const first = !entered.current;
-    entered.current = true;
-    let controls: AnimationPlaybackControls = animate(
-      h,
-      target,
-      pressed
-        ? key
-        : first && enter
-          ? { ...rise, delay: cell.week * 0.022 + cell.weekday * 0.03 }
-          : wobble,
-    );
-    // Idle blocks breathe in a wave across the board.
-    if (wave && !pressed && lift === 0 && cell.level > 0) {
-      controls.finished.then(() => {
-        if (stopped) return;
-        controls = animate(h, [base, base * 0.8, base], {
-          duration: 2.6,
-          ease: "easeInOut",
-          repeat: Infinity,
-          delay: (cell.week * 0.06 + cell.weekday * 0.1) % 2.6,
-        });
-      });
-    }
-    return () => {
-      stopped = true;
-      controls.stop();
-    };
-  }, [h, target, pressed, lift, wave, enter, base, cell, rise, wobble, key]);
-
-  const p = dayCellProps(cell, tabbable);
-  const c = active ? HOT : PLASTIC[cell.level];
+/** One week on the drum: a column of seven pieces, shaded as it turns away from the front. */
+const Face = memo(function Face({ week, step, cells, month, angle, active, tabbable }: FaceProps) {
+  const lift = useOvioTransition(motionTokens.toy.key);
+  const shade = useTransform(angle, (a) => {
+    const d = (toward(a, week * step) * Math.PI) / 180;
+    return Math.min(0.5, (1 - Math.cos(d)) * 0.6);
+  });
 
   return (
     <div
-      {...p}
-      className="relative cursor-pointer rounded-[3px] bg-[#c4bca8] shadow-[inset_0_1px_2px_rgba(70,50,20,.38)] outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--ovio-accent)"
-      style={{ ...p.style, transformStyle: "preserve-3d" }}
+      role="row"
+      className="absolute top-0 left-0 flex h-[184px] w-6 flex-col gap-[3px] bg-[#f8f5ef] px-[3px] py-1 shadow-[inset_1px_0_0_rgba(60,45,20,.12)] backface-hidden"
+      style={{ transform: `rotateY(${week * step}deg) translateZ(${RADIUS}px)` }}
     >
-      {/* Side face: stands up from the near edge, scaled to the block's height. */}
       <span
         aria-hidden
-        className="absolute inset-x-0 bottom-0 origin-bottom"
-        style={{ height: MAX, transform: "rotateX(-90deg)", transformStyle: "preserve-3d" }}
+        className="h-3 text-center font-(family-name:--ovio-mono) text-[8px] leading-3 font-semibold whitespace-nowrap text-(--ovio-muted)"
       >
-        <motion.span
-          className="absolute inset-0 origin-bottom"
-          style={{ scaleY, background: `linear-gradient(180deg, ${c.top}, ${c.side} 40%)` }}
-        />
+        {month}
       </span>
-      {/* Top face with its stud. */}
+      {Array.from({ length: 7 }, (_, wd) => {
+        const cell = cells[wd];
+        if (!cell) return <span key={wd} aria-hidden className="min-h-0 flex-1" />;
+        const p = dayCellProps(cell, cell.index === tabbable);
+        const c = PLASTIC[cell.level];
+        // Pieces stand taller for busier days; the active one pops up, an empty socket included.
+        const rest = cell.level ? cell.level + 1 : 0;
+        const on = cell.index === active;
+        const up = on ? 5 : rest;
+        return (
+          <div
+            key={wd}
+            {...p}
+            // Faces stack their days in a column, so the grid placement in p.style does not apply.
+            style={undefined}
+            className="relative min-h-0 flex-1 cursor-pointer rounded-[3px] bg-[#ddd4bf] shadow-[inset_0_1px_2px_rgba(70,50,20,.38)] outline-none focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-1 focus-visible:outline-(--ovio-accent)"
+          >
+            <motion.span
+              aria-hidden
+              className="absolute inset-0 rounded-[3px]"
+              initial={false}
+              animate={{ y: -up, opacity: cell.level || on ? 1 : 0 }}
+              transition={lift}
+              style={{
+                background: `linear-gradient(180deg, ${c.hi}, ${c.top} 65%)`,
+                boxShadow: `0 ${Math.max(rest, 2)}px 0 ${c.lip}, inset 0 1px 0 rgba(255,255,255,.5)`,
+              }}
+            />
+          </div>
+        );
+      })}
       <motion.span
         aria-hidden
-        className="absolute inset-0 rounded-[2px] shadow-[inset_0_0_0_.5px_rgba(30,20,10,.28)]"
-        style={{
-          z: h,
-          background: `radial-gradient(circle at 50% 45%, ${c.stud} 0 22%, ${c.side} 26% 31%, transparent 34%), ${c.top}`,
-        }}
+        className="pointer-events-none absolute inset-0 bg-[#2a2925]"
+        style={{ opacity: shade }}
       />
     </div>
   );
 });
 
-/** Lift for a block at (week, weekday) from the active day: a soft bump that falls off with distance. */
-function liftAt(cell: ContributionCell, active: ContributionCell | null) {
-  if (!active) return 0;
-  const d2 = (cell.week - active.week) ** 2 + (cell.weekday - active.weekday) ** 2;
-  const v = LIFT * Math.exp(-d2 / 2.2);
-  return v < 0.5 ? 0 : Math.round(v * 2) / 2;
-}
-
-/** Toy: a tray of plastic blocks, one per day, taller for busier days. Hover lifts, press pushes in. */
+/**
+ * Toy: the year printed around a drum, one week per face. Drag, flick or scroll sideways to spin it;
+ * it coasts and decays into the nearest week. Arrow keys move the focus and the drum turns to follow.
+ */
 export function ToyContributionGraph({
   year,
   active,
@@ -150,18 +130,164 @@ export function ToyContributionGraph({
   grid,
   className,
 }: ContributionGraphWorldProps) {
-  const scroller = useScrollEnd<HTMLDivElement>();
-  const [pressed, setPressed] = useState<number | null>(null);
-  const enter = animation !== "none";
-  const wave = animation === "always";
-  const day = active ?? year.best;
+  const reduced = useReducedMotionSafe();
+  const n = year.weeks;
+  const step = 360 / n;
+  const last = (n - 1) * step;
+  const angle = useMotionValue(last);
+  const weeks = useMemo(
+    () => Array.from({ length: n }, (_, w) => year.days.slice(w * 7, w * 7 + 7)),
+    [year, n],
+  );
+  const drum = useTransform(angle, (a) => `translateZ(-${RADIUS}px) rotateY(${-a}deg)`);
+  const tick = useMotionValue(0);
+  const [front, setFront] = useState(n - 1);
+  const run = useRef<AnimationPlaybackControls | null>(null);
+  /** The drag in progress: last x and time, smoothed velocity in deg/s, and the day it started on. */
+  const drag = useRef<{
+    x: number;
+    t: number;
+    v: number;
+    start: number;
+    moved: boolean;
+    cell: number | null;
+  } | null>(null);
+  const stage = useRef<HTMLDivElement>(null);
+  /** The wheel gesture in progress: the unrounded angle it aims for and its last tick. */
+  const wheel = useRef({ aim: 0, t: 0 });
+  /** Where the drum is heading (or resting). */
+  const goal = useRef(last);
 
-  const onKey = (down: boolean) => (e: KeyboardEvent<HTMLElement>) => {
-    if (e.key !== " " && e.key !== "Enter") return;
-    e.preventDefault();
-    setPressed(down ? dayIndexOf(e.target) : null);
+  const weekOf = (a: number) => ((Math.round(a / step) % n) + n) % n;
+
+  const play = (next: AnimationPlaybackControls | null) => {
+    run.current?.stop();
+    run.current = next;
   };
-  const release = () => setPressed(null);
+  /**
+   * Glide to the week nearest `to`. Inertia decays exponentially from a speed of distance / DECAY,
+   * so a flick aimed at where friction would stop it carries on at the speed it was released with.
+   */
+  const glide = (to: number) => {
+    const target = (goal.current = Math.round(to / step) * step);
+    if (reduced) {
+      play(null);
+      angle.set(target);
+      return;
+    }
+    play(
+      animate(angle, target, {
+        type: "inertia",
+        power: DECAY / 1000,
+        timeConstant: DECAY,
+        restDelta: 0.01,
+        modifyTarget: () => target,
+      }),
+    );
+  };
+  /** Coast on a velocity in deg/s, capped at MAX_SPIN. */
+  const coast = (velocity: number) =>
+    glide(angle.get() + (Math.max(-MAX_SPIN, Math.min(MAX_SPIN, velocity)) * DECAY) / 1000);
+  /** Turn the drum the short way round to a week, keeping any spin it already has. */
+  const spinTo = (week: number) => {
+    const target = (goal.current = angle.get() + toward(angle.get(), week * step));
+    if (reduced) {
+      play(null);
+      angle.set(target);
+      return;
+    }
+    play(animate(angle, target, { ...motionTokens.toy.slide, velocity: angle.getVelocity() }));
+  };
+  /** Step whole weeks from where the drum is heading, so quick presses add up. */
+  const nudge = (by: number) => spinTo(weekOf(goal.current) + by);
+
+  // Entrance: the drum spins in to the latest week.
+  useLayoutEffect(() => {
+    if (animation === "none") return;
+    angle.jump(last - 70);
+    const spin = animate(angle, last, motionTokens.toy.knob);
+    run.current = spin;
+    return () => spin.stop();
+  }, [angle, last, animation]);
+  useEffect(() => () => run.current?.stop(), []);
+
+  // The pointer flicks each time a new week passes under it.
+  useMotionValueEvent(angle, "change", (a) => {
+    const f = weekOf(a);
+    if (f === front) return;
+    setFront(f);
+    if (reduced) return;
+    const dir = Math.sign(angle.getVelocity()) || 1;
+    animate(tick, [0, dir * 22, -dir * 6, 0], {
+      duration: 0.32,
+      times: [0, 0.25, 0.6, 1],
+      ease: [0.22, 1, 0.36, 1],
+    });
+  });
+
+  // Sideways wheel and trackpad swipes push the drum; it needs a non-passive listener to keep the page still.
+  useEffect(() => {
+    const el = stage.current;
+    if (!el) return;
+    const onWheel = (e: WheelEvent) => {
+      if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;
+      e.preventDefault();
+      // Ticks in one gesture add up to an aim the drum glides towards.
+      const now = performance.now();
+      const w = wheel.current;
+      if (now - w.t > 200) w.aim = angle.get();
+      w.aim += e.deltaX * DRAG;
+      w.t = now;
+      glide(w.aim);
+    };
+    el.addEventListener("wheel", onWheel, { passive: false });
+    return () => el.removeEventListener("wheel", onWheel);
+  });
+
+  const down = (e: PointerEvent<HTMLDivElement>) => {
+    if (e.button !== 0) return;
+    play(null);
+    drag.current = {
+      x: e.clientX,
+      t: performance.now(),
+      v: 0,
+      start: e.clientX,
+      moved: false,
+      cell: dayIndexOf(e.target),
+    };
+  };
+  const move = (e: PointerEvent<HTMLDivElement>) => {
+    const d = drag.current;
+    if (!d) return;
+    if (!d.moved && Math.abs(e.clientX - d.start) > 3) {
+      d.moved = true;
+      e.currentTarget.setPointerCapture(e.pointerId);
+    }
+    if (!d.moved) return;
+    const now = performance.now();
+    const delta = -(e.clientX - d.x) * DRAG;
+    angle.set(angle.get() + delta);
+    d.v = d.v * 0.5 + ((delta * 1000) / Math.max(8, now - d.t)) * 0.5;
+    d.x = e.clientX;
+    d.t = now;
+  };
+  const up = () => {
+    const d = drag.current;
+    drag.current = null;
+    if (!d) return;
+    // A drag that stopped before release lets go without a flick.
+    if (d.moved) coast(reduced || performance.now() - d.t > 90 ? 0 : d.v);
+    else if (d.cell !== null) spinTo(year.days[d.cell].week);
+  };
+
+  const months = new Map(year.months.map((m) => [m.week, m.label.toUpperCase()]));
+  const shown = weeks[front];
+  const weekTotal = shown.reduce((s, c) => s + c.count, 0);
+  const short = (c?: ContributionCell) => c?.label.slice(5) ?? "";
+  const count = active ? active.count : weekTotal;
+
+  const arrow =
+    "size-[38px] rounded-[10px] text-base font-extrabold transition-[translate,box-shadow] duration-150 active:translate-y-[3px]";
 
   return (
     <section
@@ -200,95 +326,105 @@ export function ToyContributionGraph({
         </div>
       </div>
 
-      <div className="relative mt-[22px] rounded-[24px] bg-[#efe8d8] pt-4 pb-[18px] shadow-[inset_0_0_0_2px_#e2d9c3,inset_0_1px_0_rgba(255,255,255,.85),0_10px_0_#c7bea8,0_28px_34px_-16px_rgba(40,28,10,.5)]">
+      <div className="relative mt-[22px] overflow-clip rounded-[24px] bg-[#efe8d8] pt-[18px] pb-[22px] shadow-[inset_0_0_0_2px_#e2d9c3,inset_0_1px_0_rgba(255,255,255,.85),0_10px_0_#c7bea8,0_28px_34px_-16px_rgba(40,28,10,.5)]">
         <div
-          ref={scroller}
-          className="overflow-x-auto overflow-y-hidden px-5 [scrollbar-width:thin]"
+          ref={stage}
+          onPointerDown={down}
+          onPointerMove={move}
+          onPointerUp={up}
+          onPointerCancel={up}
+          className="relative flex h-[250px] cursor-grab touch-pan-y items-center justify-center select-none perspective-[900px] active:cursor-grabbing"
         >
-          <div className="mx-auto w-max">
-            <div className="flex h-[104px] items-end">
-              <div
-                {...grid}
-                role="grid"
-                onPointerDown={(e) => setPressed(dayIndexOf(e.target))}
-                onPointerUp={release}
-                onPointerCancel={release}
-                onPointerLeave={() => {
-                  grid.onPointerLeave();
-                  release();
-                }}
-                onKeyDown={(e) => {
-                  grid.onKeyDown(e);
-                  onKey(true)(e);
-                }}
-                onKeyUp={onKey(false)}
-                className="grid auto-cols-[13px] grid-flow-col grid-rows-[repeat(7,13px)] gap-[3px] rounded-lg bg-[#d6d0c3] p-1.5 touch-manipulation"
-                style={{
-                  transform: "rotateX(52deg)",
-                  transformOrigin: "50% 100%",
-                  transformStyle: "preserve-3d",
-                }}
-              >
-                {year.rows.map((row, r) => (
-                  <div key={r} role="row" className="contents">
-                    {row.map((cell) => (
-                      <Block
-                        key={cell.date}
-                        cell={cell}
-                        tabbable={cell.index === focusIndex}
-                        active={cell.index === active?.index}
-                        pressed={cell.index === pressed}
-                        lift={liftAt(cell, active)}
-                        enter={enter}
-                        wave={wave}
-                      />
-                    ))}
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div
+          <motion.div
+            {...grid}
+            onFocus={(e) => {
+              grid.onFocus(e);
+              const i = dayIndexOf(e.target);
+              if (i !== null && !drag.current) spinTo(year.days[i].week);
+            }}
+            className="relative h-[184px] w-6 transform-3d"
+            style={{ transform: drum }}
+          >
+            <span
               aria-hidden
-              className="mt-2 grid h-3 auto-cols-[13px] grid-flow-col gap-[3px] px-1.5 font-(family-name:--ovio-mono) text-[10px] font-medium text-(--ovio-muted)"
-            >
-              {year.months.map((m) => (
-                <span key={m.week} className="whitespace-nowrap" style={{ gridColumn: m.week + 1 }}>
-                  {m.label.toUpperCase()}
-                </span>
-              ))}
-            </div>
-          </div>
+              className="absolute top-1/2 left-1/2 -m-[210px] size-[420px] rounded-full bg-[radial-gradient(circle,#e3dbc8_0_55%,#d2c9b3_56%_62%,#efe8d8_63%)] shadow-[0_0_0_6px_#c7bea8]"
+              style={{ transform: "rotateX(90deg) translateZ(92px)" }}
+            />
+            <span
+              aria-hidden
+              className="absolute top-1/2 left-1/2 -m-[210px] size-[420px] rounded-full bg-[#c7bea8]"
+              style={{ transform: "rotateX(90deg) translateZ(-92px)" }}
+            />
+            {Array.from({ length: n }, (_, w) => (
+              <Face
+                key={w}
+                week={w}
+                step={step}
+                cells={weeks[w]}
+                month={months.get(w)}
+                angle={angle}
+                active={active?.week === w ? active.index : null}
+                tabbable={Math.floor(focusIndex / 7) === w ? focusIndex : null}
+              />
+            ))}
+          </motion.div>
+          <motion.div
+            aria-hidden
+            className="pointer-events-none absolute top-0 left-1/2 z-[5] -ml-[13px] h-10 w-[26px] origin-[50%_9px] drop-shadow-[0_3px_2px_rgba(40,28,10,.35)]"
+            style={{ rotate: tick }}
+          >
+            <span className="absolute top-[22px] left-1/2 -ml-2 border-x-8 border-t-16 border-x-transparent border-t-[#e0432a]" />
+            <span className="absolute top-0 left-1/2 -ml-3 size-6 rounded-full bg-[radial-gradient(circle_at_38%_32%,#ff8a6a,#e0432a_60%)] shadow-[inset_0_-2px_0_rgba(0,0,0,.2)]" />
+            <span className="absolute top-2 left-1/2 -ml-1 size-2 rounded-full bg-[#f8f5ef] shadow-[inset_0_1px_1px_rgba(0,0,0,.3)]" />
+          </motion.div>
         </div>
 
-        <div className="mt-3.5 flex justify-center px-4">
+        <div className="mt-2.5 flex justify-center px-4">
           <div className="flex items-center gap-4 rounded-xl bg-[#2a2925] px-4 py-2.5 text-(--ovio-surface) shadow-[inset_0_3px_6px_rgba(0,0,0,.6)]">
             <div className="flex items-baseline gap-[7px]">
               <RollingNumber
                 className="text-[26px] leading-none font-extrabold tracking-[-0.02em]"
-                value={day.count}
+                value={count}
               />
-              <span className="text-xs text-[#bdb6a8]">{unit(day.count)}</span>
+              <span className="text-xs text-[#bdb6a8]">{active ? unit(count) : "this week"}</span>
             </div>
             <div className="flex flex-col gap-0.5 font-(family-name:--ovio-mono) text-[10.5px] leading-[1.2] text-[#bdb6a8]">
-              <span className="tracking-[0.08em] uppercase">{active ? "Day" : "Best day"}</span>
-              <span>{day.label}</span>
+              <span className="tracking-[0.08em] uppercase">
+                {active ? "Day" : `Week ${front + 1} of ${n}`}
+              </span>
+              <span>
+                {active ? active.label : `${short(shown[0])} – ${short(shown[shown.length - 1])}`}
+              </span>
             </div>
           </div>
         </div>
       </div>
 
       <div className="mt-3.5 flex flex-wrap items-center justify-between gap-3 font-(family-name:--ovio-mono) text-[11px] text-(--ovio-muted)">
-        <span>Hover to lift · press to push in · arrows step a day</span>
-        <span aria-hidden className="flex items-center gap-1.5">
-          Less
-          {PLASTIC.slice(1).map((c) => (
-            <span
-              key={c.top}
-              className="size-3 rounded-[3px]"
-              style={{ background: c.top, boxShadow: `0 3px 0 ${c.side}` }}
-            />
-          ))}
-          More
+        <span>Drag or flick to spin · arrows step a day or week</span>
+        <span className="flex gap-2">
+          <button
+            type="button"
+            aria-label="Previous week"
+            onClick={() => nudge(-1)}
+            className={cn(
+              arrow,
+              "bg-white text-(--ovio-ink) shadow-[0_4px_0_#cfc8b8] active:shadow-[0_1px_0_#cfc8b8]",
+            )}
+          >
+            ‹
+          </button>
+          <button
+            type="button"
+            aria-label="Next week"
+            onClick={() => nudge(1)}
+            className={cn(
+              arrow,
+              "bg-[#ef4f2b] text-white shadow-[0_4px_0_#b5311a] active:shadow-[0_1px_0_#b5311a]",
+            )}
+          >
+            ›
+          </button>
         </span>
       </div>
     </section>

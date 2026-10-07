@@ -53,7 +53,7 @@ export default function HomePage() {
             it, own the source.
           </p>
           <div className="flex flex-wrap gap-2.5">
-            <InstallButton command={installCommand("gooey-tabs")} />
+            <InstallButton command={installCommand("contribution-graph")} />
             <Link
               href="/docs"
               className="flex items-center rounded-lg border border-line-2 px-4 py-3 text-sm hover:text-muted"

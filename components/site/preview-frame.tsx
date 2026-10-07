@@ -31,7 +31,7 @@ export function PreviewFrame({
         <motion.div
           key={world}
           data-ovio-world={world}
-          className="ovio-stage relative flex flex-1 items-center justify-center bg-(--ovio-stage) px-5 py-9 sm:px-8 sm:py-12"
+          className="ovio-stage relative flex min-w-0 flex-1 items-center justify-center bg-(--ovio-stage) px-5 py-9 sm:px-8 sm:py-12"
           initial={reduced ? false : worldIn.initial}
           animate={worldIn.animate}
           exit={{ opacity: 0, transition: { duration: 0.15 } }}

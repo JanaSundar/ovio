@@ -8,7 +8,13 @@
       "type": "registry:item",
       "title": "Ovio theme",
       "description": "The four worlds' colours, radii, shadows and fonts as CSS variables under [data-ovio-world]. Import styles/ovio.css from your global stylesheet.",
-      "files": [{ "path": "styles/ovio.css", "type": "registry:file", "target": "styles/ovio.css" }]
+      "files": [
+        {
+          "path": "styles/ovio.css",
+          "type": "registry:file",
+          "target": "styles/ovio.css"
+        }
+      ]
     },
     {
       "name": "world",
@@ -16,7 +22,11 @@
       "title": "Ovio world",
       "description": "The World type, OvioProvider for a site-wide default world, and useWorld().",
       "files": [
-        { "path": "lib/world.ts", "type": "registry:lib", "target": "lib/world.ts" },
+        {
+          "path": "lib/world.ts",
+          "type": "registry:lib",
+          "target": "lib/world.ts"
+        },
         {
           "path": "components/shared/world-provider.tsx",
           "type": "registry:component",
@@ -30,7 +40,39 @@
       "title": "Ovio motion tokens",
       "description": "Per-world motion tokens as Motion transitions (Minimal eases, Craft lift, Retro steps, Toy springs) and a reduced-motion hook that resolves springs instantly.",
       "dependencies": ["motion"],
-      "files": [{ "path": "lib/motion.ts", "type": "registry:lib", "target": "lib/motion.ts" }]
+      "files": [
+        {
+          "path": "lib/motion.ts",
+          "type": "registry:lib",
+          "target": "lib/motion.ts"
+        }
+      ]
+    },
+    {
+      "name": "keys",
+      "type": "registry:lib",
+      "title": "Ovio keyboard",
+      "description": "Maps arrow, Page, Home and End keys to an index, so tab rows and chart scrubbers answer the keyboard the same way.",
+      "files": [
+        {
+          "path": "lib/keys.ts",
+          "type": "registry:lib",
+          "target": "lib/keys.ts"
+        }
+      ]
+    },
+    {
+      "name": "format",
+      "type": "registry:lib",
+      "title": "Ovio formatters",
+      "description": "en-US number and UTC date formatters, so server and client render the same labels.",
+      "files": [
+        {
+          "path": "lib/format.ts",
+          "type": "registry:lib",
+          "target": "lib/format.ts"
+        }
+      ]
     },
     {
       "name": "rolling-number",
@@ -68,7 +110,123 @@
       "description": "Server-side helpers that fetch repository data for Ovio components, with an optional token.",
       "dependencies": ["server-only"],
       "registryDependencies": ["@ovio/repository-card"],
-      "files": [{ "path": "lib/github.ts", "type": "registry:lib", "target": "lib/github.ts" }]
+      "files": [
+        {
+          "path": "lib/github.ts",
+          "type": "registry:lib",
+          "target": "lib/github.ts"
+        }
+      ]
+    },
+    {
+      "name": "contribution-graph",
+      "type": "registry:ui",
+      "title": "Contribution Graph",
+      "description": "A year of activity, one cell per day. From an editorial heatmap to physical blocks you can press.",
+      "dependencies": ["motion", "@number-flow/react"],
+      "registryDependencies": [
+        "utils",
+        "@ovio/theme",
+        "@ovio/world",
+        "@ovio/motion",
+        "@ovio/rolling-number",
+        "@ovio/format"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/contribution-graph/contribution-graph.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/contribution-graph/contribution-graph.tsx"
+        },
+        {
+          "path": "components/ovio/contribution-graph/grid.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/contribution-graph/grid.ts"
+        },
+        {
+          "path": "components/ovio/contribution-graph/year.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/contribution-graph/year.ts"
+        },
+        {
+          "path": "components/ovio/contribution-graph/worlds/minimal.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/contribution-graph/worlds/minimal.tsx"
+        },
+        {
+          "path": "components/ovio/contribution-graph/worlds/craft.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/contribution-graph/worlds/craft.tsx"
+        },
+        {
+          "path": "components/ovio/contribution-graph/worlds/retro.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/contribution-graph/worlds/retro.tsx"
+        },
+        {
+          "path": "components/ovio/contribution-graph/worlds/toy.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/contribution-graph/worlds/toy.tsx"
+        }
+      ]
+    },
+    {
+      "name": "star-history",
+      "type": "registry:ui",
+      "title": "Star History",
+      "description": "Stargazers over time, with annotated spikes.",
+      "dependencies": ["motion", "@number-flow/react"],
+      "registryDependencies": [
+        "utils",
+        "@ovio/theme",
+        "@ovio/world",
+        "@ovio/motion",
+        "@ovio/rolling-number",
+        "@ovio/keys",
+        "@ovio/format"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/star-history/star-history.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/star-history/star-history.tsx"
+        },
+        {
+          "path": "components/ovio/star-history/line-plot.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/star-history/line-plot.tsx"
+        },
+        {
+          "path": "components/ovio/star-history/shape.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/star-history/shape.ts"
+        },
+        {
+          "path": "components/ovio/star-history/use-scrubber.ts",
+          "type": "registry:hook",
+          "target": "components/ovio/star-history/use-scrubber.ts"
+        },
+        {
+          "path": "components/ovio/star-history/worlds/minimal.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/star-history/worlds/minimal.tsx"
+        },
+        {
+          "path": "components/ovio/star-history/worlds/craft.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/star-history/worlds/craft.tsx"
+        },
+        {
+          "path": "components/ovio/star-history/worlds/retro.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/star-history/worlds/retro.tsx"
+        },
+        {
+          "path": "components/ovio/star-history/worlds/toy.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/star-history/worlds/toy.tsx"
+        }
+      ]
     },
     {
       "name": "repository-card",
@@ -113,42 +271,92 @@
       ]
     },
     {
-      "name": "gooey-tabs",
+      "name": "top-contributors",
       "type": "registry:ui",
-      "title": "Gooey Tabs",
-      "description": "Tab bar with a moving indicator and a deploy status. In Toy, the indicator is a piece you can drag and flick.",
-      "dependencies": ["motion"],
-      "registryDependencies": ["utils", "@ovio/theme", "@ovio/world", "@ovio/motion"],
+      "title": "Top Contributors",
+      "description": "The people behind a project, ranked by commits.",
+      "dependencies": ["motion", "@number-flow/react"],
+      "registryDependencies": [
+        "utils",
+        "@ovio/theme",
+        "@ovio/world",
+        "@ovio/motion",
+        "@ovio/rolling-number",
+        "@ovio/toy"
+      ],
       "files": [
         {
-          "path": "components/ovio/gooey-tabs/gooey-tabs.tsx",
+          "path": "components/ovio/top-contributors/top-contributors.tsx",
           "type": "registry:ui",
-          "target": "components/ovio/gooey-tabs/gooey-tabs.tsx"
+          "target": "components/ovio/top-contributors/top-contributors.tsx"
         },
         {
-          "path": "components/ovio/gooey-tabs/goo.tsx",
+          "path": "components/ovio/top-contributors/avatar.tsx",
           "type": "registry:ui",
-          "target": "components/ovio/gooey-tabs/goo.tsx"
+          "target": "components/ovio/top-contributors/avatar.tsx"
         },
         {
-          "path": "components/ovio/gooey-tabs/worlds/minimal.tsx",
+          "path": "components/ovio/top-contributors/worlds/minimal.tsx",
           "type": "registry:ui",
-          "target": "components/ovio/gooey-tabs/worlds/minimal.tsx"
+          "target": "components/ovio/top-contributors/worlds/minimal.tsx"
         },
         {
-          "path": "components/ovio/gooey-tabs/worlds/craft.tsx",
+          "path": "components/ovio/top-contributors/worlds/craft.tsx",
           "type": "registry:ui",
-          "target": "components/ovio/gooey-tabs/worlds/craft.tsx"
+          "target": "components/ovio/top-contributors/worlds/craft.tsx"
         },
         {
-          "path": "components/ovio/gooey-tabs/worlds/retro.tsx",
+          "path": "components/ovio/top-contributors/worlds/retro.tsx",
           "type": "registry:ui",
-          "target": "components/ovio/gooey-tabs/worlds/retro.tsx"
+          "target": "components/ovio/top-contributors/worlds/retro.tsx"
         },
         {
-          "path": "components/ovio/gooey-tabs/worlds/toy.tsx",
+          "path": "components/ovio/top-contributors/worlds/toy.tsx",
           "type": "registry:ui",
-          "target": "components/ovio/gooey-tabs/worlds/toy.tsx"
+          "target": "components/ovio/top-contributors/worlds/toy.tsx"
+        }
+      ]
+    },
+    {
+      "name": "npm-downloads",
+      "type": "registry:ui",
+      "title": "npm Downloads",
+      "description": "Weekly installs with trend and goal.",
+      "dependencies": ["motion", "@number-flow/react"],
+      "registryDependencies": [
+        "utils",
+        "@ovio/theme",
+        "@ovio/world",
+        "@ovio/motion",
+        "@ovio/rolling-number",
+        "@ovio/keys",
+        "@ovio/format"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/npm-downloads/npm-downloads.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/npm-downloads/npm-downloads.tsx"
+        },
+        {
+          "path": "components/ovio/npm-downloads/worlds/minimal.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/npm-downloads/worlds/minimal.tsx"
+        },
+        {
+          "path": "components/ovio/npm-downloads/worlds/craft.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/npm-downloads/worlds/craft.tsx"
+        },
+        {
+          "path": "components/ovio/npm-downloads/worlds/retro.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/npm-downloads/worlds/retro.tsx"
+        },
+        {
+          "path": "components/ovio/npm-downloads/worlds/toy.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/npm-downloads/worlds/toy.tsx"
         }
       ]
     },
@@ -199,11 +407,146 @@
       ]
     },
     {
+      "name": "bundle-size",
+      "type": "registry:ui",
+      "title": "Bundle Size",
+      "description": "Package size with gzip, brotli and the change from the previous version.",
+      "dependencies": ["motion", "@number-flow/react"],
+      "registryDependencies": [
+        "utils",
+        "@ovio/theme",
+        "@ovio/world",
+        "@ovio/motion",
+        "@ovio/rolling-number",
+        "@ovio/toy",
+        "@ovio/keys"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/bundle-size/bundle-size.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/bundle-size/bundle-size.tsx"
+        },
+        {
+          "path": "components/ovio/bundle-size/worlds/minimal.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/bundle-size/worlds/minimal.tsx"
+        },
+        {
+          "path": "components/ovio/bundle-size/worlds/craft.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/bundle-size/worlds/craft.tsx"
+        },
+        {
+          "path": "components/ovio/bundle-size/worlds/retro.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/bundle-size/worlds/retro.tsx"
+        },
+        {
+          "path": "components/ovio/bundle-size/worlds/toy.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/bundle-size/worlds/toy.tsx"
+        }
+      ]
+    },
+    {
+      "name": "gooey-tabs",
+      "type": "registry:ui",
+      "title": "Gooey Tabs",
+      "description": "Tab bar with a moving indicator and a deploy status. In Toy, the indicator is a piece you can drag and flick.",
+      "dependencies": ["motion"],
+      "registryDependencies": ["utils", "@ovio/theme", "@ovio/world", "@ovio/motion", "@ovio/keys"],
+      "files": [
+        {
+          "path": "components/ovio/gooey-tabs/gooey-tabs.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/gooey-tabs/gooey-tabs.tsx"
+        },
+        {
+          "path": "components/ovio/gooey-tabs/goo.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/gooey-tabs/goo.tsx"
+        },
+        {
+          "path": "components/ovio/gooey-tabs/worlds/minimal.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/gooey-tabs/worlds/minimal.tsx"
+        },
+        {
+          "path": "components/ovio/gooey-tabs/worlds/craft.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/gooey-tabs/worlds/craft.tsx"
+        },
+        {
+          "path": "components/ovio/gooey-tabs/worlds/retro.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/gooey-tabs/worlds/retro.tsx"
+        },
+        {
+          "path": "components/ovio/gooey-tabs/worlds/toy.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/gooey-tabs/worlds/toy.tsx"
+        }
+      ]
+    },
+    {
+      "name": "changelog",
+      "type": "registry:ui",
+      "title": "Changelog",
+      "description": "Releases with dates and notes.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "@ovio/theme",
+        "@ovio/world",
+        "@ovio/motion",
+        "@ovio/toy",
+        "@ovio/format"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/changelog/changelog.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/changelog/changelog.tsx"
+        },
+        {
+          "path": "components/ovio/changelog/worlds/minimal.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/changelog/worlds/minimal.tsx"
+        },
+        {
+          "path": "components/ovio/changelog/worlds/craft.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/changelog/worlds/craft.tsx"
+        },
+        {
+          "path": "components/ovio/changelog/worlds/retro.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/changelog/worlds/retro.tsx"
+        },
+        {
+          "path": "components/ovio/changelog/worlds/toy.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/changelog/worlds/toy.tsx"
+        }
+      ]
+    },
+    {
       "name": "all",
       "type": "registry:item",
       "title": "All Ovio components",
       "description": "Every Ovio component at once.",
-      "registryDependencies": ["@ovio/repository-card", "@ovio/gooey-tabs", "@ovio/physical-knob"],
+      "registryDependencies": [
+        "@ovio/contribution-graph",
+        "@ovio/star-history",
+        "@ovio/repository-card",
+        "@ovio/top-contributors",
+        "@ovio/npm-downloads",
+        "@ovio/physical-knob",
+        "@ovio/bundle-size",
+        "@ovio/gooey-tabs",
+        "@ovio/changelog"
+      ],
       "files": []
     }
   ]

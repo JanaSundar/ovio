@@ -144,7 +144,7 @@
       "name": "contribution-graph",
       "type": "registry:ui",
       "title": "Contribution Graph",
-      "description": "A year of activity, one cell per day. From an editorial heatmap to physical blocks you can press.",
+      "description": "A year of activity, one cell per day. From an editorial heatmap to a drum you can spin.",
       "dependencies": ["motion", "@number-flow/react"],
       "registryDependencies": [
         "utils",

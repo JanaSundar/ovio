@@ -1,6 +1,11 @@
 "use client";
 
-import { StarHistory, type StarHistoryAnnotation, type StarHistoryPoint } from "./star-history";
+import {
+  StarHistory,
+  type StarHistoryProps,
+  type StarHistoryAnnotation,
+  type StarHistoryPoint,
+} from "./star-history";
 
 /** Stars gained each month, Oct 2024 to Sep 2026. July 2025 is the Hacker News spike. */
 const GAINS = [
@@ -43,6 +48,7 @@ const ANNOTATIONS: StarHistoryAnnotation[] = [
   { date: "2025-07-14", label: "hit the HN front page!" },
 ];
 
-export function StarHistoryDemo() {
-  return <StarHistory repo="ada-dev/lumen" data={DATA} annotations={ANNOTATIONS} />;
+/** Sample props first, so the docs playground can override any of them. */
+export function StarHistoryDemo(props: Partial<StarHistoryProps>) {
+  return <StarHistory repo="ada-dev/lumen" data={DATA} annotations={ANNOTATIONS} {...props} />;
 }

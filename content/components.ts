@@ -6,17 +6,36 @@
 
 type PropDoc = { name: string; type: string; description: string };
 
+/**
+ * A playground control over one prop. A range bound can name another control, so a value stays
+ * inside a range that is itself adjustable.
+ */
+export type Control =
+  | { prop: string; type: "select"; options: readonly string[]; default: string }
+  | { prop: string; type: "multi"; options: readonly string[]; default: readonly string[] }
+  | {
+      prop: string;
+      type: "range";
+      min: number | string;
+      max: number | string;
+      step?: number;
+      default: number;
+    };
+export type ControlValue = string | number | readonly string[];
+export type ControlValues = Record<string, ControlValue>;
+
 export type ComponentDoc = {
   slug: string;
   name: string;
-  tag?: "flagship" | "new" | "motion";
   /** What it is drawn with. */
   tech: string;
   description: string;
   /** Export name. */
   exportName: string;
-  /** Extra lines for the usage snippet, after `variant`. */
+  /** Fixed lines for the usage snippet, after `variant`; the playground's props follow them. */
   usage: string;
+  /** Playground controls for the live preview. */
+  controls?: Control[];
   props: PropDoc[];
   /** Build phase from the library code plan. */
   phase: 1 | 2 | 3;
@@ -41,6 +60,21 @@ const A: PropDoc = {
   type: '"none" | "enter-exit" | "always"',
   description: 'Forced to "none" under reduced motion.',
 };
+const ANIMATIONS = ["none", "enter-exit", "always"] as const;
+const animation: Control = {
+  prop: "animation",
+  type: "select",
+  options: ANIMATIONS,
+  default: "enter-exit",
+};
+const range = (prop: string, min: number, max: number, def: number, step = 1): Control => ({
+  prop,
+  type: "range",
+  min,
+  max,
+  step,
+  default: def,
+});
 const CL: PropDoc = { name: "className", type: "string", description: "Merged onto the root." };
 
 const worldFiles = (slug: string, extra: string[] = []) => [
@@ -53,12 +87,12 @@ export const COMPONENTS: ComponentDoc[] = [
   {
     slug: "contribution-graph",
     name: "Contribution Graph",
-    tag: "flagship",
-    tech: "CSS grid · Motion for React (Toy: CSS 3D blocks)",
+    tech: "CSS grid · Motion for React (Toy: CSS 3D drum)",
     description:
-      "A year of activity, one cell per day. From an editorial heatmap to physical blocks you can press.",
+      "A year of activity, one cell per day. From an editorial heatmap to a drum you can spin.",
     exportName: "ContributionGraph",
     usage: "  data={contributions}",
+    controls: [animation],
     props: [
       {
         name: "data",
@@ -93,7 +127,6 @@ export const COMPONENTS: ComponentDoc[] = [
   {
     slug: "event-ticket",
     name: "Event Ticket",
-    tag: "new",
     tech: "CSS 3D · canvas art",
     description:
       "A pass for launches and conferences. Book on the stub, tear it to check in, flip it for the QR code.",
@@ -123,12 +156,19 @@ export const COMPONENTS: ComponentDoc[] = [
   {
     slug: "gooey-tabs",
     name: "Gooey Tabs",
-    tag: "motion",
     tech: "SVG goo filter · Motion for React (Toy: spring drag)",
     description:
       "A tab bar with a moving indicator and a deploy status. In Toy, the indicator is a piece you can drag and flick.",
     exportName: "GooeyTabs",
-    usage: '  tabs={["Overview", "Commits", "Issues", "Releases"]}\n  status="building"',
+    usage: '  tabs={["Overview", "Commits", "Issues", "Releases"]}',
+    controls: [
+      {
+        prop: "status",
+        type: "select",
+        options: ["offline", "building", "online"],
+        default: "building",
+      },
+    ],
     props: [
       V,
       { name: "tabs", type: "string[]", description: "Equal-width tabs." },
@@ -164,6 +204,7 @@ export const COMPONENTS: ComponentDoc[] = [
     description: "Stargazers over time, with annotated spikes.",
     exportName: "StarHistory",
     usage: "  data={stars}",
+    controls: [animation],
     props: [
       {
         name: "data",
@@ -198,6 +239,14 @@ export const COMPONENTS: ComponentDoc[] = [
     description: "A repo at a glance: name, description, stars, forks and language.",
     exportName: "RepositoryCard",
     usage: "  repo={repo}",
+    controls: [
+      {
+        prop: "stats",
+        type: "multi",
+        options: ["stars", "forks", "issues"],
+        default: ["stars", "forks", "issues"],
+      },
+    ],
     props: [
       V,
       {
@@ -229,7 +278,11 @@ export const COMPONENTS: ComponentDoc[] = [
     tech: "CSS · Motion for React",
     description: "The people behind a project, ranked by commits.",
     exportName: "TopContributors",
-    usage: "  contributors={contributors}\n  limit={6}",
+    usage: "  contributors={contributors}",
+    controls: [
+      range("limit", 1, 8, 6),
+      { prop: "defaultPeriod", type: "select", options: ["30d", "90d", "all"], default: "90d" },
+    ],
     props: [
       {
         name: "contributors",
@@ -268,7 +321,8 @@ export const COMPONENTS: ComponentDoc[] = [
     tech: "CSS · SVG · Motion for React",
     description: "Weekly installs with trend and goal.",
     exportName: "NpmDownloads",
-    usage: '  pkg="lumen"\n  data={downloads}\n  goal={50000}',
+    usage: '  pkg="lumen"\n  data={downloads}',
+    controls: [range("weeks", 4, 26, 12), range("goal", 10000, 80000, 50000, 5000)],
     props: [
       { name: "pkg", type: "string", description: "Package name." },
       {
@@ -309,12 +363,16 @@ export const COMPONENTS: ComponentDoc[] = [
   {
     slug: "physical-knob",
     name: "Physical Knob",
-    tag: "new",
     tech: "CSS · Motion for React (spring, drag, inertia)",
     description:
       "A rotary control with tick marks and a value display. Drag, flick, scroll or use the arrow keys.",
     exportName: "PhysicalKnob",
-    usage: "  value={level}\n  onChange={setLevel}",
+    usage: "  onChange={setLevel}",
+    controls: [
+      range("min", 0, 50, 0, 5),
+      range("max", 60, 200, 100, 10),
+      { prop: "defaultValue", type: "range", min: "min", max: "max", default: 72 },
+    ],
     props: [
       V,
       {
@@ -336,7 +394,6 @@ export const COMPONENTS: ComponentDoc[] = [
   {
     slug: "developer-id-card",
     name: "Developer ID Card",
-    tag: "new",
     tech: "CSS · Motion for React (drag)",
     description: "An identity card for a developer: name, role, stack, availability and a QR code.",
     exportName: "DeveloperIdCard",
@@ -357,11 +414,11 @@ export const COMPONENTS: ComponentDoc[] = [
   {
     slug: "bundle-size",
     name: "Bundle Size",
-    tag: "new",
     tech: "CSS · Motion for React",
     description: "Package size with gzip, brotli and the change from the previous version.",
     exportName: "BundleSize",
     usage: '  pkg="lumen"\n  versions={versions}',
+    controls: [range("budget", 10, 60, 40)],
     props: [
       { name: "pkg", type: "string", description: "Package name." },
       {
@@ -386,7 +443,6 @@ export const COMPONENTS: ComponentDoc[] = [
   {
     slug: "git-branch-visualizer",
     name: "Git Branch Visualizer",
-    tag: "new",
     tech: "SVG · Motion for React",
     description:
       "Branches and commits as a graph. Hover a commit, pick a branch, merge or branch off.",
@@ -415,6 +471,7 @@ export const COMPONENTS: ComponentDoc[] = [
     description: "Releases with dates and notes.",
     exportName: "Changelog",
     usage: "  releases={releases}",
+    controls: [range("limit", 1, 4, 4)],
     props: [
       {
         name: "releases",
@@ -453,5 +510,8 @@ export const COMPONENTS: ComponentDoc[] = [
 ];
 
 export const getComponent = (slug: string) => COMPONENTS.find((c) => c.slug === slug);
+
+/** Where "Docs" links land: the first built component. /docs redirects here too. */
+export const DOCS_HREF = `/docs/${COMPONENTS.find((c) => c.ready)!.slug}`;
 
 export const installCommand = (slug: string) => `npx shadcn add @ovio/${slug}`;

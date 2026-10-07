@@ -3,7 +3,7 @@ import { InstallButton } from "@/components/site/copy-command";
 import { HomeShowcase } from "@/components/site/home-showcase";
 import { SiteFooter, SiteNav } from "@/components/site/site-nav";
 import { WorldSwitcher } from "@/components/site/world-switcher";
-import { COMPONENTS, installCommand } from "@/content/components";
+import { COMPONENTS, DOCS_HREF, installCommand } from "@/content/components";
 
 const STEPS = [
   {
@@ -55,7 +55,7 @@ export default function HomePage() {
           <div className="flex flex-wrap gap-2.5">
             <InstallButton command={installCommand("contribution-graph")} />
             <Link
-              href="/docs"
+              href={DOCS_HREF}
               className="flex items-center rounded-lg border border-line-2 px-4 py-3 text-sm hover:text-muted"
             >
               Read the docs →

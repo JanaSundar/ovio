@@ -34,8 +34,16 @@ export function InstallButton({ command }: { command: string }) {
   );
 }
 
-/** A dark command box with a Copy button, as on the docs pages. */
-export function CopyCommand({ command, className }: { command: string; className?: string }) {
+/** A dark command box with a Copy button, as on the docs pages. `html` is the highlighted command. */
+export function CopyCommand({
+  command,
+  html,
+  className,
+}: {
+  command: string;
+  html: string;
+  className?: string;
+}) {
   const { copied, copy } = useCopy(command);
   return (
     <div
@@ -46,7 +54,7 @@ export function CopyCommand({ command, className }: { command: string; className
     >
       <span className="overflow-x-auto whitespace-nowrap">
         <span className="text-code-muted">$ </span>
-        {command}
+        <code dangerouslySetInnerHTML={{ __html: html }} />
       </span>
       <button
         type="button"

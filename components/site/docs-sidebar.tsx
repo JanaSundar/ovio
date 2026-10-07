@@ -5,57 +5,27 @@ import { usePathname } from "next/navigation";
 import { COMPONENTS } from "@/content/components";
 import { cn } from "@/lib/utils";
 
-function Item({
-  href,
-  active,
-  children,
-  tag,
-}: {
-  href: string;
-  active: boolean;
-  children: string;
-  tag?: string;
-}) {
+function Items({ pathname }: { pathname: string }) {
   return (
-    <Link
-      href={href}
-      aria-current={active ? "page" : undefined}
-      className={cn(
-        "-mx-2.5 flex items-baseline justify-between rounded-md px-2.5 py-1.5 hover:text-ink",
-        active ? "bg-paper-2 text-ink" : "text-ink-2",
-      )}
-    >
-      {children}
-      {tag && <span className="font-mono text-[10px] text-faint">{tag}</span>}
-    </Link>
-  );
-}
-
-function Groups({ pathname }: { pathname: string }) {
-  return (
-    <>
-      <div className="flex flex-col gap-0.5">
-        <div className="mb-2 text-[11px] tracking-[0.12em] text-muted uppercase">
-          Getting started
-        </div>
-        <Item href="/docs" active={pathname === "/docs"}>
-          Introduction
-        </Item>
-      </div>
-      <div className="flex flex-col gap-0.5">
-        <div className="mb-2 text-[11px] tracking-[0.12em] text-muted uppercase">Components</div>
-        {COMPONENTS.map((c) => (
-          <Item
+    <div className="flex flex-col gap-0.5">
+      <div className="mb-2 text-[11px] tracking-[0.12em] text-muted uppercase">Components</div>
+      {COMPONENTS.map((c) => {
+        const href = `/docs/${c.slug}`;
+        return (
+          <Link
             key={c.slug}
-            href={`/docs/${c.slug}`}
-            active={pathname === `/docs/${c.slug}`}
-            tag={c.tag}
+            href={href}
+            aria-current={pathname === href ? "page" : undefined}
+            className={cn(
+              "-mx-2.5 rounded-md px-2.5 py-1.5 hover:text-ink",
+              pathname === href ? "bg-paper-2 text-ink" : "text-ink-2",
+            )}
           >
             {c.name}
-          </Item>
-        ))}
-      </div>
-    </>
+          </Link>
+        );
+      })}
+    </div>
   );
 }
 
@@ -63,7 +33,7 @@ export function DocsSidebar() {
   const pathname = usePathname();
   return (
     <aside className="sticky top-6 hidden flex-col gap-7 text-sm docs:flex">
-      <Groups pathname={pathname} />
+      <Items pathname={pathname} />
     </aside>
   );
 }
@@ -71,7 +41,7 @@ export function DocsSidebar() {
 /** Below 820px the sidebar folds into a menu at the top of the page. */
 export function DocsMobileNav() {
   const pathname = usePathname();
-  const current = COMPONENTS.find((c) => pathname === `/docs/${c.slug}`)?.name ?? "Introduction";
+  const current = COMPONENTS.find((c) => pathname === `/docs/${c.slug}`)?.name;
   return (
     <details
       key={pathname}
@@ -87,7 +57,7 @@ export function DocsMobileNav() {
         </span>
       </summary>
       <div className="flex flex-col gap-6 border-t border-line px-4 py-4">
-        <Groups pathname={pathname} />
+        <Items pathname={pathname} />
       </div>
     </details>
   );

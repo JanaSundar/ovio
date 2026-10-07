@@ -5,9 +5,26 @@ import { useWorld } from "@/components/shared/world-provider";
 import { worldInfo } from "@/content/worlds";
 import { cn } from "@/lib/utils";
 import { Demo, DEMOS } from "./demos";
+import { highlight } from "./highlight";
+import { PlaygroundControls, propLines, usePlayground } from "./playground";
 import { PreviewFrame } from "./preview-frame";
 
-export type SourceFile = { path: string; code: string };
+/** A source file with its highlighted markup, made on the server. */
+export type SourceFile = { path: string; html: string };
+
+/** A dark code block over highlighted token markup (see highlight.ts). */
+export function CodeBlock({ html, className }: { html: string; className?: string }) {
+  return (
+    <pre
+      className={cn(
+        "m-0 overflow-auto bg-ink px-5 py-[18px] font-mono text-[13px] leading-[1.7] text-[#e6e4dd]",
+        className,
+      )}
+    >
+      <code dangerouslySetInnerHTML={{ __html: html }} />
+    </pre>
+  );
+}
 
 /** Preview and Code tabs over a component's demo and its installed source. */
 export function ComponentPreview({
@@ -47,16 +64,19 @@ export function ComponentPreview({
         </div>
       )}
       {tab === "preview" ? (
-        <PreviewFrame minHeight={demo?.minHeight ?? 400}>
-          {demo ? (
-            <Demo slug={slug} />
-          ) : (
-            <div className="flex flex-col items-center gap-2 text-center font-(family-name:--ovio-font) text-(--ovio-ink)">
-              <span className="text-lg">{name}</span>
-              <span className="text-sm opacity-60">Lands in phase {phase} of the build.</span>
-            </div>
-          )}
-        </PreviewFrame>
+        <>
+          <PreviewFrame minHeight={demo?.minHeight ?? 400}>
+            {demo ? (
+              <Demo slug={slug} />
+            ) : (
+              <div className="flex flex-col items-center gap-2 text-center font-(family-name:--ovio-font) text-(--ovio-ink)">
+                <span className="text-lg">{name}</span>
+                <span className="text-sm opacity-60">Lands in phase {phase} of the build.</span>
+              </div>
+            )}
+          </PreviewFrame>
+          <PlaygroundControls />
+        </>
       ) : (
         <div className="overflow-hidden rounded-2xl bg-ink">
           <div className="flex gap-1 overflow-x-auto border-b border-[#2c2b28] px-2 pt-2">
@@ -77,9 +97,7 @@ export function ComponentPreview({
               </button>
             ))}
           </div>
-          <pre className="m-0 max-h-[560px] overflow-auto px-5 py-[18px] font-mono text-[12.5px] leading-[1.7] text-[#e6e4dd]">
-            {files[file]?.code}
-          </pre>
+          <CodeBlock html={files[file]?.html ?? ""} className="max-h-[560px] text-[12.5px]" />
         </div>
       )}
     </div>
@@ -96,11 +114,15 @@ export function UsageSnippet({
   usage: string;
 }) {
   const world = useWorld();
-  return (
-    <pre className="m-0 overflow-x-auto rounded-[10px] bg-ink px-5 py-[18px] font-mono text-[13px] leading-[1.7] text-[#e6e4dd]">
-      {`import { ${exportName} } from "@/components/ovio/${slug}/${slug}"\n\n<${exportName}\n  variant="${world}"\n${usage}\n/>`}
-    </pre>
-  );
+  const code = [
+    `import { ${exportName} } from "@/components/ovio/${slug}/${slug}"\n`,
+    `<${exportName}`,
+    `  variant="${world}"`,
+    usage,
+    ...propLines(usePlayground()),
+    "/>",
+  ].join("\n");
+  return <CodeBlock html={highlight(code)} className="rounded-[10px]" />;
 }
 
 export function MotionInfo({ tech }: { tech: string }) {

@@ -1,7 +1,7 @@
 "use client";
 
 import { seeded } from "@/components/site/seeded";
-import { NpmDownloads, type DownloadWeek } from "./npm-downloads";
+import { NpmDownloads, type NpmDownloadsProps, type DownloadWeek } from "./npm-downloads";
 
 /** 26 weeks of steady growth with some noise, from a fixed seed so SSR and client agree. */
 function sampleWeeks(): DownloadWeek[] {
@@ -18,6 +18,7 @@ function sampleWeeks(): DownloadWeek[] {
 
 const DOWNLOADS = sampleWeeks();
 
-export function NpmDownloadsDemo() {
-  return <NpmDownloads pkg="lumen" data={DOWNLOADS} goal={50000} />;
+/** Sample props first, so the docs playground can override any of them. */
+export function NpmDownloadsDemo(props: Partial<NpmDownloadsProps>) {
+  return <NpmDownloads pkg="lumen" data={DOWNLOADS} goal={50000} {...props} />;
 }

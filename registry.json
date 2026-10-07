@@ -8,9 +8,7 @@
       "type": "registry:item",
       "title": "Ovio theme",
       "description": "The four worlds' colours, radii, shadows and fonts as CSS variables under [data-ovio-world]. Import styles/ovio.css from your global stylesheet.",
-      "files": [
-        { "path": "styles/ovio.css", "type": "registry:file", "target": "styles/ovio.css" }
-      ]
+      "files": [{ "path": "styles/ovio.css", "type": "registry:file", "target": "styles/ovio.css" }]
     },
     {
       "name": "world",

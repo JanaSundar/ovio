@@ -13,8 +13,10 @@ for (const e of entries) {
 
 const index = JSON.parse(await readFile(new URL("registry.json", dir), "utf8"));
 for (const item of index.items) {
-  if (!entries.some((e) => e.name === `${item.name}.json`)) problems.push(`missing public/r/${item.name}.json`);
-  for (const f of item.files ?? []) if ("content" in f) problems.push(`${item.name}: files entry has content`);
+  if (!entries.some((e) => e.name === `${item.name}.json`))
+    problems.push(`missing public/r/${item.name}.json`);
+  for (const f of item.files ?? [])
+    if ("content" in f) problems.push(`${item.name}: files entry has content`);
 }
 
 if (problems.length) {

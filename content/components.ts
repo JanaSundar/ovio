@@ -15,12 +15,10 @@ export type ComponentDoc = {
   phase: 1 | 2 | 3;
   /** Whether the component ships in this build. */
   ready: boolean;
-  /** Source files shown in the Code tab and shipped by the registry, relative to the repo root. */
-  files: string[];
-  /** npm packages the component installs. */
-  dependencies: string[];
-  /** Ovio registry items it pulls in. */
-  registryDependencies: string[];
+  /** Planned npm packages. A built component's come from registry.json. */
+  dependencies?: string[];
+  /** Planned Ovio registry items. A built component's come from registry.json. */
+  registryDependencies?: string[];
 };
 
 const WORLDS_TYPE = '"minimal" | "craft" | "retro" | "toy"';
@@ -35,12 +33,6 @@ const A: PropDoc = {
   description: 'Forced to "none" under reduced motion.',
 };
 const CL: PropDoc = { name: "className", type: "string", description: "Merged onto the root." };
-
-const worldFiles = (slug: string, extra: string[] = []) => [
-  `components/ovio/${slug}/${slug}.tsx`,
-  ...extra.map((f) => `components/ovio/${slug}/${f}`),
-  ...["minimal", "craft", "retro", "toy"].map((w) => `components/ovio/${slug}/worlds/${w}.tsx`),
-];
 
 export const COMPONENTS: ComponentDoc[] = [
   {
@@ -78,9 +70,6 @@ export const COMPONENTS: ComponentDoc[] = [
     ],
     phase: 2,
     ready: true,
-    files: worldFiles("contribution-graph", ["year.ts", "grid.ts"]),
-    dependencies: ["motion", "@number-flow/react"],
-    registryDependencies: ["world", "motion", "theme", "rolling-number", "format"],
   },
   {
     slug: "event-ticket",
@@ -107,7 +96,6 @@ export const COMPONENTS: ComponentDoc[] = [
     ],
     phase: 3,
     ready: false,
-    files: [],
     dependencies: ["motion", "uqr"],
     registryDependencies: ["world", "motion", "theme"],
   },
@@ -143,9 +131,6 @@ export const COMPONENTS: ComponentDoc[] = [
     ],
     phase: 1,
     ready: true,
-    files: worldFiles("gooey-tabs", ["goo.tsx"]),
-    dependencies: ["motion"],
-    registryDependencies: ["world", "motion", "theme", "keys"],
   },
   {
     slug: "star-history",
@@ -177,9 +162,6 @@ export const COMPONENTS: ComponentDoc[] = [
     ],
     phase: 2,
     ready: true,
-    files: worldFiles("star-history", ["shape.ts", "use-scrubber.ts", "line-plot.tsx"]),
-    dependencies: ["motion", "@number-flow/react"],
-    registryDependencies: ["world", "motion", "theme", "rolling-number", "keys", "format"],
   },
   {
     slug: "repository-card",
@@ -209,9 +191,6 @@ export const COMPONENTS: ComponentDoc[] = [
     ],
     phase: 1,
     ready: true,
-    files: worldFiles("repository-card"),
-    dependencies: ["motion", "@number-flow/react"],
-    registryDependencies: ["world", "motion", "theme", "rolling-number", "toy"],
   },
   {
     slug: "top-contributors",
@@ -248,9 +227,6 @@ export const COMPONENTS: ComponentDoc[] = [
     ],
     phase: 2,
     ready: true,
-    files: worldFiles("top-contributors", ["avatar.tsx"]),
-    dependencies: ["motion", "@number-flow/react"],
-    registryDependencies: ["world", "motion", "theme", "rolling-number", "toy"],
   },
   {
     slug: "npm-downloads",
@@ -273,9 +249,6 @@ export const COMPONENTS: ComponentDoc[] = [
     ],
     phase: 2,
     ready: true,
-    files: worldFiles("npm-downloads"),
-    dependencies: ["motion", "@number-flow/react"],
-    registryDependencies: ["world", "motion", "theme", "rolling-number", "keys", "format"],
   },
   {
     slug: "sponsor-wall",
@@ -292,7 +265,6 @@ export const COMPONENTS: ComponentDoc[] = [
     ],
     phase: 3,
     ready: false,
-    files: [],
     dependencies: ["motion"],
     registryDependencies: ["world", "motion", "theme"],
   },
@@ -322,9 +294,6 @@ export const COMPONENTS: ComponentDoc[] = [
     ],
     phase: 1,
     ready: true,
-    files: worldFiles("physical-knob", ["use-knob.ts"]),
-    dependencies: ["motion", "@number-flow/react"],
-    registryDependencies: ["world", "motion", "theme", "rolling-number"],
   },
   {
     slug: "developer-id-card",
@@ -342,7 +311,6 @@ export const COMPONENTS: ComponentDoc[] = [
     ],
     phase: 3,
     ready: false,
-    files: [],
     dependencies: ["motion", "uqr"],
     registryDependencies: ["world", "motion", "theme"],
   },
@@ -370,9 +338,6 @@ export const COMPONENTS: ComponentDoc[] = [
     ],
     phase: 2,
     ready: true,
-    files: worldFiles("bundle-size"),
-    dependencies: ["motion", "@number-flow/react"],
-    registryDependencies: ["world", "motion", "theme", "rolling-number", "toy", "keys"],
   },
   {
     slug: "git-branch-visualizer",
@@ -394,7 +359,6 @@ export const COMPONENTS: ComponentDoc[] = [
     ],
     phase: 3,
     ready: false,
-    files: [],
     dependencies: ["motion"],
     registryDependencies: ["world", "motion", "theme"],
   },
@@ -417,9 +381,6 @@ export const COMPONENTS: ComponentDoc[] = [
     ],
     phase: 2,
     ready: true,
-    files: worldFiles("changelog"),
-    dependencies: ["motion"],
-    registryDependencies: ["world", "motion", "theme", "toy", "format"],
   },
   {
     slug: "now-playing",
@@ -436,7 +397,6 @@ export const COMPONENTS: ComponentDoc[] = [
     ],
     phase: 3,
     ready: false,
-    files: [],
     dependencies: ["motion", "@number-flow/react"],
     registryDependencies: ["world", "motion", "theme", "rolling-number"],
   },
@@ -447,4 +407,7 @@ export const getComponent = (slug: string) => COMPONENTS.find((c) => c.slug === 
 /** Where "Docs" links land: the first built component. /docs redirects here too. */
 export const DOCS_HREF = `/docs/${COMPONENTS.find((c) => c.ready)!.slug}`;
 
-export const installCommand = (slug: string) => `npx shadcn add @ovio/${slug}`;
+/** The GitHub repository that serves as the shadcn registry. */
+export const REPO = "JanaSundar/ovio";
+
+export const installCommand = (slug: string) => `npx shadcn add ${REPO}/${slug}`;

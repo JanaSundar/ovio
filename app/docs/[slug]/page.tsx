@@ -3,13 +3,13 @@ import path from "node:path";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { CodeBlock } from "@/components/site/code-block";
 import type { SourceFile } from "@/components/site/code-explorer";
 import { ComponentPreview, MotionInfo, UsageSnippet } from "@/components/site/component-doc";
 import { CopyCommand } from "@/components/site/copy-command";
 import { highlight } from "@/components/site/highlight";
 import { WorldSwitcher } from "@/components/site/world-switcher";
 import { COMPONENTS, getComponent, installCommand, type ComponentDoc } from "@/content/components";
+import { registryItem } from "@/content/registry";
 import { WORLDS, type World } from "@/lib/world";
 
 export const dynamicParams = false;
@@ -41,11 +41,6 @@ async function readSources(files: string[]): Promise<SourceFile[]> {
   );
 }
 
-const REGISTRY = highlight(
-  '{\n  "registries": {\n    "@ovio": "https://ovio.dev/r/{name}.json"\n  }\n}',
-  "json",
-);
-
 /** The usage snippet for each world, highlighted here so no highlighter ships to the client. */
 const usageSnippets = (c: ComponentDoc) =>
   Object.fromEntries(
@@ -66,7 +61,14 @@ export default async function ComponentPage({ params }: PageProps<"/docs/[slug]"
   const c = COMPONENTS[i];
   const prev = COMPONENTS[(i - 1 + COMPONENTS.length) % COMPONENTS.length];
   const next = COMPONENTS[(i + 1) % COMPONENTS.length];
-  const files = c.ready ? await readSources(c.files) : [];
+  const item = c.ready
+    ? registryItem(c.slug)
+    : {
+        files: [],
+        dependencies: c.dependencies ?? [],
+        registryDependencies: c.registryDependencies ?? [],
+      };
+  const files = await readSources(item.files);
   const install = installCommand(c.slug);
 
   return (
@@ -90,21 +92,16 @@ export default async function ComponentPage({ params }: PageProps<"/docs/[slug]"
       <div className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,420px),1fr))] gap-10">
         <section className="flex min-w-0 flex-col gap-3.5">
           <h2 className={h2}>Installation</h2>
-          <p className="m-0 text-[13px] leading-normal text-muted">
-            Ovio is a shadcn registry. Add it to <code className="font-mono">components.json</code>{" "}
-            once:
-          </p>
-          <CodeBlock html={REGISTRY} className="rounded-[10px] py-3.5 text-[12.5px]" />
           <CopyCommand command={install} html={highlight(install, "shell")} />
           <p className="m-0 text-[13px] leading-normal text-muted">
             Installs{" "}
-            {c.dependencies.map((d, k) => (
+            {item.dependencies.map((d, k) => (
               <span key={d}>
-                {k > 0 && (k === c.dependencies.length - 1 ? " and " : ", ")}
+                {k > 0 && (k === item.dependencies.length - 1 ? " and " : ", ")}
                 <code className="font-mono">{d}</code>
               </span>
             ))}
-            , plus the Ovio {c.registryDependencies.join(", ")} items.
+            , plus the Ovio {item.registryDependencies.join(", ")} items.
           </p>
           <h2 className={`${h2} mt-4`}>Usage</h2>
           <UsageSnippet html={usageSnippets(c)} />

@@ -40,8 +40,5 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# built shadcn registry (pnpm registry:build)
-/public/r
-
 # local tooling
 /.claude

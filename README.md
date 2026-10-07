@@ -38,22 +38,15 @@ The catalogue lives in [`content/components.ts`](content/components.ts).
 
 ## Installation
 
-Ovio needs a project set up for shadcn (React 19, Tailwind CSS v4). Add the registry to
-`components.json` once:
-
-```json
-{
-  "registries": {
-    "@ovio": "https://ovio.dev/r/{name}.json"
-  }
-}
-```
-
-Then add a component by name:
+Ovio needs a project set up for shadcn (React 19, Tailwind CSS v4). This GitHub repository is the
+registry, so there is nothing to configure. Add a component by name:
 
 ```bash
-npx shadcn add @ovio/star-history
+npx shadcn add JanaSundar/ovio/star-history
 ```
+
+Append `#<tag>` or a commit SHA to pin a version, for example
+`npx shadcn add JanaSundar/ovio/star-history#v0.1.0`.
 
 The CLI installs the component under `components/ovio/<name>/`, its npm dependencies (`motion`,
 `@number-flow/react`) and the shared Ovio items it needs, including the theme at `styles/ovio.css`.
@@ -68,7 +61,7 @@ The worlds use Geist, Geist Mono, Bricolage Grotesque, IBM Plex Mono, Caveat, VT
 The theme reads them from `next/font` variables (`--font-geist`, `--font-vt323` and so on) and
 falls back to the family names, so load them with `next/font/google` or Google Fonts.
 
-`npx shadcn add @ovio/all` adds every available component at once.
+`npx shadcn add JanaSundar/ovio/all` adds every available component at once.
 
 ## Usage
 
@@ -92,8 +85,8 @@ import { OvioProvider } from "@/components/shared/world-provider";
 Two optional registry items fetch real data on the server, already shaped for the components:
 
 ```bash
-npx shadcn add @ovio/github   # lib/github.ts
-npx shadcn add @ovio/npm      # lib/npm.ts
+npx shadcn add JanaSundar/ovio/github   # lib/github.ts
+npx shadcn add JanaSundar/ovio/npm      # lib/npm.ts
 ```
 
 - `lib/github.ts`: `getRepository`, `getStarHistory`, `getContributors`, `getReleases` and
@@ -126,17 +119,19 @@ This repo is the docs site at [ovio.dev](https://ovio.dev) and the registry sour
 
 ```bash
 pnpm install
-pnpm dev         # docs site at http://localhost:3000
-pnpm build       # builds the registry into public/r, checks it, then builds the site
-pnpm lint        # oxlint
-pnpm format      # oxfmt
-pnpm typecheck   # next typegen && tsc --noEmit
+pnpm dev                # docs site at http://localhost:3000
+pnpm build              # builds the site
+pnpm registry:validate  # checks registry.json and that every file it lists exists
+pnpm lint               # oxlint
+pnpm format             # oxfmt
+pnpm typecheck          # next typegen && tsc --noEmit
 ```
 
 - `components/ovio/<name>/`: each component, its shared state, and one file per world in `worlds/`.
 - `components/shared/`, `lib/`, `styles/ovio.css`: the shared registry items (world, motion
   tokens, theme, formatting, keyboard handling, rolling numbers, Toy primitives).
-- `registry.json`: the registry index. `pnpm registry:build` writes it to `public/r/`.
+- `registry.json`: the registry. The shadcn CLI reads it and the source files straight from this
+  repository.
 - `app/`, `components/site/`, `content/`: the docs site.
 
 ## Tech stack

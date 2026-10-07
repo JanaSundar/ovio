@@ -1,8 +1,7 @@
 "use client";
 
-import { Changelog, type ChangelogProps, type Release } from "./changelog";
+import { Changelog, type Release } from "./changelog";
 
-/** Recent lumen releases, newest first. */
 const RELEASES: Release[] = [
   {
     version: "2.4.0",
@@ -46,7 +45,6 @@ const RELEASES: Release[] = [
   },
 ];
 
-/** Sample props first, so the docs playground can override any of them. */
-export function ChangelogDemo(props: Partial<ChangelogProps>) {
-  return <Changelog releases={RELEASES} {...props} />;
+export function ChangelogDemo() {
+  return <Changelog releases={RELEASES} />;
 }

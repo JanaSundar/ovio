@@ -1,6 +1,6 @@
 "use client";
 
-import { TopContributors, type TopContributorsProps, type Contributor } from "./top-contributors";
+import { TopContributors, type Contributor } from "./top-contributors";
 
 /** lumen's contributors. The ranking shifts between windows: Mei leads the last 30 days. */
 const CONTRIBUTORS: Contributor[] = [
@@ -14,7 +14,6 @@ const CONTRIBUTORS: Contributor[] = [
   { login: "tomvl", name: "Tom van Leeuwen", commits: 41, byPeriod: { "30d": 0, "90d": 5 } },
 ];
 
-/** Sample props first, so the docs playground can override any of them. */
-export function TopContributorsDemo(props: Partial<TopContributorsProps>) {
-  return <TopContributors repo="ada-dev/lumen" contributors={CONTRIBUTORS} limit={6} {...props} />;
+export function TopContributorsDemo() {
+  return <TopContributors repo="ada-dev/lumen" contributors={CONTRIBUTORS} limit={6} />;
 }

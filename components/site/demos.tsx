@@ -1,29 +1,18 @@
 "use client";
 
-import type { ComponentType, ReactNode } from "react";
-import { GooeyTabs, type GooeyTabsProps } from "@/components/ovio/gooey-tabs/gooey-tabs";
-import {
-  PhysicalKnob,
-  type PhysicalKnobProps,
-} from "@/components/ovio/physical-knob/physical-knob";
-import {
-  RepositoryCard,
-  type Repository,
-  type RepositoryCardProps,
-} from "@/components/ovio/repository-card/repository-card";
-import type {
-  ContributorPeriod,
-  TopContributorsProps,
-} from "@/components/ovio/top-contributors/top-contributors";
+import { useEffect, useState, type ComponentType } from "react";
+import { GooeyTabs, type GooeyStatus } from "@/components/ovio/gooey-tabs/gooey-tabs";
+import { PhysicalKnob } from "@/components/ovio/physical-knob/physical-knob";
+import { RepositoryCard, type Repository } from "@/components/ovio/repository-card/repository-card";
 import { BundleSizeDemo } from "@/components/ovio/bundle-size/demo";
 import { ChangelogDemo } from "@/components/ovio/changelog/demo";
 import { ContributionGraphDemo } from "@/components/ovio/contribution-graph/demo";
 import { NpmDownloadsDemo } from "@/components/ovio/npm-downloads/demo";
 import { StarHistoryDemo } from "@/components/ovio/star-history/demo";
 import { TopContributorsDemo } from "@/components/ovio/top-contributors/demo";
-import type { ControlValues } from "@/content/components";
-import { usePlayground, type Playground } from "./playground";
-/** Sample data used across the demos: the same fictional project as the mockups. */
+import { useReducedMotionSafe } from "@/lib/motion";
+
+/** Sample data shared by the demos, for one fictional project. */
 const SAMPLE_REPO: Repository = {
   owner: "ada-dev",
   name: "lumen",
@@ -42,61 +31,39 @@ const PANELS = [
   "37 open · 412 closed",
   "v2.4.0 is latest",
 ];
+const STATUSES: GooeyStatus[] = ["offline", "building", "online"];
 
-type Render = (values: ControlValues, set: Playground["set"]) => ReactNode;
+function GooeyTabsDemo() {
+  const [status, setStatus] = useState(1);
+  const reduced = useReducedMotionSafe();
+  // The deploy status cycles so every state can be seen; it holds on "building" under reduced motion.
+  useEffect(() => {
+    if (reduced) return;
+    const id = setInterval(() => setStatus((s) => (s + 1) % STATUSES.length), 2400);
+    return () => clearInterval(id);
+  }, [reduced]);
+  return (
+    <GooeyTabs tabs={TABS} panels={PANELS} status={STATUSES[status]} label="Repository sections" />
+  );
+}
 
-/** Spreads the playground's values as props: they are named after the component's own props. */
-const spread =
-  <P extends object>(Component: ComponentType<P>): Render =>
-  (values) => <Component {...(values as P)} />;
+const KnobDemo = () => <PhysicalKnob defaultValue={72} label="Level" />;
+const RepoDemo = () => <RepositoryCard repository={SAMPLE_REPO} />;
 
-export const DEMOS: Record<string, { render: Render; minHeight: number }> = {
-  "repository-card": {
-    render: (v) => <RepositoryCard repo={SAMPLE_REPO} {...(v as Partial<RepositoryCardProps>)} />,
-    minHeight: 400,
-  },
-  "gooey-tabs": {
-    render: (v) => (
-      <GooeyTabs
-        tabs={TABS}
-        panels={PANELS}
-        label="Repository sections"
-        {...(v as Partial<GooeyTabsProps>)}
-      />
-    ),
-    minHeight: 420,
-  },
-  // The knob drives its control too, so turning it moves the slider and the snippet.
-  "physical-knob": {
-    render: ({ defaultValue, ...v }, set) => (
-      <PhysicalKnob
-        label="Level"
-        {...(v as Partial<PhysicalKnobProps>)}
-        value={defaultValue as number | undefined}
-        onChange={(n) => set("defaultValue", n)}
-      />
-    ),
-    minHeight: 480,
-  },
-  "contribution-graph": { render: spread(ContributionGraphDemo), minHeight: 520 },
-  "star-history": { render: spread(StarHistoryDemo), minHeight: 420 },
-  "top-contributors": {
-    render: ({ defaultPeriod, ...v }, set) => (
-      <TopContributorsDemo
-        {...(v as Partial<TopContributorsProps>)}
-        period={defaultPeriod as ContributorPeriod | undefined}
-        onPeriodChange={(p) => set("defaultPeriod", p)}
-      />
-    ),
-    minHeight: 460,
-  },
-  "npm-downloads": { render: spread(NpmDownloadsDemo), minHeight: 440 },
-  "bundle-size": { render: spread(BundleSizeDemo), minHeight: 460 },
-  changelog: { render: spread(ChangelogDemo), minHeight: 460 },
+export const DEMOS: Record<string, { Demo: ComponentType; minHeight: number }> = {
+  "repository-card": { Demo: RepoDemo, minHeight: 400 },
+  "gooey-tabs": { Demo: GooeyTabsDemo, minHeight: 420 },
+  "physical-knob": { Demo: KnobDemo, minHeight: 480 },
+  "contribution-graph": { Demo: ContributionGraphDemo, minHeight: 520 },
+  "star-history": { Demo: StarHistoryDemo, minHeight: 420 },
+  "top-contributors": { Demo: TopContributorsDemo, minHeight: 460 },
+  "npm-downloads": { Demo: NpmDownloadsDemo, minHeight: 440 },
+  "bundle-size": { Demo: BundleSizeDemo, minHeight: 460 },
+  changelog: { Demo: ChangelogDemo, minHeight: 460 },
 };
 
-/** A component's demo, fed by the nearest playground (none on the homepage: defaults apply). */
+/** A component's demo, with fixed sample props. */
 export function Demo({ slug }: { slug: string }) {
-  const { values, set } = usePlayground();
-  return <>{DEMOS[slug]?.render(values, set)}</>;
+  const demo = DEMOS[slug];
+  return demo ? <demo.Demo /> : null;
 }

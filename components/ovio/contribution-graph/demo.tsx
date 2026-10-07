@@ -1,11 +1,7 @@
 "use client";
 
 import { seeded } from "@/components/site/seeded";
-import {
-  ContributionGraph,
-  type ContributionGraphProps,
-  type ContributionDay,
-} from "./contribution-graph";
+import { ContributionGraph, type ContributionDay } from "./contribution-graph";
 
 const END = Date.UTC(2026, 9, 7);
 const DAYS = 371;
@@ -33,7 +29,6 @@ const SAMPLE: ContributionDay[] = (() => {
   return out;
 })();
 
-/** Sample props first, so the docs playground can override any of them. */
-export function ContributionGraphDemo(props: Partial<ContributionGraphProps>) {
-  return <ContributionGraph data={SAMPLE} end="2026-10-07" {...props} />;
+export function ContributionGraphDemo() {
+  return <ContributionGraph data={SAMPLE} endDate="2026-10-07" />;
 }

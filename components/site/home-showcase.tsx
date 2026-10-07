@@ -5,7 +5,7 @@ import { worldInfo } from "@/content/worlds";
 import { Demo, DEMOS } from "./demos";
 import { PreviewFrame } from "./preview-frame";
 
-/** The homepage stage: the Contribution Graph in the selected world, as in the mockup. */
+/** The homepage stage: the Contribution Graph in the selected world. */
 export function HomeShowcase() {
   const world = useWorld();
   return (

@@ -1,30 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { useWorld } from "@/components/shared/world-provider";
+import { useWorld, type World } from "@/components/shared/world-provider";
 import { worldInfo } from "@/content/worlds";
 import { cn } from "@/lib/utils";
+import { CodeBlock } from "./code-block";
+import { CodeExplorer, type SourceFile } from "./code-explorer";
 import { Demo, DEMOS } from "./demos";
-import { highlight } from "./highlight";
-import { PlaygroundControls, propLines, usePlayground } from "./playground";
 import { PreviewFrame } from "./preview-frame";
-
-/** A source file with its highlighted markup, made on the server. */
-export type SourceFile = { path: string; html: string };
-
-/** A dark code block over highlighted token markup (see highlight.ts). */
-export function CodeBlock({ html, className }: { html: string; className?: string }) {
-  return (
-    <pre
-      className={cn(
-        "m-0 overflow-auto bg-ink px-5 py-[18px] font-mono text-[13px] leading-[1.7] text-[#e6e4dd]",
-        className,
-      )}
-    >
-      <code dangerouslySetInnerHTML={{ __html: html }} />
-    </pre>
-  );
-}
 
 /** Preview and Code tabs over a component's demo and its installed source. */
 export function ComponentPreview({
@@ -39,7 +22,6 @@ export function ComponentPreview({
   files: SourceFile[];
 }) {
   const [tab, setTab] = useState<"preview" | "code">("preview");
-  const [file, setFile] = useState(0);
   const demo = DEMOS[slug];
 
   return (
@@ -64,65 +46,26 @@ export function ComponentPreview({
         </div>
       )}
       {tab === "preview" ? (
-        <>
-          <PreviewFrame minHeight={demo?.minHeight ?? 400}>
-            {demo ? (
-              <Demo slug={slug} />
-            ) : (
-              <div className="flex flex-col items-center gap-2 text-center font-(family-name:--ovio-font) text-(--ovio-ink)">
-                <span className="text-lg">{name}</span>
-                <span className="text-sm opacity-60">Lands in phase {phase} of the build.</span>
-              </div>
-            )}
-          </PreviewFrame>
-          <PlaygroundControls />
-        </>
+        <PreviewFrame minHeight={demo?.minHeight ?? 400}>
+          {demo ? (
+            <Demo slug={slug} />
+          ) : (
+            <div className="flex flex-col items-center gap-2 text-center font-(family-name:--ovio-font) text-(--ovio-ink)">
+              <span className="text-lg">{name}</span>
+              <span className="text-sm opacity-60">Lands in phase {phase} of the build.</span>
+            </div>
+          )}
+        </PreviewFrame>
       ) : (
-        <div className="overflow-hidden rounded-2xl bg-ink">
-          <div className="flex gap-1 overflow-x-auto border-b border-[#2c2b28] px-2 pt-2">
-            {files.map((f, i) => (
-              <button
-                key={f.path}
-                type="button"
-                onClick={() => setFile(i)}
-                aria-pressed={file === i}
-                className={cn(
-                  "flex-none cursor-pointer rounded-t-md border-0 px-3 py-2 font-mono text-xs",
-                  file === i
-                    ? "bg-[#2c2b28] text-paper"
-                    : "bg-transparent text-code-muted hover:text-paper",
-                )}
-              >
-                {f.path.split("/").slice(-2).join("/")}
-              </button>
-            ))}
-          </div>
-          <CodeBlock html={files[file]?.html ?? ""} className="max-h-[560px] text-[12.5px]" />
-        </div>
+        <CodeExplorer files={files} />
       )}
     </div>
   );
 }
 
-export function UsageSnippet({
-  exportName,
-  slug,
-  usage,
-}: {
-  exportName: string;
-  slug: string;
-  usage: string;
-}) {
-  const world = useWorld();
-  const code = [
-    `import { ${exportName} } from "@/components/ovio/${slug}/${slug}"\n`,
-    `<${exportName}`,
-    `  variant="${world}"`,
-    usage,
-    ...propLines(usePlayground()),
-    "/>",
-  ].join("\n");
-  return <CodeBlock html={highlight(code)} className="rounded-[10px]" />;
+/** The usage snippet in the selected world, highlighted per world on the server. */
+export function UsageSnippet({ html }: { html: Record<World, string> }) {
+  return <CodeBlock html={html[useWorld()]} className="rounded-[10px]" />;
 }
 
 export function MotionInfo({ tech }: { tech: string }) {

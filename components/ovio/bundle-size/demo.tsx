@@ -1,6 +1,6 @@
 "use client";
 
-import { BundleSize, type BundleSizeProps, type BundleVersion } from "./bundle-size";
+import { BundleSize, type BundleVersion } from "./bundle-size";
 
 /** The last three releases of the fictional "lumen" package, newest first. */
 const VERSIONS: BundleVersion[] = [
@@ -9,7 +9,6 @@ const VERSIONS: BundleVersion[] = [
   { version: "1.0.0", raw: 30_400, gzip: 9_100, brotli: 7_800, dependencies: 2 },
 ];
 
-/** Sample props first, so the docs playground can override any of them. */
-export function BundleSizeDemo(props: Partial<BundleSizeProps>) {
-  return <BundleSize pkg="lumen" versions={VERSIONS} budget={40} {...props} />;
+export function BundleSizeDemo() {
+  return <BundleSize packageName="lumen" versions={VERSIONS} budget={40} />;
 }

@@ -1,28 +1,6 @@
-/**
- * The component catalogue, typed from the COMPS array in the Docs mockup.
- * Props for built components describe the shipped API; the rest are carried over from the mockup
- * and are revised as each component lands.
- */
+/** The component catalogue. Props of components that are not `ready` yet are provisional. */
 
 type PropDoc = { name: string; type: string; description: string };
-
-/**
- * A playground control over one prop. A range bound can name another control, so a value stays
- * inside a range that is itself adjustable.
- */
-export type Control =
-  | { prop: string; type: "select"; options: readonly string[]; default: string }
-  | { prop: string; type: "multi"; options: readonly string[]; default: readonly string[] }
-  | {
-      prop: string;
-      type: "range";
-      min: number | string;
-      max: number | string;
-      step?: number;
-      default: number;
-    };
-export type ControlValue = string | number | readonly string[];
-export type ControlValues = Record<string, ControlValue>;
 
 export type ComponentDoc = {
   slug: string;
@@ -30,14 +8,10 @@ export type ComponentDoc = {
   /** What it is drawn with. */
   tech: string;
   description: string;
-  /** Export name. */
   exportName: string;
-  /** Fixed lines for the usage snippet, after `variant`; the playground's props follow them. */
+  /** Lines for the usage snippet, after `variant`. */
   usage: string;
-  /** Playground controls for the live preview. */
-  controls?: Control[];
   props: PropDoc[];
-  /** Build phase from the library code plan. */
   phase: 1 | 2 | 3;
   /** Whether the component ships in this build. */
   ready: boolean;
@@ -60,21 +34,6 @@ const A: PropDoc = {
   type: '"none" | "enter-exit" | "always"',
   description: 'Forced to "none" under reduced motion.',
 };
-const ANIMATIONS = ["none", "enter-exit", "always"] as const;
-const animation: Control = {
-  prop: "animation",
-  type: "select",
-  options: ANIMATIONS,
-  default: "enter-exit",
-};
-const range = (prop: string, min: number, max: number, def: number, step = 1): Control => ({
-  prop,
-  type: "range",
-  min,
-  max,
-  step,
-  default: def,
-});
 const CL: PropDoc = { name: "className", type: "string", description: "Merged onto the root." };
 
 const worldFiles = (slug: string, extra: string[] = []) => [
@@ -92,7 +51,6 @@ export const COMPONENTS: ComponentDoc[] = [
       "A year of activity, one cell per day. From an editorial heatmap to a drum you can spin.",
     exportName: "ContributionGraph",
     usage: "  data={contributions}",
-    controls: [animation],
     props: [
       {
         name: "data",
@@ -104,10 +62,10 @@ export const COMPONENTS: ComponentDoc[] = [
         name: "animation",
         type: '"none" | "enter-exit" | "always"',
         description:
-          'Default "enter-exit". "always" adds the Retro flicker and the Toy wave. Forced to "none" under reduced motion.',
+          'Default "enter-exit". "always" adds the Retro flicker and roll bar. Forced to "none" under reduced motion.',
       },
       {
-        name: "end",
+        name: "endDate",
         type: "string",
         description: "Last day shown. Defaults to the latest date in data.",
       },
@@ -161,14 +119,6 @@ export const COMPONENTS: ComponentDoc[] = [
       "A tab bar with a moving indicator and a deploy status. In Toy, the indicator is a piece you can drag and flick.",
     exportName: "GooeyTabs",
     usage: '  tabs={["Overview", "Commits", "Issues", "Releases"]}',
-    controls: [
-      {
-        prop: "status",
-        type: "select",
-        options: ["offline", "building", "online"],
-        default: "building",
-      },
-    ],
     props: [
       V,
       { name: "tabs", type: "string[]", description: "Equal-width tabs." },
@@ -204,7 +154,6 @@ export const COMPONENTS: ComponentDoc[] = [
     description: "Stargazers over time, with annotated spikes.",
     exportName: "StarHistory",
     usage: "  data={stars}",
-    controls: [animation],
     props: [
       {
         name: "data",
@@ -238,19 +187,11 @@ export const COMPONENTS: ComponentDoc[] = [
     tech: "CSS · Motion for React",
     description: "A repo at a glance: name, description, stars, forks and language.",
     exportName: "RepositoryCard",
-    usage: "  repo={repo}",
-    controls: [
-      {
-        prop: "stats",
-        type: "multi",
-        options: ["stars", "forks", "issues"],
-        default: ["stars", "forks", "issues"],
-      },
-    ],
+    usage: "  repository={repository}",
     props: [
       V,
       {
-        name: "repo",
+        name: "repository",
         type: "{ owner; name; description?; language?; stars; forks; issues?; updatedAt? }",
         description: "Repository data. Fetch it on the server with getRepository().",
       },
@@ -279,10 +220,6 @@ export const COMPONENTS: ComponentDoc[] = [
     description: "The people behind a project, ranked by commits.",
     exportName: "TopContributors",
     usage: "  contributors={contributors}",
-    controls: [
-      range("limit", 1, 8, 6),
-      { prop: "defaultPeriod", type: "select", options: ["30d", "90d", "all"], default: "90d" },
-    ],
     props: [
       {
         name: "contributors",
@@ -321,10 +258,9 @@ export const COMPONENTS: ComponentDoc[] = [
     tech: "CSS · SVG · Motion for React",
     description: "Weekly installs with trend and goal.",
     exportName: "NpmDownloads",
-    usage: '  pkg="lumen"\n  data={downloads}',
-    controls: [range("weeks", 4, 26, 12), range("goal", 10000, 80000, 50000, 5000)],
+    usage: '  packageName="lumen"\n  data={downloads}',
     props: [
-      { name: "pkg", type: "string", description: "Package name." },
+      { name: "packageName", type: "string", description: "npm package name." },
       {
         name: "data",
         type: "{ week: string; downloads: number }[]",
@@ -367,12 +303,7 @@ export const COMPONENTS: ComponentDoc[] = [
     description:
       "A rotary control with tick marks and a value display. Drag, flick, scroll or use the arrow keys.",
     exportName: "PhysicalKnob",
-    usage: "  onChange={setLevel}",
-    controls: [
-      range("min", 0, 50, 0, 5),
-      range("max", 60, 200, 100, 10),
-      { prop: "defaultValue", type: "range", min: "min", max: "max", default: 72 },
-    ],
+    usage: "  onValueChange={setLevel}",
     props: [
       V,
       {
@@ -381,7 +312,11 @@ export const COMPONENTS: ComponentDoc[] = [
         description: "Controlled value, or the starting one (72).",
       },
       { name: "min / max", type: "number", description: "Range, default 0–100." },
-      { name: "onChange", type: "(value: number) => void", description: "Fires while turning." },
+      {
+        name: "onValueChange",
+        type: "(value: number) => void",
+        description: "Fires while turning.",
+      },
       { name: "label", type: "string", description: "Accessible name, printed on the dial." },
       CL,
     ],
@@ -417,10 +352,9 @@ export const COMPONENTS: ComponentDoc[] = [
     tech: "CSS · Motion for React",
     description: "Package size with gzip, brotli and the change from the previous version.",
     exportName: "BundleSize",
-    usage: '  pkg="lumen"\n  versions={versions}',
-    controls: [range("budget", 10, 60, 40)],
+    usage: '  packageName="lumen"\n  versions={versions}',
     props: [
-      { name: "pkg", type: "string", description: "Package name." },
+      { name: "packageName", type: "string", description: "npm package name." },
       {
         name: "versions",
         type: "{ version; raw; gzip; brotli?; dependencies? }[]",
@@ -471,7 +405,6 @@ export const COMPONENTS: ComponentDoc[] = [
     description: "Releases with dates and notes.",
     exportName: "Changelog",
     usage: "  releases={releases}",
-    controls: [range("limit", 1, 4, 4)],
     props: [
       {
         name: "releases",

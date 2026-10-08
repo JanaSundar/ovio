@@ -30,11 +30,14 @@ function provided(item, seen = new Set()) {
   return files;
 }
 
+// POSIX paths throughout, to match registry.json; Node's default would use backslashes on Windows.
 function resolve(spec, from) {
-  const base = spec.startsWith("@/") ? spec.slice(2) : path.join(path.dirname(from), spec);
+  const base = spec.startsWith("@/")
+    ? spec.slice(2)
+    : path.posix.join(path.posix.dirname(from), spec);
   for (const ext of ["", ".ts", ".tsx", "/index.ts", "/index.tsx"])
-    if (existsSync(base + ext) && !base.endsWith("/")) return path.normalize(base + ext);
-  return path.normalize(base);
+    if (existsSync(base + ext) && !base.endsWith("/")) return path.posix.normalize(base + ext);
+  return path.posix.normalize(base);
 }
 
 const packageOf = (spec) =>

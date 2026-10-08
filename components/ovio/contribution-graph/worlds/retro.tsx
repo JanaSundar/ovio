@@ -41,7 +41,7 @@ const SWITCH_ON: Keyframe[] = [{ opacity: 0 }, { opacity: 1 }];
 const SWITCH_ON_TIMING = {
   duration: 0.01,
   easing: "steps(1, end)",
-  delay: (week: number, weekday: number) => week * 0.026 + weekday * 0.005,
+  delay: (week: number, weekday: number) => week * 0.017 + weekday * 0.003,
 };
 
 /** Retro: a CRT running ACTIVITY.EXE. Pixels light in scan order; "always" adds flicker and a roll bar. */

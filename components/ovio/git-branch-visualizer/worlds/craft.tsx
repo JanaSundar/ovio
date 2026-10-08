@@ -19,10 +19,10 @@ const LOOK: GraphLook = {
   labelWidth: 150,
   laneGap: 68,
   maxStep: 100,
-  draw: { duration: 0.7, ease: [0.45, 0, 0.25, 1] },
+  draw: { duration: 0.45, ease: [0.45, 0, 0.25, 1] },
   enter: motionTokens.craft.base,
   move: motionTokens.craft.base,
-  stagger: 0.08,
+  stagger: 0.05,
 };
 
 /** A pencil loop around the selected commit: a little over one turn, radius wobbling. */
@@ -41,7 +41,7 @@ const tagButton =
 
 function CraftNode({ node: n, ...s }: NodeProps) {
   const settle = useOvioTransition(motionTokens.craft.base);
-  const pencil = useOvioTransition({ duration: 0.45, ease: ease.minimal });
+  const pencil = useOvioTransition({ duration: 0.3, ease: ease.minimal });
   return (
     <>
       <motion.path

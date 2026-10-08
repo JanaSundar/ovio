@@ -7,8 +7,8 @@ import { AutoHeight } from "@/components/shared/auto-height";
 import { COMPONENTS, pad2 } from "@/content/components";
 import { ease, useReducedMotionSafe } from "@/lib/motion";
 
-const SWAP = { duration: 0.35, ease: ease.stage };
-const RESIZE = { duration: 0.45, ease: ease.stage };
+const SWAP = { duration: 0.22, ease: ease.stage };
+const RESIZE = { duration: 0.28, ease: ease.stage };
 
 /**
  * The docs page header. It lives in the docs layout so it stays mounted from one component to

@@ -41,7 +41,7 @@ const nudge = (i: number) => ({ x: ((i * 29) % 9) - 4, y: ((i * 53) % 17) - 8 })
 export function CraftSponsorWall({ groups, ctaHref, ctaLabel, className }: SponsorWallWorldProps) {
   const reduced = useReducedMotionSafe();
   const press = useOvioTransition(motionTokens.craft.base);
-  const stick = useOvioTransition({ duration: 0.45, ease: [0.34, 1.6, 0.64, 1] });
+  const stick = useOvioTransition({ duration: 0.3, ease: [0.34, 1.6, 0.64, 1] });
   const stickers = scatter(groups.map((g) => g.sponsors));
 
   return (
@@ -68,7 +68,7 @@ export function CraftSponsorWall({ groups, ctaHref, ctaLabel, className }: Spons
                   initial={{ opacity: 0, scale: 1.6 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.8 }}
-                  transition={{ ...stick, delay: reduced ? 0 : i * 0.07 }}
+                  transition={{ ...stick, delay: reduced ? 0 : i * 0.045 }}
                   className="relative min-w-0 focus-within:z-10 hover:z-10"
                   style={nudge(i)}
                 >
@@ -98,7 +98,7 @@ export function CraftSponsorWall({ groups, ctaHref, ctaLabel, className }: Spons
               layout={!reduced}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ ...stick, delay: reduced ? 0 : stickers.length * 0.07 }}
+              transition={{ ...stick, delay: reduced ? 0 : stickers.length * 0.045 }}
             >
               <motion.a
                 href={ctaHref}

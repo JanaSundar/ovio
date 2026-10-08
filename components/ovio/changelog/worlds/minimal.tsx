@@ -28,7 +28,7 @@ export function MinimalChangelog({ releases, className }: ChangelogWorldProps) {
             key={r.version}
             initial={reduced ? false : { opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ ...transition, delay: reduced ? 0 : i * 0.09 }}
+            transition={{ ...transition, delay: reduced ? 0 : i * 0.055 }}
             className="grid grid-cols-1 gap-x-6 gap-y-2 border-t border-(--ovio-line-2) py-4 sm:grid-cols-[120px_minmax(0,1fr)]"
           >
             <div>

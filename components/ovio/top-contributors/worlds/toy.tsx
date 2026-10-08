@@ -90,7 +90,7 @@ export function ToyTopContributors({
                 layout={!reduced}
                 initial={reduced ? false : { opacity: 0, y: -48 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ ...piece, delay: reduced ? 0 : i * 0.08 }}
+                transition={{ ...piece, delay: reduced ? 0 : i * 0.05 }}
                 className="flex min-w-0 flex-col items-center gap-2.5"
               >
                 <ToyPiece

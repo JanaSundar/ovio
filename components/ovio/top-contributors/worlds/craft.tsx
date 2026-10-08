@@ -86,7 +86,7 @@ export function CraftTopContributors({
               layout={!reduced}
               initial={reduced ? false : { opacity: 0, y: -24 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ ...drop, delay: reduced ? 0 : i * 0.09 }}
+              transition={{ ...drop, delay: reduced ? 0 : i * 0.055 }}
             >
               <motion.div
                 initial={false}

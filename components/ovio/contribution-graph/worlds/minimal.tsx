@@ -43,7 +43,7 @@ const FADE: Keyframe[] = [
 const FADE_TIMING = {
   duration: motionTokens.minimal.slow.duration,
   easing: cssEase(motionTokens.minimal.slow.ease),
-  delay: (week: number) => week * 0.009,
+  delay: (week: number) => week * 0.006,
 };
 
 /** Minimal: an editorial heatmap. Big total, thin rules, a neutral five-step ramp. */

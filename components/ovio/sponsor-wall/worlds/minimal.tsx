@@ -43,7 +43,7 @@ export function MinimalSponsorWall({
     initial: { opacity: 0, y: 6 },
     animate: { opacity: 1, y: 0 },
     exit: { opacity: 0 },
-    transition: { ...transition, delay: reduced ? 0 : i * 0.05 },
+    transition: { ...transition, delay: reduced ? 0 : i * 0.03 },
   });
 
   return (

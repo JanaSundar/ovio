@@ -82,7 +82,7 @@ export function ToyStarHistory({
                   style={{ background: color }}
                   initial={animation === "none" ? false : { y: -48, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
-                  transition={{ ...drop, delay: i * 0.035 + j * 0.028 }}
+                  transition={{ ...drop, delay: i * 0.022 + j * 0.018 }}
                 />
               ))}
             </motion.div>

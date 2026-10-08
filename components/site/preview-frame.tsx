@@ -7,7 +7,7 @@ import { OvioProvider, useWorld } from "@/components/shared/world-provider";
 import { ease, useOvioTransition, useReducedMotionSafe } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
-const RESIZE = { duration: 0.45, ease: ease.stage };
+const RESIZE = { duration: 0.28, ease: ease.stage };
 
 /**
  * The incoming world fades and settles in. Opacity and transform only, so it stays on the
@@ -16,7 +16,7 @@ const RESIZE = { duration: 0.45, ease: ease.stage };
 const STAGE_IN = {
   initial: { opacity: 0, scale: 0.985, y: 8 },
   animate: { opacity: 1, scale: 1, y: 0 },
-  transition: { duration: 0.5, ease: ease.stage },
+  transition: { duration: 0.3, ease: ease.stage },
 } as const;
 
 /**

@@ -10,7 +10,7 @@ import { ease, useOvioTransition, useReducedMotionSafe } from "@/lib/motion";
 import { shortcutKey } from "./shortcuts";
 
 /** How the active markers glide to the next link or section. */
-const GLIDE: Transition = { duration: 0.4, ease: ease.stage };
+const GLIDE: Transition = { duration: 0.25, ease: ease.stage };
 
 type Box = { y: number; height: number };
 

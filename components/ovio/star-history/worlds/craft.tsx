@@ -11,7 +11,7 @@ import { usePointScrubber } from "../use-scrubber";
 
 /** Ballpoint blue, as if the line were inked onto graph paper. */
 const PEN = "#2b4a9b";
-const DRAW = 1.6;
+const DRAW = 1;
 
 const look: LineLook = {
   curve: "smooth",

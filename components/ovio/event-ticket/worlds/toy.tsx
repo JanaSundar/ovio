@@ -35,7 +35,7 @@ const LOOK: TicketLook = {
   qrDots: true,
   book: (sending) => <ToyBookButton sending={sending} />,
   motion: {
-    flip: { type: "spring", stiffness: 160, damping: 17 },
+    flip: { type: "spring", stiffness: 240, damping: 21 },
     tear: motionTokens.toy.slide,
     settle: motionTokens.toy.piece,
     stamp: motionTokens.toy.piece,

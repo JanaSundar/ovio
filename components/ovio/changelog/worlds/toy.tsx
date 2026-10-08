@@ -85,8 +85,8 @@ export function ToyChangelog({ releases, open, toggle, className }: ChangelogWor
                 initial={reduced ? false : { opacity: 0, y: -48 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{
-                  y: { ...drop, delay: i * 0.08 },
-                  opacity: { duration: reduced ? 0 : 0.2, delay: i * 0.08 },
+                  y: { ...drop, delay: i * 0.05 },
+                  opacity: { duration: reduced ? 0 : 0.2, delay: i * 0.05 },
                 }}
               >
                 <ToyKey

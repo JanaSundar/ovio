@@ -1,0 +1,538 @@
+/*
+ * The 404 page: the docs shell (site.css) around one stage, and each world's take on the missing
+ * page. World colours and type come from the stage's [data-ovio-world] tokens (ovio.css); sizes
+ * follow the stage width (cqw) so every world fits a phone.
+ */
+
+.nf-path {
+  font: 14px var(--mono);
+  color: #3b3d37;
+}
+.nf-article {
+  grid-column: 3 / -1;
+}
+.nf-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 22px;
+}
+.nf-btn {
+  padding: 12px 16px;
+  border: 1px solid var(--line-strong);
+  border-radius: 6px;
+  background: #fbfaf6;
+  font: 600 14px var(--sans);
+  transition: 0.15s;
+}
+.nf-btn:hover {
+  border-color: var(--ink);
+}
+.nf-btn.dark {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: #fff;
+}
+.nf-btn.dark:hover {
+  background: #3a3c37;
+}
+
+/* Minimal: the empty cell */
+.nf-minimal {
+  container-type: inline-size;
+  width: 100%;
+  max-width: 820px;
+  padding: clamp(20px, 5cqw, 40px) clamp(18px, 6cqw, 52px) clamp(18px, 4cqw, 34px);
+  border: 1px solid var(--ovio-line);
+  border-radius: var(--ovio-radius);
+  background: var(--ovio-surface);
+  color: var(--ovio-ink);
+  font-family: var(--ovio-font);
+}
+.nf-mn-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+}
+.nf-mn-label {
+  margin-bottom: 12px;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ovio-muted);
+  word-break: break-all;
+}
+.nf-mn-big {
+  font-size: clamp(40px, 9cqw, 56px);
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+.nf-mn-big small {
+  margin-left: 12px;
+  font-size: 15px;
+  letter-spacing: 0;
+  color: var(--ovio-muted);
+}
+.nf-minimal dl {
+  display: flex;
+  margin: 0;
+}
+.nf-minimal dl div {
+  padding: 0 clamp(14px, 3cqw, 26px);
+  border-left: 1px solid var(--ovio-line);
+}
+.nf-minimal dt {
+  margin-bottom: 6px;
+  font-size: 11px;
+  color: var(--ovio-muted);
+}
+.nf-minimal dd {
+  margin: 0;
+  font-size: 22px;
+  letter-spacing: -0.02em;
+}
+.nf-mn-grid {
+  display: grid;
+  grid-template-columns: repeat(23, minmax(0, 1fr));
+  gap: clamp(2px, 0.7cqw, 5px);
+  margin: clamp(22px, 4cqw, 34px) 0 clamp(18px, 3cqw, 26px);
+}
+.nf-mn-grid i,
+.nf-mn-foot i {
+  display: block;
+  aspect-ratio: 1;
+  border-radius: 2px;
+  background: #ebe9e4;
+}
+/* Cells fade in column by column; --d is set per cell. */
+.nf-mn-grid i {
+  animation: nf-fade 0.4s var(--d) both cubic-bezier(0.2, 0, 0, 1);
+}
+.nf-minimal .l1 {
+  background: #c9c6bf;
+}
+.nf-minimal .l2 {
+  background: #97938a;
+}
+.nf-minimal .l3 {
+  background: #5d5a53;
+}
+.nf-minimal .l4 {
+  background: #1d1c1a;
+}
+.nf-mn-grid .miss {
+  background: #fff;
+  box-shadow: 0 0 0 1.5px #161614;
+  animation:
+    nf-fade 0.4s var(--d) both,
+    nf-pulse 1.8s 1s ease-in-out infinite;
+}
+.nf-mn-foot {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px;
+  padding-top: 16px;
+  border-top: 1px solid var(--ovio-line-2);
+  font-size: 13px;
+  color: var(--ovio-muted);
+}
+.nf-mn-foot b {
+  font-weight: 500;
+  color: var(--ovio-ink);
+}
+.nf-mn-foot span:last-child {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+}
+.nf-mn-foot i {
+  width: 12px;
+}
+@keyframes nf-fade {
+  from {
+    opacity: 0;
+    transform: translateY(3px);
+  }
+}
+@keyframes nf-pulse {
+  50% {
+    box-shadow: 0 0 0 4px #16161433;
+  }
+}
+
+/* Craft: the lost-page flyer */
+.nf-craft {
+  container-type: inline-size;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 14px 0 6px;
+}
+.nf-cf {
+  position: relative;
+  width: min(500px, 84cqw);
+  padding: clamp(28px, 7cqw, 42px) clamp(22px, 7cqw, 44px) 0;
+  background: var(--ovio-surface);
+  color: var(--ovio-ink);
+  font-family: var(--ovio-font);
+  box-shadow:
+    0 2px 4px rgba(70, 45, 20, 0.12),
+    0 22px 40px -14px rgba(70, 45, 20, 0.4);
+}
+.nf-tape {
+  position: absolute;
+  top: -14px;
+  width: 110px;
+  height: 28px;
+  background: var(--ovio-tape);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+.nf-tape.left {
+  left: -26px;
+  transform: rotate(-32deg);
+}
+.nf-tape.right {
+  right: -26px;
+  transform: rotate(30deg);
+}
+.nf-cf h2 {
+  margin: 0;
+  font-size: clamp(40px, 11cqw, 64px);
+  font-weight: 800;
+  line-height: 0.9;
+  letter-spacing: -0.035em;
+}
+.nf-hand {
+  display: inline-block;
+  margin-top: 6px;
+  font-family: var(--ovio-hand);
+  font-size: clamp(22px, 5cqw, 30px);
+  color: var(--ovio-accent-deep);
+  transform: rotate(-2deg);
+}
+.nf-facts {
+  margin: 20px 0 22px;
+  font-family: var(--ovio-mono);
+  font-size: clamp(11px, 2.4cqw, 13px);
+  line-height: 1.9;
+  color: var(--ovio-ink-2);
+}
+.nf-facts b {
+  font-weight: 500;
+  color: var(--ovio-ink);
+  overflow-wrap: anywhere;
+}
+.nf-sticker {
+  position: absolute;
+  top: 30px;
+  right: clamp(-30px, -4cqw, -12px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: clamp(78px, 18cqw, 112px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--ovio-accent);
+  color: var(--ovio-on-accent);
+  transform: rotate(12deg);
+  box-shadow:
+    0 6px 14px -4px rgba(120, 50, 10, 0.5),
+    inset 0 -3px 0 rgba(0, 0, 0, 0.12);
+}
+.nf-sticker b {
+  font-size: clamp(26px, 6cqw, 38px);
+  font-weight: 800;
+  line-height: 1;
+}
+.nf-sticker span {
+  font-size: clamp(8px, 1.8cqw, 11px);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+/* On a phone the sticker moves up onto the card's corner, clear of the headline. */
+@container (max-width: 480px) {
+  .nf-sticker {
+    top: -30px;
+    right: -6px;
+  }
+}
+.nf-tabs {
+  display: flex;
+  margin: 0 clamp(-44px, -7cqw, -22px);
+  border-top: 2px dashed var(--ovio-faint);
+}
+.nf-tab {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 112px;
+  padding: 0;
+  border: 0;
+  border-right: 2px dashed var(--ovio-faint);
+  background: var(--ovio-surface);
+  color: var(--ovio-ink);
+  font-family: var(--ovio-hand);
+  font-size: clamp(18px, 4.4cqw, 24px);
+  cursor: pointer;
+  transition: box-shadow 0.2s;
+}
+.nf-tab:last-child {
+  border-right: 0;
+}
+.nf-tab span {
+  white-space: nowrap;
+  transform: rotate(-90deg);
+}
+.nf-tab:hover,
+.nf-tab:focus-visible {
+  outline: none;
+  box-shadow: 0 6px 10px -4px rgba(70, 45, 20, 0.35);
+}
+.nf-tab.gone {
+  border-right-color: transparent;
+  background: var(--ovio-stage);
+  cursor: default;
+}
+
+/* Retro: the DOS error */
+.nf-crt {
+  position: relative;
+  width: 100%;
+  max-width: 840px;
+  min-height: 330px;
+  padding: clamp(20px, 5cqw, 34px) clamp(16px, 5cqw, 40px);
+  overflow: hidden;
+  border: 6px solid #1c2a1d;
+  border-radius: 22px;
+  outline: 2px solid #0f1a10;
+  background: radial-gradient(ellipse at 50% 45%, #0c2412 0%, #061108 70%, #030803 100%);
+  color: var(--ovio-ink);
+  font-family: var(--ovio-font);
+  font-size: clamp(17px, 2.4vw, 26px);
+  line-height: 1.25;
+  text-shadow: var(--ovio-glow);
+  word-break: break-word;
+}
+.nf-crt::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  box-shadow: inset 0 0 90px rgba(0, 0, 0, 0.8);
+  pointer-events: none;
+}
+.nf-crt::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.3) 0 1px, transparent 1px 3px);
+  pointer-events: none;
+}
+.nf-crt .dim {
+  color: #3fae55;
+}
+.nf-crt .hi {
+  color: #c9ffd2;
+}
+.nf-bar {
+  display: flex;
+  gap: 3px;
+  margin: 10px 0 4px;
+}
+.nf-bar i {
+  flex: 1;
+  max-width: 16px;
+  height: 16px;
+  background: #123118;
+}
+.nf-bar i.on {
+  background: #4fdc68;
+  box-shadow: 0 0 6px rgba(80, 255, 120, 0.6);
+}
+.nf-err {
+  display: inline-block;
+  margin: 10px 0;
+  padding: 0 8px;
+  background: var(--ovio-ink);
+  color: #061108;
+  text-shadow: none;
+}
+.nf-prompt {
+  margin-top: 10px;
+}
+.nf-cursor {
+  display: inline-block;
+  width: 0.55em;
+  height: 0.95em;
+  margin-left: 4px;
+  vertical-align: -0.12em;
+  background: var(--ovio-ink);
+  animation: nf-blink 1s steps(1) infinite;
+}
+.nf-keys {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+  margin-top: 18px;
+}
+.nf-keys button {
+  padding: 2px 14px;
+  border: 2px solid #4fdc68;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-shadow: inherit;
+  cursor: pointer;
+}
+.nf-keys button.sel,
+.nf-keys button:hover,
+.nf-keys button:focus-visible {
+  outline: none;
+  background: #4fdc68;
+  color: #061108;
+  text-shadow: none;
+}
+@keyframes nf-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Toy: the toppled blocks */
+.nf-toy {
+  container-type: inline-size;
+  position: relative;
+  width: 100%;
+  max-width: 780px;
+  aspect-ratio: 16 / 10.5;
+  font-family: var(--ovio-font);
+  font-stretch: 125%;
+  user-select: none;
+}
+.nf-floor {
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  top: 66%;
+  height: 1.8cqw;
+  border-radius: 999px;
+  background: #cfc8b8;
+}
+.nf-slot {
+  position: absolute;
+  left: 36%;
+  top: 30%;
+  width: 18cqw;
+  aspect-ratio: 1;
+  border: 0.5cqw dashed #b4ac9a;
+  border-radius: 50%;
+  transition: opacity 0.3s;
+}
+.nf-slot.done {
+  opacity: 0;
+}
+.nf-blk {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  line-height: 1;
+  box-shadow:
+    inset 0 -1.4cqw 0 rgba(0, 0, 0, 0.18),
+    0 1.8cqw 0 rgba(0, 0, 0, 0.12);
+}
+.nf-blk.four {
+  top: 24%;
+  width: 19cqw;
+  height: 22cqw;
+  border-radius: 3cqw;
+  color: #fff;
+  font-size: 19cqw;
+}
+.nf-blk.four.a {
+  left: 14%;
+  background: #2c55e0;
+}
+.nf-blk.four.b {
+  left: 57%;
+  background: #e5483a;
+}
+.nf-blk.zero {
+  left: 79%;
+  top: 34%;
+  width: 17cqw;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #f2c230;
+  color: #1e1d1a;
+  font-size: 15cqw;
+  cursor: grab;
+  touch-action: none;
+}
+.nf-hint {
+  position: absolute;
+  left: 73%;
+  top: 12%;
+  font-family: var(--ovio-font-caveat), cursive;
+  font-stretch: 100%;
+  font-size: clamp(16px, 3.4cqw, 26px);
+  color: #5e5a50;
+  transform: rotate(-6deg);
+}
+.nf-key {
+  position: absolute;
+  left: 50%;
+  top: 78%;
+  width: clamp(170px, 32cqw, 250px);
+  height: clamp(46px, 8.6cqw, 66px);
+  border-radius: 18px;
+  background: var(--ovio-accent-deep);
+  transform: translateX(-50%);
+}
+.nf-key span {
+  position: absolute;
+  inset: 0 0 clamp(6px, 1.3cqw, 10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 18px;
+  background: var(--ovio-accent);
+  color: #fff;
+  font-size: clamp(13px, 2.5cqw, 19px);
+  font-weight: 800;
+  font-stretch: 100%;
+  letter-spacing: 0.02em;
+  transition: transform 0.12s cubic-bezier(0.3, 1.6, 0.5, 1);
+}
+.nf-key:hover span {
+  transform: translateY(2px);
+}
+.nf-key:active span {
+  transform: translateY(clamp(5px, 1.1cqw, 8px));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nf-mn-grid i,
+  .nf-mn-grid .miss,
+  .nf-cursor {
+    animation: none;
+  }
+  .nf-key span {
+    transition: none;
+  }
+}
+
+@media (max-width: 880px) {
+  .nf-article {
+    grid-column: 1 / -1;
+  }
+}

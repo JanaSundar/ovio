@@ -384,6 +384,12 @@
 .stage-frame {
   border: 1px dotted var(--line-strong);
 }
+/* While the wheel glides the page, a demo under the pointer ignores it. Otherwise every day the
+   cursor slides over lifts its tile and re-renders the graph, and Craft's tilted, shadowed tiles
+   repaint every frame and the whole page stutters. Touch scrolling isn't smoothed, so it keeps them. */
+html.lenis-smooth .stage-frame {
+  pointer-events: none;
+}
 
 /* Home: catalog */
 .catalog-title {

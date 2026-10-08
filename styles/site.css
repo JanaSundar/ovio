@@ -746,19 +746,25 @@ html.lenis-smooth .stage-frame {
   background: #ebeae4;
   color: var(--ink);
 }
+.side-links {
+  position: relative;
+}
 .side-links a {
   position: relative;
-  isolation: isolate;
 }
 .side-links a[aria-current] {
   color: var(--ink);
   font-weight: 600;
 }
-/* The active link's background, a separate piece so it can glide from one link to the next. */
+.side-links a[aria-current]:hover {
+  background: none;
+}
+/* The active link's background, one piece that glides from link to link under them. */
 .side-active {
   position: absolute;
-  inset: 0;
-  z-index: -1;
+  top: 0;
+  left: 0;
+  right: 0;
   border-radius: 3px;
   background: #e6e5dd;
 }
@@ -810,9 +816,6 @@ html.lenis-smooth .stage-frame {
 .toc a:hover {
   color: #332f63;
 }
-.toc a {
-  position: relative;
-}
 .toc a[aria-current] {
   color: #292b25;
   font-weight: 600;
@@ -820,9 +823,8 @@ html.lenis-smooth .stage-frame {
 /* A mark on the column's rule beside the current section; it glides as the page scrolls. */
 .toc-active {
   position: absolute;
-  top: 6px;
-  bottom: 6px;
-  left: -19px;
+  top: 0;
+  left: -1px;
   width: 2px;
   border-radius: 1px;
   background: #292b25;

@@ -7,7 +7,6 @@ import { notFound } from "next/navigation";
 import type { SourceFile } from "@/components/site/code-explorer";
 import { ComponentPreview, MotionInfo, UsageSnippet } from "@/components/site/component-doc";
 import { CopyCommand } from "@/components/site/copy-command";
-import { DocsToc } from "@/components/site/docs-sidebar";
 import { highlight } from "@/components/site/highlight";
 import {
   COMPONENTS,
@@ -166,7 +165,6 @@ export default async function ComponentPage({ params }: PageProps<"/docs/[slug]"
           </Link>
         </nav>
       </article>
-      <DocsToc />
     </>
   );
 }

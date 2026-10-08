@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useLenis } from "lenis/react";
 import { AnimatePresence, motion, type Transition } from "motion/react";
-import { useEffect, useRef, useState, type RefObject } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type RefObject } from "react";
 import { COMPONENTS, DOC_SECTIONS, pad2 } from "@/content/components";
 import { ease, useOvioTransition, useReducedMotionSafe } from "@/lib/motion";
 import { shortcutKey } from "./shortcuts";
@@ -12,24 +12,68 @@ import { shortcutKey } from "./shortcuts";
 /** How the active markers glide to the next link or section. */
 const GLIDE: Transition = { duration: 0.4, ease: ease.stage };
 
+type Box = { y: number; height: number };
+
+/**
+ * A marker that slides to the active item of a list. It is measured inside the list (offsetTop),
+ * not on the page: the lists are sticky, so page positions shift with every scroll, and a shared
+ * layout animation read the jump to the top on a new page as a long flight.
+ */
+function useMarker(active: string | null, layout = "") {
+  const items = useRef(new Map<string, HTMLElement>());
+  const [box, setBox] = useState<Box | null>(null);
+  // Measured when the active item changes, or when `layout` says the list itself changed.
+  useLayoutEffect(() => {
+    const el = active === null ? undefined : items.current.get(active);
+    const next = el ? { y: el.offsetTop, height: el.offsetHeight } : null;
+    setBox((b) => (b?.y === next?.y && b?.height === next?.height ? b : next));
+    // oxlint-disable-next-line react/exhaustive-deps -- `layout` is the trigger, not a value read here
+  }, [active, layout]);
+  const item = (key: string) => (el: HTMLElement | null) => {
+    if (el) items.current.set(key, el);
+    else items.current.delete(key);
+  };
+  return { item, box };
+}
+
+/** The marker itself: placed at once the first time, then gliding. */
+function Marker({
+  box,
+  className,
+  inset = 0,
+}: {
+  box: Box | null;
+  className: string;
+  inset?: number;
+}) {
+  const glide = useOvioTransition(GLIDE);
+  if (!box) return null;
+  return (
+    <motion.span
+      aria-hidden
+      className={className}
+      initial={false}
+      animate={{ y: box.y + inset, height: box.height - inset * 2 }}
+      transition={glide}
+    />
+  );
+}
+
 /** The component search and list, shared by the sidebar and the small-screen menu. */
 function ComponentLinks({
   inputRef,
   onNavigate,
-  indicatorId,
 }: {
   inputRef?: RefObject<HTMLInputElement | null>;
   onNavigate?: () => void;
-  /** Names the active marker, so the sidebar's and the menu's never trade places. */
-  indicatorId: string;
 }) {
   const pathname = usePathname();
-  const glide = useOvioTransition(GLIDE);
   const [query, setQuery] = useState("");
   const q = query.trim().toLowerCase();
   const shown = COMPONENTS.map((c, i) => ({ ...c, n: i + 1 })).filter((c) =>
     c.name.toLowerCase().includes(q),
   );
+  const marker = useMarker(shown.some((c) => `/docs/${c.slug}` === pathname) ? pathname : null, q);
 
   return (
     <>
@@ -54,23 +98,17 @@ function ComponentLinks({
         <span>{COMPONENTS.length}</span>
       </p>
       <nav className="side-links" aria-label="Components">
+        <Marker box={marker.box} className="side-active" />
         {shown.map((c) => {
           const href = `/docs/${c.slug}`;
           return (
             <Link
               key={c.slug}
+              ref={marker.item(href)}
               href={href}
               aria-current={pathname === href ? "page" : undefined}
               onClick={onNavigate}
             >
-              {pathname === href && (
-                <motion.span
-                  aria-hidden
-                  layoutId={indicatorId}
-                  className="side-active"
-                  transition={glide}
-                />
-              )}
               {c.name}
               <small>{pad2(c.n)}</small>
             </Link>
@@ -101,7 +139,7 @@ export function DocsSidebar() {
   return (
     <aside className="side">
       <div className="side-inner">
-        <ComponentLinks inputRef={input} indicatorId="side-active" />
+        <ComponentLinks inputRef={input} />
         <p className="side-note">
           <b>Every component has four worlds.</b>
           <br />
@@ -215,7 +253,7 @@ export function DocsFab() {
                   ✕
                 </button>
               </div>
-              <ComponentLinks onNavigate={() => setOpen(false)} indicatorId="sheet-active" />
+              <ComponentLinks onNavigate={() => setOpen(false)} />
             </motion.div>
           </>
         )}
@@ -226,8 +264,16 @@ export function DocsFab() {
 
 /** "On this page", marking the section nearest the top of the viewport. */
 export function DocsToc() {
+  const pathname = usePathname();
   const [active, setActive] = useState<string>(DOC_SECTIONS[0].id);
-  const glide = useOvioTransition(GLIDE);
+  const [page, setPage] = useState(pathname);
+  const marker = useMarker(active);
+  // It lives in the docs layout, so it outlasts a page: a new component starts at the top and
+  // the mark glides back to the first section.
+  if (page !== pathname) {
+    setPage(pathname);
+    setActive(DOC_SECTIONS[0].id);
+  }
 
   useEffect(() => {
     const els = DOC_SECTIONS.map((s) => document.getElementById(s.id)).filter(
@@ -253,21 +299,21 @@ export function DocsToc() {
       io.disconnect();
       window.removeEventListener("scroll", onScroll);
     };
-  }, []);
+    // Each page has its own section elements to watch, so a new page sets up the observer again.
+    // oxlint-disable-next-line react/exhaustive-deps
+  }, [pathname]);
 
   return (
     <aside className="toc">
       <p className="toc-title">On this page</p>
+      <Marker box={marker.box} className="toc-active" inset={6} />
       {DOC_SECTIONS.map((s) => (
-        <a key={s.id} href={`#${s.id}`} aria-current={active === s.id ? "location" : undefined}>
-          {active === s.id && (
-            <motion.span
-              aria-hidden
-              layoutId="toc-active"
-              className="toc-active"
-              transition={glide}
-            />
-          )}
+        <a
+          key={s.id}
+          ref={marker.item(s.id)}
+          href={`#${s.id}`}
+          aria-current={active === s.id ? "location" : undefined}
+        >
           {s.label}
         </a>
       ))}

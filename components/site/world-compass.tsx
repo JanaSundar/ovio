@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion, useMotionValue, useSpring, useTransform } from "motion/react";
+import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
 import { useEffect, useRef, type KeyboardEvent, type PointerEvent } from "react";
 import { WORLD_INFO } from "@/content/worlds";
 import { keyToIndex } from "@/lib/keys";
@@ -8,10 +8,10 @@ import { useSiteWorld } from "./site-world";
 
 /** The four worlds sit on the cardinal points, clockwise from north. */
 const POINTS = [
-  { letter: "N", x: 50, y: 21 },
-  { letter: "E", x: 79, y: 50 },
-  { letter: "S", x: 50, y: 79 },
-  { letter: "W", x: 21, y: 50 },
+  { x: 50, y: 21 },
+  { x: 79, y: 50 },
+  { x: 50, y: 79 },
+  { x: 21, y: 50 },
 ];
 /** Each world's swatch, matching its stage. */
 const SWATCH = ["#ffffff", "#e8d6b4", "#c9dc4e", "#c4b8ff"];
@@ -223,21 +223,6 @@ export function WorldCompass() {
           </svg>
         </motion.div>
       </motion.div>
-
-      <div className="compass-readout" aria-live="polite">
-        <span>{POINTS[index].letter}</span>
-        <AnimatePresence mode="popLayout" initial={false}>
-          <motion.b
-            key={world}
-            initial={{ opacity: 0, y: 6 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -6 }}
-            transition={{ duration: 0.2 }}
-          >
-            {WORLD_INFO[index].tagline}
-          </motion.b>
-        </AnimatePresence>
-      </div>
     </div>
   );
 }

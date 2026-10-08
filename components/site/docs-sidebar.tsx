@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useLenis } from "lenis/react";
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useRef, useState, type RefObject } from "react";
 import { COMPONENTS } from "@/content/components";
@@ -106,6 +107,7 @@ export function DocsFab() {
   const fab = useRef<HTMLButtonElement>(null);
   const sheet = useRef<HTMLDivElement>(null);
   const reduced = useReducedMotionSafe();
+  const lenis = useLenis();
 
   const close = () => {
     setOpen(false);
@@ -122,13 +124,13 @@ export function DocsFab() {
       fab.current?.focus();
     };
     window.addEventListener("keydown", onKey);
-    const overflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
+    // Hold the page still behind the sheet.
+    lenis?.stop();
     return () => {
       window.removeEventListener("keydown", onKey);
-      document.body.style.overflow = overflow;
+      lenis?.start();
     };
-  }, [open]);
+  }, [open, lenis]);
 
   return (
     <div className="fab-root">
@@ -162,6 +164,7 @@ export function DocsFab() {
             <motion.div
               ref={sheet}
               tabIndex={-1}
+              data-lenis-prevent
               role="dialog"
               aria-modal="true"
               aria-label="Components"

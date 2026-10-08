@@ -13,6 +13,7 @@ import {
 } from "next/font/google";
 import { Page, SiteNav } from "@/components/site/site-nav";
 import { SiteWorldProvider } from "@/components/site/site-world";
+import { SmoothScroll } from "@/components/site/smooth-scroll";
 import "@/styles/globals.css";
 
 const geist = Geist({ variable: "--font-geist", subsets: ["latin"] });
@@ -69,12 +70,14 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={fonts}>
       <body>
-        <SiteWorldProvider>
-          <Page>
-            <SiteNav />
-            {children}
-          </Page>
-        </SiteWorldProvider>
+        <SmoothScroll>
+          <SiteWorldProvider>
+            <Page>
+              <SiteNav />
+              {children}
+            </Page>
+          </SiteWorldProvider>
+        </SmoothScroll>
       </body>
     </html>
   );

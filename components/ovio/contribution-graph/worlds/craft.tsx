@@ -1,12 +1,18 @@
 "use client";
 
-import { motion } from "motion/react";
-import { memo } from "react";
+import { memo, useRef, type CSSProperties } from "react";
 import { RollingNumber } from "@/components/shared/rolling-number";
-import { motionTokens, useOvioTransition } from "@/lib/motion";
+import { motionTokens } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import type { ContributionGraphWorldProps } from "../contribution-graph";
-import { dayCellProps, weekColumns, weekScroller, weeksMinWidth } from "../grid";
+import {
+  cssEase,
+  dayCellProps,
+  useCellEntrance,
+  weekColumns,
+  weekScroller,
+  weeksMinWidth,
+} from "../grid";
 import { unit, type ContributionCell } from "../year";
 
 const SCALE = ["#e6dcc8", "#f2c9a0", "#ee9f63", "#e0713a", "#b8471f"];
@@ -14,44 +20,54 @@ const SCALE = ["#e6dcc8", "#f2c9a0", "#ee9f63", "#e0713a", "#b8471f"];
 /** A small fixed tilt per tile (-7° to 7°), from its index, so tiles look hand-placed. */
 const tilt = (i: number) => ((Math.imul(i + 1, 2654435761) >>> 16) % 1400) / 100 - 7;
 
-type CellProps = { cell: ContributionCell; tabbable: boolean; active: boolean; enter: boolean };
+type CellProps = { cell: ContributionCell; tabbable: boolean; active: boolean };
 
-/** A paper tile: dropped in on entry, raised by its level, lifted and squared up when hovered. */
-const Cell = memo(function Cell({ cell, tabbable, active, enter }: CellProps) {
-  const lift = useOvioTransition(motionTokens.craft.base);
-  const p = dayCellProps(cell, tabbable);
+/** Where a tile rests: raised by its level and tilted, or lifted and squared up when active. */
+function tileStyle(cell: ContributionCell, active: boolean): CSSProperties {
   const lvl = cell.level;
+  if (active) {
+    return {
+      background: SCALE[lvl],
+      transform: "translateY(-6px) scale(1.35)",
+      boxShadow: "0 8px 10px -2px rgba(90,50,20,.45)",
+      zIndex: 1,
+    };
+  }
+  return {
+    background: SCALE[lvl],
+    transform: `translateY(${-lvl * 1.5}px) rotate(${lvl ? tilt(cell.index) : 0}deg)`,
+    boxShadow: lvl
+      ? `0 ${1 + lvl}px ${2 + lvl * 1.5}px rgba(90,50,20,${(0.14 + lvl * 0.06).toFixed(2)}), inset 0 1px 0 rgba(255,255,255,.4)`
+      : "inset 0 1px 2px rgba(70,45,20,.15)",
+  };
+}
 
+/**
+ * A paper tile, raised by its level, lifted and squared up when hovered. Plain elements with a
+ * CSS transition: a year is 371 tiles, and a Motion component per tile made switching to Craft lag.
+ */
+const Cell = memo(function Cell({ cell, tabbable, active }: CellProps) {
+  const p = dayCellProps(cell, tabbable);
   return (
-    <motion.div
-      {...p}
-      initial={enter ? { opacity: 0, y: -16 } : false}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ ...motionTokens.craft.slow, delay: cell.week * 0.014 + cell.weekday * 0.012 }}
-      className="aspect-square rounded-[3px]"
-    >
-      <motion.span
+    <div {...p} className="aspect-square rounded-[3px]">
+      <span
         aria-hidden
-        className="block size-full rounded-[3px]"
-        initial={false}
-        animate={
-          active
-            ? { y: -6, rotate: 0, scale: 1.35, boxShadow: "0 8px 10px -2px rgba(90,50,20,.45)" }
-            : {
-                y: -lvl * 1.5,
-                rotate: lvl ? tilt(cell.index) : 0,
-                scale: 1,
-                boxShadow: lvl
-                  ? `0 ${1 + lvl}px ${2 + lvl * 1.5}px rgba(90,50,20,${(0.14 + lvl * 0.06).toFixed(2)}), inset 0 1px 0 rgba(255,255,255,.4)`
-                  : "inset 0 1px 2px rgba(70,45,20,.15)",
-              }
-        }
-        transition={lift}
-        style={{ background: SCALE[lvl], zIndex: active ? 1 : undefined, position: "relative" }}
+        className="relative block size-full rounded-[3px] transition-[transform,box-shadow] duration-[450ms] ease-[cubic-bezier(.34,1.5,.5,1)] motion-reduce:transition-none"
+        style={tileStyle(cell, active)}
       />
-    </motion.div>
+    </div>
   );
 });
+
+const DROP: Keyframe[] = [
+  { opacity: 0, transform: "translateY(-16px)" },
+  { opacity: 1, transform: "none" },
+];
+const DROP_TIMING = {
+  duration: motionTokens.craft.slow.duration,
+  easing: cssEase(motionTokens.craft.slow.ease),
+  delay: (week: number, weekday: number) => week * 0.014 + weekday * 0.012,
+};
 
 /** Craft: tiles on a taped paper card. Taller tiles, busier days; a sticker counts the streak. */
 export function CraftContributionGraph({
@@ -64,6 +80,9 @@ export function CraftContributionGraph({
 }: ContributionGraphWorldProps) {
   const enter = animation !== "none";
   const day = active ?? year.best;
+  const gridRef = useRef<HTMLDivElement>(null);
+  // Tiles drop into place, column by column.
+  useCellEntrance(gridRef, enter, DROP, DROP_TIMING);
 
   const minWidth = weeksMinWidth(year.weeks);
   // The card tilts only on desktop: a tilted parent blurs the grid while it scrolls on smaller screens.
@@ -104,7 +123,12 @@ export function CraftContributionGraph({
           className={`@container px-1.5 pt-2.5 pb-3.5 ${minWidth.className}`}
           style={minWidth.style}
         >
-          <div {...grid} className="grid gap-[0.45cqw]" style={weekColumns(year.weeks)}>
+          <div
+            {...grid}
+            ref={gridRef}
+            className="grid gap-[0.45cqw]"
+            style={weekColumns(year.weeks)}
+          >
             {year.rows.map((row, r) => (
               <div key={r} role="row" className="contents">
                 {row.map((cell) => (
@@ -113,7 +137,6 @@ export function CraftContributionGraph({
                     cell={cell}
                     tabbable={cell.index === focusIndex}
                     active={cell.index === active?.index}
-                    enter={enter}
                   />
                 ))}
               </div>

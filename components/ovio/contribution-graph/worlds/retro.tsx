@@ -1,34 +1,28 @@
 "use client";
 
 import { motion } from "motion/react";
-import { memo } from "react";
+import { memo, useRef } from "react";
 import { RollingNumber } from "@/components/shared/rolling-number";
 import { motionTokens, steps } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import type { ContributionGraphWorldProps } from "../contribution-graph";
-import { dayCellProps, weekColumns, weekScroller, weeksMinWidth } from "../grid";
+import { dayCellProps, useCellEntrance, weekColumns, weekScroller, weeksMinWidth } from "../grid";
 import type { ContributionCell } from "../year";
 
 const SCALE = ["#0f2414", "#1d5a2b", "#2f9a45", "#4fdc68", "#b8ffc4"];
 const PAD3 = { minimumIntegerDigits: 3, useGrouping: false } as const;
 
-type CellProps = { cell: ContributionCell; tabbable: boolean; active: boolean; enter: boolean };
+type CellProps = { cell: ContributionCell; tabbable: boolean; active: boolean };
 
-/** A phosphor pixel: switches on in one hard frame, column by column, and burns white when hovered. */
-const Cell = memo(function Cell({ cell, tabbable, active, enter }: CellProps) {
+/** A phosphor pixel that burns white when hovered. */
+const Cell = memo(function Cell({ cell, tabbable, active }: CellProps) {
   const p = dayCellProps(cell, tabbable);
   const lvl = cell.level;
 
   return (
-    <motion.div
+    <div
       {...p}
-      initial={enter ? { opacity: 0 } : false}
-      animate={{ opacity: 1 }}
       className="aspect-square"
-      transition={{
-        ...motionTokens.retro.frames(1, 0.01),
-        delay: cell.week * 0.026 + cell.weekday * 0.005,
-      }}
       style={{
         ...p.style,
         background: active ? "#ffffff" : SCALE[lvl],
@@ -42,6 +36,14 @@ const Cell = memo(function Cell({ cell, tabbable, active, enter }: CellProps) {
   );
 });
 
+/** Pixels switch on in one hard frame, in scan order: column by column, top to bottom. */
+const SWITCH_ON: Keyframe[] = [{ opacity: 0 }, { opacity: 1 }];
+const SWITCH_ON_TIMING = {
+  duration: 0.01,
+  easing: "steps(1, end)",
+  delay: (week: number, weekday: number) => week * 0.026 + weekday * 0.005,
+};
+
 /** Retro: a CRT running ACTIVITY.EXE. Pixels light in scan order; "always" adds flicker and a roll bar. */
 export function RetroContributionGraph({
   year,
@@ -54,6 +56,8 @@ export function RetroContributionGraph({
   const enter = animation !== "none";
   const always = animation === "always";
   const day = active ?? year.best;
+  const gridRef = useRef<HTMLDivElement>(null);
+  useCellEntrance(gridRef, enter, SWITCH_ON, SWITCH_ON_TIMING);
 
   const minWidth = weeksMinWidth(year.weeks);
   return (
@@ -105,7 +109,12 @@ export function RetroContributionGraph({
 
         <div {...weekScroller}>
           <div className={`@container ${minWidth.className}`} style={minWidth.style}>
-            <div {...grid} className="grid gap-[0.36cqw] p-1" style={weekColumns(year.weeks)}>
+            <div
+              {...grid}
+              ref={gridRef}
+              className="grid gap-[0.36cqw] p-1"
+              style={weekColumns(year.weeks)}
+            >
               {year.rows.map((row, r) => (
                 <div key={r} role="row" className="contents">
                   {row.map((cell) => (
@@ -114,7 +123,6 @@ export function RetroContributionGraph({
                       cell={cell}
                       tabbable={cell.index === focusIndex}
                       active={cell.index === active?.index}
-                      enter={enter}
                     />
                   ))}
                 </div>

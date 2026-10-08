@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "./ovio.css";
 @import "./site.css";
+@import "lenis/dist/lenis.css";
 
 @theme inline {
   --color-paper: #f5f4f0;

@@ -3,7 +3,7 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useLayoutEffect, useRef, useState, type ReactNode } from "react";
 import { OvioProvider, useWorld } from "@/components/shared/world-provider";
-import { ease, useOvioTransition, useReducedMotionSafe, worldIn } from "@/lib/motion";
+import { ease, useOvioTransition, useReducedMotionSafe } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
 /** The content's height, kept current by a ResizeObserver. Null until measured (SSR, first paint). */
@@ -23,9 +23,19 @@ function useHeight<T extends HTMLElement>() {
 const RESIZE = { duration: 0.45, ease: ease.stage };
 
 /**
- * A demo stage: the world's backdrop around a component. Switching worlds blurs the new one in,
+ * The incoming world fades and settles in. Opacity and transform only, so it stays on the
+ * compositor: a blur over the whole stage re-rasterised every frame and dropped frames.
+ */
+const STAGE_IN = {
+  initial: { opacity: 0, scale: 0.985, y: 8 },
+  animate: { opacity: 1, scale: 1, y: 0 },
+  transition: { duration: 0.5, ease: ease.stage },
+} as const;
+
+/**
+ * A demo stage: the world's backdrop around a component. Switching worlds fades the new one in,
  * while the frame's height eases to the new world's, so the page below never jumps.
- * Retro adds CRT scanlines over the whole stage; crosshairs (site.css) mark its centre.
+ * Retro adds CRT scanlines over the whole stage.
  */
 export function PreviewFrame({
   children,
@@ -55,10 +65,10 @@ export function PreviewFrame({
             key={world}
             data-ovio-world={world}
             className="ovio-stage relative flex min-w-0 flex-1 items-center justify-center bg-(--ovio-stage) px-3 py-6 sm:px-8 sm:py-12"
-            initial={reduced ? false : worldIn.initial}
-            animate={worldIn.animate}
+            initial={reduced ? false : STAGE_IN.initial}
+            animate={STAGE_IN.animate}
             exit={{ opacity: 0, pointerEvents: "none", transition: { duration: 0.15 } }}
-            transition={worldIn.transition}
+            transition={STAGE_IN.transition}
           >
             {/* Pins the world, so the outgoing stage keeps rendering its own world while it fades. */}
             <OvioProvider world={world}>{children}</OvioProvider>

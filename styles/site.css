@@ -18,10 +18,6 @@
   --display: var(--font-space-grotesk), system-ui, sans-serif;
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
 .page {
   position: relative;
   overflow-x: clip;
@@ -311,29 +307,6 @@ html {
   outline: 2px solid var(--ink);
   outline-offset: 0;
 }
-.compass-readout {
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
-  max-width: 260px;
-  min-height: 40px;
-  font: 12px/1.5 var(--mono);
-  color: #7d7f78;
-}
-.compass-readout span {
-  flex: none;
-  display: grid;
-  place-items: center;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: var(--ink);
-  color: var(--lime);
-  font-weight: 500;
-}
-.compass-readout b {
-  font-weight: 400;
-}
 
 /* Home: specimen */
 .specimen-label {
@@ -387,6 +360,24 @@ html {
 .world-gooey {
   width: 380px;
   max-width: 100%;
+}
+
+/* The Gooey Tabs track and tabs, sized per screen by these variables. */
+.nav-tabs,
+.world-gooey {
+  --goo-pad: 6px;
+  --goo-tab-y: 12px;
+  --goo-font: 14px;
+}
+:is(.nav-tabs, .world-gooey) div:has(> [role="tablist"]) {
+  padding: var(--goo-pad);
+}
+:is(.nav-tabs, .world-gooey) div:has(> [role="tablist"]) > [aria-hidden] {
+  inset: var(--goo-pad);
+}
+:is(.nav-tabs, .world-gooey) [role="tab"] {
+  padding-block: var(--goo-tab-y);
+  font-size: var(--goo-font);
 }
 
 /* The demo stage. */
@@ -1210,7 +1201,16 @@ html {
     display: block;
   }
   .nav-tabs {
-    width: 160px;
+    width: 150px;
+  }
+  .nav-tabs,
+  .world-gooey {
+    --goo-pad: 4px;
+    --goo-tab-y: 9px;
+    --goo-font: 13px;
+  }
+  .world-gooey {
+    width: 340px;
   }
   .article {
     grid-column: 1 / -1;
@@ -1251,7 +1251,13 @@ html {
     border-left: 0;
   }
   .nav-tabs {
-    width: 148px;
+    width: 128px;
+  }
+  .nav-tabs,
+  .world-gooey {
+    --goo-pad: 3px;
+    --goo-tab-y: 7px;
+    --goo-font: 12.5px;
   }
 
   .nav > .nav-action {

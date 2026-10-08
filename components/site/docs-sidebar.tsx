@@ -5,8 +5,9 @@ import { usePathname } from "next/navigation";
 import { useLenis } from "lenis/react";
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useRef, useState, type RefObject } from "react";
-import { COMPONENTS } from "@/content/components";
+import { COMPONENTS, DOC_SECTIONS, pad2 } from "@/content/components";
 import { useReducedMotionSafe } from "@/lib/motion";
+import { shortcutKey } from "./shortcuts";
 
 /** The component search and list, shared by the sidebar and the small-screen menu. */
 function ComponentLinks({
@@ -56,7 +57,7 @@ function ComponentLinks({
               onClick={onNavigate}
             >
               {c.name}
-              <small>{String(c.n).padStart(2, "0")}</small>
+              <small>{pad2(c.n)}</small>
             </Link>
           );
         })}
@@ -72,9 +73,7 @@ export function DocsSidebar() {
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key !== "/" || e.metaKey || e.ctrlKey || e.altKey) return;
-      const t = e.target as HTMLElement | null;
-      if (t && (/^(input|textarea|select)$/i.test(t.tagName) || t.isContentEditable)) return;
+      if (shortcutKey(e) !== "/") return;
       // Below 880px the sidebar is hidden and the floating menu takes over.
       if (!input.current?.offsetParent) return;
       e.preventDefault();
@@ -210,19 +209,12 @@ export function DocsFab() {
   );
 }
 
-const SECTIONS = [
-  { id: "preview", label: "Preview" },
-  { id: "installation", label: "Installation" },
-  { id: "usage", label: "Usage" },
-  { id: "props", label: "Props" },
-];
-
 /** "On this page", marking the section nearest the top of the viewport. */
 export function DocsToc() {
-  const [active, setActive] = useState(SECTIONS[0].id);
+  const [active, setActive] = useState<string>(DOC_SECTIONS[0].id);
 
   useEffect(() => {
-    const els = SECTIONS.map((s) => document.getElementById(s.id)).filter(
+    const els = DOC_SECTIONS.map((s) => document.getElementById(s.id)).filter(
       (el): el is HTMLElement => el !== null,
     );
     const io = new IntersectionObserver(
@@ -238,7 +230,7 @@ export function DocsToc() {
     // The last section is too short to reach the top band, so the page's end selects it.
     const onScroll = () => {
       const end = window.innerHeight + window.scrollY >= document.body.scrollHeight - 4;
-      if (end) setActive(SECTIONS[SECTIONS.length - 1].id);
+      if (end) setActive(DOC_SECTIONS[DOC_SECTIONS.length - 1].id);
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => {
@@ -250,7 +242,7 @@ export function DocsToc() {
   return (
     <aside className="toc">
       <p className="toc-title">On this page</p>
-      {SECTIONS.map((s) => (
+      {DOC_SECTIONS.map((s) => (
         <a key={s.id} href={`#${s.id}`} aria-current={active === s.id ? "location" : undefined}>
           {s.label}
         </a>

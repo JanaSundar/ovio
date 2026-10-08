@@ -1,7 +1,7 @@
 "use client";
 
-import { posthog } from "posthog-js";
 import { useState } from "react";
+import { track } from "@/lib/analytics";
 import { useWorld, type World } from "@/components/shared/world-provider";
 import { worldInfo } from "@/content/worlds";
 import { CodeBlock } from "./code-block";
@@ -38,7 +38,7 @@ export function ComponentPreview({
                 onClick={() => {
                   if (tab === t) return;
                   setTab(t);
-                  posthog.capture("component_view_changed", {
+                  track("component_view_changed", {
                     component_slug: slug,
                     view: t,
                   });

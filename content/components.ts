@@ -490,3 +490,16 @@ export const GITHUB_URL = `https://github.com/${REPO}`;
 export const AUTHOR_URL = "https://github.com/JanaSundar";
 
 export const installCommand = (slug: string) => `npx shadcn add ${REPO}/${slug}`;
+
+/** "07": catalogue numbers and counts are printed two digits wide. */
+export const pad2 = (n: number) => String(n).padStart(2, "0");
+
+/** The sections of a component's docs page, in order, for the page and its "On this page" list. */
+export const DOC_SECTIONS = [
+  { id: "preview", label: "Preview" },
+  { id: "installation", label: "Installation" },
+  { id: "usage", label: "Usage" },
+  { id: "props", label: "Props" },
+] as const;
+
+export type DocSectionId = (typeof DOC_SECTIONS)[number]["id"];

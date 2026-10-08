@@ -10,6 +10,7 @@ export function DeveloperIdCardDemo() {
       stack={["React", "TypeScript", "Node", "Postgres"]}
       github="ada-dev"
       website="ada.dev"
+      url="https://janasundar.vercel.app"
       location="Seoul, Korea"
       available
       serial="024"

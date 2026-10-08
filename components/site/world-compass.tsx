@@ -17,10 +17,15 @@ const POINTS = [
 const SWATCH = ["#ffffff", "#e8d6b4", "#c9dc4e", "#c4b8ff"];
 
 const C = 120;
-/** A point `r` from the centre, `deg` clockwise from north. */
+/** Two decimals: enough for the art, and identical on the server and in every browser. */
+const round = (n: number) => Math.round(n * 100) / 100;
+/**
+ * A point `r` from the centre, `deg` clockwise from north. Rounded, because Math.cos and Math.sin
+ * can differ in the last digit between Node and the browser, which made hydration mismatch.
+ */
 const at = (deg: number, r: number) => {
   const a = ((deg - 90) * Math.PI) / 180;
-  return [C + r * Math.cos(a), C + r * Math.sin(a)] as const;
+  return [round(C + r * Math.cos(a)), round(C + r * Math.sin(a))] as const;
 };
 /** The nearest cardinal point to an angle. */
 const pointOf = (deg: number) => ((Math.round(deg / 90) % 4) + 4) % 4;

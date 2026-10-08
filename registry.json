@@ -1,7 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry.json",
   "name": "ovio",
-  "homepage": "https://ovio.dev",
+  "homepage": "https://ovioui.vercel.app",
   "items": [
     {
       "name": "theme",

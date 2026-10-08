@@ -19,15 +19,15 @@ All motion respects `prefers-reduced-motion`.
 
 | Component                                                      | Status       | Description                                                              |
 | -------------------------------------------------------------- | ------------ | ------------------------------------------------------------------------ |
-| [Contribution Graph](https://ovio.dev/docs/contribution-graph) | Available    | A year of activity, one cell per day.                                    |
-| [Gooey Tabs](https://ovio.dev/docs/gooey-tabs)                 | Available    | A tab bar with a moving indicator and a deploy status.                   |
-| [Star History](https://ovio.dev/docs/star-history)             | Available    | Stargazers over time, with annotated spikes.                             |
-| [Repository Card](https://ovio.dev/docs/repository-card)       | Available    | A repo at a glance: name, description, stars, forks and language.        |
-| [Top Contributors](https://ovio.dev/docs/top-contributors)     | Available    | The people behind a project, ranked by commits.                          |
-| [npm Downloads](https://ovio.dev/docs/npm-downloads)           | Available    | Weekly installs with trend and goal.                                     |
-| [Physical Knob](https://ovio.dev/docs/physical-knob)           | Available    | A rotary control you can drag, flick, scroll or turn with the keyboard.  |
-| [Bundle Size](https://ovio.dev/docs/bundle-size)               | Available    | Package size with gzip, brotli and the change from the previous version. |
-| [Changelog](https://ovio.dev/docs/changelog)                   | Available    | Releases with dates and notes.                                           |
+| [Contribution Graph](https://ovioui.vercel.app/docs/contribution-graph) | Available    | A year of activity, one cell per day.                                    |
+| [Gooey Tabs](https://ovioui.vercel.app/docs/gooey-tabs)                 | Available    | A tab bar with a moving indicator and a deploy status.                   |
+| [Star History](https://ovioui.vercel.app/docs/star-history)             | Available    | Stargazers over time, with annotated spikes.                             |
+| [Repository Card](https://ovioui.vercel.app/docs/repository-card)       | Available    | A repo at a glance: name, description, stars, forks and language.        |
+| [Top Contributors](https://ovioui.vercel.app/docs/top-contributors)     | Available    | The people behind a project, ranked by commits.                          |
+| [npm Downloads](https://ovioui.vercel.app/docs/npm-downloads)           | Available    | Weekly installs with trend and goal.                                     |
+| [Physical Knob](https://ovioui.vercel.app/docs/physical-knob)           | Available    | A rotary control you can drag, flick, scroll or turn with the keyboard.  |
+| [Bundle Size](https://ovioui.vercel.app/docs/bundle-size)               | Available    | Package size with gzip, brotli and the change from the previous version. |
+| [Changelog](https://ovioui.vercel.app/docs/changelog)                   | Available    | Releases with dates and notes.                                           |
 | Event Ticket                                                   | Coming later | A pass for launches and conferences.                                     |
 | Sponsor Wall                                                   | Coming later | Sponsors by tier, from a logo wall to blocks on a pegboard.              |
 | Developer ID Card                                              | Coming later | An identity card for a developer.                                        |
@@ -115,7 +115,7 @@ export default async function Page() {
 
 ## Development
 
-This repo is the docs site at [ovio.dev](https://ovio.dev) and the registry source.
+This repo is the docs site at [ovioui.vercel.app](https://ovioui.vercel.app) and the registry source.
 
 ```bash
 pnpm install

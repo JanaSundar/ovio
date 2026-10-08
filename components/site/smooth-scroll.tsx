@@ -16,8 +16,8 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
       options={{
         autoRaf: true,
         // Higher lerp = shorter glide tail; wheelMultiplier = more distance per wheel tick.
-        lerp: 0.2,
-        wheelMultiplier: 1.4,
+        lerp: 0.3,
+        wheelMultiplier: 2,
         anchors: { offset: -24 },
         allowNestedScroll: true,
         stopInertiaOnNavigate: true,

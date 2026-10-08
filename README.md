@@ -153,4 +153,4 @@ registry-checked. Skip them once with `LEFTHOOK=0`, e.g. `LEFTHOOK=0 git commit 
 
 ## License
 
-MIT
+[MIT](LICENSE) © Jana Sundar

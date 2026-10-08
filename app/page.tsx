@@ -46,9 +46,9 @@ export default function HomePage() {
             <div>
               <p className="eyebrow">For portfolios, projects, docs and profiles</p>
               <h1>
-                Small interfaces.
+                One component.
                 <br />
-                <em>Big presence.</em>
+                <em>Four worlds.</em>
               </h1>
             </div>
             <div className="intro-bottom">

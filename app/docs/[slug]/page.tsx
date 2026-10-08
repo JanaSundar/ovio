@@ -20,7 +20,15 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: PageProps<"/docs/[slug]">): Promise<Metadata> {
   const c = getComponent((await params).slug);
-  return c ? { title: c.name, description: c.description } : {};
+  if (!c) return {};
+  // Shares carry the component's own title; the image comes from opengraph-image.tsx alongside.
+  const social = { title: `${c.name} · Ovio`, description: c.description };
+  return {
+    title: c.name,
+    description: c.description,
+    openGraph: { type: "website", siteName: "Ovio", ...social },
+    twitter: { card: "summary_large_image", ...social },
+  };
 }
 
 /**

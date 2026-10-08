@@ -43,6 +43,3 @@ next-env.d.ts
 # local tooling
 /.claude
 
-# Playwright
-/test-results/
-/playwright-report/

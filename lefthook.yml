@@ -1,6 +1,6 @@
 # Git hooks, installed by `pnpm install` (lefthook's postinstall; skipped in CI).
 # Skip them for one command with LEFTHOOK=0, e.g. `LEFTHOOK=0 git commit -m "wip"`.
-# CI runs the same checks and more (build, Playwright), so the hooks only catch things early.
+# CI runs the same checks and a build, so the hooks only catch things early.
 
 # Staged files only, so a commit stays quick: format them in place and lint them.
 pre-commit:

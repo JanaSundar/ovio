@@ -1,0 +1,186 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`contribution year > shapes a year deterministically 1`] = `
+{
+  "best": "2026-02-03",
+  "busiestWeekday": "Sunday",
+  "current": 1,
+  "days": 368,
+  "levels": "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000004001004002004002004003004003004003000004001004002004002004003004003004003000004001004002004002004003004003004003000004001004002004002004003004003004003000004001004002004002004003004003004003000004001004002004002004003004003004003000004001004002004002004003004003004003000004001",
+  "longest": 1,
+  "months": [
+    {
+      "label": "Oct",
+      "week": 0,
+    },
+    {
+      "label": "Nov",
+      "week": 4,
+    },
+    {
+      "label": "Dec",
+      "week": 9,
+    },
+    {
+      "label": "Jan",
+      "week": 13,
+    },
+    {
+      "label": "Feb",
+      "week": 17,
+    },
+    {
+      "label": "Mar",
+      "week": 21,
+    },
+    {
+      "label": "Apr",
+      "week": 26,
+    },
+    {
+      "label": "May",
+      "week": 30,
+    },
+    {
+      "label": "Jun",
+      "week": 35,
+    },
+    {
+      "label": "Jul",
+      "week": 39,
+    },
+    {
+      "label": "Aug",
+      "week": 43,
+    },
+    {
+      "label": "Sep",
+      "week": 48,
+    },
+    {
+      "label": "Oct",
+      "week": 52,
+    },
+  ],
+  "total": 554,
+  "weeks": 53,
+}
+`;
+
+exports[`seeded values > hashString is stable 1`] = `
+[
+  2166136261,
+  3193756659,
+  3808762101,
+  2554031677,
+]
+`;
+
+exports[`seeded values > random and seeded produce the same stable sequence 1`] = `
+[
+  0.6011037519201636,
+  0.44829055899754167,
+  0.8524657934904099,
+  0.6697340414393693,
+  0.17481389874592423,
+]
+`;
+
+exports[`star history shape > shapes points, months and annotations 1`] = `
+{
+  "annotations": [
+    [
+      "HN",
+      15,
+      2,
+    ],
+  ],
+  "months": [
+    {
+      "gain": 252,
+      "h": 0.0715909090909091,
+      "month": 7,
+      "notes": [],
+      "stars": 252,
+      "year": 2025,
+    },
+    {
+      "gain": 276,
+      "h": 0.15,
+      "month": 8,
+      "notes": [],
+      "stars": 528,
+      "year": 2025,
+    },
+    {
+      "gain": 300,
+      "h": 0.23522727272727273,
+      "month": 9,
+      "notes": [
+        "HN",
+      ],
+      "stars": 828,
+      "year": 2025,
+    },
+    {
+      "gain": 324,
+      "h": 0.32727272727272727,
+      "month": 10,
+      "notes": [],
+      "stars": 1152,
+      "year": 2025,
+    },
+    {
+      "gain": 348,
+      "h": 0.42613636363636365,
+      "month": 11,
+      "notes": [],
+      "stars": 1500,
+      "year": 2025,
+    },
+    {
+      "gain": 372,
+      "h": 0.5318181818181819,
+      "month": 12,
+      "notes": [],
+      "stars": 1872,
+      "year": 2025,
+    },
+    {
+      "gain": 396,
+      "h": 0.6443181818181818,
+      "month": 1,
+      "notes": [],
+      "stars": 2268,
+      "year": 2026,
+    },
+    {
+      "gain": 420,
+      "h": 0.7636363636363637,
+      "month": 2,
+      "notes": [],
+      "stars": 2688,
+      "year": 2026,
+    },
+    {
+      "gain": 444,
+      "h": 0.8897727272727273,
+      "month": 3,
+      "notes": [],
+      "stars": 3132,
+      "year": 2026,
+    },
+    {
+      "gain": 388,
+      "h": 1,
+      "month": 4,
+      "notes": [],
+      "stars": 3520,
+      "year": 2026,
+    },
+  ],
+  "path": "M0.0 0.0 C0.3 0.2 1.1 0.8 1.7 1.1 C2.3 1.5 2.8 1.9 3.4 2.3 C4.0 2.7 4.5 3.1 5.1 3.5 C5.6 3.9 6.2 4.3 6.8 4.7 C7.3 5.1 8.2 5.7 8.5 5.9",
+  "points": 60,
+  "total": 3520,
+}
+`;

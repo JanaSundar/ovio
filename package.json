@@ -10,7 +10,10 @@
     "registry:validate": "shadcn registry validate",
     "format": "oxfmt --write .",
     "typecheck": "next typegen && tsc --noEmit",
-    "format:check": "oxfmt --check ."
+    "format:check": "oxfmt --check .",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "registry:check": "node scripts/check-registry.mjs"
   },
   "dependencies": {
     "@number-flow/react": "^0.6.2",
@@ -27,6 +30,7 @@
     "uqr": "^0.1.3"
   },
   "devDependencies": {
+    "@playwright/test": "1.56.1",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
@@ -35,7 +39,8 @@
     "oxlint": "^1.87.0",
     "shadcn": "^4.21.3",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "3.2.4"
   },
   "packageManager": "pnpm@11.15.1"
 }

@@ -5,12 +5,13 @@ import {
   useRef,
   useState,
   useSyncExternalStore,
+  type ComponentType,
   type FocusEvent,
   type KeyboardEvent,
   type PointerEvent,
 } from "react";
 import { useWorld, type World } from "@/components/shared/world-provider";
-import { useReducedMotionSafe } from "@/lib/motion";
+import { useReducedMotionSafe, type OvioAnimation } from "@/lib/motion";
 import { dayIndexOf } from "./grid";
 import {
   buildContributionYear,
@@ -27,7 +28,7 @@ import { formatNumber } from "@/lib/format";
 export { buildContributionYear };
 export type { ContributionCell, ContributionDay, ContributionYear };
 
-export type ContributionAnimation = "none" | "enter-exit" | "always";
+export type ContributionAnimation = OvioAnimation;
 
 export type ContributionGraphProps = {
   /** Daily counts; gaps become zero. Dates are "YYYY-MM-DD". */
@@ -85,6 +86,13 @@ function useNarrow() {
     () => false,
   );
 }
+
+const VIEWS = {
+  minimal: MinimalContributionGraph,
+  craft: CraftContributionGraph,
+  retro: RetroContributionGraph,
+  toy: ToyContributionGraph,
+} satisfies Record<World, ComponentType<ContributionGraphWorldProps>>;
 
 export function ContributionGraph({
   data,
@@ -170,14 +178,6 @@ export function ContributionGraph({
     className,
   };
 
-  switch (world) {
-    case "craft":
-      return <CraftContributionGraph {...props} />;
-    case "retro":
-      return <RetroContributionGraph {...props} />;
-    case "toy":
-      return <ToyContributionGraph {...props} />;
-    default:
-      return <MinimalContributionGraph {...props} />;
-  }
+  const View = VIEWS[world] ?? VIEWS.minimal;
+  return <View {...props} />;
 }

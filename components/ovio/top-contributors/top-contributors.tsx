@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { type ComponentType, useState } from "react";
+import { initialsOf } from "@/components/shared/avatar";
 import { useWorld, type World } from "@/components/shared/world-provider";
 import { MinimalTopContributors } from "./worlds/minimal";
 import { CraftTopContributors } from "./worlds/craft";
@@ -76,13 +77,6 @@ export const PERIOD_SHORT: Record<ContributorPeriod, string> = {
 
 const PERIODS: ContributorPeriod[] = ["30d", "90d", "all"];
 
-/** "Ada Okafor" → "AO"; "ada-dev" → "AD". */
-function initialsOf(name: string): string {
-  const words = name.split(/[\s._-]+/).filter(Boolean);
-  const letters = words.length > 1 ? words[0][0] + words[words.length - 1][0] : name.slice(0, 2);
-  return letters.toUpperCase();
-}
-
 /** Ranks contributors by commits in a window: highest first, ties by login so the order is stable. */
 function rankContributors(
   contributors: Contributor[],
@@ -111,6 +105,13 @@ function rankContributors(
   });
   return { people, total };
 }
+
+const VIEWS = {
+  minimal: MinimalTopContributors,
+  craft: CraftTopContributors,
+  retro: RetroTopContributors,
+  toy: ToyTopContributors,
+} satisfies Record<World, ComponentType<TopContributorsWorldProps>>;
 
 export function TopContributors({
   contributors,
@@ -144,14 +145,6 @@ export function TopContributors({
     className,
   };
 
-  switch (world) {
-    case "craft":
-      return <CraftTopContributors {...props} />;
-    case "retro":
-      return <RetroTopContributors {...props} />;
-    case "toy":
-      return <ToyTopContributors {...props} />;
-    default:
-      return <MinimalTopContributors {...props} />;
-  }
+  const View = VIEWS[world] ?? VIEWS.minimal;
+  return <View {...props} />;
 }

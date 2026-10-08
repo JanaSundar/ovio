@@ -118,14 +118,21 @@ export default async function Page() {
 This repo is the docs site at [ovioui.vercel.app](https://ovioui.vercel.app) and the registry source.
 
 ```bash
-pnpm install
+pnpm install            # also installs the git hooks (Lefthook)
 pnpm dev                # docs site at http://localhost:3000
 pnpm build              # builds the site
 pnpm registry:validate  # checks registry.json and that every file it lists exists
+pnpm registry:check     # checks every registry item installs with all the files it imports
 pnpm lint               # oxlint
 pnpm format             # oxfmt
 pnpm typecheck          # next typegen && tsc --noEmit
+pnpm test               # unit tests (Vitest)
+pnpm test:e2e           # screenshots and interactions (Playwright); run pnpm build first
 ```
+
+Git hooks run through [Lefthook](https://lefthook.dev) (`lefthook.yml`): before a commit, the
+staged files are formatted and linted; before a push, the project is type-checked, unit-tested and
+registry-checked. Skip them once with `LEFTHOOK=0`, e.g. `LEFTHOOK=0 git commit -m "wip"`.
 
 - `components/ovio/<name>/`: each component, its shared state, and one file per world in `worlds/`.
 - `components/shared/`, `lib/`, `styles/ovio.css`: the shared registry items (world, motion
@@ -141,6 +148,7 @@ pnpm typecheck          # next typegen && tsc --noEmit
 - [Tailwind CSS v4](https://tailwindcss.com)
 - [shadcn](https://ui.shadcn.com) registry
 - [oxlint](https://oxc.rs/docs/guide/usage/linter) and [oxfmt](https://oxc.rs/docs/guide/usage/formatter)
+- [Vitest](https://vitest.dev), [Playwright](https://playwright.dev) and [Lefthook](https://lefthook.dev)
 - TypeScript, pnpm
 
 ## License

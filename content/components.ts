@@ -1,5 +1,7 @@
 /** The component catalogue. */
 
+import { WORLDS } from "../lib/world";
+
 type PropDoc = { name: string; type: string; description: string };
 
 export type ComponentDoc = {
@@ -14,7 +16,9 @@ export type ComponentDoc = {
   props: PropDoc[];
 };
 
-const WORLDS_TYPE = '"minimal" | "craft" | "retro" | "toy"';
+const union = (values: readonly string[]) => values.map((v) => `"${v}"`).join(" | ");
+const WORLDS_TYPE = union(WORLDS);
+const ANIMATION_TYPE = union(["none", "enter-exit", "always"]);
 const V: PropDoc = {
   name: "variant",
   type: WORLDS_TYPE,
@@ -40,7 +44,7 @@ export const COMPONENTS: ComponentDoc[] = [
       V,
       {
         name: "animation",
-        type: '"none" | "enter-exit" | "always"',
+        type: ANIMATION_TYPE,
         description:
           'Default "enter-exit". "always" adds the Retro flicker and roll bar. Forced to "none" under reduced motion.',
       },
@@ -169,7 +173,7 @@ export const COMPONENTS: ComponentDoc[] = [
       V,
       {
         name: "animation",
-        type: '"none" | "enter-exit" | "always"',
+        type: ANIMATION_TYPE,
         description:
           'Default "enter-exit". "always" keeps a live marker on the latest point. Forced to "none" under reduced motion.',
       },
@@ -486,3 +490,16 @@ export const GITHUB_URL = `https://github.com/${REPO}`;
 export const AUTHOR_URL = "https://github.com/JanaSundar";
 
 export const installCommand = (slug: string) => `npx shadcn add ${REPO}/${slug}`;
+
+/** "07": catalogue numbers and counts are printed two digits wide. */
+export const pad2 = (n: number) => String(n).padStart(2, "0");
+
+/** The sections of a component's docs page, in order, for the page and its "On this page" list. */
+export const DOC_SECTIONS = [
+  { id: "preview", label: "Preview" },
+  { id: "installation", label: "Installation" },
+  { id: "usage", label: "Usage" },
+  { id: "props", label: "Props" },
+] as const;
+
+export type DocSectionId = (typeof DOC_SECTIONS)[number]["id"];

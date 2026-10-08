@@ -1,6 +1,6 @@
 "use client";
 
-import { useLayoutEffect, useRef, useState, type RefObject } from "react";
+import { type ComponentType, useLayoutEffect, useRef, useState, type RefObject } from "react";
 import { useWorld, type World } from "@/components/shared/world-provider";
 import { formatDate, formatShortDate } from "@/lib/format";
 import { hashString } from "./seed";
@@ -95,6 +95,13 @@ function useFitLayout(layout: TicketLayout) {
   return [ref, layout === "horizontal" && !narrow ? "horizontal" : "vertical"] as const;
 }
 
+const VIEWS = {
+  minimal: MinimalEventTicket,
+  craft: CraftEventTicket,
+  retro: RetroEventTicket,
+  toy: ToyEventTicket,
+} satisfies Record<World, ComponentType<EventTicketWorldProps>>;
+
 export function EventTicket({
   event,
   variant,
@@ -176,14 +183,6 @@ export function EventTicket({
     className,
   };
 
-  switch (world) {
-    case "craft":
-      return <CraftEventTicket {...props} />;
-    case "retro":
-      return <RetroEventTicket {...props} />;
-    case "toy":
-      return <ToyEventTicket {...props} />;
-    default:
-      return <MinimalEventTicket {...props} />;
-  }
+  const View = VIEWS[world] ?? VIEWS.minimal;
+  return <View {...props} />;
 }

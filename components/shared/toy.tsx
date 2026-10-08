@@ -9,6 +9,16 @@ import {
 } from "motion/react";
 import { motionTokens, useOvioTransition } from "@/lib/motion";
 
+/** Toy's moulded plastics as [face, side, text on it]. Worlds pick and order them. */
+export const TOY_PLASTIC = {
+  blue: ["var(--ovio-accent)", "var(--ovio-accent-deep)", "#fff"],
+  red: ["var(--ovio-red)", "var(--ovio-red-deep)", "#fff"],
+  yellow: ["var(--ovio-yellow)", "var(--ovio-yellow-deep)", "var(--ovio-ink)"],
+  green: ["#33b07a", "#1f7c52", "#fff"],
+  black: ["#2a2925", "#0d0d0c", "var(--ovio-surface)"],
+  white: ["#fff", "#cfc8b8", "var(--ovio-ink)"],
+} as const;
+
 type ToyKeyStyle<T extends "button" | "a"> = Omit<
   NonNullable<HTMLMotionProps<T>["style"]>,
   "y" | "boxShadow"

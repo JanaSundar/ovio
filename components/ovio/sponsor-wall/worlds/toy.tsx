@@ -2,21 +2,15 @@
 
 import { AnimatePresence, motion } from "motion/react";
 import { useRef } from "react";
-import { ToyKeyLink, ToyPiece } from "@/components/shared/toy";
+import { TOY_PLASTIC, ToyKeyLink, ToyPiece } from "@/components/shared/toy";
 import { motionTokens, useOvioTransition, useReducedMotionSafe } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { SponsorLink } from "../sponsor-link";
 import type { SponsorTier, SponsorWallWorldProps } from "../sponsor-wall";
 
 /** Plastic colours: face, side, ink. */
-const PLASTIC = [
-  ["var(--ovio-accent)", "var(--ovio-accent-deep)", "#fff"],
-  ["var(--ovio-red)", "var(--ovio-red-deep)", "#fff"],
-  ["var(--ovio-yellow)", "var(--ovio-yellow-deep)", "var(--ovio-ink)"],
-  ["#33b07a", "#1f7c52", "#fff"],
-  ["#2a2925", "#0d0d0c", "var(--ovio-surface)"],
-  ["#fff", "#cfc8b8", "var(--ovio-ink)"],
-] as const;
+const { blue, red, yellow, green, black, white } = TOY_PLASTIC;
+const PLASTIC = [blue, red, yellow, green, black, white] as const;
 
 const ROW: Record<SponsorTier, string> = {
   platinum: "grid grid-cols-1 gap-2.5 @sm:grid-cols-2 @sm:gap-3",

@@ -1,24 +1,11 @@
 "use client";
 
 import { AnimatePresence, motion } from "motion/react";
-import { useLayoutEffect, useRef, useState, type ReactNode } from "react";
+import type { ReactNode } from "react";
+import { useElementHeight } from "@/components/shared/auto-height";
 import { OvioProvider, useWorld } from "@/components/shared/world-provider";
 import { ease, useOvioTransition, useReducedMotionSafe } from "@/lib/motion";
 import { cn } from "@/lib/utils";
-
-/** The content's height, kept current by a ResizeObserver. Null until measured (SSR, first paint). */
-function useHeight<T extends HTMLElement>() {
-  const ref = useRef<T>(null);
-  const [height, setHeight] = useState<number | null>(null);
-  useLayoutEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const ro = new ResizeObserver(([entry]) => setHeight(entry.borderBoxSize[0].blockSize));
-    ro.observe(el);
-    return () => ro.disconnect();
-  }, []);
-  return [ref, height] as const;
-}
 
 const RESIZE = { duration: 0.45, ease: ease.stage };
 
@@ -49,7 +36,7 @@ export function PreviewFrame({
   const world = useWorld();
   const reduced = useReducedMotionSafe();
   const resize = useOvioTransition(RESIZE);
-  const [ref, height] = useHeight<HTMLDivElement>();
+  const [ref, height] = useElementHeight<HTMLDivElement>();
 
   return (
     <motion.div

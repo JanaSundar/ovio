@@ -1,4 +1,6 @@
 allowBuilds:
   core-js: false
+  esbuild: false
+  lefthook: true
   sharp: false
   unrs-resolver: false

@@ -1,8 +1,8 @@
 "use client";
 
 import { AnimatePresence, motion } from "motion/react";
-import { posthog } from "posthog-js";
 import { useId, useMemo, useRef, useState, type KeyboardEvent } from "react";
+import { track } from "@/lib/analytics";
 import { ease, useOvioTransition } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { CodeBlock } from "./code-block";
@@ -241,7 +241,7 @@ export function CodeExplorer({ files }: { files: SourceFile[] }) {
           className={toolButton}
           onClick={() => {
             copy(codeRef.current?.textContent ?? "");
-            posthog.capture("source_code_copied");
+            track("source_code_copied");
           }}
           aria-label={copied ? "Copied" : `Copy ${current?.path.split("/").pop()}`}
         >

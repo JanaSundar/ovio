@@ -1,5 +1,7 @@
 "use client";
 
+import type { ComponentType } from "react";
+import { initialsOf } from "@/components/shared/avatar";
 import { useWorld, type World } from "@/components/shared/world-provider";
 import { MinimalDeveloperIdCard } from "./worlds/minimal";
 import { CraftDeveloperIdCard } from "./worlds/craft";
@@ -54,13 +56,6 @@ export type DeveloperIdCardWorldProps = {
   className?: string;
 };
 
-/** "Jana Sundar" → "JS"; "jana" → "JA". */
-export function initialsOf(name: string): string {
-  const words = name.split(/[\s._-]+/).filter(Boolean);
-  const letters = words.length > 1 ? words[0][0] + words[words.length - 1][0] : name.slice(0, 2);
-  return letters.toUpperCase();
-}
-
 /** Square cells as one path: `M x y h1v1h-1z` per dark cell. */
 export function cellsPath(cells: boolean[][]): string {
   let d = "";
@@ -73,6 +68,13 @@ export function cellsPath(cells: boolean[][]): string {
 }
 
 const stripProtocol = (url: string) => url.replace(/^https?:\/\//, "").replace(/\/$/, "");
+
+const VIEWS = {
+  minimal: MinimalDeveloperIdCard,
+  craft: CraftDeveloperIdCard,
+  retro: RetroDeveloperIdCard,
+  toy: ToyDeveloperIdCard,
+} satisfies Record<World, ComponentType<DeveloperIdCardWorldProps>>;
 
 export function DeveloperIdCard({
   name,
@@ -108,14 +110,6 @@ export function DeveloperIdCard({
     className,
   };
 
-  switch (world) {
-    case "craft":
-      return <CraftDeveloperIdCard {...props} />;
-    case "retro":
-      return <RetroDeveloperIdCard {...props} />;
-    case "toy":
-      return <ToyDeveloperIdCard {...props} />;
-    default:
-      return <MinimalDeveloperIdCard {...props} />;
-  }
+  const View = VIEWS[world] ?? VIEWS.minimal;
+  return <View {...props} />;
 }

@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { type ComponentType, useState, useSyncExternalStore } from "react";
 import { useWorld, type World } from "@/components/shared/world-provider";
+import { formatShortDate } from "@/lib/format";
 import { MinimalRepositoryCard } from "./worlds/minimal";
 import { CraftRepositoryCard } from "./worlds/craft";
 import { RetroRepositoryCard } from "./worlds/retro";
@@ -75,24 +76,35 @@ const LANGUAGE_SHORT: Record<string, string> = {
 };
 
 /** "2h ago", "3d ago". */
-function relativeTime(iso: string, now = Date.now()): string {
+export function relativeTime(iso: string, now = Date.now()): string {
   const s = Math.max(0, (now - new Date(iso).getTime()) / 1000);
-  if (s < 60) return "just now";
-  const units: [number, string][] = [
-    [60, "m"],
-    [24, "h"],
-    [30, "d"],
-    [12, "mo"],
+  // Each unit, and how many of it make the next one.
+  const units: [string, number][] = [
+    ["m", 60],
+    ["h", 24],
+    ["d", 30],
+    ["mo", 12],
+    ["y", Infinity],
   ];
+  if (s < 60) return "just now";
   let v = s / 60;
-  let unit = "m";
-  for (let i = 1; i < units.length && v >= units[i][0]; i++) {
-    v /= units[i][0];
-    unit = units[i][1];
+  for (const [unit, next] of units) {
+    if (v < next) return `${Math.floor(v)}${unit} ago`;
+    v /= next;
   }
-  if (unit === "mo" && v >= 12) return `${Math.floor(v / 12)}y ago`;
-  return `${Math.floor(v)}${unit} ago`;
+  return "just now";
 }
+
+const noop = () => () => {};
+const yes = () => true;
+const no = () => false;
+
+const VIEWS = {
+  minimal: MinimalRepositoryCard,
+  craft: CraftRepositoryCard,
+  retro: RetroRepositoryCard,
+  toy: ToyRepositoryCard,
+} satisfies Record<World, ComponentType<RepositoryCardWorldProps>>;
 
 export function RepositoryCard({
   repository: repo,
@@ -104,6 +116,10 @@ export function RepositoryCard({
   className,
 }: RepositoryCardProps) {
   const world = useWorld(variant);
+  // "2h ago" depends on when it is read, so the server and hydration print the date instead
+  // and the browser switches to the relative time before the first paint. Reading the clock while
+  // prerendering froze the build's "2d ago" into the page for good.
+  const painted = useSyncExternalStore(noop, yes, no);
   const [starredState, setStarredState] = useState(defaultStarred);
   const starred = starredProp ?? starredState;
 
@@ -128,18 +144,14 @@ export function RepositoryCard({
     starCount: repo.stars + (starred ? 1 : 0),
     toggleStar,
     language,
-    updated: repo.updatedAt ? relativeTime(repo.updatedAt) : undefined,
+    updated: repo.updatedAt
+      ? painted
+        ? relativeTime(repo.updatedAt)
+        : formatShortDate(repo.updatedAt)
+      : undefined,
     className,
   };
 
-  switch (world) {
-    case "craft":
-      return <CraftRepositoryCard {...props} />;
-    case "retro":
-      return <RetroRepositoryCard {...props} />;
-    case "toy":
-      return <ToyRepositoryCard {...props} />;
-    default:
-      return <MinimalRepositoryCard {...props} />;
-  }
+  const View = VIEWS[world] ?? VIEWS.minimal;
+  return <View {...props} />;
 }

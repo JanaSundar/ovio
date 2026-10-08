@@ -8,6 +8,12 @@ import { useReducedMotion, type Transition } from "motion/react";
  * Toy is driven by physics. Springs are written as stiffness (k) and damping (c), mass 1.
  */
 
+/**
+ * How a data component animates: "enter-exit" plays its entrance, "always" adds an idle loop
+ * (a live marker, a flicker), "none" draws it still. Reduced motion forces "none".
+ */
+export type OvioAnimation = "none" | "enter-exit" | "always";
+
 export type Ease = [number, number, number, number] | ((t: number) => number);
 
 /** CSS steps(n, end) as a Motion easing function. */
@@ -59,14 +65,6 @@ export const motionTokens = {
     /** A piece sliding in a track. */
     slide: spring(420, 20),
   },
-} as const;
-
-/** Entrance used by demo stages when the world changes. */
-export const worldIn = {
-  initial: { opacity: 0, scale: 0.988, filter: "blur(8px)" },
-  // Clear the filter once in, so it never sits above an SVG goo filter (Safari drops nested filters).
-  animate: { opacity: 1, scale: 1, filter: "blur(0px)", transitionEnd: { filter: "none" } },
-  transition: { duration: 0.55, ease: ease.stage },
 } as const;
 
 const INSTANT: Transition = { duration: 0 };

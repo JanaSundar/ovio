@@ -8,6 +8,12 @@ import { useReducedMotion, type Transition } from "motion/react";
  * Toy is driven by physics. Springs are written as stiffness (k) and damping (c), mass 1.
  */
 
+/**
+ * How a data component animates: "enter-exit" plays its entrance, "always" adds an idle loop
+ * (a live marker, a flicker), "none" draws it still. Reduced motion forces "none".
+ */
+export type OvioAnimation = "none" | "enter-exit" | "always";
+
 export type Ease = [number, number, number, number] | ((t: number) => number);
 
 /** CSS steps(n, end) as a Motion easing function. */

@@ -25,7 +25,7 @@ const RESIZE = { duration: 0.45, ease: ease.stage };
 /**
  * A demo stage: the world's backdrop around a component. Switching worlds blurs the new one in,
  * while the frame's height eases to the new world's, so the page below never jumps.
- * Retro adds CRT scanlines over the whole stage.
+ * Retro adds CRT scanlines over the whole stage; crosshairs (site.css) mark its centre.
  */
 export function PreviewFrame({
   children,
@@ -43,10 +43,7 @@ export function PreviewFrame({
 
   return (
     <motion.div
-      className={cn(
-        "relative box-content overflow-hidden rounded-2xl border border-line",
-        className,
-      )}
+      className={cn("stage-frame relative box-content overflow-hidden", className)}
       initial={false}
       animate={{ height: height ?? "auto" }}
       transition={resize}
@@ -57,7 +54,7 @@ export function PreviewFrame({
           <motion.div
             key={world}
             data-ovio-world={world}
-            className="ovio-stage relative flex min-w-0 flex-1 items-center justify-center bg-(--ovio-stage) px-5 py-9 sm:px-8 sm:py-12"
+            className="ovio-stage relative flex min-w-0 flex-1 items-center justify-center bg-(--ovio-stage) px-3 py-6 sm:px-8 sm:py-12"
             initial={reduced ? false : worldIn.initial}
             animate={worldIn.animate}
             exit={{ opacity: 0, pointerEvents: "none", transition: { duration: 0.15 } }}

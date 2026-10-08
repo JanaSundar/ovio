@@ -11,6 +11,10 @@ export type WorldInfo = {
   motion: string;
   /** How the homepage showcase renders in this world. */
   note: string;
+  /** One line on the world's character, under the specimens. */
+  tagline: string;
+  /** Short code on the homepage's world wheel. */
+  code: string;
 };
 
 export const WORLD_INFO: WorldInfo[] = [
@@ -23,6 +27,8 @@ export const WORLD_INFO: WorldInfo[] = [
     weight: 500,
     motion: "Small springs, opacity and layout shifts that show state.",
     note: "rendered as clean digital objects",
+    tagline: "Clean surfaces and measured motion.",
+    code: "MIN",
   },
   {
     id: "craft",
@@ -33,6 +39,8 @@ export const WORLD_INFO: WorldInfo[] = [
     weight: 800,
     motion: "Material motion: cards lift, paper slides, pieces settle.",
     note: "rendered as paper, tape and printed labels",
+    tagline: "Warm paper, gentle texture, and a made-by-hand feel.",
+    code: "CRF",
   },
   {
     id: "retro",
@@ -43,6 +51,8 @@ export const WORLD_INFO: WorldInfo[] = [
     weight: 400,
     motion: "Stepped frames, typing, blinking cursors.",
     note: "rendered as CRT phosphor and old hardware",
+    tagline: "Pixels, punchier color, and a little analog energy.",
+    code: "RET",
   },
   {
     id: "toy",
@@ -53,6 +63,8 @@ export const WORLD_INFO: WorldInfo[] = [
     weight: 800,
     motion: "Physics: spring, drag, inertia, snap, compression, overshoot.",
     note: "rendered as physical pieces you can press and flick",
+    tagline: "Rounded depth, elastic movement, and something to touch.",
+    code: "TOY",
   },
 ];
 

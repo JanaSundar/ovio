@@ -4,6 +4,7 @@ import {
   useMemo,
   useRef,
   useState,
+  useSyncExternalStore,
   type FocusEvent,
   type KeyboardEvent,
   type PointerEvent,
@@ -36,6 +37,11 @@ export type ContributionGraphProps = {
   animation?: ContributionAnimation;
   /** Last day shown, "YYYY-MM-DD". Defaults to the latest date in `data`. */
   endDate?: string;
+  /**
+   * Months to show on screens under 1024px wide, so the cells stay large. Left out, the full year
+   * scrolls sideways there instead. Toy's drum always shows the full year.
+   */
+  compactMonths?: number;
   /** Fires with the day under the pointer or keyboard focus, and null when it leaves. */
   onDayHover?: (day: ContributionCell | null) => void;
   className?: string;
@@ -65,17 +71,41 @@ export type ContributionGraphWorldProps = {
   className?: string;
 };
 
+const NARROW = "(max-width: 1023.98px)";
+
+/** Whether the screen is under 1024px wide; false on the server and the first render. */
+function useNarrow() {
+  return useSyncExternalStore(
+    (onChange) => {
+      const mq = window.matchMedia(NARROW);
+      mq.addEventListener("change", onChange);
+      return () => mq.removeEventListener("change", onChange);
+    },
+    () => window.matchMedia(NARROW).matches,
+    () => false,
+  );
+}
+
 export function ContributionGraph({
   data,
   variant,
   animation = "enter-exit",
   endDate,
+  compactMonths,
   onDayHover,
   className,
 }: ContributionGraphProps) {
   const world = useWorld(variant);
   const reduced = useReducedMotionSafe();
-  const year = useMemo(() => buildContributionYear(data, { end: endDate }), [data, endDate]);
+  const narrow = useNarrow();
+  const weeks =
+    compactMonths && narrow && world !== "toy"
+      ? Math.min(53, Math.ceil((compactMonths * 365) / 12 / 7) + 1)
+      : 53;
+  const year = useMemo(
+    () => buildContributionYear(data, { end: endDate, weeks }),
+    [data, endDate, weeks],
+  );
   const lastIndex = year.days.length - 1;
 
   const [activeIndex, setActiveIndex] = useState<number | null>(null);

@@ -6,7 +6,7 @@ import { RollingNumber } from "@/components/shared/rolling-number";
 import { motionTokens, steps } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import type { ContributionGraphWorldProps } from "../contribution-graph";
-import { dayCellProps, weekColumns } from "../grid";
+import { dayCellProps, weekColumns, weekScroller, weeksMinWidth } from "../grid";
 import type { ContributionCell } from "../year";
 
 const SCALE = ["#0f2414", "#1d5a2b", "#2f9a45", "#4fdc68", "#b8ffc4"];
@@ -55,6 +55,7 @@ export function RetroContributionGraph({
   const always = animation === "always";
   const day = active ?? year.best;
 
+  const minWidth = weeksMinWidth(year.weeks);
   return (
     <section
       data-ovio-world="retro"
@@ -102,21 +103,23 @@ export function RetroContributionGraph({
           </div>
         </div>
 
-        <div className="@container">
-          <div {...grid} className="grid gap-[0.36cqw] p-1" style={weekColumns(year.weeks)}>
-            {year.rows.map((row, r) => (
-              <div key={r} role="row" className="contents">
-                {row.map((cell) => (
-                  <Cell
-                    key={cell.date}
-                    cell={cell}
-                    tabbable={cell.index === focusIndex}
-                    active={cell.index === active?.index}
-                    enter={enter}
-                  />
-                ))}
-              </div>
-            ))}
+        <div {...weekScroller}>
+          <div className={`@container ${minWidth.className}`} style={minWidth.style}>
+            <div {...grid} className="grid gap-[0.36cqw] p-1" style={weekColumns(year.weeks)}>
+              {year.rows.map((row, r) => (
+                <div key={r} role="row" className="contents">
+                  {row.map((cell) => (
+                    <Cell
+                      key={cell.date}
+                      cell={cell}
+                      tabbable={cell.index === focusIndex}
+                      active={cell.index === active?.index}
+                      enter={enter}
+                    />
+                  ))}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 

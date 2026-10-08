@@ -127,7 +127,7 @@ export function ToyTopContributors({
                     <span className="sr-only">Rank </span>
                     {p.rank}
                   </span>
-                  <span className="font-(family-name:--ovio-mono) text-[10px] text-(--ovio-muted)">
+                  <span className="font-(family-name:--ovio-mono) text-[11.5px] text-(--ovio-muted)">
                     <RollingNumber value={p.commits} />
                     <span className="sr-only"> commits</span>
                   </span>

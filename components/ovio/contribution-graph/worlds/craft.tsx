@@ -6,7 +6,7 @@ import { RollingNumber } from "@/components/shared/rolling-number";
 import { motionTokens, useOvioTransition } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import type { ContributionGraphWorldProps } from "../contribution-graph";
-import { dayCellProps, weekColumns } from "../grid";
+import { dayCellProps, weekColumns, weekScroller, weeksMinWidth } from "../grid";
 import { unit, type ContributionCell } from "../year";
 
 const SCALE = ["#e6dcc8", "#f2c9a0", "#ee9f63", "#e0713a", "#b8471f"];
@@ -65,11 +65,13 @@ export function CraftContributionGraph({
   const enter = animation !== "none";
   const day = active ?? year.best;
 
+  const minWidth = weeksMinWidth(year.weeks);
+  // The card tilts only on desktop: a tilted parent blurs the grid while it scrolls on smaller screens.
   return (
     <section
       data-ovio-world="craft"
       className={cn(
-        "relative mx-auto w-full min-w-0 -rotate-[0.6deg] rounded-md bg-(--ovio-surface) px-6 pt-10 pb-9 font-(family-name:--ovio-font) text-(--ovio-ink) shadow-[inset_0_1px_0_rgba(255,255,255,.8),0_2px_4px_rgba(70,45,20,.12),0_18px_40px_-12px_rgba(70,45,20,.35)] sm:px-11",
+        "relative mx-auto w-full min-w-0 rounded-md lg:-rotate-[0.6deg] bg-(--ovio-surface) px-6 pt-10 pb-9 font-(family-name:--ovio-font) text-(--ovio-ink) shadow-[inset_0_1px_0_rgba(255,255,255,.8),0_2px_4px_rgba(70,45,20,.12),0_18px_40px_-12px_rgba(70,45,20,.35)] sm:px-11",
         className,
       )}
     >
@@ -97,21 +99,26 @@ export function CraftContributionGraph({
         Every tile is a day. Taller tiles, busier days.
       </p>
 
-      <div className="@container px-1.5 pt-2.5 pb-3.5">
-        <div {...grid} className="grid gap-[0.45cqw]" style={weekColumns(year.weeks)}>
-          {year.rows.map((row, r) => (
-            <div key={r} role="row" className="contents">
-              {row.map((cell) => (
-                <Cell
-                  key={cell.date}
-                  cell={cell}
-                  tabbable={cell.index === focusIndex}
-                  active={cell.index === active?.index}
-                  enter={enter}
-                />
-              ))}
-            </div>
-          ))}
+      <div {...weekScroller}>
+        <div
+          className={`@container px-1.5 pt-2.5 pb-3.5 ${minWidth.className}`}
+          style={minWidth.style}
+        >
+          <div {...grid} className="grid gap-[0.45cqw]" style={weekColumns(year.weeks)}>
+            {year.rows.map((row, r) => (
+              <div key={r} role="row" className="contents">
+                {row.map((cell) => (
+                  <Cell
+                    key={cell.date}
+                    cell={cell}
+                    tabbable={cell.index === focusIndex}
+                    active={cell.index === active?.index}
+                    enter={enter}
+                  />
+                ))}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 

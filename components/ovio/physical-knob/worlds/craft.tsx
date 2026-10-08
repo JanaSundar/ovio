@@ -46,7 +46,7 @@ export function CraftKnob({
     <div
       data-ovio-world="craft"
       className={cn(
-        "relative flex -rotate-1 flex-col items-center gap-2 rounded-[8px] bg-(--ovio-surface) px-[34px] pt-[30px] pb-[26px] font-(family-name:--ovio-font) text-(--ovio-ink) shadow-[0_2px_4px_rgba(70,45,20,.12),0_22px_36px_-14px_rgba(70,45,20,.4)]",
+        "relative flex -rotate-1 flex-col items-center gap-2 rounded-[8px] bg-(--ovio-surface) px-4 pt-[30px] sm:px-[34px] pb-[26px] font-(family-name:--ovio-font) text-(--ovio-ink) shadow-[0_2px_4px_rgba(70,45,20,.12),0_22px_36px_-14px_rgba(70,45,20,.4)]",
         className,
       )}
     >
@@ -54,7 +54,7 @@ export function CraftKnob({
         aria-hidden
         className="absolute -top-3 left-1/2 -ml-[45px] h-6 w-[90px] rotate-2 bg-(--ovio-tape)"
       />
-      <div className="font-(family-name:--ovio-mono) text-[10.5px] tracking-[0.14em] text-[#7d6650] uppercase">
+      <div className="font-(family-name:--ovio-mono) text-[12px] tracking-[0.14em] text-[#7d6650] uppercase">
         Dial No. 07 · {label}
       </div>
       <div className="relative size-[260px]">

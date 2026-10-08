@@ -6,8 +6,8 @@ import { notFound } from "next/navigation";
 import type { SourceFile } from "@/components/site/code-explorer";
 import { ComponentPreview, MotionInfo, UsageSnippet } from "@/components/site/component-doc";
 import { CopyCommand } from "@/components/site/copy-command";
+import { DocsFab, DocsSidebar, DocsToc } from "@/components/site/docs-sidebar";
 import { highlight } from "@/components/site/highlight";
-import { WorldSwitcher } from "@/components/site/world-switcher";
 import { COMPONENTS, getComponent, installCommand, type ComponentDoc } from "@/content/components";
 import { registryItem } from "@/content/registry";
 import { WORLDS, type World } from "@/lib/world";
@@ -52,8 +52,6 @@ const usageSnippets = (c: ComponentDoc) =>
     ]),
   ) as Record<World, string>;
 
-const h2 = "m-0 text-[22px] font-medium tracking-[-0.025em]";
-
 export default async function ComponentPage({ params }: PageProps<"/docs/[slug]">) {
   const { slug } = await params;
   const i = COMPONENTS.findIndex((c) => c.slug === slug);
@@ -69,74 +67,115 @@ export default async function ComponentPage({ params }: PageProps<"/docs/[slug]"
         registryDependencies: c.registryDependencies ?? [],
       };
   const files = await readSources(item.files);
-  const install = installCommand(c.slug);
+  const pad = (n: number) => String(n).padStart(2, "0");
 
   return (
-    <div className="flex flex-col gap-11">
-      <header className="flex flex-col gap-3.5">
-        <div className="text-[13px] text-muted">Docs / Components</div>
-        <h1 className="m-0 text-5xl leading-none font-medium tracking-[-0.045em]">{c.name}</h1>
-        <p className="m-0 max-w-[62ch] text-[17px] leading-[1.55] text-ink-2 text-pretty">
-          {c.description}
-        </p>
-      </header>
-
-      <section className="flex flex-col gap-3.5">
-        <div className="flex flex-wrap items-center justify-between gap-4">
-          <WorldSwitcher className="w-full max-w-[460px] rounded-[13px]" />
-          <span className="font-mono text-xs text-muted">Press 1–4</span>
+    <>
+      <section className="dochead row-12">
+        <aside className="trail">
+          <b>Docs / Components</b>
+          {pad(i + 1)} / {pad(COMPONENTS.length)} <br />
+          {c.name}
+        </aside>
+        <div className="head-main">
+          <p className="eyebrow">Component reference</p>
+          <h1>{c.name}</h1>
+          <p>{c.description}</p>
         </div>
-        <ComponentPreview slug={c.slug} name={c.name} phase={c.phase} files={files} />
+        <aside className="head-meta">
+          <span className="meta-top">
+            <b>Renderer</b>
+            {c.tech}
+          </span>
+          <span className={c.ready ? "doc-pill" : "doc-pill soon"}>
+            {c.ready ? "READY" : `PHASE ${c.phase} · SOON`}
+          </span>
+        </aside>
       </section>
 
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,420px),1fr))] gap-10">
-        <section className="flex min-w-0 flex-col gap-3.5">
-          <h2 className={h2}>Installation</h2>
-          <CopyCommand command={install} html={highlight(install, "shell")} />
-          <p className="m-0 text-[13px] leading-normal text-muted">
-            Installs{" "}
-            {item.dependencies.map((d, k) => (
-              <span key={d}>
-                {k > 0 && (k === item.dependencies.length - 1 ? " and " : ", ")}
-                <code className="font-mono">{d}</code>
-              </span>
-            ))}
-            , plus the Ovio {item.registryDependencies.join(", ")} items.
-          </p>
-          <h2 className={`${h2} mt-4`}>Usage</h2>
-          <UsageSnippet html={usageSnippets(c)} />
-          <MotionInfo tech={c.tech} />
-        </section>
-        <section className="flex min-w-0 flex-col gap-3.5">
-          <h2 className={h2}>Props</h2>
-          <div className="border-t border-line-2 text-[13px]">
-            {c.props.map((p) => (
-              <div
-                key={p.name}
-                className="grid grid-cols-[minmax(0,.9fr)_minmax(0,1.3fr)_minmax(0,1.4fr)] gap-3.5 border-b border-line py-[13px]"
-              >
-                <span className="font-mono font-medium">{p.name}</span>
-                <span className="font-mono text-xs break-words text-muted">{p.type}</span>
-                <span className="text-ink-2">{p.description}</span>
-              </div>
-            ))}
-          </div>
-        </section>
-      </div>
+      <div className="docs row-12">
+        <DocsSidebar />
+        <article className="article">
+          <section className="doc-section" id="preview">
+            <ComponentPreview
+              slug={c.slug}
+              name={c.name}
+              exportName={c.exportName}
+              phase={c.phase}
+              files={files}
+            />
+          </section>
 
-      <div className="flex justify-between gap-4 border-t border-line pt-6 text-sm">
-        <Link href={`/docs/${prev.slug}`} className="flex flex-col gap-1 hover:text-muted">
-          <span className="text-xs text-muted">Previous</span>
-          {prev.name}
-        </Link>
-        <Link
-          href={`/docs/${next.slug}`}
-          className="flex flex-col gap-1 text-right hover:text-muted"
-        >
-          <span className="text-xs text-muted">Next</span>
-          {next.name}
-        </Link>
+          <section className="doc-section" id="installation">
+            <h2>Installation</h2>
+            <p>
+              Use the shadcn CLI to copy the component source and its dependencies into your own
+              project. Installs{" "}
+              {item.dependencies.map((d, k) => (
+                <span key={d}>
+                  {k > 0 && (k === item.dependencies.length - 1 ? " and " : ", ")}
+                  <code>{d}</code>
+                </span>
+              ))}
+              , plus the Ovio {item.registryDependencies.join(", ")} items.
+            </p>
+            <CopyCommand command={installCommand(c.slug)} variant="install-box" />
+            <div className="callout">
+              <i>↳</i>
+              <span>
+                <strong>You own the source.</strong> Ovio components arrive in your codebase so you
+                can edit any part of their style, behavior, or data flow.
+              </span>
+            </div>
+          </section>
+
+          <section className="doc-section" id="usage">
+            <h2>Usage</h2>
+            <p>
+              Set the visual world on the component, or wrap the page in an OvioProvider to set a
+              default for everything inside it.
+            </p>
+            <UsageSnippet html={usageSnippets(c)} />
+            <MotionInfo tech={c.tech} />
+          </section>
+
+          <section className="doc-section" id="props">
+            <h2>Props</h2>
+            <p>Control the data, selected world, animation behavior, and callbacks.</p>
+            <div className="prop-scroll">
+              <table className="prop-table">
+                <thead>
+                  <tr>
+                    <th>Prop</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {c.props.map((p) => (
+                    <tr key={p.name}>
+                      <td>{p.name}</td>
+                      <td>{p.type}</td>
+                      <td>{p.description}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <nav className="pager" aria-label="Components">
+            <Link href={`/docs/${prev.slug}`}>
+              ← Previous<b>{prev.name}</b>
+            </Link>
+            <Link href={`/docs/${next.slug}`}>
+              Next →<b>{next.name}</b>
+            </Link>
+          </nav>
+        </article>
+        <DocsToc />
       </div>
-    </div>
+      <DocsFab />
+    </>
   );
 }

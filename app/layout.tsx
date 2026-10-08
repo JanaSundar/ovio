@@ -3,11 +3,15 @@ import {
   Archivo,
   Bricolage_Grotesque,
   Caveat,
+  DM_Mono,
+  DM_Sans,
   Geist,
   Geist_Mono,
   IBM_Plex_Mono,
+  Space_Grotesk,
   VT323,
 } from "next/font/google";
+import { Page, SiteNav } from "@/components/site/site-nav";
 import { SiteWorldProvider } from "@/components/site/site-world";
 import "@/styles/globals.css";
 
@@ -23,7 +27,22 @@ const caveat = Caveat({ variable: "--font-caveat", subsets: ["latin"] });
 const vt323 = VT323({ variable: "--font-vt323", subsets: ["latin"], weight: "400" });
 const archivo = Archivo({ variable: "--font-archivo", subsets: ["latin"], axes: ["wdth"] });
 
-const fonts = [geist, geistMono, bricolage, plexMono, caveat, vt323, archivo]
+const dmSans = DM_Sans({ variable: "--font-dm-sans", subsets: ["latin"] });
+const dmMono = DM_Mono({ variable: "--font-dm-mono", subsets: ["latin"], weight: ["400", "500"] });
+const spaceGrotesk = Space_Grotesk({ variable: "--font-space-grotesk", subsets: ["latin"] });
+
+const fonts = [
+  dmSans,
+  dmMono,
+  spaceGrotesk,
+  geist,
+  geistMono,
+  bricolage,
+  plexMono,
+  caveat,
+  vt323,
+  archivo,
+]
   .map((f) => f.variable)
   .join(" ");
 
@@ -44,13 +63,18 @@ export const metadata: Metadata = {
   twitter: { card: "summary_large_image" },
 };
 
-export const viewport: Viewport = { themeColor: "#000000" };
+export const viewport: Viewport = { themeColor: "#f5f4f0" };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={fonts}>
       <body>
-        <SiteWorldProvider>{children}</SiteWorldProvider>
+        <SiteWorldProvider>
+          <Page>
+            <SiteNav />
+            {children}
+          </Page>
+        </SiteWorldProvider>
       </body>
     </html>
   );

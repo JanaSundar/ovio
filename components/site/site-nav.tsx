@@ -1,48 +1,91 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { DOCS_HREF } from "@/content/components";
-import { cn } from "@/lib/utils";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState, type ReactNode } from "react";
+import { GooeyTabs } from "@/components/ovio/gooey-tabs/gooey-tabs";
+import { AUTHOR_URL, DOCS_HREF, GITHUB_URL } from "@/content/components";
 import { LogoLink } from "./logo";
 
-const GITHUB_URL = "https://github.com/JanaSundar/ovio";
-
-export function SiteNav() {
-  const pathname = usePathname();
-  const inDocs = pathname.startsWith("/docs");
-
+/** The wrap every page sits in: the 1280px column with dotted rules down each side. */
+export function Page({ children }: { children: ReactNode }) {
   return (
-    <nav className="flex flex-wrap items-center justify-between gap-6 border-b border-line py-[22px]">
-      <LogoLink />
-      <div className="flex flex-wrap gap-7 text-sm text-muted">
-        <Link href="/#styles" className="hover:text-ink">
-          Styles
-        </Link>
-        <Link href="/#about" className="hover:text-ink">
-          About
-        </Link>
-        <Link
-          href={DOCS_HREF}
-          className={cn("hover:text-ink", inDocs && "font-medium text-ink")}
-          aria-current={inDocs ? "page" : undefined}
-        >
-          Docs
-        </Link>
-        <a href={GITHUB_URL} target="_blank" rel="noreferrer" className="hover:text-ink">
-          GitHub ↗
-        </a>
+    <div className="page">
+      <div className="wrap">
+        <i aria-hidden className="dot-v left" />
+        <i aria-hidden className="dot-v right" />
+        {children}
       </div>
-      <span className="font-mono text-xs text-muted">v0.1 · MIT</span>
-    </nav>
+    </div>
   );
 }
 
-export function SiteFooter() {
+const PAGES = [
+  { label: "Home", href: "/" },
+  { label: "Docs", href: DOCS_HREF },
+];
+
+/**
+ * The top bar. It lives in the root layout so it stays mounted across pages, which lets the
+ * Home / Docs goo indicator travel between tabs as the page changes.
+ */
+export function SiteNav() {
+  const pathname = usePathname();
+  const router = useRouter();
+  const current = pathname.startsWith("/docs") ? 1 : 0;
+  // Moves the indicator at once; the route catches up, and back/forward bring it along too.
+  const [tab, setTab] = useState(current);
+  const [shown, setShown] = useState(current);
+  if (current !== shown) {
+    setShown(current);
+    setTab(current);
+  }
+
+  useEffect(() => router.prefetch(DOCS_HREF), [router]);
+
   return (
-    <footer className="flex flex-wrap justify-between gap-4 border-t border-line pt-7 pb-10 text-[13px] text-muted">
-      <span>One component. Four worlds.</span>
-      <span>MIT · Built on the shadcn registry</span>
+    <header className="nav row-12">
+      <div className="brand">
+        <LogoLink />
+      </div>
+      <div className="nav-note">An open component system for developer sites</div>
+      <div className="nav-links">
+        <GooeyTabs
+          variant="minimal"
+          className="nav-tabs"
+          label="Main"
+          tabs={PAGES.map((p) => p.label)}
+          value={tab}
+          onValueChange={(i) => {
+            setTab(i);
+            router.push(PAGES[i].href);
+          }}
+        />
+      </div>
+      <div className="nav-action">
+        <a href={GITHUB_URL} target="_blank" rel="noreferrer" aria-label="Ovio on GitHub">
+          GitHub ↗
+        </a>
+      </div>
+    </header>
+  );
+}
+
+export function SiteFooter({ note, className }: { note: string; className?: string }) {
+  return (
+    <footer className={`footer ${className ?? ""}`}>
+      <span>
+        <b>Ovio</b>
+        {note}
+      </span>
+      <span className="footer-links">
+        <a className="made-by" href={AUTHOR_URL} target="_blank" rel="noreferrer">
+          Made by Jana ↗
+        </a>
+        <a href={GITHUB_URL} target="_blank" rel="noreferrer">
+          GitHub ↗
+        </a>
+        <span>MIT</span>
+      </span>
     </footer>
   );
 }

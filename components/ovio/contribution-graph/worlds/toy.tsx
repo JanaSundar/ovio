@@ -326,7 +326,7 @@ export function ToyContributionGraph({
         </div>
         <div className="flex flex-wrap gap-3">
           <div className="rounded-(--ovio-radius) bg-(--ovio-surface) px-4 py-3 shadow-[inset_0_1px_0_#fff,0_5px_0_#d2ccbf,0_12px_14px_-8px_rgba(40,28,10,.4)]">
-            <div className="font-(family-name:--ovio-mono) text-[10px] tracking-[0.08em] text-(--ovio-muted)">
+            <div className="font-(family-name:--ovio-mono) text-[11.5px] tracking-[0.08em] text-(--ovio-muted)">
               STREAK
             </div>
             <div className="text-2xl font-extrabold tracking-[-0.02em]">
@@ -334,7 +334,9 @@ export function ToyContributionGraph({
             </div>
           </div>
           <div className="rounded-(--ovio-radius) bg-(--ovio-accent) px-4 py-3 text-(--ovio-on-accent) shadow-[inset_0_2px_0_rgba(255,255,255,.25),0_5px_0_var(--ovio-accent-deep),0_12px_14px_-8px_rgba(40,28,10,.4)]">
-            <div className="font-(family-name:--ovio-mono) text-[10px] tracking-[0.08em]">PEAK</div>
+            <div className="font-(family-name:--ovio-mono) text-[11.5px] tracking-[0.08em]">
+              PEAK
+            </div>
             <div className="text-2xl font-extrabold tracking-[-0.02em]">
               <RollingNumber value={year.best.count} /> / day
             </div>
@@ -415,7 +417,7 @@ export function ToyContributionGraph({
               />
               <span className="text-xs text-[#bdb6a8]">{active ? unit(count) : "this week"}</span>
             </div>
-            <div className="flex flex-col gap-0.5 font-(family-name:--ovio-mono) text-[10.5px] leading-[1.2] text-[#bdb6a8]">
+            <div className="flex flex-col gap-0.5 font-(family-name:--ovio-mono) text-[12px] leading-[1.25] text-[#bdb6a8]">
               <span className="tracking-[0.08em] uppercase">
                 {active ? "Day" : `Week ${front + 1} of ${n}`}
               </span>

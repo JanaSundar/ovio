@@ -27,9 +27,9 @@ export function LogoLink() {
   return (
     <Link
       href="/"
-      className="flex items-center gap-2.5 text-[15px] font-semibold tracking-[-0.01em] hover:text-ink"
+      className="flex items-center gap-2.5 font-(family-name:--font-geist) text-[17px] font-semibold tracking-[-0.01em] hover:text-ink"
     >
-      <OvioMark />
+      <OvioMark size={28} />
       Ovio
     </Link>
   );

@@ -62,7 +62,7 @@ export function CraftBundleSize({
         </motion.div>
       </AnimatePresence>
 
-      <h3 className="m-0 font-(family-name:--ovio-mono) text-[10.5px] font-normal tracking-[0.14em] text-[#7d6650] uppercase">
+      <h3 className="m-0 font-(family-name:--ovio-mono) text-[12px] font-normal tracking-[0.14em] text-[#7d6650] uppercase">
         Package label · {packageName}
       </h3>
 
@@ -96,7 +96,7 @@ export function CraftBundleSize({
             transition={fill}
           />
         </div>
-        <div className="flex justify-between font-(family-name:--ovio-mono) text-[10px] text-[#7d6650]">
+        <div className="flex justify-between font-(family-name:--ovio-mono) text-[11.5px] text-[#7d6650]">
           <span>0</span>
           <span>{r.scale / 2}</span>
           <span>

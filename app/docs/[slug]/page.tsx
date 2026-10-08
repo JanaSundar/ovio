@@ -1,6 +1,7 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import type { Metadata } from "next";
+import type { ReactNode } from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { SourceFile } from "@/components/site/code-explorer";
@@ -8,7 +9,14 @@ import { ComponentPreview, MotionInfo, UsageSnippet } from "@/components/site/co
 import { CopyCommand } from "@/components/site/copy-command";
 import { DocsFab, DocsSidebar, DocsToc } from "@/components/site/docs-sidebar";
 import { highlight } from "@/components/site/highlight";
-import { COMPONENTS, getComponent, installCommand, type ComponentDoc } from "@/content/components";
+import {
+  COMPONENTS,
+  getComponent,
+  installCommand,
+  pad2,
+  type ComponentDoc,
+  type DocSectionId,
+} from "@/content/components";
 import { registryItem } from "@/content/registry";
 import { WORLDS, type World } from "@/lib/world";
 
@@ -52,6 +60,15 @@ const usageSnippets = (c: ComponentDoc) =>
     ]),
   ) as Record<World, string>;
 
+/** A section of the page; its id is one of DOC_SECTIONS, so the contents list always matches. */
+function DocSection({ id, children }: { id: DocSectionId; children: ReactNode }) {
+  return (
+    <section className="doc-section" id={id}>
+      {children}
+    </section>
+  );
+}
+
 export default async function ComponentPage({ params }: PageProps<"/docs/[slug]">) {
   const { slug } = await params;
   const i = COMPONENTS.findIndex((c) => c.slug === slug);
@@ -61,14 +78,13 @@ export default async function ComponentPage({ params }: PageProps<"/docs/[slug]"
   const next = COMPONENTS[(i + 1) % COMPONENTS.length];
   const item = registryItem(c.slug);
   const files = await readSources(item.files);
-  const pad = (n: number) => String(n).padStart(2, "0");
 
   return (
     <>
       <section className="dochead row-12">
         <aside className="trail">
           <b>Docs / Components</b>
-          {pad(i + 1)} / {pad(COMPONENTS.length)} <br />
+          {pad2(i + 1)} / {pad2(COMPONENTS.length)} <br />
           {c.name}
         </aside>
         <div className="head-main">
@@ -88,11 +104,11 @@ export default async function ComponentPage({ params }: PageProps<"/docs/[slug]"
       <div className="docs row-12">
         <DocsSidebar />
         <article className="article">
-          <section className="doc-section" id="preview">
+          <DocSection id="preview">
             <ComponentPreview slug={c.slug} exportName={c.exportName} files={files} />
-          </section>
+          </DocSection>
 
-          <section className="doc-section" id="installation">
+          <DocSection id="installation">
             <h2>Installation</h2>
             <p>
               Use the shadcn CLI to copy the component source and its dependencies into your own
@@ -113,9 +129,9 @@ export default async function ComponentPage({ params }: PageProps<"/docs/[slug]"
                 can edit any part of their style, behavior, or data flow.
               </span>
             </div>
-          </section>
+          </DocSection>
 
-          <section className="doc-section" id="usage">
+          <DocSection id="usage">
             <h2>Usage</h2>
             <p>
               Set the visual world on the component, or wrap the page in an OvioProvider to set a
@@ -123,9 +139,9 @@ export default async function ComponentPage({ params }: PageProps<"/docs/[slug]"
             </p>
             <UsageSnippet html={usageSnippets(c)} />
             <MotionInfo tech={c.tech} />
-          </section>
+          </DocSection>
 
-          <section className="doc-section" id="props">
+          <DocSection id="props">
             <h2>Props</h2>
             <p>Control the data, selected world, animation behavior, and callbacks.</p>
             <div className="prop-scroll">
@@ -148,7 +164,7 @@ export default async function ComponentPage({ params }: PageProps<"/docs/[slug]"
                 </tbody>
               </table>
             </div>
-          </section>
+          </DocSection>
 
           <nav className="pager" aria-label="Components">
             <Link href={`/docs/${prev.slug}`}>

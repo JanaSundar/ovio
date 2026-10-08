@@ -3,7 +3,7 @@ import { CopyCommand } from "@/components/site/copy-command";
 import { HomeShowcase } from "@/components/site/home-showcase";
 import { SiteFooter } from "@/components/site/site-nav";
 import { WorldCompass } from "@/components/site/world-compass";
-import { AUTHOR_URL, COMPONENTS, DOCS_HREF, installCommand } from "@/content/components";
+import { AUTHOR_URL, COMPONENTS, DOCS_HREF, installCommand, pad2 } from "@/content/components";
 
 /** The six components the catalog leads with, each with a glyph and a one-line pitch. */
 const FEATURED = [
@@ -14,8 +14,6 @@ const FEATURED = [
   { slug: "top-contributors", glyph: "◎", pitch: "Put project people in the foreground." },
   { slug: "physical-knob", glyph: "◉", pitch: "A tactile control with genuine inertia." },
 ];
-
-const pad = (n: number) => String(n).padStart(2, "0");
 
 export default function HomePage() {
   const count = COMPONENTS.length;
@@ -140,7 +138,7 @@ export default function HomePage() {
           </div>
           <aside className="manifesto-stats">
             <div className="stat-row">
-              <b>{pad(count)}</b>
+              <b>{pad2(count)}</b>
               <span>
                 components
                 <br />

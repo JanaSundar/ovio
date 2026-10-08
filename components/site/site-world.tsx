@@ -1,7 +1,6 @@
 "use client";
 
 import { MotionConfig } from "motion/react";
-import { posthog } from "posthog-js";
 import {
   createContext,
   useCallback,
@@ -11,6 +10,8 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import { track } from "@/lib/analytics";
+import { shortcutKey } from "./shortcuts";
 import { OvioProvider } from "@/components/shared/world-provider";
 import { WORLDS, type World } from "@/lib/world";
 
@@ -27,15 +28,12 @@ export function SiteWorldProvider({ children }: { children: ReactNode }) {
     if (next === current.current) return;
     current.current = next;
     setWorld(next);
-    posthog.capture("design_world_changed", { design_world: next });
+    track("design_world_changed", { design_world: next });
   }, []);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.metaKey || e.ctrlKey || e.altKey) return;
-      const t = e.target as HTMLElement | null;
-      if (t && (/^(input|textarea|select)$/i.test(t.tagName) || t.isContentEditable)) return;
-      const k = Number.parseInt(e.key, 10);
+      const k = Number.parseInt(shortcutKey(e) ?? "", 10);
       if (k >= 1 && k <= 4) selectWorld(WORLDS[k - 1]);
     };
     window.addEventListener("keydown", onKey);

@@ -60,8 +60,9 @@ export const metadata: Metadata = {
     siteName: "Ovio",
     title: "Ovio · The motion layer for developer websites",
     description,
+    images: [{ url: "/og", width: 1200, height: 630, alt: "Ovio — One component. Four worlds." }],
   },
-  twitter: { card: "summary_large_image" },
+  twitter: { card: "summary_large_image", images: ["/og"] },
 };
 
 export const viewport: Viewport = { themeColor: "#f5f4f0" };

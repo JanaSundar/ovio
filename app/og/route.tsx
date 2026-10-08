@@ -4,11 +4,11 @@ import { ComponentArt } from "@/lib/og/art";
 import { OG_SIZE, OgFrame } from "@/lib/og/card";
 import { ogFonts } from "@/lib/og/fonts";
 
-export const alt = "Ovio — One component. Four worlds.";
-export const size = OG_SIZE;
-export const contentType = "image/png";
+/** Rendered once at build time. */
+export const dynamic = "force-static";
 
-export default async function OpenGraphImage() {
+/** /og: the site's share image. */
+export async function GET() {
   return new ImageResponse(
     <OgFrame
       title={["One component.", "Four worlds."]}
@@ -16,6 +16,6 @@ export default async function OpenGraphImage() {
       footRight="04  WORLDS"
       card={<ComponentArt slug="contribution-graph" />}
     />,
-    { ...size, fonts: await ogFonts },
+    { ...OG_SIZE, fonts: await ogFonts },
   );
 }

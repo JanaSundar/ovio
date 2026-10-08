@@ -18,7 +18,7 @@
   },
   "overrides": [
     {
-      "files": ["lib/og/**", "app/**/opengraph-image.tsx"],
+      "files": ["lib/og/**", "app/og/**"],
       "rules": {
         "nextjs/no-img-element": "off"
       }

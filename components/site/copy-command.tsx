@@ -1,5 +1,6 @@
 "use client";
 
+import { posthog } from "posthog-js";
 import { useEffect, useRef, useState } from "react";
 
 /** Copies text to the clipboard; `copied` stays true for a moment after. */
@@ -31,7 +32,14 @@ export function CopyCommand({
   return (
     <div className={variant}>
       <code>{command}</code>
-      <button type="button" onClick={() => copy(command)} aria-live="polite">
+      <button
+        type="button"
+        onClick={() => {
+          copy(command);
+          posthog.capture("install_command_copied", { command_variant: variant });
+        }}
+        aria-live="polite"
+      >
         {copied ? "Copied" : "Copy"}
       </button>
     </div>

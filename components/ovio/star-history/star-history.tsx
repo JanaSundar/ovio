@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useSyncExternalStore } from "react";
+import { type ComponentType, useMemo, useSyncExternalStore } from "react";
 import { useWorld, type World } from "@/components/shared/world-provider";
 import { useReducedMotionSafe, type OvioAnimation } from "@/lib/motion";
 import { shapeStarHistory, type StarHistoryShape } from "./shape";
@@ -56,6 +56,13 @@ const noop = () => () => {};
 const yes = () => true;
 const no = () => false;
 
+const VIEWS = {
+  minimal: MinimalStarHistory,
+  craft: CraftStarHistory,
+  retro: RetroStarHistory,
+  toy: ToyStarHistory,
+} satisfies Record<World, ComponentType<StarHistoryWorldProps>>;
+
 export function StarHistory({
   data,
   repo,
@@ -83,14 +90,6 @@ export function StarHistory({
     className,
   };
 
-  switch (world) {
-    case "craft":
-      return <CraftStarHistory {...props} />;
-    case "retro":
-      return <RetroStarHistory {...props} />;
-    case "toy":
-      return <ToyStarHistory {...props} />;
-    default:
-      return <MinimalStarHistory {...props} />;
-  }
+  const View = VIEWS[world] ?? VIEWS.minimal;
+  return <View {...props} />;
 }

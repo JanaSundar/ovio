@@ -1,6 +1,13 @@
 "use client";
 
-import { useCallback, useId, useRef, useState, type KeyboardEvent } from "react";
+import {
+  type ComponentType,
+  useCallback,
+  useId,
+  useRef,
+  useState,
+  type KeyboardEvent,
+} from "react";
 import { useWorld, type World } from "@/components/shared/world-provider";
 import { keyToIndex } from "@/lib/keys";
 import { MinimalBundleSize } from "./worlds/minimal";
@@ -116,6 +123,13 @@ export const ARROW: Record<BundleTrend, string> = { down: "↓", up: "↑", same
 
 export const KB_FORMAT = { minimumFractionDigits: 1, maximumFractionDigits: 1 } as const;
 
+const VIEWS = {
+  minimal: MinimalBundleSize,
+  craft: CraftBundleSize,
+  retro: RetroBundleSize,
+  toy: ToyBundleSize,
+} satisfies Record<World, ComponentType<BundleSizeWorldProps>>;
+
 export function BundleSize({ packageName, versions, budget, variant, className }: BundleSizeProps) {
   const world = useWorld(variant);
   const [selected, setSelected] = useState(0);
@@ -153,16 +167,8 @@ export function BundleSize({ packageName, versions, budget, variant, className }
     className,
   };
 
-  switch (world) {
-    case "craft":
-      return <CraftBundleSize {...props} />;
-    case "retro":
-      return <RetroBundleSize {...props} />;
-    case "toy":
-      return <ToyBundleSize {...props} />;
-    default:
-      return <MinimalBundleSize {...props} />;
-  }
+  const View = VIEWS[world] ?? VIEWS.minimal;
+  return <View {...props} />;
 }
 
 /** Text equivalent of the size bar. */

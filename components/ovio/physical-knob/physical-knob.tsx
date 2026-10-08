@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { type ComponentType, useState } from "react";
 import { useWorld, type World } from "@/components/shared/world-provider";
 import { MinimalKnob } from "./worlds/minimal";
 import { CraftKnob } from "./worlds/craft";
@@ -92,6 +92,13 @@ export function KnobTicks({ s, percent }: { s: TickStyle; percent: number }) {
   );
 }
 
+const VIEWS = {
+  minimal: MinimalKnob,
+  craft: CraftKnob,
+  retro: RetroKnob,
+  toy: ToyKnob,
+} satisfies Record<World, ComponentType<KnobWorldProps>>;
+
 export function PhysicalKnob({
   variant,
   value: valueProp,
@@ -123,14 +130,6 @@ export function PhysicalKnob({
     className,
   };
 
-  switch (world) {
-    case "craft":
-      return <CraftKnob {...props} />;
-    case "retro":
-      return <RetroKnob {...props} />;
-    case "toy":
-      return <ToyKnob {...props} />;
-    default:
-      return <MinimalKnob {...props} />;
-  }
+  const View = VIEWS[world] ?? VIEWS.minimal;
+  return <View {...props} />;
 }

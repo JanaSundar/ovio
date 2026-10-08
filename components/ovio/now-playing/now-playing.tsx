@@ -1,6 +1,13 @@
 "use client";
 
-import { useEffect, useRef, useState, type KeyboardEvent, type PointerEvent } from "react";
+import {
+  type ComponentType,
+  useEffect,
+  useRef,
+  useState,
+  type KeyboardEvent,
+  type PointerEvent,
+} from "react";
 import { useWorld, type World } from "@/components/shared/world-provider";
 import { keyToIndex } from "@/lib/keys";
 import { formatTime, VOLUME_STEPS } from "./parts";
@@ -74,6 +81,13 @@ export type NowPlayingWorldProps = {
 };
 
 const clamp = (v: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, v));
+
+const VIEWS = {
+  minimal: MinimalNowPlaying,
+  craft: CraftNowPlaying,
+  retro: RetroNowPlaying,
+  toy: ToyNowPlaying,
+} satisfies Record<World, ComponentType<NowPlayingWorldProps>>;
 
 export function NowPlaying({
   track,
@@ -197,14 +211,6 @@ export function NowPlaying({
     className,
   };
 
-  switch (world) {
-    case "craft":
-      return <CraftNowPlaying {...props} />;
-    case "retro":
-      return <RetroNowPlaying {...props} />;
-    case "toy":
-      return <ToyNowPlaying {...props} />;
-    default:
-      return <MinimalNowPlaying {...props} />;
-  }
+  const View = VIEWS[world] ?? VIEWS.minimal;
+  return <View {...props} />;
 }

@@ -5,6 +5,7 @@ import {
   useRef,
   useState,
   useSyncExternalStore,
+  type ComponentType,
   type FocusEvent,
   type KeyboardEvent,
   type PointerEvent,
@@ -85,6 +86,13 @@ function useNarrow() {
     () => false,
   );
 }
+
+const VIEWS = {
+  minimal: MinimalContributionGraph,
+  craft: CraftContributionGraph,
+  retro: RetroContributionGraph,
+  toy: ToyContributionGraph,
+} satisfies Record<World, ComponentType<ContributionGraphWorldProps>>;
 
 export function ContributionGraph({
   data,
@@ -170,14 +178,6 @@ export function ContributionGraph({
     className,
   };
 
-  switch (world) {
-    case "craft":
-      return <CraftContributionGraph {...props} />;
-    case "retro":
-      return <RetroContributionGraph {...props} />;
-    case "toy":
-      return <ToyContributionGraph {...props} />;
-    default:
-      return <MinimalContributionGraph {...props} />;
-  }
+  const View = VIEWS[world] ?? VIEWS.minimal;
+  return <View {...props} />;
 }

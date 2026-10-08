@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { type ComponentType, useState } from "react";
 import { useWorld, type World } from "@/components/shared/world-provider";
 import { formatDate } from "@/lib/format";
 import { MinimalChangelog } from "./worlds/minimal";
@@ -89,6 +89,13 @@ function toEntry(release: Release): ChangelogEntry {
   };
 }
 
+const VIEWS = {
+  minimal: MinimalChangelog,
+  craft: CraftChangelog,
+  retro: RetroChangelog,
+  toy: ToyChangelog,
+} satisfies Record<World, ComponentType<ChangelogWorldProps>>;
+
 export function Changelog({ releases, variant, limit, className }: ChangelogProps) {
   const world = useWorld(variant);
   const [top, setTop] = useState(0);
@@ -104,14 +111,6 @@ export function Changelog({ releases, variant, limit, className }: ChangelogProp
     className,
   };
 
-  switch (world) {
-    case "craft":
-      return <CraftChangelog {...props} />;
-    case "retro":
-      return <RetroChangelog {...props} />;
-    case "toy":
-      return <ToyChangelog {...props} />;
-    default:
-      return <MinimalChangelog {...props} />;
-  }
+  const View = VIEWS[world] ?? VIEWS.minimal;
+  return <View {...props} />;
 }

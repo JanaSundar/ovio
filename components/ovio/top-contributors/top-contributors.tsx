@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { type ComponentType, useState } from "react";
 import { initialsOf } from "@/components/shared/avatar";
 import { useWorld, type World } from "@/components/shared/world-provider";
 import { MinimalTopContributors } from "./worlds/minimal";
@@ -106,6 +106,13 @@ function rankContributors(
   return { people, total };
 }
 
+const VIEWS = {
+  minimal: MinimalTopContributors,
+  craft: CraftTopContributors,
+  retro: RetroTopContributors,
+  toy: ToyTopContributors,
+} satisfies Record<World, ComponentType<TopContributorsWorldProps>>;
+
 export function TopContributors({
   contributors,
   variant,
@@ -138,14 +145,6 @@ export function TopContributors({
     className,
   };
 
-  switch (world) {
-    case "craft":
-      return <CraftTopContributors {...props} />;
-    case "retro":
-      return <RetroTopContributors {...props} />;
-    case "toy":
-      return <ToyTopContributors {...props} />;
-    default:
-      return <MinimalTopContributors {...props} />;
-  }
+  const View = VIEWS[world] ?? VIEWS.minimal;
+  return <View {...props} />;
 }

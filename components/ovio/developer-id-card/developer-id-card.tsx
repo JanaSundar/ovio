@@ -1,5 +1,6 @@
 "use client";
 
+import type { ComponentType } from "react";
 import { initialsOf } from "@/components/shared/avatar";
 import { useWorld, type World } from "@/components/shared/world-provider";
 import { MinimalDeveloperIdCard } from "./worlds/minimal";
@@ -68,6 +69,13 @@ export function cellsPath(cells: boolean[][]): string {
 
 const stripProtocol = (url: string) => url.replace(/^https?:\/\//, "").replace(/\/$/, "");
 
+const VIEWS = {
+  minimal: MinimalDeveloperIdCard,
+  craft: CraftDeveloperIdCard,
+  retro: RetroDeveloperIdCard,
+  toy: ToyDeveloperIdCard,
+} satisfies Record<World, ComponentType<DeveloperIdCardWorldProps>>;
+
 export function DeveloperIdCard({
   name,
   variant,
@@ -102,14 +110,6 @@ export function DeveloperIdCard({
     className,
   };
 
-  switch (world) {
-    case "craft":
-      return <CraftDeveloperIdCard {...props} />;
-    case "retro":
-      return <RetroDeveloperIdCard {...props} />;
-    case "toy":
-      return <ToyDeveloperIdCard {...props} />;
-    default:
-      return <MinimalDeveloperIdCard {...props} />;
-  }
+  const View = VIEWS[world] ?? VIEWS.minimal;
+  return <View {...props} />;
 }

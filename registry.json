@@ -104,6 +104,63 @@
       ]
     },
     {
+      "name": "qr-code",
+      "type": "registry:ui",
+      "title": "QR Code",
+      "description": "A QR code drawn as one SVG path in the current text colour, as squares or round dots.",
+      "dependencies": ["uqr"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "components/shared/qr-code.tsx",
+          "type": "registry:component",
+          "target": "components/shared/qr-code.tsx"
+        }
+      ]
+    },
+    {
+      "name": "avatar",
+      "type": "registry:ui",
+      "title": "Avatar",
+      "description": "Initials on a tile with the photo laid over them; a photo that fails to load falls back to the initials.",
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "components/shared/avatar.tsx",
+          "type": "registry:component",
+          "target": "components/shared/avatar.tsx"
+        }
+      ]
+    },
+    {
+      "name": "auto-height",
+      "type": "registry:ui",
+      "title": "Auto Height",
+      "description": "Eases its height to its content's, so swapping or wrapping content never jumps.",
+      "dependencies": ["motion"],
+      "registryDependencies": ["JanaSundar/ovio/motion"],
+      "files": [
+        {
+          "path": "components/shared/auto-height.tsx",
+          "type": "registry:component",
+          "target": "components/shared/auto-height.tsx"
+        }
+      ]
+    },
+    {
+      "name": "goo-filter",
+      "type": "registry:ui",
+      "title": "Goo Filter",
+      "description": "The SVG goo filter: blur shapes together and cut the alpha back to a hard edge.",
+      "files": [
+        {
+          "path": "components/shared/goo-filter.tsx",
+          "type": "registry:component",
+          "target": "components/shared/goo-filter.tsx"
+        }
+      ]
+    },
+    {
       "name": "github",
       "type": "registry:lib",
       "title": "GitHub fetchers",
@@ -308,18 +365,14 @@
         "JanaSundar/ovio/world",
         "JanaSundar/ovio/motion",
         "JanaSundar/ovio/rolling-number",
-        "JanaSundar/ovio/toy"
+        "JanaSundar/ovio/toy",
+        "JanaSundar/ovio/avatar"
       ],
       "files": [
         {
           "path": "components/ovio/top-contributors/top-contributors.tsx",
           "type": "registry:ui",
           "target": "components/ovio/top-contributors/top-contributors.tsx"
-        },
-        {
-          "path": "components/ovio/top-contributors/avatar.tsx",
-          "type": "registry:ui",
-          "target": "components/ovio/top-contributors/avatar.tsx"
         },
         {
           "path": "components/ovio/top-contributors/worlds/minimal.tsx",
@@ -486,7 +539,8 @@
         "JanaSundar/ovio/theme",
         "JanaSundar/ovio/world",
         "JanaSundar/ovio/motion",
-        "JanaSundar/ovio/keys"
+        "JanaSundar/ovio/keys",
+        "JanaSundar/ovio/goo-filter"
       ],
       "files": [
         {
@@ -564,6 +618,268 @@
       ]
     },
     {
+      "name": "event-ticket",
+      "type": "registry:ui",
+      "title": "Event Ticket",
+      "description": "A pass for launches and conferences. Book on the stub, tear it to check in, flip it for the QR code.",
+      "dependencies": ["motion", "uqr"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion",
+        "JanaSundar/ovio/format",
+        "JanaSundar/ovio/toy",
+        "JanaSundar/ovio/qr-code",
+        "JanaSundar/ovio/auto-height",
+        "JanaSundar/ovio/goo-filter"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/event-ticket/event-ticket.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/event-ticket/event-ticket.tsx"
+        },
+        {
+          "path": "components/ovio/event-ticket/art.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/event-ticket/art.tsx"
+        },
+        {
+          "path": "components/ovio/event-ticket/book-button.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/event-ticket/book-button.tsx"
+        },
+        {
+          "path": "components/ovio/event-ticket/parts.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/event-ticket/parts.tsx"
+        },
+        {
+          "path": "components/ovio/event-ticket/seed.ts",
+          "type": "registry:ui",
+          "target": "components/ovio/event-ticket/seed.ts"
+        },
+        {
+          "path": "components/ovio/event-ticket/ticket.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/event-ticket/ticket.tsx"
+        },
+        {
+          "path": "components/ovio/event-ticket/worlds/minimal.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/event-ticket/worlds/minimal.tsx"
+        },
+        {
+          "path": "components/ovio/event-ticket/worlds/craft.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/event-ticket/worlds/craft.tsx"
+        },
+        {
+          "path": "components/ovio/event-ticket/worlds/retro.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/event-ticket/worlds/retro.tsx"
+        },
+        {
+          "path": "components/ovio/event-ticket/worlds/toy.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/event-ticket/worlds/toy.tsx"
+        }
+      ]
+    },
+    {
+      "name": "sponsor-wall",
+      "type": "registry:ui",
+      "title": "Sponsor Wall",
+      "description": "Sponsors by tier, from a logo wall to blocks on a pegboard.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion",
+        "JanaSundar/ovio/toy"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/sponsor-wall/sponsor-wall.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/sponsor-wall/sponsor-wall.tsx"
+        },
+        {
+          "path": "components/ovio/sponsor-wall/sponsor-link.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/sponsor-wall/sponsor-link.tsx"
+        },
+        {
+          "path": "components/ovio/sponsor-wall/worlds/minimal.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/sponsor-wall/worlds/minimal.tsx"
+        },
+        {
+          "path": "components/ovio/sponsor-wall/worlds/craft.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/sponsor-wall/worlds/craft.tsx"
+        },
+        {
+          "path": "components/ovio/sponsor-wall/worlds/retro.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/sponsor-wall/worlds/retro.tsx"
+        },
+        {
+          "path": "components/ovio/sponsor-wall/worlds/toy.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/sponsor-wall/worlds/toy.tsx"
+        }
+      ]
+    },
+    {
+      "name": "developer-id-card",
+      "type": "registry:ui",
+      "title": "Developer ID Card",
+      "description": "An identity card for a developer: name, role, stack, availability and a QR code.",
+      "dependencies": ["motion", "uqr"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion",
+        "JanaSundar/ovio/toy",
+        "JanaSundar/ovio/qr-code",
+        "JanaSundar/ovio/avatar"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/developer-id-card/developer-id-card.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/developer-id-card/developer-id-card.tsx"
+        },
+        {
+          "path": "components/ovio/developer-id-card/worlds/minimal.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/developer-id-card/worlds/minimal.tsx"
+        },
+        {
+          "path": "components/ovio/developer-id-card/worlds/craft.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/developer-id-card/worlds/craft.tsx"
+        },
+        {
+          "path": "components/ovio/developer-id-card/worlds/retro.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/developer-id-card/worlds/retro.tsx"
+        },
+        {
+          "path": "components/ovio/developer-id-card/worlds/toy.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/developer-id-card/worlds/toy.tsx"
+        }
+      ]
+    },
+    {
+      "name": "git-branch-visualizer",
+      "type": "registry:ui",
+      "title": "Git Branch Visualizer",
+      "description": "Branches and commits as a graph. Hover a commit, pick a branch, merge or branch off.",
+      "dependencies": ["motion", "@number-flow/react"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion",
+        "JanaSundar/ovio/keys",
+        "JanaSundar/ovio/format",
+        "JanaSundar/ovio/rolling-number",
+        "JanaSundar/ovio/toy",
+        "JanaSundar/ovio/auto-height"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/git-branch-visualizer/git-branch-visualizer.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/git-branch-visualizer/git-branch-visualizer.tsx"
+        },
+        {
+          "path": "components/ovio/git-branch-visualizer/graph.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/git-branch-visualizer/graph.tsx"
+        },
+        {
+          "path": "components/ovio/git-branch-visualizer/parts.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/git-branch-visualizer/parts.tsx"
+        },
+        {
+          "path": "components/ovio/git-branch-visualizer/worlds/minimal.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/git-branch-visualizer/worlds/minimal.tsx"
+        },
+        {
+          "path": "components/ovio/git-branch-visualizer/worlds/craft.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/git-branch-visualizer/worlds/craft.tsx"
+        },
+        {
+          "path": "components/ovio/git-branch-visualizer/worlds/retro.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/git-branch-visualizer/worlds/retro.tsx"
+        },
+        {
+          "path": "components/ovio/git-branch-visualizer/worlds/toy.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/git-branch-visualizer/worlds/toy.tsx"
+        }
+      ]
+    },
+    {
+      "name": "now-playing",
+      "type": "registry:ui",
+      "title": "Now Playing",
+      "description": "What you're listening to, live. Play, pause, seek and turn it up.",
+      "dependencies": ["motion", "@number-flow/react"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion",
+        "JanaSundar/ovio/keys",
+        "JanaSundar/ovio/rolling-number",
+        "JanaSundar/ovio/toy"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/now-playing/now-playing.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/now-playing/now-playing.tsx"
+        },
+        {
+          "path": "components/ovio/now-playing/parts.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/now-playing/parts.tsx"
+        },
+        {
+          "path": "components/ovio/now-playing/worlds/minimal.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/now-playing/worlds/minimal.tsx"
+        },
+        {
+          "path": "components/ovio/now-playing/worlds/craft.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/now-playing/worlds/craft.tsx"
+        },
+        {
+          "path": "components/ovio/now-playing/worlds/retro.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/now-playing/worlds/retro.tsx"
+        },
+        {
+          "path": "components/ovio/now-playing/worlds/toy.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/now-playing/worlds/toy.tsx"
+        }
+      ]
+    },
+    {
       "name": "all",
       "type": "registry:item",
       "title": "All Ovio components",
@@ -577,7 +893,12 @@
         "JanaSundar/ovio/physical-knob",
         "JanaSundar/ovio/bundle-size",
         "JanaSundar/ovio/gooey-tabs",
-        "JanaSundar/ovio/changelog"
+        "JanaSundar/ovio/changelog",
+        "JanaSundar/ovio/event-ticket",
+        "JanaSundar/ovio/sponsor-wall",
+        "JanaSundar/ovio/developer-id-card",
+        "JanaSundar/ovio/git-branch-visualizer",
+        "JanaSundar/ovio/now-playing"
       ],
       "files": []
     }

@@ -9,43 +9,53 @@ import {
 } from "motion/react";
 import { motionTokens, useOvioTransition } from "@/lib/motion";
 
-type ToyKeyProps = Omit<HTMLMotionProps<"button">, "style"> & {
+type ToyKeyStyle<T extends "button" | "a"> = Omit<
+  NonNullable<HTMLMotionProps<T>["style"]>,
+  "y" | "boxShadow"
+>;
+
+type KeyProps = {
   /** How far the key travels when pressed, in px. Also the height of its side. */
   depth?: number;
   /** Colour of the key's side (the shadow under the cap). */
   side?: string;
-  style?: Omit<NonNullable<HTMLMotionProps<"button">["style"]>, "y" | "boxShadow">;
 };
 
-/**
- * A raised plastic key. Hover lifts it, press compresses it into its surface,
- * release springs back (Toy key spring, k900 c22). Space and Enter press it too.
- */
-export function ToyKey({
-  depth = 6,
-  side = "rgba(0,0,0,.25)",
-  style,
-  className,
-  ...props
-}: ToyKeyProps) {
+type ToyKeyProps = Omit<HTMLMotionProps<"button">, "style"> &
+  KeyProps & { style?: ToyKeyStyle<"button"> };
+
+type ToyKeyLinkProps = Omit<HTMLMotionProps<"a">, "style"> &
+  KeyProps & { style?: ToyKeyStyle<"a"> };
+
+/** The key's press: lift on hover, sink into its side on press, and the side's shadow following. */
+function useToyKey({ depth = 6, side = "rgba(0,0,0,.25)" }: KeyProps) {
   const transition = useOvioTransition(motionTokens.toy.key);
   const y = useMotionValue(0);
   const boxShadow = useTransform(y, (v) => {
     const lift = Math.max(0, depth - v);
     return `0 ${lift.toFixed(2)}px 0 ${side}, 0 ${(lift * 1.4 + 3).toFixed(1)}px ${(lift * 1.6 + 6).toFixed(1)}px -5px rgba(40,28,10,.32)`;
   });
+  return {
+    whileHover: { y: -2 },
+    whileTap: { y: depth - 1 },
+    transition,
+    style: { y, boxShadow },
+  };
+}
 
-  return (
-    <motion.button
-      type="button"
-      whileHover={{ y: -2 }}
-      whileTap={{ y: depth - 1 }}
-      transition={transition}
-      {...props}
-      className={className}
-      style={{ ...style, y, boxShadow }}
-    />
-  );
+/**
+ * A raised plastic key. Hover lifts it, press compresses it into its surface,
+ * release springs back (Toy key spring, k900 c22). Space and Enter press it too.
+ */
+export function ToyKey({ depth, side, style, ...props }: ToyKeyProps) {
+  const { style: press, ...motionProps } = useToyKey({ depth, side });
+  return <motion.button type="button" {...motionProps} {...props} style={{ ...style, ...press }} />;
+}
+
+/** A link that presses like a ToyKey. */
+export function ToyKeyLink({ depth, side, style, ...props }: ToyKeyLinkProps) {
+  const { style: press, ...motionProps } = useToyKey({ depth, side });
+  return <motion.a {...motionProps} {...props} style={{ ...style, ...press }} />;
 }
 
 type ToyPieceProps = Omit<HTMLMotionProps<"div">, "style"> & {

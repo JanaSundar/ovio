@@ -61,13 +61,7 @@ export default async function ComponentPage({ params }: PageProps<"/docs/[slug]"
   const c = COMPONENTS[i];
   const prev = COMPONENTS[(i - 1 + COMPONENTS.length) % COMPONENTS.length];
   const next = COMPONENTS[(i + 1) % COMPONENTS.length];
-  const item = c.ready
-    ? registryItem(c.slug)
-    : {
-        files: [],
-        dependencies: c.dependencies ?? [],
-        registryDependencies: c.registryDependencies ?? [],
-      };
+  const item = registryItem(c.slug);
   const files = await readSources(item.files);
   const install = installCommand(c.slug);
 
@@ -86,7 +80,7 @@ export default async function ComponentPage({ params }: PageProps<"/docs/[slug]"
           <WorldSwitcher className="w-full max-w-[460px] rounded-[13px]" />
           <span className="font-mono text-xs text-muted">Press 1–4</span>
         </div>
-        <ComponentPreview slug={c.slug} name={c.name} phase={c.phase} files={files} />
+        <ComponentPreview slug={c.slug} files={files} />
       </section>
 
       <div className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,420px),1fr))] gap-10">

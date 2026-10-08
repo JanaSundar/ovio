@@ -2,6 +2,7 @@
 
 import { motion, useAnimate, type Transition } from "motion/react";
 import { useEffect, type CSSProperties } from "react";
+import { GooFilter } from "@/components/shared/goo-filter";
 import { useReducedMotionSafe } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { STATUS_INDEX, type GooeyTabsWorldProps } from "./gooey-tabs";
@@ -91,24 +92,6 @@ function StatusDots({
         />
       ))}
     </div>
-  );
-}
-
-/** The goo filter: blur the blobs together, then cut the alpha back to a hard edge. */
-export function GooFilter({ id, blur }: { id: string; blur: number }) {
-  return (
-    <svg aria-hidden width="0" height="0" className="absolute">
-      <defs>
-        <filter id={id} x="-50%" y="-50%" width="200%" height="200%">
-          <feGaussianBlur in="SourceGraphic" stdDeviation={blur} result="b" />
-          <feColorMatrix
-            in="b"
-            mode="matrix"
-            values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -9"
-          />
-        </filter>
-      </defs>
-    </svg>
   );
 }
 

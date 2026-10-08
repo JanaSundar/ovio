@@ -2,7 +2,7 @@
 
 import { motion } from "motion/react";
 import { useId, useRef, type KeyboardEvent } from "react";
-import { GooFilter } from "@/components/ovio/gooey-tabs/goo";
+import { GooFilter } from "@/components/shared/goo-filter";
 import { WORLD_INFO } from "@/content/worlds";
 import { keyToIndex } from "@/lib/keys";
 import { ease, useReducedMotionSafe } from "@/lib/motion";

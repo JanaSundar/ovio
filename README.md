@@ -17,22 +17,22 @@ All motion respects `prefers-reduced-motion`.
 
 ## Components
 
-| Component                                                      | Status       | Description                                                              |
-| -------------------------------------------------------------- | ------------ | ------------------------------------------------------------------------ |
-| [Contribution Graph](https://ovioui.vercel.app/docs/contribution-graph) | Available    | A year of activity, one cell per day.                                    |
-| [Gooey Tabs](https://ovioui.vercel.app/docs/gooey-tabs)                 | Available    | A tab bar with a moving indicator and a deploy status.                   |
-| [Star History](https://ovioui.vercel.app/docs/star-history)             | Available    | Stargazers over time, with annotated spikes.                             |
-| [Repository Card](https://ovioui.vercel.app/docs/repository-card)       | Available    | A repo at a glance: name, description, stars, forks and language.        |
-| [Top Contributors](https://ovioui.vercel.app/docs/top-contributors)     | Available    | The people behind a project, ranked by commits.                          |
-| [npm Downloads](https://ovioui.vercel.app/docs/npm-downloads)           | Available    | Weekly installs with trend and goal.                                     |
-| [Physical Knob](https://ovioui.vercel.app/docs/physical-knob)           | Available    | A rotary control you can drag, flick, scroll or turn with the keyboard.  |
-| [Bundle Size](https://ovioui.vercel.app/docs/bundle-size)               | Available    | Package size with gzip, brotli and the change from the previous version. |
-| [Changelog](https://ovioui.vercel.app/docs/changelog)                   | Available    | Releases with dates and notes.                                           |
-| Event Ticket                                                   | Coming later | A pass for launches and conferences.                                     |
-| Sponsor Wall                                                   | Coming later | Sponsors by tier, from a logo wall to blocks on a pegboard.              |
-| Developer ID Card                                              | Coming later | An identity card for a developer.                                        |
-| Git Branch Visualizer                                          | Coming later | Branches and commits as a graph.                                         |
-| Now Playing                                                    | Coming later | What you're listening to, live.                                          |
+| Component                                                                     | Status    | Description                                                                           |
+| ----------------------------------------------------------------------------- | --------- | ------------------------------------------------------------------------------------- |
+| [Contribution Graph](https://ovioui.vercel.app/docs/contribution-graph)       | Available | A year of activity, one cell per day.                                                 |
+| [Gooey Tabs](https://ovioui.vercel.app/docs/gooey-tabs)                       | Available | A tab bar with a moving indicator and a deploy status.                                |
+| [Star History](https://ovioui.vercel.app/docs/star-history)                   | Available | Stargazers over time, with annotated spikes.                                          |
+| [Repository Card](https://ovioui.vercel.app/docs/repository-card)             | Available | A repo at a glance: name, description, stars, forks and language.                     |
+| [Top Contributors](https://ovioui.vercel.app/docs/top-contributors)           | Available | The people behind a project, ranked by commits.                                       |
+| [npm Downloads](https://ovioui.vercel.app/docs/npm-downloads)                 | Available | Weekly installs with trend and goal.                                                  |
+| [Physical Knob](https://ovioui.vercel.app/docs/physical-knob)                 | Available | A rotary control you can drag, flick, scroll or turn with the keyboard.               |
+| [Bundle Size](https://ovioui.vercel.app/docs/bundle-size)                     | Available | Package size with gzip, brotli and the change from the previous version.              |
+| [Changelog](https://ovioui.vercel.app/docs/changelog)                         | Available | Releases with dates and notes.                                                        |
+| [Event Ticket](https://ovioui.vercel.app/docs/event-ticket)                   | Available | A pass for launches and conferences: book it, tear the stub, flip it for the QR code. |
+| [Sponsor Wall](https://ovioui.vercel.app/docs/sponsor-wall)                   | Available | Sponsors by tier, from a logo wall to blocks on a pegboard.                           |
+| [Developer ID Card](https://ovioui.vercel.app/docs/developer-id-card)         | Available | An identity card for a developer: name, role, stack, availability and a QR code.      |
+| [Git Branch Visualizer](https://ovioui.vercel.app/docs/git-branch-visualizer) | Available | Branches and commits as a graph you can select, merge and branch off.                 |
+| [Now Playing](https://ovioui.vercel.app/docs/now-playing)                     | Available | What you're listening to, with play, seek and volume.                                 |
 
 The catalogue lives in [`content/components.ts`](content/components.ts).
 
@@ -49,7 +49,7 @@ Append `#<tag>` or a commit SHA to pin a version, for example
 `npx shadcn add JanaSundar/ovio/star-history#v0.1.0`.
 
 The CLI installs the component under `components/ovio/<name>/`, its npm dependencies (`motion`,
-`@number-flow/react`) and the shared Ovio items it needs, including the theme at `styles/ovio.css`.
+`@number-flow/react`, `uqr` for QR codes) and the shared Ovio items it needs, including the theme at `styles/ovio.css`.
 Import the theme from your global stylesheet (the path is relative to that file):
 
 ```css

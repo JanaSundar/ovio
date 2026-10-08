@@ -2,10 +2,10 @@
 
 import { motion } from "motion/react";
 import { useId } from "react";
+import { Avatar } from "@/components/shared/avatar";
 import { RollingNumber } from "@/components/shared/rolling-number";
 import { motionTokens, useOvioTransition, useReducedMotionSafe } from "@/lib/motion";
 import { cn } from "@/lib/utils";
-import { Avatar } from "../avatar";
 import { PERIOD_LABEL, PERIOD_SHORT, type TopContributorsWorldProps } from "../top-contributors";
 
 export function MinimalTopContributors({
@@ -102,7 +102,8 @@ export function MinimalTopContributors({
                 {String(p.rank).padStart(2, "0")}
               </span>
               <Avatar
-                person={p}
+                initials={p.initials}
+                src={p.avatarUrl}
                 className="size-[30px] rounded-full bg-[#ebe9e4] text-[11px] font-medium"
               />
               <span className="flex min-w-0 flex-col">

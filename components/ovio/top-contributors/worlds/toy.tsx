@@ -1,11 +1,11 @@
 "use client";
 
 import { motion } from "motion/react";
+import { Avatar } from "@/components/shared/avatar";
 import { RollingNumber } from "@/components/shared/rolling-number";
 import { ToyKey, ToyPiece } from "@/components/shared/toy";
 import { motionTokens, useOvioTransition, useReducedMotionSafe } from "@/lib/motion";
 import { cn } from "@/lib/utils";
-import { Avatar } from "../avatar";
 import { PERIOD_LABEL, PERIOD_SHORT, type TopContributorsWorldProps } from "../top-contributors";
 
 /** Plastic piece colours by rank: face, side, ink. */
@@ -108,7 +108,8 @@ export function ToyTopContributors({
                   }}
                 >
                   <Avatar
-                    person={p}
+                    initials={p.initials}
+                    src={p.avatarUrl}
                     className="size-10 rounded-full text-sm font-extrabold shadow-[inset_0_2px_0_rgba(255,255,255,.3)] @md:size-[52px] @md:text-base"
                     style={{ background: face, color: ink }}
                   />

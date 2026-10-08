@@ -1,6 +1,14 @@
 "use client";
 
-import { useCallback, useId, useRef, useState, type KeyboardEvent, type ReactNode } from "react";
+import {
+  type ComponentType,
+  useCallback,
+  useId,
+  useRef,
+  useState,
+  type KeyboardEvent,
+  type ReactNode,
+} from "react";
 import { useWorld, type World } from "@/components/shared/world-provider";
 import { keyToIndex } from "@/lib/keys";
 import { MinimalGooeyTabs } from "./worlds/minimal";
@@ -52,6 +60,13 @@ const STATUS_LABEL: Record<GooeyStatus, string> = {
 };
 
 export const STATUS_INDEX: Record<GooeyStatus, number> = { offline: 0, building: 1, online: 2 };
+
+const VIEWS = {
+  minimal: MinimalGooeyTabs,
+  craft: CraftGooeyTabs,
+  retro: RetroGooeyTabs,
+  toy: ToyGooeyTabs,
+} satisfies Record<World, ComponentType<GooeyTabsWorldProps>>;
 
 export function GooeyTabs({
   tabs,
@@ -107,14 +122,6 @@ export function GooeyTabs({
     className,
   };
 
-  switch (world) {
-    case "craft":
-      return <CraftGooeyTabs {...props} />;
-    case "retro":
-      return <RetroGooeyTabs {...props} />;
-    case "toy":
-      return <ToyGooeyTabs {...props} />;
-    default:
-      return <MinimalGooeyTabs {...props} />;
-  }
+  const View = VIEWS[world] ?? VIEWS.minimal;
+  return <View {...props} />;
 }

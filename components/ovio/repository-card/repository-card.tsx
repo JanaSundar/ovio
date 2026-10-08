@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useSyncExternalStore } from "react";
+import { type ComponentType, useState, useSyncExternalStore } from "react";
 import { useWorld, type World } from "@/components/shared/world-provider";
 import { formatShortDate } from "@/lib/format";
 import { MinimalRepositoryCard } from "./worlds/minimal";
@@ -99,6 +99,13 @@ const noop = () => () => {};
 const yes = () => true;
 const no = () => false;
 
+const VIEWS = {
+  minimal: MinimalRepositoryCard,
+  craft: CraftRepositoryCard,
+  retro: RetroRepositoryCard,
+  toy: ToyRepositoryCard,
+} satisfies Record<World, ComponentType<RepositoryCardWorldProps>>;
+
 export function RepositoryCard({
   repository: repo,
   variant,
@@ -145,14 +152,6 @@ export function RepositoryCard({
     className,
   };
 
-  switch (world) {
-    case "craft":
-      return <CraftRepositoryCard {...props} />;
-    case "retro":
-      return <RetroRepositoryCard {...props} />;
-    case "toy":
-      return <ToyRepositoryCard {...props} />;
-    default:
-      return <MinimalRepositoryCard {...props} />;
-  }
+  const View = VIEWS[world] ?? VIEWS.minimal;
+  return <View {...props} />;
 }

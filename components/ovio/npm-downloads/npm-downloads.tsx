@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type KeyboardEvent } from "react";
+import { type ComponentType, useState, type KeyboardEvent } from "react";
 import { useWorld, type World } from "@/components/shared/world-provider";
 import { formatNumber, formatShortDate } from "@/lib/format";
 import { keyToIndex } from "@/lib/keys";
@@ -75,6 +75,13 @@ export function formatDelta(delta: number | null, marks: [string, string] = ["+"
   return `${delta >= 0 ? marks[0] : marks[1]}${Math.abs(delta).toFixed(1)}%`;
 }
 
+const VIEWS = {
+  minimal: MinimalNpmDownloads,
+  craft: CraftNpmDownloads,
+  retro: RetroNpmDownloads,
+  toy: ToyNpmDownloads,
+} satisfies Record<World, ComponentType<NpmDownloadsWorldProps>>;
+
 export function NpmDownloads({
   packageName,
   data,
@@ -145,14 +152,6 @@ export function NpmDownloads({
     className,
   };
 
-  switch (world) {
-    case "craft":
-      return <CraftNpmDownloads {...props} />;
-    case "retro":
-      return <RetroNpmDownloads {...props} />;
-    case "toy":
-      return <ToyNpmDownloads {...props} />;
-    default:
-      return <MinimalNpmDownloads {...props} />;
-  }
+  const View = VIEWS[world] ?? VIEWS.minimal;
+  return <View {...props} />;
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState, type KeyboardEvent } from "react";
+import { type ComponentType, useMemo, useState, type KeyboardEvent } from "react";
 import { useWorld, type World } from "@/components/shared/world-provider";
 import { formatShortDate } from "@/lib/format";
 import { keyToIndex } from "@/lib/keys";
@@ -189,6 +189,13 @@ function ancestors(id: string | undefined, byId: Map<string, GitCommit>): Set<st
   return seen;
 }
 
+const VIEWS = {
+  minimal: MinimalGitBranchVisualizer,
+  craft: CraftGitBranchVisualizer,
+  retro: RetroGitBranchVisualizer,
+  toy: ToyGitBranchVisualizer,
+} satisfies Record<World, ComponentType<GitBranchVisualizerWorldProps>>;
+
 export function GitBranchVisualizer({
   commits,
   variant,
@@ -372,14 +379,6 @@ export function GitBranchVisualizer({
     className,
   };
 
-  switch (world) {
-    case "craft":
-      return <CraftGitBranchVisualizer {...props} />;
-    case "retro":
-      return <RetroGitBranchVisualizer {...props} />;
-    case "toy":
-      return <ToyGitBranchVisualizer {...props} />;
-    default:
-      return <MinimalGitBranchVisualizer {...props} />;
-  }
+  const View = VIEWS[world] ?? VIEWS.minimal;
+  return <View {...props} />;
 }

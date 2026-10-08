@@ -1,5 +1,6 @@
 "use client";
 
+import type { ComponentType } from "react";
 import { useWorld, type World } from "@/components/shared/world-provider";
 import { MinimalSponsorWall } from "./worlds/minimal";
 import { CraftSponsorWall } from "./worlds/craft";
@@ -67,6 +68,13 @@ function groupSponsors(sponsors: Sponsor[]): SponsorGroup[] {
   })).filter((g) => g.sponsors.length > 0);
 }
 
+const VIEWS = {
+  minimal: MinimalSponsorWall,
+  craft: CraftSponsorWall,
+  retro: RetroSponsorWall,
+  toy: ToySponsorWall,
+} satisfies Record<World, ComponentType<SponsorWallWorldProps>>;
+
 export function SponsorWall({
   sponsors,
   variant,
@@ -82,14 +90,6 @@ export function SponsorWall({
     className,
   };
 
-  switch (world) {
-    case "craft":
-      return <CraftSponsorWall {...props} />;
-    case "retro":
-      return <RetroSponsorWall {...props} />;
-    case "toy":
-      return <ToySponsorWall {...props} />;
-    default:
-      return <MinimalSponsorWall {...props} />;
-  }
+  const View = VIEWS[world] ?? VIEWS.minimal;
+  return <View {...props} />;
 }

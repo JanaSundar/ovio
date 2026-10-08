@@ -50,6 +50,12 @@ export const COMPONENTS: ComponentDoc[] = [
         description: "Last day shown. Defaults to the latest date in data.",
       },
       {
+        name: "compactMonths",
+        type: "number",
+        description:
+          "Months shown on screens under 1024px so cells stay large. Left out, the full year scrolls sideways there. Toy always shows the year.",
+      },
+      {
         name: "onDayHover",
         type: "(day: ContributionCell | null) => void",
         description: "Hover and keyboard focus; null when they leave.",
@@ -474,5 +480,9 @@ export const DOCS_HREF = `/docs/${COMPONENTS[0].slug}`;
 
 /** The GitHub repository that serves as the shadcn registry. */
 export const REPO = "JanaSundar/ovio";
+
+/** Where the code lives, and who made it. */
+export const GITHUB_URL = `https://github.com/${REPO}`;
+export const AUTHOR_URL = "https://github.com/JanaSundar";
 
 export const installCommand = (slug: string) => `npx shadcn add ${REPO}/${slug}`;

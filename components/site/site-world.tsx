@@ -25,6 +25,21 @@ export function SiteWorldProvider({ children }: { children: ReactNode }) {
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
+  // Each world's typeface only loads the first time that world shows, so the first switch used
+  // to swap fonts mid-animation and stutter. Load the Latin faces while the page is idle instead.
+  useEffect(() => {
+    const warm = () =>
+      document.fonts.forEach((f) => {
+        if (f.status === "unloaded" && /U\+0+-0*FF/i.test(f.unicodeRange)) f.load().catch(() => {});
+      });
+    if ("requestIdleCallback" in window) {
+      const id = requestIdleCallback(warm, { timeout: 2500 });
+      return () => cancelIdleCallback(id);
+    }
+    const id = setTimeout(warm, 1200);
+    return () => clearTimeout(id);
+  }, []);
+
   return (
     <Ctx.Provider value={{ world, setWorld }}>
       <MotionConfig reducedMotion="user">

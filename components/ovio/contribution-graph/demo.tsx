@@ -30,5 +30,5 @@ const SAMPLE: ContributionDay[] = (() => {
 })();
 
 export function ContributionGraphDemo() {
-  return <ContributionGraph data={SAMPLE} endDate="2026-10-07" />;
+  return <ContributionGraph data={SAMPLE} endDate="2026-10-07" compactMonths={6} />;
 }

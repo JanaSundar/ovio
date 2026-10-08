@@ -214,7 +214,7 @@ export function CodeExplorer({ files }: { files: SourceFile[] }) {
   const tabbable = rows.some((r) => key(r.node) === focused) ? focused : key(rows[0].node);
 
   return (
-    <div className="flex flex-col overflow-hidden rounded-2xl bg-ink text-paper">
+    <div className="flex flex-col overflow-hidden bg-ink text-paper">
       <div className="flex items-center gap-2 border-b border-[#2c2b28] px-2 py-1.5">
         <button
           type="button"

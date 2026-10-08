@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { cn } from "@/lib/utils";
 
 /** Copies text to the clipboard; `copied` stays true for a moment after. */
 export function useCopy() {
@@ -17,52 +16,22 @@ export function useCopy() {
   return { copied, copy };
 }
 
-/** The hero's install button: the whole command is the button. */
-export function InstallButton({ command }: { command: string }) {
-  const { copied, copy } = useCopy();
-  return (
-    <button
-      type="button"
-      onClick={() => copy(command)}
-      className="flex cursor-pointer items-center gap-3 rounded-lg border-0 bg-ink px-4 py-3 font-mono text-[13px] text-paper transition-colors hover:bg-[#2c2b28]"
-    >
-      <span className="text-code-muted">$</span>
-      <span>{command}</span>
-      <span className="text-[11px] text-code-muted" aria-live="polite">
-        {copied ? "copied" : "copy"}
-      </span>
-    </button>
-  );
-}
-
-/** A dark command box with a Copy button, as on the docs pages. `html` is the highlighted command. */
+/**
+ * A command with a Copy button: dark with a lime button on the homepage (`command`), a light
+ * box with an ink button in the docs (`install-box`).
+ */
 export function CopyCommand({
   command,
-  html,
-  className,
+  variant = "command",
 }: {
   command: string;
-  html: string;
-  className?: string;
+  variant?: "command" | "install-box";
 }) {
   const { copied, copy } = useCopy();
   return (
-    <div
-      className={cn(
-        "flex items-center justify-between gap-3 rounded-[10px] bg-ink px-4 py-3.5 font-mono text-[13px] text-paper",
-        className,
-      )}
-    >
-      <span className="overflow-x-auto whitespace-nowrap">
-        <span className="text-code-muted">$ </span>
-        <code dangerouslySetInnerHTML={{ __html: html }} />
-      </span>
-      <button
-        type="button"
-        onClick={() => copy(command)}
-        className="flex-none cursor-pointer rounded-md border border-[#3a3935] bg-transparent px-2.5 py-[5px] font-[inherit] text-[11px] text-[#d8d6cf]"
-        aria-live="polite"
-      >
+    <div className={variant}>
+      <code>{command}</code>
+      <button type="button" onClick={() => copy(command)} aria-live="polite">
         {copied ? "Copied" : "Copy"}
       </button>
     </div>

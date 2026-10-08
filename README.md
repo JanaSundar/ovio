@@ -127,7 +127,6 @@ pnpm lint               # oxlint
 pnpm format             # oxfmt
 pnpm typecheck          # next typegen && tsc --noEmit
 pnpm test               # unit tests (Vitest)
-pnpm test:e2e           # screenshots and interactions (Playwright); run pnpm build first
 ```
 
 Git hooks run through [Lefthook](https://lefthook.dev) (`lefthook.yml`): before a commit, the
@@ -148,7 +147,7 @@ registry-checked. Skip them once with `LEFTHOOK=0`, e.g. `LEFTHOOK=0 git commit 
 - [Tailwind CSS v4](https://tailwindcss.com)
 - [shadcn](https://ui.shadcn.com) registry
 - [oxlint](https://oxc.rs/docs/guide/usage/linter) and [oxfmt](https://oxc.rs/docs/guide/usage/formatter)
-- [Vitest](https://vitest.dev), [Playwright](https://playwright.dev) and [Lefthook](https://lefthook.dev)
+- [Vitest](https://vitest.dev) and [Lefthook](https://lefthook.dev)
 - TypeScript, pnpm
 
 ## License

@@ -194,10 +194,10 @@ export function OgFrame({
   card: ReactNode;
 }) {
   // As large as the longest line allows across the 650px column (measured, a character of
-  // condensed Archivo Black is about 0.35em wide with this tracking), smaller when a
+  // condensed Archivo Black is up to 0.44em wide with this tracking), smaller when a
   // description shares the space.
   const longest = Math.max(...title.map((l) => l.length));
-  const size = Math.min(description ? 104 : 110, Math.floor(630 / (longest * 0.37)));
+  const size = Math.min(description ? 104 : 110, Math.floor(630 / (longest * 0.45)));
 
   return (
     <div
@@ -245,7 +245,7 @@ export function OgFrame({
                 fontSize: size,
                 lineHeight: 0.88,
                 // A hair of space: at this weight, tighter tracking makes letters touch.
-                letterSpacing: 1,
+                letterSpacing: 3.5,
               }}
             >
               {line}

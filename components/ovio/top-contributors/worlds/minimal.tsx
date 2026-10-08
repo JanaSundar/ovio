@@ -94,7 +94,7 @@ export function MinimalTopContributors({
               layout={!reduced}
               initial={reduced ? false : { opacity: 0, y: 6 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ ...transition, delay: reduced ? 0 : i * 0.06 }}
+              transition={{ ...transition, delay: reduced ? 0 : i * 0.04 }}
               className="grid grid-cols-[22px_30px_minmax(0,1fr)_52px] items-center gap-3 border-b border-(--ovio-line-2) py-[11px] @md:grid-cols-[28px_34px_minmax(0,1fr)_minmax(0,1.2fr)_60px] @md:gap-3.5"
             >
               <span className="font-(family-name:--ovio-mono) text-[11px] text-(--ovio-faint)">
@@ -118,7 +118,7 @@ export function MinimalTopContributors({
                   className="absolute inset-0 origin-left bg-(--ovio-ink)"
                   initial={reduced ? false : { scaleX: 0 }}
                   animate={{ scaleX: p.ratio }}
-                  transition={{ ...transition, delay: reduced ? 0 : 0.1 + i * 0.06 }}
+                  transition={{ ...transition, delay: reduced ? 0 : 0.06 + i * 0.04 }}
                 />
               </span>
               <span className="text-right font-(family-name:--ovio-mono) text-[13px]">

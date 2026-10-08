@@ -68,9 +68,9 @@ export type TicketLook = {
   };
 };
 
-const TILT = { stiffness: 220, damping: 22 };
+const TILT = { stiffness: 320, damping: 26 };
 /** The stub easing its height as the form swaps for the pass. */
-const RESIZE = { duration: 0.4, ease: [0.2, 0.7, 0.2, 1] } as const;
+const RESIZE = { duration: 0.26, ease: [0.2, 0.7, 0.2, 1] } as const;
 /** How far the stub must be pulled to tear, or flicked faster than FLICK px/s past a short pull. */
 const TEAR_AT = 100;
 const FLICK = 600;

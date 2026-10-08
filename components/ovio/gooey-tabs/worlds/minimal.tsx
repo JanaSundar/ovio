@@ -15,9 +15,9 @@ const look: GooLook = {
   label: "text-xs",
   statusText: "text-lg font-medium",
   trail: [
-    { duration: 0.38, ease: ease.glide },
-    { duration: 0.55, ease: ease.glide },
-    { duration: 0.72, ease: ease.glide },
+    { duration: 0.25, ease: ease.glide },
+    { duration: 0.36, ease: ease.glide },
+    { duration: 0.47, ease: ease.glide },
   ],
   dots: ["#c9c6bf", "#97938a", "#161614"],
   colorDelay: 0.12,

@@ -19,7 +19,7 @@ type Row = { node: Node; level: number; parent?: string };
 
 const SIDEBAR = 232;
 const NARROW = "(max-width: 639px)";
-const SLIDE = { duration: 0.28, ease: ease.minimal };
+const SLIDE = { duration: 0.18, ease: ease.minimal };
 
 /**
  * Folders from the file paths, rooted at their shared folder (components/ovio/<slug>/ becomes

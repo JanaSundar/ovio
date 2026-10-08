@@ -85,7 +85,7 @@ export function MinimalNpmDownloads({
               transition={{
                 scaleY: reduced
                   ? { duration: 0 }
-                  : { ...motionTokens.minimal.slow, delay: i * 0.025 },
+                  : { ...motionTokens.minimal.slow, delay: i * 0.016 },
                 backgroundColor: fast,
               }}
             />
@@ -98,7 +98,7 @@ export function MinimalNpmDownloads({
             style={{ bottom: `${(goalHeight * 100).toFixed(1)}%` }}
             initial={reduced ? false : { opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={reduced ? { duration: 0 } : { ...motionTokens.minimal.slow, delay: 0.3 }}
+            transition={reduced ? { duration: 0 } : { ...motionTokens.minimal.slow, delay: 0.2 }}
           >
             <span className="absolute -top-[18px] right-0 bg-(--ovio-surface) pl-1.5 text-[11px] text-(--ovio-muted)">
               Goal {formatNumber(goal)}

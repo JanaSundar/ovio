@@ -11,7 +11,7 @@ const BOOK: GooBookLook = {
   label: "text-[22px] leading-[1.05] font-medium tracking-[-0.03em] text-(--ovio-ink)",
   arrow: "text-[#c6f432]",
   radius: 16,
-  transition: { duration: 0.45, ease: [0.5, 0, 0.2, 1] },
+  transition: { duration: 0.3, ease: [0.5, 0, 0.2, 1] },
 };
 
 const LOOK: TicketLook = {
@@ -39,8 +39,8 @@ const LOOK: TicketLook = {
     "rounded-full border border-(--ovio-line) bg-(--ovio-surface) px-2.5 py-1 font-(family-name:--ovio-mono) text-[10.5px] tracking-[0.06em] text-(--ovio-ink) transition-colors hover:bg-(--ovio-line-2)",
   book: (sending) => <GooBookButton sending={sending} look={BOOK} />,
   motion: {
-    flip: { duration: 0.7, ease: [0.3, 1.25, 0.5, 1] },
-    tear: { duration: 0.6, ease: [0.4, 0, 0.6, 1] },
+    flip: { duration: 0.45, ease: [0.3, 1.25, 0.5, 1] },
+    tear: { duration: 0.4, ease: [0.4, 0, 0.6, 1] },
     settle: motionTokens.minimal.slow,
     stamp: { duration: 0.35, ease: [0.3, 1.6, 0.5, 1] },
     sweep: { duration: 2.4, ease: [0.45, 0, 0.55, 1] },

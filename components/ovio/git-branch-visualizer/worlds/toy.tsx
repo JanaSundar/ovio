@@ -20,10 +20,10 @@ const LOOK: GraphLook = {
   labelWidth: 150,
   laneGap: 72,
   maxStep: 100,
-  draw: { duration: 0.6, ease: [0.3, 0, 0.2, 1] },
+  draw: { duration: 0.4, ease: [0.3, 0, 0.2, 1] },
   enter: motionTokens.toy.piece,
   move: motionTokens.toy.slide,
-  stagger: 0.07,
+  stagger: 0.045,
 };
 
 const key =

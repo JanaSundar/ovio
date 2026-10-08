@@ -11,7 +11,7 @@ const BOOK: GooBookLook = {
   label: "text-[23px] leading-[1.05] font-extrabold tracking-[-0.04em] text-(--ovio-on-accent)",
   arrow: "text-[#ffd9b8]",
   radius: 14,
-  transition: { duration: 0.5, ease: [0.34, 1.3, 0.5, 1] },
+  transition: { duration: 0.32, ease: [0.34, 1.3, 0.5, 1] },
 };
 
 const LOOK: TicketLook = {
@@ -49,7 +49,7 @@ const LOOK: TicketLook = {
   ),
   motion: {
     flip: motionTokens.craft.slow,
-    tear: { duration: 0.7, ease: [0.4, 0, 0.6, 1] },
+    tear: { duration: 0.45, ease: [0.4, 0, 0.6, 1] },
     settle: motionTokens.craft.base,
     stamp: motionTokens.craft.base,
     sweep: { duration: 2.8, ease: [0.45, 0, 0.55, 1] },

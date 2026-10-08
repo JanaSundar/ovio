@@ -81,7 +81,7 @@ export function ToySponsorWall({ groups, ctaHref, ctaLabel, className }: Sponsor
                     initial={{ opacity: 0, y: -48 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.8 }}
-                    transition={{ ...drop, delay: reduced ? 0 : s.index * 0.06 }}
+                    transition={{ ...drop, delay: reduced ? 0 : s.index * 0.04 }}
                     className="relative min-w-0 active:z-10"
                   >
                     <ToyPiece

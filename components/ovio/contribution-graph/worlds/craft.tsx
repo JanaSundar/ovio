@@ -52,7 +52,7 @@ const Cell = memo(function Cell({ cell, tabbable, active }: CellProps) {
     <div {...p} className="aspect-square rounded-[3px]">
       <span
         aria-hidden
-        className="relative block size-full rounded-[3px] transition-[transform,box-shadow] duration-[450ms] ease-[cubic-bezier(.34,1.5,.5,1)] motion-reduce:transition-none"
+        className="relative block size-full rounded-[3px] transition-[transform,box-shadow] duration-[300ms] ease-[cubic-bezier(.34,1.5,.5,1)] motion-reduce:transition-none"
         style={tileStyle(cell, active)}
       />
     </div>
@@ -66,7 +66,7 @@ const DROP: Keyframe[] = [
 const DROP_TIMING = {
   duration: motionTokens.craft.slow.duration,
   easing: cssEase(motionTokens.craft.slow.ease),
-  delay: (week: number, weekday: number) => week * 0.014 + weekday * 0.012,
+  delay: (week: number, weekday: number) => week * 0.009 + weekday * 0.008,
 };
 
 /** Craft: tiles on a taped paper card. Taller tiles, busier days; a sticker counts the streak. */

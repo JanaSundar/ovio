@@ -8,7 +8,7 @@ import { detents, KnobTicks, type KnobWorldProps } from "../physical-knob";
 import { useKnob, type KnobFeel } from "../use-knob";
 
 /** Craft: a weighty brass-and-paper dial that overshoots a touch, then settles. */
-const feel: KnobFeel = { steps: 101, follow: { stiffness: 160, damping: 17 }, wheel: 2 };
+const feel: KnobFeel = { steps: 101, follow: { stiffness: 240, damping: 21 }, wheel: 2 };
 
 const TICKS = {
   R: 110,

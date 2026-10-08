@@ -10,7 +10,7 @@ import { formatMonth, monthTicks } from "../shape";
 import type { StarHistoryWorldProps } from "../star-history";
 import { usePointScrubber } from "../use-scrubber";
 
-const DRAW = 1.6;
+const DRAW = 1;
 
 const look: LineLook = {
   curve: "line",

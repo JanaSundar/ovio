@@ -25,7 +25,7 @@ const LIFT = 130;
 const TIMES = [0, 0.4, 0.46, 1];
 /** The tuck: lift off quickly, hang for a beat while it drops behind, then settle on the craft ease. */
 const FLIP: Transition = {
-  duration: motionTokens.craft.slow.duration + 0.25,
+  duration: motionTokens.craft.slow.duration + 0.1,
   ease: ["easeOut", "linear", [...ease.craft]],
 };
 
@@ -84,7 +84,7 @@ export function CraftChangelog({ releases, top, next, className }: ChangelogWorl
                 transition={
                   tucked
                     ? { ...flipT, times: TIMES }
-                    : { ...settle, delay: dealt ? 0.08 : (n - 1 - i) * 0.08 }
+                    : { ...settle, delay: dealt ? 0.05 : (n - 1 - i) * 0.05 }
                 }
                 style={{ zIndex: z, transitionProperty: "z-index", transitionDelay: restack }}
                 className={cn(

@@ -16,9 +16,9 @@ const look: GooLook = {
   statusText: "text-[26px] uppercase [text-shadow:var(--ovio-glow)]",
   // Old hardware: the indicator jumps in hard frames.
   trail: [
-    { duration: 0.4, ease: steps(4) },
-    { duration: 0.6, ease: steps(5) },
-    { duration: 0.8, ease: steps(6) },
+    { duration: 0.26, ease: steps(4) },
+    { duration: 0.4, ease: steps(5) },
+    { duration: 0.52, ease: steps(6) },
   ],
   dots: ["#1d5a2b", "#ffd34d", "#4fdc68"],
   colorDelay: 0.12,

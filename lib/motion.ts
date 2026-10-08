@@ -37,13 +37,13 @@ const spring = (stiffness: number, damping: number, mass = 1) =>
 
 export const motionTokens = {
   minimal: {
-    fast: { duration: 0.12, ease: ease.minimal },
-    base: { duration: 0.2, ease: ease.minimal },
-    slow: { duration: 0.3, ease: ease.minimal },
+    fast: { duration: 0.08, ease: ease.minimal },
+    base: { duration: 0.14, ease: ease.minimal },
+    slow: { duration: 0.2, ease: ease.minimal },
   },
   craft: {
-    base: { duration: 0.45, ease: ease.craft },
-    slow: { duration: 0.6, ease: ease.craft },
+    base: { duration: 0.3, ease: ease.craft },
+    slow: { duration: 0.4, ease: ease.craft },
   },
   retro: {
     frames: (n: number, duration: number) => ({ duration, ease: steps(n) }),
@@ -57,13 +57,13 @@ export const motionTokens = {
   },
   toy: {
     /** Rotary knob: heavy, slow to settle. */
-    knob: spring(95, 22),
+    knob: spring(150, 28),
     /** Raised key: stiff, fast return. */
     key: spring(900, 22),
     /** A loose piece that wobbles back to its seat. */
-    piece: spring(240, 14),
+    piece: spring(360, 17),
     /** A piece sliding in a track. */
-    slide: spring(420, 20),
+    slide: spring(600, 24),
   },
 } as const;
 

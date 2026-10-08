@@ -18,10 +18,10 @@ const LOOK: GraphLook = {
   labelWidth: 140,
   laneGap: 64,
   maxStep: 100,
-  draw: { duration: 0.5, ease: [0.2, 0, 0, 1] },
+  draw: { duration: 0.32, ease: [0.2, 0, 0, 1] },
   enter: motionTokens.minimal.slow,
   move: motionTokens.minimal.slow,
-  stagger: 0.06,
+  stagger: 0.04,
 };
 
 const button =

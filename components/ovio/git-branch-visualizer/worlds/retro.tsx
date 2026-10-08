@@ -22,7 +22,7 @@ const LOOK: GraphLook = {
   draw: motionTokens.retro.frames(10, 0.9),
   enter: motionTokens.retro.frames(1, 0.01),
   move: motionTokens.retro.frames(4, 0.24),
-  stagger: 0.09,
+  stagger: 0.06,
 };
 
 const block =

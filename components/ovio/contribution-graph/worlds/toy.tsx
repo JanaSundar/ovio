@@ -235,7 +235,7 @@ export function ToyContributionGraph({
     if (reduced) return;
     const dir = Math.sign(angle.getVelocity()) || 1;
     animate(tick, [0, dir * 22, -dir * 6, 0], {
-      duration: 0.32,
+      duration: 0.22,
       times: [0, 0.25, 0.6, 1],
       ease: [0.22, 1, 0.36, 1],
     });

@@ -3,21 +3,28 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useLenis } from "lenis/react";
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, motion, type Transition } from "motion/react";
 import { useEffect, useRef, useState, type RefObject } from "react";
 import { COMPONENTS, DOC_SECTIONS, pad2 } from "@/content/components";
-import { useReducedMotionSafe } from "@/lib/motion";
+import { ease, useOvioTransition, useReducedMotionSafe } from "@/lib/motion";
 import { shortcutKey } from "./shortcuts";
+
+/** How the active markers glide to the next link or section. */
+const GLIDE: Transition = { duration: 0.4, ease: ease.stage };
 
 /** The component search and list, shared by the sidebar and the small-screen menu. */
 function ComponentLinks({
   inputRef,
   onNavigate,
+  indicatorId,
 }: {
   inputRef?: RefObject<HTMLInputElement | null>;
   onNavigate?: () => void;
+  /** Names the active marker, so the sidebar's and the menu's never trade places. */
+  indicatorId: string;
 }) {
   const pathname = usePathname();
+  const glide = useOvioTransition(GLIDE);
   const [query, setQuery] = useState("");
   const q = query.trim().toLowerCase();
   const shown = COMPONENTS.map((c, i) => ({ ...c, n: i + 1 })).filter((c) =>
@@ -56,6 +63,14 @@ function ComponentLinks({
               aria-current={pathname === href ? "page" : undefined}
               onClick={onNavigate}
             >
+              {pathname === href && (
+                <motion.span
+                  aria-hidden
+                  layoutId={indicatorId}
+                  className="side-active"
+                  transition={glide}
+                />
+              )}
               {c.name}
               <small>{pad2(c.n)}</small>
             </Link>
@@ -86,7 +101,7 @@ export function DocsSidebar() {
   return (
     <aside className="side">
       <div className="side-inner">
-        <ComponentLinks inputRef={input} />
+        <ComponentLinks inputRef={input} indicatorId="side-active" />
         <p className="side-note">
           <b>Every component has four worlds.</b>
           <br />
@@ -200,7 +215,7 @@ export function DocsFab() {
                   ✕
                 </button>
               </div>
-              <ComponentLinks onNavigate={() => setOpen(false)} />
+              <ComponentLinks onNavigate={() => setOpen(false)} indicatorId="sheet-active" />
             </motion.div>
           </>
         )}
@@ -212,6 +227,7 @@ export function DocsFab() {
 /** "On this page", marking the section nearest the top of the viewport. */
 export function DocsToc() {
   const [active, setActive] = useState<string>(DOC_SECTIONS[0].id);
+  const glide = useOvioTransition(GLIDE);
 
   useEffect(() => {
     const els = DOC_SECTIONS.map((s) => document.getElementById(s.id)).filter(
@@ -244,6 +260,14 @@ export function DocsToc() {
       <p className="toc-title">On this page</p>
       {DOC_SECTIONS.map((s) => (
         <a key={s.id} href={`#${s.id}`} aria-current={active === s.id ? "location" : undefined}>
+          {active === s.id && (
+            <motion.span
+              aria-hidden
+              layoutId="toc-active"
+              className="toc-active"
+              transition={glide}
+            />
+          )}
           {s.label}
         </a>
       ))}

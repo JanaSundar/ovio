@@ -7,13 +7,12 @@ import { notFound } from "next/navigation";
 import type { SourceFile } from "@/components/site/code-explorer";
 import { ComponentPreview, MotionInfo, UsageSnippet } from "@/components/site/component-doc";
 import { CopyCommand } from "@/components/site/copy-command";
-import { DocsFab, DocsSidebar, DocsToc } from "@/components/site/docs-sidebar";
+import { DocsToc } from "@/components/site/docs-sidebar";
 import { highlight } from "@/components/site/highlight";
 import {
   COMPONENTS,
   getComponent,
   installCommand,
-  pad2,
   type ComponentDoc,
   type DocSectionId,
 } from "@/content/components";
@@ -95,103 +94,79 @@ export default async function ComponentPage({ params }: PageProps<"/docs/[slug]"
 
   return (
     <>
-      <section className="dochead row-12">
-        <aside className="trail">
-          <b>Docs / Components</b>
-          {pad2(i + 1)} / {pad2(COMPONENTS.length)} <br />
-          {c.name}
-        </aside>
-        <div className="head-main">
-          <p className="eyebrow">Component reference</p>
-          <h1>{c.name}</h1>
-          <p>{c.description}</p>
-        </div>
-        <aside className="head-meta">
-          <span className="meta-top">
-            <b>Renderer</b>
-            {c.tech}
-          </span>
-          <span className="doc-pill">4 WORLDS</span>
-        </aside>
-      </section>
+      <article className="article">
+        <DocSection id="preview">
+          <ComponentPreview slug={c.slug} exportName={c.exportName} files={files} />
+        </DocSection>
 
-      <div className="docs row-12">
-        <DocsSidebar />
-        <article className="article">
-          <DocSection id="preview">
-            <ComponentPreview slug={c.slug} exportName={c.exportName} files={files} />
-          </DocSection>
-
-          <DocSection id="installation">
-            <h2>Installation</h2>
-            <p>
-              Use the shadcn CLI to copy the component source and its dependencies into your own
-              project. Installs{" "}
-              {item.dependencies.map((d, k) => (
-                <span key={d}>
-                  {k > 0 && (k === item.dependencies.length - 1 ? " and " : ", ")}
-                  <code>{d}</code>
-                </span>
-              ))}
-              , plus the Ovio {item.registryDependencies.join(", ")} items.
-            </p>
-            <CopyCommand command={installCommand(c.slug)} variant="install-box" />
-            <div className="callout">
-              <i>↳</i>
-              <span>
-                <strong>You own the source.</strong> Ovio components arrive in your codebase so you
-                can edit any part of their style, behavior, or data flow.
+        <DocSection id="installation">
+          <h2>Installation</h2>
+          <p>
+            Use the shadcn CLI to copy the component source and its dependencies into your own
+            project. Installs{" "}
+            {item.dependencies.map((d, k) => (
+              <span key={d}>
+                {k > 0 && (k === item.dependencies.length - 1 ? " and " : ", ")}
+                <code>{d}</code>
               </span>
-            </div>
-          </DocSection>
+            ))}
+            , plus the Ovio {item.registryDependencies.join(", ")} items.
+          </p>
+          <CopyCommand command={installCommand(c.slug)} variant="install-box" />
+          <div className="callout">
+            <i>↳</i>
+            <span>
+              <strong>You own the source.</strong> Ovio components arrive in your codebase so you
+              can edit any part of their style, behavior, or data flow.
+            </span>
+          </div>
+        </DocSection>
 
-          <DocSection id="usage">
-            <h2>Usage</h2>
-            <p>
-              Set the visual world on the component, or wrap the page in an OvioProvider to set a
-              default for everything inside it.
-            </p>
-            <UsageSnippet html={usageSnippets(c)} />
-            <MotionInfo tech={c.tech} />
-          </DocSection>
+        <DocSection id="usage">
+          <h2>Usage</h2>
+          <p>
+            Set the visual world on the component, or wrap the page in an OvioProvider to set a
+            default for everything inside it.
+          </p>
+          <UsageSnippet html={usageSnippets(c)} />
+          <MotionInfo tech={c.tech} />
+        </DocSection>
 
-          <DocSection id="props">
-            <h2>Props</h2>
-            <p>Control the data, selected world, animation behavior, and callbacks.</p>
-            <div className="prop-scroll">
-              <table className="prop-table">
-                <thead>
-                  <tr>
-                    <th>Prop</th>
-                    <th>Type</th>
-                    <th>Description</th>
+        <DocSection id="props">
+          <h2>Props</h2>
+          <p>Control the data, selected world, animation behavior, and callbacks.</p>
+          <div className="prop-scroll">
+            <table className="prop-table">
+              <thead>
+                <tr>
+                  <th>Prop</th>
+                  <th>Type</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                {c.props.map((p) => (
+                  <tr key={p.name}>
+                    <td>{p.name}</td>
+                    <td>{p.type}</td>
+                    <td>{p.description}</td>
                   </tr>
-                </thead>
-                <tbody>
-                  {c.props.map((p) => (
-                    <tr key={p.name}>
-                      <td>{p.name}</td>
-                      <td>{p.type}</td>
-                      <td>{p.description}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </DocSection>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </DocSection>
 
-          <nav className="pager" aria-label="Components">
-            <Link href={`/docs/${prev.slug}`}>
-              ← Previous<b>{prev.name}</b>
-            </Link>
-            <Link href={`/docs/${next.slug}`}>
-              Next →<b>{next.name}</b>
-            </Link>
-          </nav>
-        </article>
-        <DocsToc />
-      </div>
-      <DocsFab />
+        <nav className="pager" aria-label="Components">
+          <Link href={`/docs/${prev.slug}`}>
+            ← Previous<b>{prev.name}</b>
+          </Link>
+          <Link href={`/docs/${next.slug}`}>
+            Next →<b>{next.name}</b>
+          </Link>
+        </nav>
+      </article>
+      <DocsToc />
     </>
   );
 }

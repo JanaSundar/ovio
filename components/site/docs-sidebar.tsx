@@ -98,6 +98,25 @@ export function DocsSidebar() {
   );
 }
 
+/** Keeps Tab and Shift+Tab cycling inside a modal, so focus never wanders to the page behind it. */
+function trapFocus(e: KeyboardEvent, root: HTMLElement | null) {
+  if (!root) return;
+  const items = [...root.querySelectorAll<HTMLElement>("a[href], button, input")].filter(
+    (el) => !el.hasAttribute("disabled"),
+  );
+  if (!items.length) return;
+  const first = items[0];
+  const last = items[items.length - 1];
+  const at = document.activeElement;
+  if (e.shiftKey && (at === first || at === root)) {
+    e.preventDefault();
+    last.focus();
+  } else if (!e.shiftKey && (at === last || !root.contains(at))) {
+    e.preventDefault();
+    first.focus();
+  }
+}
+
 /**
  * Below 880px: a floating button in the bottom right that opens every component in a sheet.
  * Picking one navigates there and closes it; Escape, the backdrop and the close button do too.
@@ -119,6 +138,7 @@ export function DocsFab() {
     // Focus the sheet rather than the search, so a phone keyboard doesn't cover the list.
     sheet.current?.focus();
     const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Tab") return trapFocus(e, sheet.current);
       if (e.key !== "Escape") return;
       setOpen(false);
       fab.current?.focus();

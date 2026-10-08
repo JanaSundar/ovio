@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { barLabel, deltaLabel, signedDelta } from "@/components/ovio/bundle-size/bundle-size";
 import { buildContributionYear } from "@/components/ovio/contribution-graph/year";
+import { relativeTime } from "@/components/ovio/repository-card/repository-card";
 import { cellsPath, initialsOf } from "@/components/ovio/developer-id-card/developer-id-card";
 import { hashString, random } from "@/components/ovio/event-ticket/seed";
 import { formatDelta } from "@/components/ovio/npm-downloads/npm-downloads";
@@ -126,5 +127,21 @@ describe("small formatters", () => {
         [false, true],
       ]),
     ).toBe("M0 0h1v1h-1zM1 1h1v1h-1z");
+  });
+});
+
+describe("repository card relativeTime", () => {
+  const now = Date.parse("2026-10-08T12:00:00Z");
+  const ago = (seconds: number) => new Date(now - seconds * 1000).toISOString();
+
+  it("picks the largest whole unit", () => {
+    expect(relativeTime(ago(30), now)).toBe("just now");
+    expect(relativeTime(ago(5 * 60), now)).toBe("5m ago");
+    expect(relativeTime(ago(2 * 3600), now)).toBe("2h ago");
+    expect(relativeTime(ago(30 * 3600), now)).toBe("1d ago");
+    expect(relativeTime(ago(29 * 86400), now)).toBe("29d ago");
+    expect(relativeTime(ago(100 * 86400), now)).toBe("3mo ago");
+    expect(relativeTime(ago(400 * 86400), now)).toBe("1y ago");
+    expect(relativeTime(ago(-60), now)).toBe("just now");
   });
 });

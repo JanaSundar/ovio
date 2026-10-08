@@ -100,3 +100,15 @@ test("repository card hydrates cleanly long after the build", async ({ page }) =
   await expect(page.locator(".stage-frame")).toContainText("3mo ago");
   expect(errors).toEqual([]);
 });
+
+test("components sheet keeps focus inside while open", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 800 });
+  await open(page, "/docs/contribution-graph");
+  await page.getByRole("button", { name: "Components" }).click();
+  await settle(page);
+  const sheet = page.getByRole("dialog", { name: "Components" });
+  for (let i = 0; i < 20; i++) {
+    await page.keyboard.press(i % 3 ? "Tab" : "Shift+Tab");
+    expect(await sheet.evaluate((el) => el.contains(document.activeElement))).toBe(true);
+  }
+});

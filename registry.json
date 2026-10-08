@@ -323,7 +323,8 @@
         "JanaSundar/ovio/world",
         "JanaSundar/ovio/motion",
         "JanaSundar/ovio/rolling-number",
-        "JanaSundar/ovio/toy"
+        "JanaSundar/ovio/toy",
+        "JanaSundar/ovio/format"
       ],
       "files": [
         {

@@ -1,5 +1,6 @@
 "use client";
 
+import { posthog } from "posthog-js";
 import { useState } from "react";
 import { useWorld, type World } from "@/components/shared/world-provider";
 import { worldInfo } from "@/content/worlds";
@@ -34,7 +35,14 @@ export function ComponentPreview({
                 role="tab"
                 type="button"
                 aria-selected={tab === t}
-                onClick={() => setTab(t)}
+                onClick={() => {
+                  if (tab === t) return;
+                  setTab(t);
+                  posthog.capture("component_view_changed", {
+                    component_slug: slug,
+                    view: t,
+                  });
+                }}
               >
                 {t === "preview" ? "Live specimen" : "Source"}
               </button>

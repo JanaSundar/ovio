@@ -10,17 +10,7 @@ import { Demo, DEMOS } from "./demos";
 import { PreviewFrame } from "./preview-frame";
 
 /** Preview and Code tabs over a component's demo and its installed source. */
-export function ComponentPreview({
-  slug,
-  name,
-  phase,
-  files,
-}: {
-  slug: string;
-  name: string;
-  phase: number;
-  files: SourceFile[];
-}) {
+export function ComponentPreview({ slug, files }: { slug: string; files: SourceFile[] }) {
   const [tab, setTab] = useState<"preview" | "code">("preview");
   const demo = DEMOS[slug];
 
@@ -47,14 +37,7 @@ export function ComponentPreview({
       )}
       {tab === "preview" ? (
         <PreviewFrame minHeight={demo?.minHeight ?? 400}>
-          {demo ? (
-            <Demo slug={slug} />
-          ) : (
-            <div className="flex flex-col items-center gap-2 text-center font-(family-name:--ovio-font) text-(--ovio-ink)">
-              <span className="text-lg">{name}</span>
-              <span className="text-sm opacity-60">Lands in phase {phase} of the build.</span>
-            </div>
-          )}
+          <Demo slug={slug} />
         </PreviewFrame>
       ) : (
         <CodeExplorer files={files} />

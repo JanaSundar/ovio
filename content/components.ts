@@ -1,4 +1,4 @@
-/** The component catalogue. Props of components that are not `ready` yet are provisional. */
+/** The component catalogue. */
 
 type PropDoc = { name: string; type: string; description: string };
 
@@ -12,13 +12,6 @@ export type ComponentDoc = {
   /** Lines for the usage snippet, after `variant`. */
   usage: string;
   props: PropDoc[];
-  phase: 1 | 2 | 3;
-  /** Whether the component ships in this build. */
-  ready: boolean;
-  /** Planned npm packages. A built component's come from registry.json. */
-  dependencies?: string[];
-  /** Planned Ovio registry items. A built component's come from registry.json. */
-  registryDependencies?: string[];
 };
 
 const WORLDS_TYPE = '"minimal" | "craft" | "retro" | "toy"';
@@ -26,11 +19,6 @@ const V: PropDoc = {
   name: "variant",
   type: WORLDS_TYPE,
   description: "Which world to render. Defaults to the nearest OvioProvider, then minimal.",
-};
-const A: PropDoc = {
-  name: "animation",
-  type: '"none" | "enter-exit" | "always"',
-  description: 'Forced to "none" under reduced motion.',
 };
 const CL: PropDoc = { name: "className", type: "string", description: "Merged onto the root." };
 
@@ -68,36 +56,59 @@ export const COMPONENTS: ComponentDoc[] = [
       },
       CL,
     ],
-    phase: 2,
-    ready: true,
   },
   {
     slug: "event-ticket",
     name: "Event Ticket",
-    tech: "CSS 3D · canvas art",
+    tech: "SVG · CSS 3D · Motion for React",
     description:
       "A pass for launches and conferences. Book on the stub, tear it to check in, flip it for the QR code.",
     exportName: "EventTicket",
-    usage: '  layout="horizontal"\n  onBook={reserve}\n  onTear={checkIn}',
+    usage: "  event={event}\n  onBook={reserve}\n  onTear={checkIn}",
     props: [
+      {
+        name: "event",
+        type: "{ name; date; venue?; title?; description?; tier?; price?; schedule? }",
+        description: "Printed on the ticket. The schedule goes on the back.",
+      },
       V,
       {
         name: "layout",
         type: '"horizontal" | "vertical"',
-        description: "Side stub or tear-off bottom.",
+        description: "Side stub or tear-off bottom. Horizontal turns vertical below 600px.",
       },
-      { name: "event", type: "{ name; date; venue? }", description: "Printed on the ticket." },
+      {
+        name: "ticketId",
+        type: "string",
+        description: "Printed on the stub and encoded in the QR code.",
+      },
+      {
+        name: "defaultAttendee",
+        type: "{ name; email }",
+        description: "Starts the ticket already booked.",
+      },
       {
         name: "onBook",
         type: "(attendee) => Promise<void>",
-        description: "The book button waits on it.",
+        description: "The book button waits on it; a rejection shows its message.",
       },
-      { name: "onTear", type: "() => void", description: "Fires when the stub tears off." },
+      {
+        name: "onTear",
+        type: "(attendee | null) => void",
+        description: "Fires when the stub is dragged off, booked or not.",
+      },
+      {
+        name: "flipped / defaultFlipped",
+        type: "boolean",
+        description: "QR side showing, controlled or not.",
+      },
+      {
+        name: "onFlippedChange",
+        type: "(flipped: boolean) => void",
+        description: "Fires when the ticket flips.",
+      },
+      CL,
     ],
-    phase: 3,
-    ready: false,
-    dependencies: ["motion", "uqr"],
-    registryDependencies: ["world", "motion", "theme"],
   },
   {
     slug: "gooey-tabs",
@@ -129,8 +140,6 @@ export const COMPONENTS: ComponentDoc[] = [
       { name: "goo", type: "number", description: "Blur strength of the filter. Default 9." },
       CL,
     ],
-    phase: 1,
-    ready: true,
   },
   {
     slug: "star-history",
@@ -160,8 +169,6 @@ export const COMPONENTS: ComponentDoc[] = [
       },
       CL,
     ],
-    phase: 2,
-    ready: true,
   },
   {
     slug: "repository-card",
@@ -189,8 +196,6 @@ export const COMPONENTS: ComponentDoc[] = [
       },
       CL,
     ],
-    phase: 1,
-    ready: true,
   },
   {
     slug: "top-contributors",
@@ -225,8 +230,6 @@ export const COMPONENTS: ComponentDoc[] = [
       },
       CL,
     ],
-    phase: 2,
-    ready: true,
   },
   {
     slug: "npm-downloads",
@@ -247,26 +250,29 @@ export const COMPONENTS: ComponentDoc[] = [
       { name: "goal", type: "number", description: "Weekly target. Hidden when left out." },
       CL,
     ],
-    phase: 2,
-    ready: true,
   },
   {
     slug: "sponsor-wall",
     name: "Sponsor Wall",
-    tech: "CSS · Motion for React",
+    tech: "CSS · Motion for React (drag, layout)",
     description: "Sponsors by tier, from a logo wall to blocks on a pegboard.",
     exportName: "SponsorWall",
-    usage: "  sponsors={sponsors}",
+    usage: '  sponsors={sponsors}\n  ctaHref="https://github.com/sponsors/ada-dev"',
     props: [
+      {
+        name: "sponsors",
+        type: '{ name; tier: "platinum" | "gold" | "backer"; url? }[]',
+        description: "Tier decides size; url makes the name a link.",
+      },
       V,
-      { name: "sponsors", type: "{ name; tier; url? }[]", description: "Tier decides size." },
-      { name: "cta", type: "string", description: "Become-a-sponsor link." },
-      A,
+      {
+        name: "ctaHref",
+        type: "string",
+        description: "Become-a-sponsor link. Hidden when left out.",
+      },
+      { name: "ctaLabel", type: "string", description: 'Link text. Default "Become a sponsor".' },
+      CL,
     ],
-    phase: 3,
-    ready: false,
-    dependencies: ["motion"],
-    registryDependencies: ["world", "motion", "theme"],
   },
   {
     slug: "physical-knob",
@@ -292,27 +298,38 @@ export const COMPONENTS: ComponentDoc[] = [
       { name: "label", type: "string", description: "Accessible name, printed on the dial." },
       CL,
     ],
-    phase: 1,
-    ready: true,
   },
   {
     slug: "developer-id-card",
     name: "Developer ID Card",
-    tech: "CSS · Motion for React (drag)",
+    tech: "SVG · Motion for React (drag)",
     description: "An identity card for a developer: name, role, stack, availability and a QR code.",
     exportName: "DeveloperIdCard",
-    usage: '  name="Jana Sundar"\n  role="Senior Software Engineer"',
+    usage:
+      '  name="Ada Park"\n  title="Senior Software Engineer"\n  stack={["React", "TypeScript", "Node"]}\n  github="ada-dev"\n  available',
     props: [
-      V,
       { name: "name", type: "string", description: "Printed name." },
-      { name: "role", type: "string", description: "Job title." },
-      { name: "stack", type: "string[]", description: "Technologies." },
-      { name: "github", type: "string", description: "Profile for the QR code." },
+      V,
+      { name: "title", type: "string", description: "Job title." },
+      { name: "stack", type: "string[]", description: "Technologies, most important first." },
+      {
+        name: "github",
+        type: "string",
+        description: "GitHub handle without the @. The QR code opens this profile.",
+      },
+      { name: "url", type: "string", description: "What the QR code opens instead." },
+      { name: "website", type: "string", description: "Personal site, printed without https." },
+      { name: "location", type: "string", description: 'For example "Chennai, India".' },
+      {
+        name: "available",
+        type: "boolean",
+        description: "Open to work. The status is hidden when left out.",
+      },
+      { name: "avatarUrl", type: "string", description: "Photo. Initials show without it." },
+      { name: "serial", type: "string", description: 'Card number, e.g. "024".' },
+      { name: "since", type: "number", description: "Year they started, printed in Craft." },
+      CL,
     ],
-    phase: 3,
-    ready: false,
-    dependencies: ["motion", "uqr"],
-    registryDependencies: ["world", "motion", "theme"],
   },
   {
     slug: "bundle-size",
@@ -336,8 +353,6 @@ export const COMPONENTS: ComponentDoc[] = [
       },
       CL,
     ],
-    phase: 2,
-    ready: true,
   },
   {
     slug: "git-branch-visualizer",
@@ -348,19 +363,41 @@ export const COMPONENTS: ComponentDoc[] = [
     exportName: "GitBranchVisualizer",
     usage: '  commits={commits}\n  head="main"',
     props: [
-      V,
       {
         name: "commits",
-        type: "{ id; branch; message; author; date; parents[] }[]",
-        description: "Commit list.",
+        type: "{ id; branch; message; author; date; parents?; tag? }[]",
+        description: "History, oldest first. Two parents make a merge; tag draws a release label.",
       },
-      { name: "head", type: "string", description: "Checked-out branch." },
-      { name: "onSelect", type: "(commit) => void", description: "Commit selected." },
+      V,
+      {
+        name: "head",
+        type: "string",
+        description: "Checked-out branch. Defaults to the first commit's branch.",
+      },
+      { name: "repo", type: "string", description: 'Header label, e.g. "ada-dev/lumen".' },
+      {
+        name: "value / defaultValue",
+        type: "string",
+        description: "Selected commit id, controlled or not. Defaults to the newest.",
+      },
+      {
+        name: "onValueChange",
+        type: "(id: string, commit) => void",
+        description: "Fires when the selected commit changes.",
+      },
+      {
+        name: "actions",
+        type: "boolean",
+        description: "Shows Merge, Branch from and Reset, played out locally. Default true.",
+      },
+      { name: "onMerge", type: "(commit) => void", description: "Fires with the merge commit." },
+      {
+        name: "onBranch",
+        type: "(branch: string, from) => void",
+        description: "Fires with the new branch and the commit it starts from.",
+      },
+      CL,
     ],
-    phase: 3,
-    ready: false,
-    dependencies: ["motion"],
-    registryDependencies: ["world", "motion", "theme"],
   },
   {
     slug: "changelog",
@@ -379,33 +416,61 @@ export const COMPONENTS: ComponentDoc[] = [
       { name: "limit", type: "number", description: "Releases shown. All when left out." },
       CL,
     ],
-    phase: 2,
-    ready: true,
   },
   {
     slug: "now-playing",
     name: "Now Playing",
     tech: "CSS · Motion for React",
-    description: "What you're listening to, live.",
+    description: "What you're listening to, live. Play, pause, seek and turn it up.",
     exportName: "NowPlaying",
     usage: "  track={track}",
     props: [
+      {
+        name: "track",
+        type: "{ title; artist; album?; duration; artwork? }",
+        description: "Current track. duration in seconds; artwork is a cover image URL.",
+      },
       V,
-      { name: "track", type: "{ title; artist; album; duration }", description: "Current track." },
-      { name: "progress", type: "number", description: "Seconds elapsed." },
-      A,
+      {
+        name: "playing / defaultPlaying",
+        type: "boolean",
+        description: "Playing state, controlled or not. Plays by default.",
+      },
+      {
+        name: "onPlayingChange",
+        type: "(playing: boolean) => void",
+        description: "Play or pause.",
+      },
+      {
+        name: "progress / defaultProgress",
+        type: "number",
+        description: "Seconds elapsed. Ticks once a second while playing.",
+      },
+      {
+        name: "onProgressChange",
+        type: "(progress: number) => void",
+        description: "Fires on each tick and seek.",
+      },
+      {
+        name: "volume / defaultVolume",
+        type: "number",
+        description: "0–10, default 6. Turned with the Toy knob.",
+      },
+      { name: "onVolumeChange", type: "(volume: number) => void", description: "Volume changed." },
+      {
+        name: "onPrevious / onNext",
+        type: "() => void",
+        description: "Transport keys. onNext also fires when the track ends.",
+      },
+      CL,
     ],
-    phase: 3,
-    ready: false,
-    dependencies: ["motion", "@number-flow/react"],
-    registryDependencies: ["world", "motion", "theme", "rolling-number"],
   },
 ];
 
 export const getComponent = (slug: string) => COMPONENTS.find((c) => c.slug === slug);
 
-/** Where "Docs" links land: the first built component. /docs redirects here too. */
-export const DOCS_HREF = `/docs/${COMPONENTS.find((c) => c.ready)!.slug}`;
+/** Where "Docs" links land: the first component. /docs redirects here too. */
+export const DOCS_HREF = `/docs/${COMPONENTS[0].slug}`;
 
 /** The GitHub repository that serves as the shadcn registry. */
 export const REPO = "JanaSundar/ovio";

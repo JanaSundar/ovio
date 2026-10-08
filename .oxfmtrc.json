@@ -4,5 +4,5 @@
   "singleQuote": false,
   "trailingComma": "all",
   "printWidth": 100,
-  "ignorePatterns": ["reference/**", ".next/**", "pnpm-lock.yaml"]
+  "ignorePatterns": [".next/**", "pnpm-lock.yaml"]
 }

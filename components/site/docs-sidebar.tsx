@@ -52,11 +52,10 @@ function ComponentLinks({
               key={c.slug}
               href={href}
               aria-current={pathname === href ? "page" : undefined}
-              className={c.ready ? undefined : "soon"}
               onClick={onNavigate}
             >
               {c.name}
-              <small>{c.ready ? String(c.n).padStart(2, "0") : "soon"}</small>
+              <small>{String(c.n).padStart(2, "0")}</small>
             </Link>
           );
         })}

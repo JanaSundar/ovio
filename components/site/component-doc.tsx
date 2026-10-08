@@ -12,15 +12,11 @@ import { WorldSwitcher } from "./world-switcher";
 /** Preview and Code tabs over a component's demo and its installed source, with the world tabs. */
 export function ComponentPreview({
   slug,
-  name,
   exportName,
-  phase,
   files,
 }: {
   slug: string;
-  name: string;
   exportName: string;
-  phase: number;
   files: SourceFile[];
 }) {
   const [tab, setTab] = useState<"preview" | "code">("preview");
@@ -51,14 +47,7 @@ export function ComponentPreview({
       </div>
       {tab === "preview" ? (
         <PreviewFrame minHeight={demo?.minHeight ?? 400}>
-          {demo ? (
-            <Demo slug={slug} />
-          ) : (
-            <div className="empty-stage">
-              <span className="text-lg">{name}</span>
-              <span className="text-sm opacity-60">Lands in phase {phase} of the build.</span>
-            </div>
-          )}
+          <Demo slug={slug} />
         </PreviewFrame>
       ) : (
         <CodeExplorer files={files} />

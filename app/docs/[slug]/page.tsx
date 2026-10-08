@@ -59,13 +59,7 @@ export default async function ComponentPage({ params }: PageProps<"/docs/[slug]"
   const c = COMPONENTS[i];
   const prev = COMPONENTS[(i - 1 + COMPONENTS.length) % COMPONENTS.length];
   const next = COMPONENTS[(i + 1) % COMPONENTS.length];
-  const item = c.ready
-    ? registryItem(c.slug)
-    : {
-        files: [],
-        dependencies: c.dependencies ?? [],
-        registryDependencies: c.registryDependencies ?? [],
-      };
+  const item = registryItem(c.slug);
   const files = await readSources(item.files);
   const pad = (n: number) => String(n).padStart(2, "0");
 
@@ -87,9 +81,7 @@ export default async function ComponentPage({ params }: PageProps<"/docs/[slug]"
             <b>Renderer</b>
             {c.tech}
           </span>
-          <span className={c.ready ? "doc-pill" : "doc-pill soon"}>
-            {c.ready ? "READY" : `PHASE ${c.phase} · SOON`}
-          </span>
+          <span className="doc-pill">4 WORLDS</span>
         </aside>
       </section>
 
@@ -97,13 +89,7 @@ export default async function ComponentPage({ params }: PageProps<"/docs/[slug]"
         <DocsSidebar />
         <article className="article">
           <section className="doc-section" id="preview">
-            <ComponentPreview
-              slug={c.slug}
-              name={c.name}
-              exportName={c.exportName}
-              phase={c.phase}
-              files={files}
-            />
+            <ComponentPreview slug={c.slug} exportName={c.exportName} files={files} />
           </section>
 
           <section className="doc-section" id="installation">

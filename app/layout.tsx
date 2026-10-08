@@ -50,7 +50,7 @@ const description =
   "Expressive motion components for developer websites, each in four design worlds: Minimal, Craft, Retro and Toy. Install it, own the source.";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://ovio.dev"),
+  metadataBase: new URL("https://ovioui.vercel.app"),
   title: { default: "Ovio · The motion layer for developer websites", template: "%s · Ovio" },
   description,
   applicationName: "Ovio",

@@ -383,36 +383,10 @@ html {
   font-weight: 500;
 }
 
-/* World tabs */
-.world-tabs {
-  display: flex;
-  padding: 3px;
-  background: #e8e7e1;
-  border-radius: 5px;
-  gap: 2px;
-}
-.world-tabs button {
-  border: 0;
-  background: transparent;
-  border-radius: 3px;
-  color: #7b7d76;
-  padding: 7px 10px;
-  font-size: 13px;
-  cursor: pointer;
-}
-.world-tabs button:hover {
-  color: var(--ink);
-}
-.world-tabs button[aria-selected="true"] {
-  background: #fff;
-  color: var(--ink);
-  box-shadow: 0 1px 2px #00000010;
-  font-weight: 600;
-}
-.world-tabs b {
-  font: 11px var(--mono);
-  color: #a3a49d;
-  margin-right: 4px;
+/* World tabs: Gooey Tabs over the live specimens */
+.world-gooey {
+  width: 380px;
+  max-width: 100%;
 }
 
 /* The demo stage. */
@@ -706,10 +680,6 @@ html {
   color: #555750;
   font: 12px var(--mono);
 }
-.doc-pill.soon {
-  background: #ebe8fb;
-  color: #5a4fb0;
-}
 
 /* Docs: body */
 .docs {
@@ -787,9 +757,6 @@ html {
 .side-links a small {
   color: #aaa;
   font: 12px var(--mono);
-}
-.side-links a.soon {
-  color: #a3a49d;
 }
 .side-empty {
   padding: 7px;
@@ -892,15 +859,6 @@ html {
 .preview-caption b {
   color: #4a4c46;
   font-weight: 500;
-}
-.empty-stage {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  text-align: center;
-  font-family: var(--ovio-font);
-  color: var(--ovio-ink);
 }
 .install-box {
   border: 1px dotted var(--line-strong);
@@ -1345,17 +1303,8 @@ html {
     gap: 8px;
     flex-direction: column;
   }
-  .world-tabs {
+  .world-gooey {
     width: 100%;
-    justify-content: space-between;
-  }
-  .world-tabs button {
-    flex: 1;
-    padding: 8px 4px;
-    font-size: 13px;
-  }
-  .world-tabs b {
-    display: none;
   }
   .specimen-caption,
   .preview-caption {

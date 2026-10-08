@@ -1,10 +1,10 @@
 "use client";
 
 import { motion } from "motion/react";
+import { Avatar } from "@/components/shared/avatar";
 import { RollingNumber } from "@/components/shared/rolling-number";
 import { motionTokens, useOvioTransition, useReducedMotionSafe } from "@/lib/motion";
 import { cn } from "@/lib/utils";
-import { Avatar } from "../avatar";
 import { PERIOD_LABEL, type TopContributorsWorldProps } from "../top-contributors";
 
 /** Photo tile colours and tilts, by rank. Light tiles take dark ink. */
@@ -96,7 +96,8 @@ export function CraftTopContributors({
                 className="relative w-[150px] rounded-md bg-(--ovio-surface) px-3 pt-3 pb-3.5 shadow-(--ovio-shadow)"
               >
                 <Avatar
-                  person={p}
+                  initials={p.initials}
+                  src={p.avatarUrl}
                   className="h-24 rounded-[4px] text-[34px] font-extrabold tracking-[-0.03em]"
                   style={{
                     background: TILES[i % TILES.length],

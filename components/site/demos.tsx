@@ -10,6 +10,11 @@ import { ContributionGraphDemo } from "@/components/ovio/contribution-graph/demo
 import { NpmDownloadsDemo } from "@/components/ovio/npm-downloads/demo";
 import { StarHistoryDemo } from "@/components/ovio/star-history/demo";
 import { TopContributorsDemo } from "@/components/ovio/top-contributors/demo";
+import { EventTicketDemo } from "@/components/ovio/event-ticket/demo";
+import { SponsorWallDemo } from "@/components/ovio/sponsor-wall/demo";
+import { DeveloperIdCardDemo } from "@/components/ovio/developer-id-card/demo";
+import { GitBranchVisualizerDemo } from "@/components/ovio/git-branch-visualizer/demo";
+import { NowPlayingDemo } from "@/components/ovio/now-playing/demo";
 import { useReducedMotionSafe } from "@/lib/motion";
 
 /** Sample data shared by the demos, for one fictional project. */
@@ -60,6 +65,11 @@ export const DEMOS: Record<string, { Demo: ComponentType; minHeight: number }> =
   "npm-downloads": { Demo: NpmDownloadsDemo, minHeight: 440 },
   "bundle-size": { Demo: BundleSizeDemo, minHeight: 460 },
   changelog: { Demo: ChangelogDemo, minHeight: 460 },
+  "event-ticket": { Demo: EventTicketDemo, minHeight: 500 },
+  "sponsor-wall": { Demo: SponsorWallDemo, minHeight: 480 },
+  "developer-id-card": { Demo: DeveloperIdCardDemo, minHeight: 520 },
+  "git-branch-visualizer": { Demo: GitBranchVisualizerDemo, minHeight: 520 },
+  "now-playing": { Demo: NowPlayingDemo, minHeight: 440 },
 };
 
 /** A component's demo, with fixed sample props. */

@@ -9,14 +9,7 @@
     "browser": true,
     "node": true
   },
-  "ignorePatterns": [
-    ".next/**",
-    "out/**",
-    "build/**",
-    "next-env.d.ts",
-    "reference/**",
-    "public/**"
-  ],
+  "ignorePatterns": [".next/**", "out/**", "build/**", "next-env.d.ts", "public/**"],
   "rules": {
     "react/react-in-jsx-scope": "off",
     "jsx-a11y/prefer-tag-over-role": "off",

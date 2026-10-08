@@ -20,7 +20,21 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: PageProps<"/docs/[slug]">): Promise<Metadata> {
   const c = getComponent((await params).slug);
-  return c ? { title: c.name, description: c.description } : {};
+  if (!c) return {};
+  // Shares carry the component's own title and its own image, from app/og/[slug].
+  const social = { title: `${c.name} · Ovio`, description: c.description };
+  const image = `/og/${c.slug}`;
+  return {
+    title: c.name,
+    description: c.description,
+    openGraph: {
+      type: "website",
+      siteName: "Ovio",
+      ...social,
+      images: [{ url: image, width: 1200, height: 630, alt: `${c.name} — Ovio` }],
+    },
+    twitter: { card: "summary_large_image", ...social, images: [image] },
+  };
 }
 
 /**

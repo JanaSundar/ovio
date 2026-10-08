@@ -15,5 +15,13 @@
     "jsx-a11y/prefer-tag-over-role": "off",
     "jsx-a11y/interactive-supports-focus": "off",
     "import/no-unassigned-import": "off"
-  }
+  },
+  "overrides": [
+    {
+      "files": ["lib/og/**", "app/og/**"],
+      "rules": {
+        "nextjs/no-img-element": "off"
+      }
+    }
+  ]
 }

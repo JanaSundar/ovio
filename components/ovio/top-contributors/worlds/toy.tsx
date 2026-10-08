@@ -3,20 +3,14 @@
 import { motion } from "motion/react";
 import { Avatar } from "@/components/shared/avatar";
 import { RollingNumber } from "@/components/shared/rolling-number";
-import { ToyKey, ToyPiece } from "@/components/shared/toy";
+import { TOY_PLASTIC, ToyKey, ToyPiece } from "@/components/shared/toy";
 import { motionTokens, useOvioTransition, useReducedMotionSafe } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { PERIOD_LABEL, PERIOD_SHORT, type TopContributorsWorldProps } from "../top-contributors";
 
 /** Plastic piece colours by rank: face, side, ink. */
-const PIECES = [
-  ["var(--ovio-red)", "var(--ovio-red-deep)", "#fff"],
-  ["var(--ovio-accent)", "var(--ovio-accent-deep)", "#fff"],
-  ["var(--ovio-yellow)", "var(--ovio-yellow-deep)", "var(--ovio-ink)"],
-  ["#33b07a", "#1f7c52", "#fff"],
-  ["#2a2925", "#0d0d0c", "var(--ovio-surface)"],
-  ["#fff", "#cfc8b8", "var(--ovio-ink)"],
-] as const;
+const { red, blue, yellow, green, black, white } = TOY_PLASTIC;
+const PIECES = [red, blue, yellow, green, black, white] as const;
 
 export function ToyTopContributors({
   people,

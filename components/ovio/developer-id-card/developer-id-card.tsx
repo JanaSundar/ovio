@@ -1,5 +1,6 @@
 "use client";
 
+import { initialsOf } from "@/components/shared/avatar";
 import { useWorld, type World } from "@/components/shared/world-provider";
 import { MinimalDeveloperIdCard } from "./worlds/minimal";
 import { CraftDeveloperIdCard } from "./worlds/craft";
@@ -53,13 +54,6 @@ export type DeveloperIdCardWorldProps = {
   qrUrl?: string;
   className?: string;
 };
-
-/** "Jana Sundar" → "JS"; "jana" → "JA". */
-export function initialsOf(name: string): string {
-  const words = name.split(/[\s._-]+/).filter(Boolean);
-  const letters = words.length > 1 ? words[0][0] + words[words.length - 1][0] : name.slice(0, 2);
-  return letters.toUpperCase();
-}
 
 /** Square cells as one path: `M x y h1v1h-1z` per dark cell. */
 export function cellsPath(cells: boolean[][]): string {

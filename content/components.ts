@@ -1,5 +1,7 @@
 /** The component catalogue. */
 
+import { WORLDS } from "../lib/world";
+
 type PropDoc = { name: string; type: string; description: string };
 
 export type ComponentDoc = {
@@ -14,7 +16,9 @@ export type ComponentDoc = {
   props: PropDoc[];
 };
 
-const WORLDS_TYPE = '"minimal" | "craft" | "retro" | "toy"';
+const union = (values: readonly string[]) => values.map((v) => `"${v}"`).join(" | ");
+const WORLDS_TYPE = union(WORLDS);
+const ANIMATION_TYPE = union(["none", "enter-exit", "always"]);
 const V: PropDoc = {
   name: "variant",
   type: WORLDS_TYPE,
@@ -40,7 +44,7 @@ export const COMPONENTS: ComponentDoc[] = [
       V,
       {
         name: "animation",
-        type: '"none" | "enter-exit" | "always"',
+        type: ANIMATION_TYPE,
         description:
           'Default "enter-exit". "always" adds the Retro flicker and roll bar. Forced to "none" under reduced motion.',
       },
@@ -169,7 +173,7 @@ export const COMPONENTS: ComponentDoc[] = [
       V,
       {
         name: "animation",
-        type: '"none" | "enter-exit" | "always"',
+        type: ANIMATION_TYPE,
         description:
           'Default "enter-exit". "always" keeps a live marker on the latest point. Forced to "none" under reduced motion.',
       },

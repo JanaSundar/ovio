@@ -2,7 +2,7 @@
 
 import { useMemo, useSyncExternalStore } from "react";
 import { useWorld, type World } from "@/components/shared/world-provider";
-import { useReducedMotionSafe } from "@/lib/motion";
+import { useReducedMotionSafe, type OvioAnimation } from "@/lib/motion";
 import { shapeStarHistory, type StarHistoryShape } from "./shape";
 import { MinimalStarHistory } from "./worlds/minimal";
 import { CraftStarHistory } from "./worlds/craft";
@@ -22,7 +22,7 @@ export type StarHistoryAnnotation = {
   label: string;
 };
 
-export type StarHistoryAnimation = "none" | "enter-exit" | "always";
+export type StarHistoryAnimation = OvioAnimation;
 
 export type StarHistoryProps = {
   /** Cumulative stars by day. Any order; sorted by date. */

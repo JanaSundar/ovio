@@ -10,7 +10,7 @@ import {
   type PointerEvent,
 } from "react";
 import { useWorld, type World } from "@/components/shared/world-provider";
-import { useReducedMotionSafe } from "@/lib/motion";
+import { useReducedMotionSafe, type OvioAnimation } from "@/lib/motion";
 import { dayIndexOf } from "./grid";
 import {
   buildContributionYear,
@@ -27,7 +27,7 @@ import { formatNumber } from "@/lib/format";
 export { buildContributionYear };
 export type { ContributionCell, ContributionDay, ContributionYear };
 
-export type ContributionAnimation = "none" | "enter-exit" | "always";
+export type ContributionAnimation = OvioAnimation;
 
 export type ContributionGraphProps = {
   /** Daily counts; gaps become zero. Dates are "YYYY-MM-DD". */

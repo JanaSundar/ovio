@@ -92,7 +92,12 @@ export async function getStarHistory(
   const [repo, first] = await Promise.all([
     gh<RepoResponse>(`/repos/${fullName}`, options),
     ghResponse(`${path}&page=1`, options, { headers: STAR_HEADERS }).catch((e) => {
-      if (e instanceof HttpError && (e.status === 401 || e.status === 404))
+      // Rate-limit 403s are RateLimitErrors by now, so what's left is GitHub refusing the list.
+      if (
+        e instanceof HttpError &&
+        !(e instanceof RateLimitError) &&
+        [401, 403, 404].includes(e.status)
+      )
         throw new HttpError(`GitHub lists ${fullName}'s stargazers only to its owner`, e.status);
       throw e;
     }),

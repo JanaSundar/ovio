@@ -9,6 +9,43 @@ import {
   plural,
 } from "@/lib/format";
 import { keyToIndex } from "@/lib/keys";
+import { formatType } from "@/components/site/format-type";
+
+describe("formatType", () => {
+  it("leaves short types alone", () => {
+    expect(formatType("string")).toBe("string");
+    expect(formatType("{ date; label }[]")).toBe("{ date; label }[]");
+  });
+
+  it("puts a long union one member per line", () => {
+    expect(formatType('"minimal" | "craft" | "retro" | "toy"')).toBe(
+      '| "minimal"\n| "craft"\n| "retro"\n| "toy"',
+    );
+  });
+
+  it("puts a long object one member per line, keeping its separators", () => {
+    expect(formatType("{ date: string; count: number }[]")).toBe(
+      "{\n  date: string;\n  count: number\n}[]",
+    );
+    expect(formatType("(title, { description?, action?, duration? }) => id")).toBe(
+      "(title, {\n  description?,\n  action?,\n  duration?\n}) => id",
+    );
+  });
+
+  it("indents nested objects and keeps short ones inline", () => {
+    expect(
+      formatType("{ version; date; title; items: (string | { type?; text })[]; hash? }[]"),
+    ).toBe(
+      "{\n  version;\n  date;\n  title;\n  items: (string | { type?; text })[];\n  hash?\n}[]",
+    );
+  });
+
+  it("doesn't split unions inside brackets", () => {
+    expect(formatType("(day: ContributionCell | null) => void")).toBe(
+      "(day: ContributionCell | null) => void",
+    );
+  });
+});
 
 describe("keyToIndex", () => {
   it("steps and stops at the ends", () => {

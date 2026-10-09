@@ -1,7 +1,6 @@
 /** What each live demo shows: real repos, people and packages picked for the richest data. */
 export const DEMO_TARGETS = {
   "repository-card": "honojs/hono",
-  "star-history": "shadcn-ui/ui",
   "top-contributors": "withastro/starlight",
   changelog: "tailwindlabs/tailwindcss",
   "contribution-graph": "shadcn",

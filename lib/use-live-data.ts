@@ -16,10 +16,14 @@ function update(url: string, entry: Entry) {
 function load(url: string) {
   if (entries.has(url)) return;
   update(url, { status: "loading" });
-  fetch(url)
+  // Browsers may cache a response with no max-age on their own; the server's cache is the one
+  // that spares the API, so always ask it.
+  fetch(url, { cache: "no-cache" })
     .then(async (res) => {
       if (!res.ok) throw new Error(`${url} responded ${res.status}`);
-      update(url, { status: "live", data: await res.json() });
+      const data = await res.json();
+      if (data === null) throw new Error(`${url} has no data`);
+      update(url, { status: "live", data });
     })
     .catch((error: Error) => update(url, { status: "error", error }));
 }
@@ -31,7 +35,8 @@ function reload(url: string) {
 
 /**
  * JSON from `url`, fetched once per page load and shared by every component that asks. `data` is
- * `fallback` until the response arrives, and stays `fallback` if the request fails.
+ * `fallback` until the response arrives, and stays `fallback` if the request fails or the body
+ * is `null`.
  */
 export function useLiveData<T>(url: string, fallback: T) {
   const subscribe = useCallback(

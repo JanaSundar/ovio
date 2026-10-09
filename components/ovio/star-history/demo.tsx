@@ -1,5 +1,7 @@
 "use client";
 
+import { LiveDemo } from "@/components/site/live-demo";
+import { DEMO_TARGETS } from "@/content/demo-sources";
 import { StarHistory, type StarHistoryAnnotation, type StarHistoryPoint } from "./star-history";
 
 /** Stars gained each month, Oct 2024 to Sep 2026. July 2025 is the Hacker News spike. */
@@ -44,5 +46,15 @@ const ANNOTATIONS: StarHistoryAnnotation[] = [
 ];
 
 export function StarHistoryDemo() {
-  return <StarHistory repo="ada-dev/lumen" data={DATA} annotations={ANNOTATIONS} />;
+  return (
+    <LiveDemo slug="star-history" fallback={DATA}>
+      {(data, live) =>
+        live ? (
+          <StarHistory repo={DEMO_TARGETS["star-history"]} data={data} />
+        ) : (
+          <StarHistory repo="ada-dev/lumen" data={data} annotations={ANNOTATIONS} />
+        )
+      }
+    </LiveDemo>
+  );
 }

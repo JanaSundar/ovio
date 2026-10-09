@@ -1,5 +1,6 @@
 "use client";
 
+import { LiveDemo } from "@/components/site/live-demo";
 import { Changelog, type Release } from "./changelog";
 
 const RELEASES: Release[] = [
@@ -46,5 +47,9 @@ const RELEASES: Release[] = [
 ];
 
 export function ChangelogDemo() {
-  return <Changelog releases={RELEASES} />;
+  return (
+    <LiveDemo slug="changelog" fallback={RELEASES}>
+      {(releases) => <Changelog releases={releases} />}
+    </LiveDemo>
+  );
 }

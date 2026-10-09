@@ -1,5 +1,6 @@
 "use client";
 
+import { LiveDemo } from "@/components/site/live-demo";
 import { seeded } from "@/components/site/seeded";
 import { ContributionGraph, type ContributionDay } from "./contribution-graph";
 
@@ -30,5 +31,15 @@ const SAMPLE: ContributionDay[] = (() => {
 })();
 
 export function ContributionGraphDemo() {
-  return <ContributionGraph data={SAMPLE} endDate="2026-10-07" compactMonths={6} />;
+  return (
+    <LiveDemo slug="contribution-graph" fallback={SAMPLE}>
+      {(data, live) => (
+        <ContributionGraph
+          data={data}
+          endDate={live ? undefined : "2026-10-07"}
+          compactMonths={6}
+        />
+      )}
+    </LiveDemo>
+  );
 }

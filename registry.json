@@ -161,6 +161,19 @@
       ]
     },
     {
+      "name": "live-data",
+      "type": "registry:hook",
+      "title": "Ovio live data",
+      "description": "useLiveData(url, fallback): client JSON fetched once per page and shared by every component that asks, with the fallback shown until it arrives or if it fails.",
+      "files": [
+        {
+          "path": "lib/use-live-data.ts",
+          "type": "registry:hook",
+          "target": "lib/use-live-data.ts"
+        }
+      ]
+    },
+    {
       "name": "fetch",
       "type": "registry:lib",
       "title": "Ovio fetch",

@@ -14,6 +14,8 @@ type Events = {
   component_view_changed: { component_slug: string; view: "preview" | "code" };
   /** A source file was copied from the docs code explorer. */
   source_code_copied: undefined;
+  /** A docs demo could not load its live data and fell back to sample data. */
+  demo_data_failed: { component_slug: string };
 };
 
 export function track<E extends keyof Events>(

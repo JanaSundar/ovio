@@ -1,8 +1,9 @@
 "use client";
 
+import { LiveDemo } from "@/components/site/live-demo";
 import { RepositoryCard, type Repository } from "./repository-card";
 
-/** lumen, the fictional project the demos are about. */
+/** Shown when the live data can't load: lumen, the fictional project the samples are about. */
 const LUMEN: Repository = {
   owner: "ada-dev",
   name: "lumen",
@@ -15,5 +16,9 @@ const LUMEN: Repository = {
 };
 
 export function RepositoryCardDemo() {
-  return <RepositoryCard repository={LUMEN} />;
+  return (
+    <LiveDemo slug="repository-card" fallback={LUMEN}>
+      {(repository) => <RepositoryCard repository={repository} />}
+    </LiveDemo>
+  );
 }

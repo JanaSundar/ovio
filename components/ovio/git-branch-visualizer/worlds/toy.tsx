@@ -26,6 +26,9 @@ const LOOK: GraphLook = {
   stagger: 0.045,
 };
 
+/** How far a bead's plastic side shows below its face. */
+const SIDE = 3;
+
 const key =
   "flex cursor-pointer items-center gap-1.5 rounded-[11px] border-0 px-3.5 py-2 font-(family-name:--ovio-font) text-[13px] font-extrabold touch-manipulation disabled:cursor-default disabled:opacity-50";
 
@@ -33,7 +36,9 @@ function ToyNode({ node: n, ...s }: NodeProps) {
   const spring = useOvioTransition(motionTokens.toy.key);
   return (
     <>
+      {/* Centred on the whole bead, side included, which is also where it scales from. */}
       <motion.circle
+        cy={SIDE / 2}
         fill="none"
         stroke="var(--ovio-ink)"
         strokeWidth={3}
@@ -42,8 +47,8 @@ function ToyNode({ node: n, ...s }: NodeProps) {
         transition={spring}
       />
       <motion.g initial={false} animate={{ scale: s.hot ? 1.15 : 1 }} transition={spring}>
-        <circle r={11} cy={3} fill={s.color} />
-        <circle r={11} cy={3} fill="rgba(0,0,0,.3)" />
+        <circle r={11} cy={SIDE} fill={s.color} />
+        <circle r={11} cy={SIDE} fill="rgba(0,0,0,.3)" />
         <circle r={11} fill={s.color} />
         <circle r={4} cx={-3.5} cy={-3.5} fill="#fff" opacity={0.4} />
         {n.merge && <circle r={4} fill="var(--ovio-ink)" />}

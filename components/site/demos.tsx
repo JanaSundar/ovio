@@ -14,6 +14,7 @@ import { PhysicalKnobDemo } from "@/components/ovio/physical-knob/demo";
 import { RepositoryCardDemo } from "@/components/ovio/repository-card/demo";
 import { SponsorWallDemo } from "@/components/ovio/sponsor-wall/demo";
 import { StarHistoryDemo } from "@/components/ovio/star-history/demo";
+import { ToastDemo } from "@/components/ovio/toast/demo";
 import { TopContributorsDemo } from "@/components/ovio/top-contributors/demo";
 
 /** Each component's demo, with fixed sample props, and the stage height it needs. */
@@ -32,6 +33,7 @@ export const DEMOS: Record<string, { Demo: ComponentType; minHeight: number }> =
   "developer-id-card": { Demo: DeveloperIdCardDemo, minHeight: 520 },
   "git-branch-visualizer": { Demo: GitBranchVisualizerDemo, minHeight: 520 },
   "now-playing": { Demo: NowPlayingDemo, minHeight: 440 },
+  toast: { Demo: ToastDemo, minHeight: 280 },
 };
 
 /** A component's demo, with fixed sample props. */

@@ -33,6 +33,7 @@ All motion respects `prefers-reduced-motion`.
 | [Developer ID Card](https://ovioui.vercel.app/docs/developer-id-card)         | Available | An identity card for a developer: name, role, stack, availability and a QR code.      |
 | [Git Branch Visualizer](https://ovioui.vercel.app/docs/git-branch-visualizer) | Available | Branches and commits as a graph you can select, merge and branch off.                 |
 | [Now Playing](https://ovioui.vercel.app/docs/now-playing)                     | Available | What you're listening to, with play, seek and volume.                                 |
+| [Toast](https://ovioui.vercel.app/docs/toast)                                 | Available | Notifications in every world, from a taped note to a terminal line.                   |
 
 The catalogue lives in [`content/components.ts`](content/components.ts).
 
@@ -93,25 +94,57 @@ npx shadcn add JanaSundar/ovio/npm      # lib/npm.ts
   `getContributions`.
 - `lib/npm.ts`: `getWeeklyDownloads` (npm registry) and `getBundleSizes` (bundlephobia).
 
-Both are `server-only` and cache responses for an hour by default (pass `{ revalidate }` to
-change it). The GitHub helpers read `GITHUB_TOKEN` from the environment, or take `{ token }`.
-Without a token GitHub allows 60 requests an hour, and `getContributions` needs one because it
-uses the GraphQL API. The npm helpers need no key.
+Both are `server-only` and use native `fetch` through `lib/ovio-fetch.ts`. The GitHub helpers read
+`GITHUB_TOKEN` from the environment, or take `{ token }`. The npm helpers need no key.
 
 ```bash
 # .env.local
-GITHUB_TOKEN=ghp_...
+GITHUB_TOKEN=github_pat_...
 ```
 
 ```tsx
-import { StarHistory } from "@/components/ovio/star-history/star-history";
-import { getStarHistory } from "@/lib/github";
+import { RepositoryCard } from "@/components/ovio/repository-card/repository-card";
+import { getRepository } from "@/lib/github";
 
 export default async function Page() {
-  const stars = await getStarHistory("vercel/next.js");
-  return <StarHistory data={stars} repo="vercel/next.js" />;
+  return <RepositoryCard repository={await getRepository("honojs/hono")} />;
 }
 ```
+
+### Rate limits on a static site
+
+- **Responses are cached for an hour by default.** Pass `{ revalidate }` to change it. A static or
+  ISR page calls each API at most once per window, however much traffic it gets. If a refresh
+  fails, Next keeps serving the last good page.
+- **A spent limit throws `RateLimitError`,** with `resetAt` and a message like "github.com rate
+  limit reached, resets in 12 min". Every request times out after 10 seconds.
+- **GitHub:** 60 requests an hour without a token, 5,000 with one. `getContributions` uses GraphQL,
+  which needs a token. `getStarHistory` makes up to 16 requests, and GitHub lists stargazers only
+  to the repository's owner, so it charts your own repos, not someone else's.
+- **npm:** the downloads API is keyless and serves up to 18 months.
+- **bundlephobia:** unofficial, and it answers 429 after a few quick requests. Call
+  `getBundleSizes` without `versions` to read its history in one request.
+
+Each component's docs page has a Data section with its source, auth and limits.
+
+### Client-side data
+
+To fetch from your own API route in the browser, `useLiveData` shares one request per page and
+shows a fallback until the response arrives, or if it fails. Pair it with the Toast to report
+errors:
+
+```bash
+npx shadcn add JanaSundar/ovio/live-data JanaSundar/ovio/toast
+```
+
+```tsx
+const { data } = useLiveData("/api/stars", sampleStars, {
+  onError: (error, retry) =>
+    ovioToast.error(error.message, { action: { label: "Retry", onClick: retry } }),
+});
+```
+
+Mount `<OvioToaster />` once, for example in your root layout.
 
 ## Development
 

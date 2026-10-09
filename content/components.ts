@@ -4,6 +4,16 @@ import { WORLDS } from "../lib/world";
 
 type PropDoc = { name: string; type: string; description: string };
 
+/** Where an API-backed component's data comes from, for its docs page. */
+type DataDoc = {
+  /** The data helper's registry item, which is also its file: lib/<lib>.ts. */
+  lib: "github" | "npm";
+  helper: string;
+  source: string;
+  auth: string;
+  limits: string;
+};
+
 export type ComponentDoc = {
   slug: string;
   name: string;
@@ -14,7 +24,11 @@ export type ComponentDoc = {
   /** Lines for the usage snippet, after `variant`. */
   usage: string;
   props: PropDoc[];
+  data?: DataDoc;
 };
+
+const TOKEN_OPTIONAL =
+  "Optional. GITHUB_TOKEN (or { token }) raises the limit from 60 to 5,000 requests an hour.";
 
 const union = (values: readonly string[]) => values.map((v) => `"${v}"`).join(" | ");
 const WORLDS_TYPE = union(WORLDS);
@@ -66,6 +80,13 @@ export const COMPONENTS: ComponentDoc[] = [
       },
       CL,
     ],
+    data: {
+      lib: "github",
+      helper: "getContributions(login)",
+      source: "GitHub's GraphQL API: the contribution calendar on a user's profile.",
+      auth: "Required. GraphQL rejects anonymous requests; any GITHUB_TOKEN works.",
+      limits: "One query per refresh, against 5,000 points an hour per token.",
+    },
   },
   {
     slug: "event-ticket",
@@ -179,6 +200,14 @@ export const COMPONENTS: ComponentDoc[] = [
       },
       CL,
     ],
+    data: {
+      lib: "github",
+      helper: 'getStarHistory("owner/name")',
+      source: "GitHub's REST API: stargazers with the time each star was given.",
+      auth: "The repository owner's token. GitHub lists stargazers only to the owner, so you can chart your own repos but not someone else's.",
+      limits:
+        "Up to 16 requests per refresh: the repo, then 15 pages of 100 stargazers, sampled evenly. GitHub serves at most 400 pages.",
+    },
   },
   {
     slug: "repository-card",
@@ -206,6 +235,13 @@ export const COMPONENTS: ComponentDoc[] = [
       },
       CL,
     ],
+    data: {
+      lib: "github",
+      helper: 'getRepository("owner/name")',
+      source: "GitHub's REST API: the repository.",
+      auth: TOKEN_OPTIONAL,
+      limits: "One request per refresh.",
+    },
   },
   {
     slug: "top-contributors",
@@ -240,6 +276,15 @@ export const COMPONENTS: ComponentDoc[] = [
       },
       CL,
     ],
+    data: {
+      lib: "github",
+      helper: 'getContributors("owner/name")',
+      source:
+        "GitHub's REST API: weekly commit stats per contributor, for the 30-day, 90-day and all-time windows. Bots are left out.",
+      auth: TOKEN_OPTIONAL,
+      limits:
+        "One request, or up to four: GitHub answers 202 while it computes the stats, so the helper retries, then falls back to all-time counts.",
+    },
   },
   {
     slug: "npm-downloads",
@@ -260,6 +305,14 @@ export const COMPONENTS: ComponentDoc[] = [
       { name: "goal", type: "number", description: "Weekly target. Hidden when left out." },
       CL,
     ],
+    data: {
+      lib: "npm",
+      helper: "getWeeklyDownloads(packageName, weeks)",
+      source:
+        "The npm registry's downloads API, summed into Monday-to-Sunday weeks. The current, partial week is left out.",
+      auth: "None.",
+      limits: "One request per refresh. npm serves up to 18 months, about 78 weeks.",
+    },
   },
   {
     slug: "sponsor-wall",
@@ -363,6 +416,15 @@ export const COMPONENTS: ComponentDoc[] = [
       },
       CL,
     ],
+    data: {
+      lib: "npm",
+      helper: "getBundleSizes(packageName, versions?)",
+      source:
+        "bundlephobia, an unofficial service: minified and gzipped sizes. It doesn't measure brotli.",
+      auth: "None.",
+      limits:
+        "bundlephobia answers 429 after a few quick requests. Leave out versions to read its history in one request; each listed version costs one.",
+    },
   },
   {
     slug: "git-branch-visualizer",
@@ -426,6 +488,14 @@ export const COMPONENTS: ComponentDoc[] = [
       { name: "limit", type: "number", description: "Releases shown. All when left out." },
       CL,
     ],
+    data: {
+      lib: "github",
+      helper: 'getReleases("owner/name")',
+      source:
+        "GitHub's REST API: the 30 latest releases. Bullet lines become notes, tagged added, fixed or changed by their heading or first word.",
+      auth: TOKEN_OPTIONAL,
+      limits: "One request per refresh.",
+    },
   },
   {
     slug: "now-playing",
@@ -475,6 +545,40 @@ export const COMPONENTS: ComponentDoc[] = [
       CL,
     ],
   },
+  {
+    slug: "toast",
+    name: "Toast",
+    tech: "Sonner · CSS (Toy: spring keys)",
+    description:
+      "Notifications in every world: a clean card, a taped note, a terminal line, a plastic slab. Call ovioToast from anywhere.",
+    exportName: "OvioToaster",
+    usage: '  position="bottom-right"',
+    props: [
+      V,
+      {
+        name: "position",
+        type: '"top-left" | "top-center" | "top-right" | "bottom-left" | "bottom-center" | "bottom-right"',
+        description: 'Corner the toasts stack in. Default "bottom-right".',
+      },
+      {
+        name: "ovioToast.success / error / info",
+        type: "(title, { description?, action?, duration?, id? }) => id",
+        description:
+          "Shows a toast in the toaster's world. Errors stay 8s, others 4s. Pressing the action also dismisses it; reusing an id replaces that toast.",
+      },
+      {
+        name: "ovioToast.dismiss",
+        type: "(id?) => void",
+        description: "Dismisses one toast, or all of them.",
+      },
+      {
+        name: "…ToasterProps",
+        type: "Sonner",
+        description:
+          "Other Sonner Toaster props (duration, gap, offset, expand, hotkey) pass through.",
+      },
+    ],
+  },
 ];
 
 export const getComponent = (slug: string) => COMPONENTS.find((c) => c.slug === slug);
@@ -499,7 +603,12 @@ export const DOC_SECTIONS = [
   { id: "preview", label: "Preview" },
   { id: "installation", label: "Installation" },
   { id: "usage", label: "Usage" },
+  { id: "data", label: "Data" },
   { id: "props", label: "Props" },
 ] as const;
 
 export type DocSectionId = (typeof DOC_SECTIONS)[number]["id"];
+
+/** A page's sections: Data only on components that fetch real data. */
+export const docSections = (slug: string) =>
+  DOC_SECTIONS.filter((s) => s.id !== "data" || getComponent(slug)?.data);

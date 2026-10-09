@@ -83,18 +83,22 @@ import { OvioProvider } from "@/components/shared/world-provider";
 
 ## Data helpers
 
-Two optional registry items fetch real data on the server, already shaped for the components:
+Three optional registry items fetch real data on the server, already shaped for the components:
 
 ```bash
 npx shadcn add JanaSundar/ovio/github   # lib/github.ts
 npx shadcn add JanaSundar/ovio/npm      # lib/npm.ts
+npx shadcn add JanaSundar/ovio/music    # lib/music.ts
 ```
 
-- `lib/github.ts`: `getRepository`, `getStarHistory`, `getContributors`, `getReleases` and
-  `getContributions`.
+- `lib/github.ts`: `getRepository`, `getStarHistory`, `getContributors`, `getReleases`,
+  `getContributions` and `getCommitGraph`.
 - `lib/npm.ts`: `getWeeklyDownloads` (npm registry) and `getBundleSizes` (bundlephobia).
+- `lib/music.ts`: `getNowPlaying(services)` asks whichever music service is attached. `spotify()`
+  and `lastfm()` read their credentials from the environment (see `.env.example`), and
+  `musicService({ name, url, map })` adapts any other JSON API.
 
-Both are `server-only` and use native `fetch` through `lib/ovio-fetch.ts`. The GitHub helpers read
+All are `server-only` and use native `fetch` through `lib/ovio-fetch.ts`. The GitHub helpers read
 `GITHUB_TOKEN` from the environment, or take `{ token }`. The npm helpers need no key.
 
 ```bash

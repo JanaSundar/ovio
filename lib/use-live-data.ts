@@ -13,6 +13,8 @@ type Entry = {
 export type LiveDataOptions = {
   /** Called once per failed request, with a retry. Show a toast here, or log it. */
   onError?: (error: Error, retry: () => void) => void;
+  /** Fetches again this often (ms) while the tab is visible, keeping what's shown on a failure. */
+  refreshMs?: number;
 };
 
 // Shared across components, so a remount (or another component on the same URL) never refetches.
@@ -24,22 +26,26 @@ function update(url: string, entry: Entry) {
   listeners.get(url)?.forEach((notify) => notify());
 }
 
+async function request(url: string) {
+  // Browsers may cache a response with no max-age on their own; the server's cache is the one
+  // that spares the API, so always ask it.
+  const res = await fetch(url, { cache: "no-cache" });
+  if (!res.ok) {
+    const body = await res.json().catch(() => null);
+    throw new Error(body?.error ?? `${url} responded ${res.status}`);
+  }
+  const data = await res.json();
+  if (data === null) throw new Error(`${url} has no data`);
+  return data;
+}
+
 function load(url: string) {
   if (entries.has(url)) return;
   update(url, { status: "loading" });
-  // Browsers may cache a response with no max-age on their own; the server's cache is the one
-  // that spares the API, so always ask it.
-  fetch(url, { cache: "no-cache" })
-    .then(async (res) => {
-      if (!res.ok) {
-        const body = await res.json().catch(() => null);
-        throw new Error(body?.error ?? `${url} responded ${res.status}`);
-      }
-      const data = await res.json();
-      if (data === null) throw new Error(`${url} has no data`);
-      update(url, { status: "live", data });
-    })
-    .catch((error: Error) => update(url, { status: "error", error }));
+  request(url).then(
+    (data) => update(url, { status: "live", data }),
+    (error: Error) => update(url, { status: "error", error }),
+  );
 }
 
 function reload(url: string) {
@@ -47,12 +53,28 @@ function reload(url: string) {
   load(url);
 }
 
+const refreshing = new Set<string>();
+
+/** Fetches again in the background; only a success replaces what's shown. */
+function refresh(url: string) {
+  if (refreshing.has(url) || entries.get(url)?.status === "loading") return;
+  refreshing.add(url);
+  request(url)
+    .then((data) => update(url, { status: "live", data }))
+    .catch(() => {})
+    .finally(() => refreshing.delete(url));
+}
+
 /**
  * JSON from `url`, fetched once per page load and shared by every component that asks. `data` is
  * `fallback` until the response arrives, and stays `fallback` if the request fails or the body
  * is `null`. A failed response's `{ error }` field becomes the error message.
  */
-export function useLiveData<T>(url: string, fallback: T, { onError }: LiveDataOptions = {}) {
+export function useLiveData<T>(
+  url: string,
+  fallback: T,
+  { onError, refreshMs }: LiveDataOptions = {},
+) {
   const subscribe = useCallback(
     (notify: () => void) => {
       const set = listeners.get(url) ?? new Set();
@@ -67,6 +89,11 @@ export function useLiveData<T>(url: string, fallback: T, { onError }: LiveDataOp
     () => undefined,
   );
   useEffect(() => load(url), [url]);
+  useEffect(() => {
+    if (!refreshMs) return;
+    const timer = setInterval(() => document.hidden || refresh(url), refreshMs);
+    return () => clearInterval(timer);
+  }, [url, refreshMs]);
 
   const report = useEffectEvent((failed: Entry) => {
     failed.reported = true;

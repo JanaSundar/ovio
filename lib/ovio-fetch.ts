@@ -67,7 +67,9 @@ export async function fetchOk(
   if (res.ok) return res;
   if (isRateLimited(res))
     throw new RateLimitError(serviceOf(url), res.status, resetTime(res.headers));
-  throw new HttpError(`${url} responded ${res.status}`, res.status);
+  // Host and path only: some APIs take their key in the query, and messages end up in logs.
+  const { host, pathname } = new URL(url);
+  throw new HttpError(`${host}${pathname} responded ${res.status}`, res.status);
 }
 
 export async function fetchJson<T>(

@@ -1,8 +1,13 @@
 "use client";
 
+import { LiveDemo } from "@/components/site/live-demo";
+import { DEMO_TARGETS } from "@/content/demo-sources";
 import { GitBranchVisualizer, type GitCommit } from "./git-branch-visualizer";
 
-/** lumen's last few weeks: a login feature, a parser fix branched off it, and the 1.0 release. */
+/**
+ * The sample: lumen's last few weeks, a login feature, a parser fix branched off it, and the
+ * 1.0 release.
+ */
 const COMMITS: GitCommit[] = [
   {
     id: "3c1e9a0d27f4b18e6a52c9d03e7b4f1a8c6d2e90",
@@ -96,11 +101,23 @@ const COMMITS: GitCommit[] = [
 
 export function GitBranchVisualizerDemo() {
   return (
-    <GitBranchVisualizer
-      repo="ada-dev/lumen"
-      commits={COMMITS}
-      head="main"
-      defaultValue="6e10d88a2c5f4b91e7d03c6a8b2f5e1d9c4a7b03"
-    />
+    <LiveDemo slug="git-branch-visualizer" fallback={COMMITS}>
+      {(commits, live) =>
+        live ? (
+          <GitBranchVisualizer
+            repo={DEMO_TARGETS["git-branch-visualizer"]}
+            commits={commits}
+            head="main"
+          />
+        ) : (
+          <GitBranchVisualizer
+            repo="ada-dev/lumen"
+            commits={commits}
+            head="main"
+            defaultValue="6e10d88a2c5f4b91e7d03c6a8b2f5e1d9c4a7b03"
+          />
+        )
+      }
+    </LiveDemo>
   );
 }

@@ -13,13 +13,19 @@ import { useLiveData } from "@/lib/use-live-data";
 export function LiveDemo<S extends LiveSlug>({
   slug,
   fallback,
+  refreshMs,
+  source = () => DEMO_TARGETS[slug],
   children,
 }: {
   slug: S;
   fallback: DemoData[S];
+  refreshMs?: number;
+  /** What the live label names; the demo's target by default. */
+  source?: (data: DemoData[S]) => string;
   children: (data: DemoData[S], live: boolean) => ReactNode;
 }) {
   const { status, data } = useLiveData(demoUrl(slug), fallback, {
+    refreshMs,
     onError: () => track("demo_data_failed", { component_slug: slug }),
   });
 
@@ -29,7 +35,7 @@ export function LiveDemo<S extends LiveSlug>({
   const live = status === "live";
   return (
     <>
-      <DemoLabel live={live}>{live ? `Live · ${DEMO_TARGETS[slug]}` : "Sample data"}</DemoLabel>
+      <DemoLabel live={live}>{live ? `Live · ${source(data)}` : "Sample data"}</DemoLabel>
       {children(data, live)}
     </>
   );

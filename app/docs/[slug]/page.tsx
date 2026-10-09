@@ -87,7 +87,7 @@ function dataRows(slug: string, data: NonNullable<ComponentDoc["data"]>): [strin
     ["Source", data.source],
     ["Auth", data.auth],
     ["Limits", data.limits],
-    ["Caching", CACHING],
+    ["Caching", data.caching ?? CACHING],
     ...(demo ? [["This demo", demo] as [string, string]] : []),
   ];
 }

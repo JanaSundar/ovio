@@ -6,6 +6,8 @@ export const DEMO_TARGETS = {
   "contribution-graph": "shadcn",
   "npm-downloads": "hono",
   "bundle-size": "sonner",
+  "git-branch-visualizer": "JanaSundar/ovio",
+  "now-playing": "the attached music service",
 } as const;
 
 /** Demos that can't be live with our token, with the reason printed on the stage. */

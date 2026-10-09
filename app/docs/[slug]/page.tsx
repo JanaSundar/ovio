@@ -7,6 +7,7 @@ import { notFound } from "next/navigation";
 import type { SourceFile } from "@/components/site/code-explorer";
 import { ComponentPreview, MotionInfo, UsageSnippet } from "@/components/site/component-doc";
 import { CopyCommand } from "@/components/site/copy-command";
+import { formatType } from "@/components/site/format-type";
 import { highlight } from "@/components/site/highlight";
 import {
   COMPONENTS,
@@ -190,7 +191,7 @@ export default async function ComponentPage({ params }: PageProps<"/docs/[slug]"
                 {c.props.map((p) => (
                   <tr key={p.name}>
                     <td>{p.name}</td>
-                    <td>{p.type}</td>
+                    <td>{formatType(p.type)}</td>
                     <td>{p.description}</td>
                   </tr>
                 ))}

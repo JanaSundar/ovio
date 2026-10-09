@@ -132,8 +132,9 @@ export function MinimalBundleSize({
           )}
         </dl>
 
+        {/* The rolling number's box is 21px; the same line height keeps "first release" as tall. */}
         <motion.div
-          className="text-[13px]"
+          className="text-[13px] leading-[21px]"
           initial={false}
           animate={{ color: TREND_COLOR[r.trend] }}
           transition={fast}

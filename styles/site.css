@@ -1052,6 +1052,8 @@ html.lenis-smooth .stage-frame {
   font: 13px/1.5 var(--mono);
   color: #7560df;
   width: 29%;
+  /* formatType lays long types out over lines; keep its breaks and indents. */
+  white-space: pre-wrap;
 }
 .prop-table td:last-child {
   width: 47%;
@@ -1064,6 +1066,7 @@ html.lenis-smooth .stage-frame {
   width: auto;
   font: inherit;
   color: #74766f;
+  white-space: normal;
 }
 .pager {
   display: flex;

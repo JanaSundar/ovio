@@ -1,7 +1,14 @@
 "use client";
 
 import { motion, type Transition } from "motion/react";
-import { useEffect, useLayoutEffect, useRef, useState, type ComponentType } from "react";
+import {
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+  type ComponentType,
+  type PointerEvent,
+} from "react";
 import { useOvioTransition, useReducedMotionSafe } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import type { GitBranchVisualizerWorldProps, GraphLane, GraphNode } from "./git-branch-visualizer";
@@ -34,6 +41,8 @@ export type GraphLook = {
   move: Transition;
   /** Delay between columns as the graph first draws, in seconds. */
   stagger: number;
+  /** CSS background under the plot. It moves with it, so a wide history pans like a canvas. */
+  canvas: string;
 };
 
 export type NodeProps = {
@@ -198,6 +207,35 @@ export function Graph({
     // oxlint-disable-next-line react/exhaustive-deps
   }, [selectedX, step, inner, scrolls]);
 
+  // Mouse and pen drag a wide plot sideways like a canvas; touch already pans it natively. The
+  // drag starts past a few pixels, so a click still selects a commit.
+  const pan = useRef<{ id: number; x: number; left: number; moved: boolean } | null>(null);
+  const panned = useRef(false);
+  const [panning, setPanning] = useState(false);
+  const startPan = (e: PointerEvent<HTMLDivElement>) => {
+    panned.current = false;
+    if (!scrolls || e.pointerType === "touch" || e.button !== 0) return;
+    pan.current = { id: e.pointerId, x: e.clientX, left: e.currentTarget.scrollLeft, moved: false };
+  };
+  const movePan = (e: PointerEvent<HTMLDivElement>) => {
+    const p = pan.current;
+    if (p?.id !== e.pointerId) return;
+    const dx = e.clientX - p.x;
+    if (!p.moved) {
+      if (Math.abs(dx) < 4) return;
+      p.moved = true;
+      e.currentTarget.setPointerCapture(e.pointerId);
+      setPanning(true);
+    }
+    e.currentTarget.scrollLeft = p.left - dx;
+  };
+  const endPan = (e: PointerEvent<HTMLDivElement>) => {
+    if (pan.current?.id !== e.pointerId) return;
+    panned.current = pan.current.moved;
+    pan.current = null;
+    setPanning(false);
+  };
+
   const edges = graph.edges
     .map((e) => ({ ...e, hot: near.has(e.from.commit.id) && near.has(e.to.commit.id) }))
     .sort((a, b) => Number(a.hot) - Number(b.hot));
@@ -269,7 +307,20 @@ export function Graph({
         <div
           ref={scroller}
           onScroll={measure}
-          className={cn("min-w-0 flex-1", scrolls && "overflow-x-auto overflow-y-hidden")}
+          onPointerDown={startPan}
+          onPointerMove={movePan}
+          onPointerUp={endPan}
+          onPointerCancel={endPan}
+          onClickCapture={(e) => {
+            // The click that ends a drag isn't a selection.
+            if (panned.current) e.stopPropagation();
+          }}
+          className={cn(
+            "min-w-0 flex-1",
+            scrolls &&
+              "overflow-x-auto overflow-y-hidden [scrollbar-width:none] select-none [&::-webkit-scrollbar]:hidden",
+            scrolls && (panning ? "cursor-grabbing" : "cursor-grab"),
+          )}
           style={
             scrolls
               ? {
@@ -278,7 +329,10 @@ export function Graph({
               : undefined
           }
         >
-          <div className="relative" style={{ width: scrolls ? inner : "100%" }}>
+          <div
+            className="relative"
+            style={{ width: scrolls ? inner : "100%", background: look.canvas }}
+          >
             <motion.svg
               ref={svg}
               role="listbox"

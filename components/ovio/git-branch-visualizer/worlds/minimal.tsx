@@ -22,6 +22,8 @@ const LOOK: GraphLook = {
   enter: motionTokens.minimal.slow,
   move: motionTokens.minimal.slow,
   stagger: 0.04,
+  // A faint dot grid.
+  canvas: "radial-gradient(circle, rgba(22,22,20,.13) 1px, transparent 1.5px) 0 0 / 20px 20px",
 };
 
 const button =

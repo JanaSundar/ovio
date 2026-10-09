@@ -23,6 +23,9 @@ const LOOK: GraphLook = {
   enter: motionTokens.craft.base,
   move: motionTokens.craft.base,
   stagger: 0.05,
+  // Blue-ruled graph paper.
+  canvas:
+    "linear-gradient(rgba(43,74,155,.1) 1px, transparent 1px) 0 0 / 22px 22px, linear-gradient(90deg, rgba(43,74,155,.1) 1px, transparent 1px) 0 0 / 22px 22px",
 };
 
 /** A pencil loop around the selected commit: a little over one turn, radius wobbling. */

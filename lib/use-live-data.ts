@@ -1,8 +1,19 @@
-import { useCallback, useEffect, useSyncExternalStore } from "react";
+import { useCallback, useEffect, useEffectEvent, useSyncExternalStore } from "react";
 
 export type LiveStatus = "idle" | "loading" | "live" | "error";
 
-type Entry = { status: Exclude<LiveStatus, "idle">; data?: unknown; error?: Error };
+type Entry = {
+  status: Exclude<LiveStatus, "idle">;
+  data?: unknown;
+  error?: Error;
+  /** Set once onError has seen this failure, so remounts don't report it again. */
+  reported?: boolean;
+};
+
+export type LiveDataOptions = {
+  /** Called once per failed request, with a retry. Show a toast here, or log it. */
+  onError?: (error: Error, retry: () => void) => void;
+};
 
 // Shared across components, so a remount (or another component on the same URL) never refetches.
 const entries = new Map<string, Entry>();
@@ -20,7 +31,10 @@ function load(url: string) {
   // that spares the API, so always ask it.
   fetch(url, { cache: "no-cache" })
     .then(async (res) => {
-      if (!res.ok) throw new Error(`${url} responded ${res.status}`);
+      if (!res.ok) {
+        const body = await res.json().catch(() => null);
+        throw new Error(body?.error ?? `${url} responded ${res.status}`);
+      }
       const data = await res.json();
       if (data === null) throw new Error(`${url} has no data`);
       update(url, { status: "live", data });
@@ -36,9 +50,9 @@ function reload(url: string) {
 /**
  * JSON from `url`, fetched once per page load and shared by every component that asks. `data` is
  * `fallback` until the response arrives, and stays `fallback` if the request fails or the body
- * is `null`.
+ * is `null`. A failed response's `{ error }` field becomes the error message.
  */
-export function useLiveData<T>(url: string, fallback: T) {
+export function useLiveData<T>(url: string, fallback: T, { onError }: LiveDataOptions = {}) {
   const subscribe = useCallback(
     (notify: () => void) => {
       const set = listeners.get(url) ?? new Set();
@@ -53,6 +67,14 @@ export function useLiveData<T>(url: string, fallback: T) {
     () => undefined,
   );
   useEffect(() => load(url), [url]);
+
+  const report = useEffectEvent((failed: Entry) => {
+    failed.reported = true;
+    onError?.(failed.error!, () => reload(url));
+  });
+  useEffect(() => {
+    if (entry?.status === "error" && !entry.reported) report(entry);
+  }, [entry]);
 
   return {
     status: entry?.status ?? ("idle" as LiveStatus),

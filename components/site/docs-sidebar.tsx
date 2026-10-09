@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { useLenis } from "lenis/react";
 import { AnimatePresence, motion, type Transition } from "motion/react";
 import { useEffect, useLayoutEffect, useRef, useState, type RefObject } from "react";
-import { COMPONENTS, DOC_SECTIONS, pad2 } from "@/content/components";
+import { COMPONENTS, DOC_SECTIONS, docSections, pad2 } from "@/content/components";
 import { ease, useOvioTransition, useReducedMotionSafe } from "@/lib/motion";
 import { shortcutKey } from "./shortcuts";
 
@@ -268,6 +268,7 @@ export function DocsToc() {
   const [active, setActive] = useState<string>(DOC_SECTIONS[0].id);
   const [page, setPage] = useState(pathname);
   const marker = useMarker(active);
+  const sections = docSections(pathname.split("/").pop() ?? "");
   // It lives in the docs layout, so it outlasts a page: a new component starts at the top and
   // the mark glides back to the first section.
   if (page !== pathname) {
@@ -307,7 +308,7 @@ export function DocsToc() {
     <aside className="toc">
       <p className="toc-title">On this page</p>
       <Marker box={marker.box} className="toc-active" inset={6} />
-      {DOC_SECTIONS.map((s) => (
+      {sections.map((s) => (
         <a
           key={s.id}
           ref={marker.item(s.id)}

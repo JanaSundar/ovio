@@ -909,6 +909,45 @@
       ]
     },
     {
+      "name": "toast",
+      "type": "registry:ui",
+      "title": "Toast",
+      "description": "Notifications in every world: a clean card, a taped note, a terminal line, a plastic slab. Sonner handles stacking, timing and swipe.",
+      "dependencies": ["sonner"],
+      "registryDependencies": [
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/toy"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/toast/toast.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/toast/toast.tsx"
+        },
+        {
+          "path": "components/ovio/toast/worlds/minimal.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/toast/worlds/minimal.tsx"
+        },
+        {
+          "path": "components/ovio/toast/worlds/craft.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/toast/worlds/craft.tsx"
+        },
+        {
+          "path": "components/ovio/toast/worlds/retro.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/toast/worlds/retro.tsx"
+        },
+        {
+          "path": "components/ovio/toast/worlds/toy.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/toast/worlds/toy.tsx"
+        }
+      ]
+    },
+    {
       "name": "all",
       "type": "registry:item",
       "title": "All Ovio components",
@@ -927,7 +966,8 @@
         "JanaSundar/ovio/sponsor-wall",
         "JanaSundar/ovio/developer-id-card",
         "JanaSundar/ovio/git-branch-visualizer",
-        "JanaSundar/ovio/now-playing"
+        "JanaSundar/ovio/now-playing",
+        "JanaSundar/ovio/toast"
       ],
       "files": []
     }

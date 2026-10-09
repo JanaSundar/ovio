@@ -15,7 +15,9 @@ import {
   type ComponentDoc,
   type DocSectionId,
 } from "@/content/components";
+import { DEMO_TARGETS, isLiveSlug, SAMPLE_ONLY } from "@/content/demo-sources";
 import { registryItem } from "@/content/registry";
+import { DEFAULT_REVALIDATE } from "@/lib/ovio-fetch";
 import { WORLDS, type World } from "@/lib/world";
 
 export const dynamicParams = false;
@@ -71,6 +73,24 @@ const usageSnippets = (c: ComponentDoc) =>
       ),
     ]),
   ) as Record<World, string>;
+
+const CACHING = `Cached for an hour by default (revalidate: ${DEFAULT_REVALIDATE}), so traffic adds no API calls. A failed refresh keeps serving the last good data, and a spent limit throws RateLimitError with the time it resets.`;
+
+/** The Data table: the component's facts, how caching works, and what this page's demo shows. */
+function dataRows(slug: string, data: NonNullable<ComponentDoc["data"]>): [string, string][] {
+  const demo = isLiveSlug(slug)
+    ? `Live data from ${DEMO_TARGETS[slug]}, through the same helper. If the API fails, the sample shows instead.`
+    : slug in SAMPLE_ONLY
+      ? `Sample data: ${SAMPLE_ONLY[slug as keyof typeof SAMPLE_ONLY]}.`
+      : undefined;
+  return [
+    ["Source", data.source],
+    ["Auth", data.auth],
+    ["Limits", data.limits],
+    ["Caching", CACHING],
+    ...(demo ? [["This demo", demo] as [string, string]] : []),
+  ];
+}
 
 /** A section of the page; its id is one of DOC_SECTIONS, so the contents list always matches. */
 function DocSection({ id, children }: { id: DocSectionId; children: ReactNode }) {
@@ -130,6 +150,29 @@ export default async function ComponentPage({ params }: PageProps<"/docs/[slug]"
           <UsageSnippet html={usageSnippets(c)} />
           <MotionInfo tech={c.tech} />
         </DocSection>
+
+        {c.data && (
+          <DocSection id="data">
+            <h2>Data</h2>
+            <p>
+              Fetch it on the server with <code>{c.data.helper}</code> and pass the result as props.
+              The helper is <code>lib/{c.data.lib}.ts</code>, added with the CLI.
+            </p>
+            <CopyCommand command={installCommand(c.data.lib)} variant="install-box" />
+            <div className="prop-scroll">
+              <table className="prop-table data-table">
+                <tbody>
+                  {dataRows(c.slug, c.data).map(([label, text]) => (
+                    <tr key={label}>
+                      <td>{label}</td>
+                      <td>{text}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </DocSection>
+        )}
 
         <DocSection id="props">
           <h2>Props</h2>

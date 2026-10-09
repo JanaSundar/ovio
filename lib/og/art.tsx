@@ -469,6 +469,38 @@ function Player() {
   );
 }
 
+function Toasts() {
+  const toasts: [string, string, string][] = [
+    [RAMP[3], "Install command copied", ""],
+    ["#b4432a", "Rate limit reached", "Resets in 12 min"],
+    [lime, "Live data is back", ""],
+  ];
+  return (
+    <div style={{ ...col, gap: 14, width: 360 }}>
+      {toasts.map(([dot, title, note], i) => (
+        <div
+          key={title}
+          style={{
+            ...row,
+            gap: 14,
+            padding: "16px 18px",
+            borderRadius: 10,
+            border: `1.5px solid ${line}`,
+            background: "#fff",
+            opacity: 0.55 + i * 0.225,
+          }}
+        >
+          <div style={{ width: 12, height: 12, borderRadius: 6, background: dot }} />
+          <div style={{ ...col, gap: 4 }}>
+            <span style={{ fontFamily: sans, fontSize: 20, fontWeight: 500 }}>{title}</span>
+            {note && <Label color={muted}>{note}</Label>}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 type Art = { label: string; metric?: string; footer?: string[]; draw: () => ReactNode };
 
 const ARTS: Record<string, Art> = {
@@ -555,6 +587,12 @@ const ARTS: Record<string, Art> = {
     metric: "LIVE",
     footer: ["PLAY", "SCRUB", "SKIP"],
     draw: Player,
+  },
+  toast: {
+    label: "Toast",
+    metric: "3 queued",
+    footer: ["SUCCESS", "ERROR", "INFO"],
+    draw: Toasts,
   },
 };
 

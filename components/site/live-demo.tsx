@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, type ReactNode } from "react";
+import type { ReactNode } from "react";
 import { DEMO_TARGETS, demoUrl, type LiveSlug } from "@/content/demo-sources";
 import { track } from "@/lib/analytics";
 import type { DemoData } from "@/lib/demo-data";
@@ -19,10 +19,9 @@ export function LiveDemo<S extends LiveSlug>({
   fallback: DemoData[S];
   children: (data: DemoData[S], live: boolean) => ReactNode;
 }) {
-  const { status, data } = useLiveData(demoUrl(slug), fallback);
-  useEffect(() => {
-    if (status === "error") track("demo_data_failed", { component_slug: slug });
-  }, [status, slug]);
+  const { status, data } = useLiveData(demoUrl(slug), fallback, {
+    onError: () => track("demo_data_failed", { component_slug: slug }),
+  });
 
   if (status === "idle" || status === "loading")
     return <div role="status" aria-label="Loading live data" className="demo-skeleton" />;

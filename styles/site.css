@@ -1056,6 +1056,15 @@ html.lenis-smooth .stage-frame {
 .prop-table td:last-child {
   width: 47%;
 }
+.data-table td:first-child {
+  width: 1%;
+  padding-right: 24px;
+}
+.data-table td:nth-child(2) {
+  width: auto;
+  font: inherit;
+  color: #74766f;
+}
 .pager {
   display: flex;
   justify-content: space-between;

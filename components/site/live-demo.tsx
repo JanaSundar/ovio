@@ -30,10 +30,17 @@ export function LiveDemo<S extends LiveSlug>({
   const live = status === "live";
   return (
     <>
-      <span className="demo-source" data-live={live || undefined}>
-        {live ? `Live · ${DEMO_TARGETS[slug]}` : "Sample data"}
-      </span>
+      <DemoLabel live={live}>{live ? `Live · ${DEMO_TARGETS[slug]}` : "Sample data"}</DemoLabel>
       {children(data, live)}
     </>
+  );
+}
+
+/** Says in the stage, in the selected world's type, whether the demo is live or a sample. */
+export function DemoLabel({ live, children }: { live?: boolean; children: ReactNode }) {
+  return (
+    <span className="demo-source" data-live={live || undefined}>
+      {children}
+    </span>
   );
 }

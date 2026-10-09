@@ -199,7 +199,8 @@
         "JanaSundar/ovio/star-history",
         "JanaSundar/ovio/top-contributors",
         "JanaSundar/ovio/changelog",
-        "JanaSundar/ovio/contribution-graph"
+        "JanaSundar/ovio/contribution-graph",
+        "JanaSundar/ovio/git-branch-visualizer"
       ],
       "files": [
         {
@@ -226,6 +227,21 @@
           "path": "lib/npm.ts",
           "type": "registry:lib",
           "target": "lib/npm.ts"
+        }
+      ]
+    },
+    {
+      "name": "music",
+      "type": "registry:lib",
+      "title": "Now playing fetchers",
+      "description": "Server-side getNowPlaying for <NowPlaying />, from any attached music service: Spotify and Last.fm ready-made, musicService() for any JSON API.",
+      "dependencies": ["server-only"],
+      "registryDependencies": ["JanaSundar/ovio/fetch", "JanaSundar/ovio/now-playing"],
+      "files": [
+        {
+          "path": "lib/music.ts",
+          "type": "registry:lib",
+          "target": "lib/music.ts"
         }
       ]
     },

@@ -78,6 +78,13 @@ describe("fetchOk", () => {
     expect(error.status).toBe(403);
   });
 
+  it("leaves the query, where keys can be, out of the message", async () => {
+    respond(403);
+    await expect(
+      fetchOk("https://ws.audioscrobbler.com/2.0/?api_key=secret&method=x"),
+    ).rejects.toThrow("ws.audioscrobbler.com/2.0/ responded 403");
+  });
+
   it("turns a timeout into a 504 HttpError", async () => {
     vi.stubGlobal(
       "fetch",

@@ -7,11 +7,13 @@ type PropDoc = { name: string; type: string; description: string };
 /** Where an API-backed component's data comes from, for its docs page. */
 type DataDoc = {
   /** The data helper's registry item, which is also its file: lib/<lib>.ts. */
-  lib: "github" | "npm";
+  lib: "github" | "npm" | "music";
   helper: string;
   source: string;
   auth: string;
   limits: string;
+  /** Replaces the shared hour-long caching note. */
+  caching?: string;
 };
 
 export type ComponentDoc = {
@@ -470,6 +472,14 @@ export const COMPONENTS: ComponentDoc[] = [
       },
       CL,
     ],
+    data: {
+      lib: "github",
+      helper: 'getCommitGraph("owner/name", { limit })',
+      source:
+        "GitHub's GraphQL API: the default branch's last 100 commits with their parents. The newest merges are kept with every commit their branch brought in, up to limit (14). Merged branches keep the name their merge commit records.",
+      auth: "Required. GraphQL rejects anonymous requests; any GITHUB_TOKEN works.",
+      limits: "One query per refresh, against 5,000 points an hour per token.",
+    },
   },
   {
     slug: "changelog",
@@ -544,6 +554,17 @@ export const COMPONENTS: ComponentDoc[] = [
       },
       CL,
     ],
+    data: {
+      lib: "music",
+      helper: "getNowPlaying([spotify(), lastfm()])",
+      source:
+        "Any music service: the first attached one answers with what's playing, or what played last. Spotify and Last.fm come ready-made; musicService({ name, url, map }) adapts any other JSON API.",
+      auth: "Per service, read from the environment. Spotify: SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET and SPOTIFY_REFRESH_TOKEN. Last.fm: LASTFM_API_KEY and LASTFM_USER. A service without them is skipped.",
+      limits:
+        "Spotify: a token and one or two calls per refresh, with the token reused for 50 minutes. Last.fm: two calls.",
+      caching:
+        "Cached for 30 seconds by default, since what's playing changes by the minute. A spent limit throws RateLimitError with the time it resets.",
+    },
   },
   {
     slug: "toast",

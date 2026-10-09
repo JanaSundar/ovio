@@ -2,6 +2,7 @@ import "server-only";
 
 import type { Release, ChangelogItem, ChangeType } from "@/components/ovio/changelog/changelog";
 import type { ContributionDay } from "@/components/ovio/contribution-graph/contribution-graph";
+import type { GitCommit } from "@/components/ovio/git-branch-visualizer/git-branch-visualizer";
 import type { Repository } from "@/components/ovio/repository-card/repository-card";
 import type { StarHistoryPoint } from "@/components/ovio/star-history/star-history";
 import type { Contributor } from "@/components/ovio/top-contributors/top-contributors";
@@ -260,17 +261,40 @@ export async function getReleases(fullName: string, options?: FetchOptions): Pro
     }));
 }
 
+type GraphQLResponse<T> = { data?: T; errors?: { type?: string; message: string }[] };
+
+/** A GraphQL query's data. GraphQL rejects anonymous requests, so this needs a token. */
+async function graphql<T>(
+  query: string,
+  variables: Record<string, unknown>,
+  { token = process.env.GITHUB_TOKEN, ...options }: FetchOptions = {},
+): Promise<T> {
+  if (!token)
+    throw new Error(
+      "GitHub's GraphQL API rejects anonymous requests. Pass { token } or set GITHUB_TOKEN.",
+    );
+  const raw = await ghResponse(
+    "/graphql",
+    { ...options, token },
+    { method: "POST", body: JSON.stringify({ query, variables }) },
+  );
+  const res = (await raw.json()) as GraphQLResponse<T>;
+  // GraphQL reports a spent limit as a 200 with a RATE_LIMITED error.
+  if (res.errors?.some((e) => e.type === "RATE_LIMITED"))
+    throw new RateLimitError("github.com", 403, resetTime(raw.headers));
+  if (res.errors?.length || !res.data)
+    throw new Error(`GitHub GraphQL: ${res.errors?.[0].message ?? "no data"}`);
+  return res.data;
+}
+
 type CalendarResponse = {
-  data?: {
-    user: {
-      contributionsCollection: {
-        contributionCalendar: {
-          weeks: { contributionDays: { date: string; contributionCount: number }[] }[];
-        };
+  user: {
+    contributionsCollection: {
+      contributionCalendar: {
+        weeks: { contributionDays: { date: string; contributionCount: number }[] }[];
       };
-    } | null;
-  };
-  errors?: { type?: string; message: string }[];
+    };
+  } | null;
 };
 
 const CALENDAR_QUERY = `query($login: String!) {
@@ -287,27 +311,111 @@ const CALENDAR_QUERY = `query($login: String!) {
  */
 export async function getContributions(
   login: string,
-  options: FetchOptions = {},
+  options?: FetchOptions,
 ): Promise<ContributionDay[]> {
-  const token = options.token ?? process.env.GITHUB_TOKEN;
-  if (!token)
-    throw new Error(
-      "getContributions needs a GitHub token: the GraphQL API rejects anonymous requests. " +
-        "Pass { token } or set GITHUB_TOKEN.",
-    );
-  const raw = await ghResponse(
-    "/graphql",
-    { ...options, token },
-    { method: "POST", body: JSON.stringify({ query: CALENDAR_QUERY, variables: { login } }) },
-  );
-  const res = (await raw.json()) as CalendarResponse;
-  // GraphQL reports a spent limit as a 200 with a RATE_LIMITED error.
-  if (res.errors?.some((e) => e.type === "RATE_LIMITED"))
-    throw new RateLimitError("github.com", 403, resetTime(raw.headers));
-  if (res.errors?.length) throw new Error(`GitHub GraphQL: ${res.errors[0].message}`);
-  const user = res.data?.user;
+  const { user } = await graphql<CalendarResponse>(CALENDAR_QUERY, { login }, options);
   if (!user) throw new Error(`GitHub user ${login} not found`);
   return user.contributionsCollection.contributionCalendar.weeks.flatMap((w) =>
     w.contributionDays.map((d) => ({ date: d.date, count: d.contributionCount })),
   );
+}
+
+type HistoryCommit = {
+  oid: string;
+  messageHeadline: string;
+  messageBody: string;
+  committedDate: string;
+  author: { name: string | null } | null;
+  parents: { nodes: { oid: string }[] };
+};
+
+type HistoryResponse = {
+  repository: {
+    defaultBranchRef: {
+      name: string;
+      target: { history: { nodes: HistoryCommit[] } };
+    } | null;
+  } | null;
+};
+
+const HISTORY_QUERY = `query($owner: String!, $name: String!) {
+  repository(owner: $owner, name: $name) {
+    defaultBranchRef {
+      name
+      target {
+        ... on Commit {
+          history(first: 100) {
+            nodes {
+              oid messageHeadline messageBody committedDate
+              author { name }
+              parents(first: 2) { nodes { oid } }
+            }
+          }
+        }
+      }
+    }
+  }
+}`;
+
+/** "Merge pull request #16 from owner/fix/scroll": the PR number and the branch it came from. */
+const PULL_MERGE = /^Merge pull request #(\d+) from [^/\s]+\/(\S+)/;
+
+/**
+ * Recent history for <GitBranchVisualizer commits={...} />, from "owner/name", oldest first. Walks
+ * the default branch's first parents from its tip, taking the newest merges with every commit of
+ * the branch each one brought in, while the total stays within `limit`. Merged branches keep the
+ * name their merge commit records, and pull request merges read as "<PR title> (#16)". Uses
+ * the GraphQL API, which needs a token (GITHUB_TOKEN or `token`).
+ */
+export async function getCommitGraph(
+  fullName: string,
+  { limit = 14, ...options }: FetchOptions & { limit?: number } = {},
+): Promise<GitCommit[]> {
+  const [owner, name] = fullName.split("/");
+  const { repository } = await graphql<HistoryResponse>(HISTORY_QUERY, { owner, name }, options);
+  const ref = repository?.defaultBranchRef;
+  if (!ref) throw new Error(`GitHub repository ${fullName} not found`);
+
+  const byId = new Map(ref.target.history.nodes.map((c) => [c.oid, c]));
+  const firstParent = (c: HistoryCommit) => byId.get(c.parents.nodes[0]?.oid ?? "");
+  const mainline: HistoryCommit[] = [];
+  for (let c = byId.get(ref.target.history.nodes[0]?.oid ?? ""); c; c = firstParent(c))
+    mainline.push(c);
+  const onMain = new Set(mainline.map((c) => c.oid));
+
+  // Newest first: each mainline commit, and for a merge the branch commits it brought in.
+  const branchOf = new Map<string, string>();
+  for (const [i, c] of mainline.entries()) {
+    const branch: HistoryCommit[] = [];
+    const merged = byId.get(c.parents.nodes[1]?.oid ?? "");
+    for (let b = merged; b && !onMain.has(b.oid); b = firstParent(b)) branch.push(b);
+    branchOf.set(c.oid, ref.name);
+    // Past the limit, keep this commit alone: it's where the oldest branch above grew from.
+    if (i > 0 && branchOf.size + branch.length > limit) break;
+    const label = c.messageHeadline.match(PULL_MERGE)?.[2] ?? `merged-${c.oid.slice(0, 7)}`;
+    branch.forEach((b) => branchOf.set(b.oid, label));
+  }
+
+  // Parents before children: a depth-first walk that emits each commit after its parents.
+  const ordered: GitCommit[] = [];
+  const seen = new Set<string>();
+  const visit = (id: string) => {
+    const c = byId.get(id);
+    if (!c || seen.has(id) || !branchOf.has(id)) return;
+    seen.add(id);
+    const parents = c.parents.nodes.map((p) => p.oid).filter((p) => branchOf.has(p));
+    parents.forEach(visit);
+    const pull = c.messageHeadline.match(PULL_MERGE);
+    const title = c.messageBody.split("\n")[0].trim();
+    ordered.push({
+      id: c.oid,
+      branch: branchOf.get(id)!,
+      message: pull && title ? `${title} (#${pull[1]})` : c.messageHeadline,
+      author: c.author?.name ?? "unknown",
+      date: c.committedDate,
+      ...(parents.length ? { parents } : {}),
+    });
+  };
+  visit(mainline[0].oid);
+  return ordered;
 }

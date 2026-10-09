@@ -590,11 +590,14 @@ const ARTS: Record<string, Art> = {
   },
   toast: {
     label: "Toast",
-    metric: "3 queued",
+    metric: "3 QUEUED",
     footer: ["SUCCESS", "ERROR", "INFO"],
     draw: Toasts,
   },
 };
+
+/** Whether a component has its own drawing; without one its share image borrows another's. */
+export const hasComponentArt = (slug: string) => slug in ARTS;
 
 /** The right-hand card for a component; the contribution graph for anything else. */
 export function ComponentArt({ slug }: { slug?: string }) {

@@ -9,6 +9,8 @@ import { formatDelta } from "@/components/ovio/npm-downloads/npm-downloads";
 import { detents } from "@/components/ovio/physical-knob/physical-knob";
 import { nearestIndex, shapeStarHistory, smoothPath } from "@/components/ovio/star-history/shape";
 import { seeded } from "@/components/site/seeded";
+import { COMPONENTS } from "@/content/components";
+import { hasComponentArt } from "@/lib/og/art";
 
 /** Pins today's outputs, so refactors that share this logic can prove nothing changed. */
 
@@ -144,5 +146,11 @@ describe("repository card relativeTime", () => {
     expect(relativeTime(ago(100 * 86400), now)).toBe("3mo ago");
     expect(relativeTime(ago(400 * 86400), now)).toBe("1y ago");
     expect(relativeTime(ago(-60), now)).toBe("just now");
+  });
+});
+
+describe("share images", () => {
+  it("draws every component in its own OG art", () => {
+    expect(COMPONENTS.filter((c) => !hasComponentArt(c.slug)).map((c) => c.slug)).toEqual([]);
   });
 });

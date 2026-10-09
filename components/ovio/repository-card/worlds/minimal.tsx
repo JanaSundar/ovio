@@ -1,10 +1,10 @@
 "use client";
 
 import { motion } from "motion/react";
-import { RollingNumber } from "@/components/shared/rolling-number";
 import { motionTokens, useOvioTransition } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import type { RepositoryCardWorldProps } from "../repository-card";
+import { formatNumber } from "@/lib/format";
 
 const COMPACT = { notation: "compact", maximumFractionDigits: 1 } as const;
 
@@ -44,13 +44,12 @@ export function MinimalRepositoryCard({
         {stats.map((stat) => (
           <span key={stat} className="flex items-center gap-1" aria-label={`${stat}`}>
             <span aria-hidden>{stat === "stars" ? "★" : stat === "forks" ? "⑂" : "◎"}</span>
-            <RollingNumber
-              className="font-(family-name:--ovio-mono) lowercase"
-              value={
-                stat === "stars" ? starCount : stat === "forks" ? repo.forks : (repo.issues ?? 0)
-              }
-              format={COMPACT}
-            />
+            <span className="font-(family-name:--ovio-mono) lowercase">
+              {formatNumber(
+                stat === "stars" ? starCount : stat === "forks" ? repo.forks : (repo.issues ?? 0),
+                COMPACT,
+              )}
+            </span>
           </span>
         ))}
         {updated && (

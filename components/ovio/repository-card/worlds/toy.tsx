@@ -2,13 +2,14 @@
 
 import { motion } from "motion/react";
 import { RollingNumber } from "@/components/shared/rolling-number";
-import { ToyKey, ToyPiece } from "@/components/shared/toy";
+import { ToyKey } from "@/components/shared/toy";
 import { motionTokens, useOvioTransition } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import type { RepositoryCardWorldProps } from "../repository-card";
+import { formatNumber } from "@/lib/format";
 
 const keyClass =
-  "flex items-center justify-center gap-2 rounded-xl border-0 px-2.5 py-3.5 font-(family-name:--ovio-font) text-base font-extrabold text-(--ovio-ink) cursor-pointer touch-manipulation";
+  "flex items-center justify-center gap-2 rounded-xl border-0 px-2.5 py-3.5 font-(family-name:--ovio-font) text-base font-extrabold text-(--ovio-ink)";
 
 export function ToyRepositoryCard({
   repo,
@@ -68,27 +69,25 @@ export function ToyRepositoryCard({
           </ToyKey>
         )}
         {counts.slice(0, 1).map((stat) => (
-          <ToyKey
+          <span
             key={stat}
-            depth={6}
-            side="#cfc8b8"
-            className={cn(keyClass, "bg-white")}
+            className={cn(keyClass, "bg-white shadow-[0_6px_0_#cfc8b8]")}
             aria-label={`${stat === "forks" ? repo.forks : (repo.issues ?? 0)} ${stat}`}
           >
             {stat === "forks" ? "⑂" : "◎"}{" "}
-            <RollingNumber value={stat === "forks" ? repo.forks : (repo.issues ?? 0)} />
-          </ToyKey>
+            {formatNumber(stat === "forks" ? repo.forks : (repo.issues ?? 0))}
+          </span>
         ))}
         <div className="flex items-center justify-center rounded-xl bg-[#e6e1d6] shadow-[inset_0_3px_5px_rgba(40,28,10,.25)]">
           {language && (
-            <ToyPiece
+            <span
               title={language.name}
               aria-label={language.name}
               role="img"
               className="flex size-[38px] items-center justify-center rounded-full bg-(--ovio-accent) text-[13px] font-extrabold text-white shadow-[0_4px_0_var(--ovio-accent-deep),0_8px_10px_-4px_rgba(40,28,10,.4)]"
             >
               {language.short}
-            </ToyPiece>
+            </span>
           )}
         </div>
       </div>

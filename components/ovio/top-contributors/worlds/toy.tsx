@@ -3,10 +3,11 @@
 import { motion } from "motion/react";
 import { Avatar } from "@/components/shared/avatar";
 import { RollingNumber } from "@/components/shared/rolling-number";
-import { TOY_PLASTIC, ToyKey, ToyPiece } from "@/components/shared/toy";
+import { TOY_PLASTIC, ToyKey } from "@/components/shared/toy";
 import { motionTokens, useOvioTransition, useReducedMotionSafe } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { PERIOD_LABEL, PERIOD_SHORT, type TopContributorsWorldProps } from "../top-contributors";
+import { formatNumber } from "@/lib/format";
 
 /** Plastic piece colours by rank: face, side, ink. */
 const { red, blue, yellow, green, black, white } = TOY_PLASTIC;
@@ -45,7 +46,7 @@ export function ToyTopContributors({
           </h3>
           <span className="font-(family-name:--ovio-mono) text-[11px] tracking-[0.08em] text-(--ovio-muted) uppercase">
             {repo && `${repo} · `}
-            <RollingNumber value={total} /> commits · drag a piece
+            <RollingNumber value={total} /> commits
           </span>
         </div>
         {periods.length > 0 && (
@@ -93,7 +94,7 @@ export function ToyTopContributors({
                 transition={{ ...piece, delay: reduced ? 0 : i * 0.05 }}
                 className="flex min-w-0 flex-col items-center gap-2.5"
               >
-                <ToyPiece
+                <div
                   role="img"
                   aria-label={`${p.name}, @${p.login}`}
                   className="z-10 rounded-full"
@@ -107,7 +108,7 @@ export function ToyTopContributors({
                     className="size-10 rounded-full text-sm font-extrabold shadow-[inset_0_2px_0_rgba(255,255,255,.3)] @md:size-[52px] @md:text-base"
                     style={{ background: face, color: ink }}
                   />
-                </ToyPiece>
+                </div>
                 {/* The podium grows with the share of the top score. */}
                 <motion.div
                   initial={false}
@@ -123,7 +124,7 @@ export function ToyTopContributors({
                     {p.rank}
                   </span>
                   <span className="font-(family-name:--ovio-mono) text-[11.5px] text-(--ovio-muted)">
-                    <RollingNumber value={p.commits} />
+                    {formatNumber(p.commits)}
                     <span className="sr-only"> commits</span>
                   </span>
                 </motion.div>

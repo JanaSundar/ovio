@@ -26,12 +26,11 @@ const LOOK: TicketLook = {
   perf: "4px dotted #cfc8b8",
   stamp:
     "rounded-xl bg-(--ovio-accent) text-xl font-extrabold text-white shadow-[inset_0_2px_0_rgba(255,255,255,.25),0_5px_0_var(--ovio-accent-deep),0_12px_14px_-8px_rgba(40,28,10,.4)]",
-  stampPiece: true,
   laser: "var(--ovio-red)",
   sheen: "rgba(255,255,255,.5)",
   sheenBlend: "soft-light",
   flipButton:
-    "rounded-lg bg-(--ovio-yellow) px-2.5 py-1.5 font-(family-name:--ovio-mono) text-[10.5px] font-bold tracking-[0.06em] text-(--ovio-ink) shadow-[0_3px_0_var(--ovio-yellow-deep)] transition-[translate,box-shadow] duration-100 active:translate-y-[3px] active:shadow-none",
+    "rounded-xl bg-(--ovio-yellow) px-4 font-(family-name:--ovio-font) text-[13px] font-extrabold tracking-normal text-(--ovio-ink) normal-case shadow-[0_4px_0_var(--ovio-yellow-deep)] transition-[translate,box-shadow] duration-100 active:translate-y-[4px] active:shadow-none",
   qrDots: true,
   book: (sending) => <ToyBookButton sending={sending} />,
   motion: {

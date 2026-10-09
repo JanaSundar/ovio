@@ -39,7 +39,7 @@ const LOOK: TicketLook = {
   sheen: "rgba(120,255,150,.18)",
   sheenBlend: "screen",
   flipButton:
-    "border-0 bg-transparent p-0 text-[19px] leading-none text-(--ovio-ink) hover:bg-(--ovio-accent) hover:text-(--ovio-on-accent)",
+    "border-2 border-(--ovio-ink) bg-(--ovio-stage) px-3 text-[20px] leading-none text-(--ovio-ink) uppercase hover:bg-(--ovio-accent) hover:text-(--ovio-on-accent)",
   book: (sending) => <GooBookButton sending={sending} look={BOOK} />,
   motion: {
     flip: frames(8, 0.48),

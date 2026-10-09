@@ -23,8 +23,9 @@ const MONTH = new Intl.DateTimeFormat("en-US", {
 
 const toTime = (date: string | number) => (typeof date === "string" ? Date.parse(date) : date);
 
-/** "12,450". */
-export const formatNumber = (n: number) => NUMBER.format(n);
+/** "12,450", or shaped by Intl options: { style: "percent" } gives "86%". */
+export const formatNumber = (n: number, options?: Intl.NumberFormatOptions) =>
+  options ? new Intl.NumberFormat("en-US", options).format(n) : NUMBER.format(n);
 
 /** "2026-09-30", the UTC day of an ISO date or a timestamp. */
 export const isoDate = (date: string | number) => new Date(toTime(date)).toISOString().slice(0, 10);

@@ -1,6 +1,6 @@
 "use client";
 
-import { type ComponentType, useMemo, useSyncExternalStore } from "react";
+import { type ComponentType, useMemo } from "react";
 import { useWorld, type World } from "@/components/shared/world-provider";
 import { useReducedMotionSafe, type OvioAnimation } from "@/lib/motion";
 import { shapeStarHistory, type StarHistoryShape } from "./shape";
@@ -44,17 +44,12 @@ export type StarHistoryWorldProps = {
   /** Accessible name for the chart's scrubber. */
   label: string;
   animation: StarHistoryAnimation;
-  /** False until after the first paint, so the total can roll up from zero. */
-  entered: boolean;
   /** Changes when the data changes, to replay the entrance. */
   dataKey: string;
   className?: string;
 };
 
 const NO_ANNOTATIONS: StarHistoryAnnotation[] = [];
-const noop = () => () => {};
-const yes = () => true;
-const no = () => false;
 
 const VIEWS = {
   minimal: MinimalStarHistory,
@@ -76,16 +71,12 @@ export function StarHistory({
   const motionMode = reduced ? "none" : animation;
   const shape = useMemo(() => shapeStarHistory(data, annotations, repo), [data, annotations, repo]);
 
-  // False while hydrating (and on the server), true after, so the total rolls up from zero.
-  const painted = useSyncExternalStore(noop, yes, no);
-
   const last = shape.points.at(-1);
   const props: StarHistoryWorldProps = {
     shape,
     name: repo?.split("/").pop() || "repository",
     label: repo ? `Star history of ${repo}` : "Star history",
     animation: motionMode,
-    entered: painted || motionMode === "none",
     dataKey: `${shape.points.length}:${shape.points[0]?.date ?? ""}:${last?.date ?? ""}:${shape.total}`,
     className,
   };

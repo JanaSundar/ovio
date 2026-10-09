@@ -1,7 +1,6 @@
 "use client";
 
 import { memo, useRef, type CSSProperties } from "react";
-import { RollingNumber } from "@/components/shared/rolling-number";
 import { motionTokens } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import type { ContributionGraphWorldProps } from "../contribution-graph";
@@ -14,6 +13,7 @@ import {
   weeksMinWidth,
 } from "../grid";
 import { unit, type ContributionCell } from "../year";
+import { formatNumber } from "@/lib/format";
 
 const SCALE = ["#e6dcc8", "#f2c9a0", "#ee9f63", "#e0713a", "#b8471f"];
 
@@ -99,10 +99,9 @@ export function CraftContributionGraph({
         className="absolute -top-3.5 left-1/2 -ml-[60px] h-7 w-[120px] rotate-2 bg-(--ovio-tape) shadow-[0_1px_2px_rgba(0,0,0,.08)]"
       />
       <div className="absolute -top-[26px] -right-1 sm:-right-[18px] flex size-[104px] rotate-12 flex-col items-center justify-center rounded-full bg-(--ovio-accent) text-(--ovio-on-accent) shadow-[0_6px_14px_-4px_rgba(120,50,10,.5),inset_0_-3px_0_rgba(0,0,0,.12)]">
-        <RollingNumber
-          className="text-[30px] leading-none font-extrabold tracking-[-0.03em]"
-          value={year.longest}
-        />
+        <span className="text-[30px] leading-none font-extrabold tracking-[-0.03em]">
+          {year.longest}
+        </span>
         <span className="text-[11px] font-bold tracking-[0.06em]">DAY STREAK</span>
       </div>
 
@@ -111,7 +110,7 @@ export function CraftContributionGraph({
           A year of making things
         </h3>
         <span className="inline-block -rotate-3 font-(family-name:--ovio-hand) text-[26px] text-(--ovio-accent-deep)">
-          <RollingNumber value={year.total} /> of them!
+          {formatNumber(year.total)} of them!
         </span>
       </div>
       <p className="mt-0 mb-7 text-[15px] text-(--ovio-ink-2)">
@@ -152,7 +151,7 @@ export function CraftContributionGraph({
             className="absolute top-1/2 left-[9px] -mt-[3.5px] size-[7px] rounded-full bg-(--ovio-stage) shadow-[inset_0_1px_2px_rgba(0,0,0,.25)]"
           />
           <strong className="font-bold">
-            <RollingNumber value={day.count} /> {unit(day.count)}
+            <span className="tabular-nums">{formatNumber(day.count)}</span> {unit(day.count)}
           </strong>{" "}
           · {day.label}
         </div>

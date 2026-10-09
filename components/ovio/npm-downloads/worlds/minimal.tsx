@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "motion/react";
-import { RollingNumber } from "@/components/shared/rolling-number";
 import { motionTokens, useReducedMotionSafe } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { formatNumber } from "@/lib/format";
@@ -42,10 +41,9 @@ export function MinimalNpmDownloads({
           <div className="mb-2.5 text-[11px] tracking-[0.12em] text-(--ovio-muted) uppercase">
             {current.ago === 0 ? "Weekly downloads" : `Week of ${current.label}`} · {packageName}
           </div>
-          <RollingNumber
-            className="text-[52px] leading-none tracking-[-0.045em]"
-            value={current.downloads}
-          />
+          <span className="text-[52px] leading-none tracking-[-0.045em] tabular-nums">
+            {formatNumber(current.downloads)}
+          </span>
         </div>
         {current.delta !== null && (
           <div className={cn("text-[13px]", up ? "text-[#2f7a45]" : "text-[#b5311a]")}>
@@ -115,7 +113,7 @@ export function MinimalNpmDownloads({
       <div className="flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-(--ovio-line-2) pt-4 text-[13px] text-(--ovio-ink-2)">
         <span>
           {points.length}-week total{" "}
-          <RollingNumber className="font-(family-name:--ovio-mono)" value={total} />
+          <span className="font-(family-name:--ovio-mono)">{formatNumber(total)}</span>
         </span>
         {goal !== undefined && (
           <span className="ml-auto flex items-center gap-2.5">
@@ -127,11 +125,9 @@ export function MinimalNpmDownloads({
                 transition={reduced ? { duration: 0 } : motionTokens.minimal.slow}
               />
             </span>
-            <RollingNumber
-              className="font-(family-name:--ovio-mono)"
-              value={goalProgress}
-              format={{ style: "percent" }}
-            />
+            <span className="font-(family-name:--ovio-mono)">
+              {formatNumber(goalProgress, { style: "percent" })}
+            </span>
             of goal
           </span>
         )}

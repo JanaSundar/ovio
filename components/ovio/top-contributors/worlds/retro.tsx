@@ -1,10 +1,10 @@
 "use client";
 
 import { motion } from "motion/react";
-import { RollingNumber } from "@/components/shared/rolling-number";
 import { motionTokens, useReducedMotionSafe } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { PERIOD_LABEL, PERIOD_SHORT, type TopContributorsWorldProps } from "../top-contributors";
+import { formatNumber } from "@/lib/format";
 
 /** Arcade row colours: gold, then pale, then phosphor fading down the table. */
 const ROW = ["#ffd34d", "#c9ffd2", "#6dff8a", "#6dff8a"];
@@ -110,9 +110,7 @@ export function RetroTopContributors({
                   {tag(p.login)}
                   <span className="sr-only"> ({p.name})</span>
                 </td>
-                <td className="pt-1 text-right">
-                  <RollingNumber value={p.commits} format={SCORE} />
-                </td>
+                <td className="pt-1 text-right">{formatNumber(p.commits, SCORE)}</td>
               </motion.tr>
             ))}
           </tbody>

@@ -5,6 +5,7 @@ import { RollingNumber } from "@/components/shared/rolling-number";
 import { motionTokens, useOvioTransition } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { ARROW, barLabel, KB_FORMAT, type BundleSizeWorldProps } from "../bundle-size";
+import { formatNumber } from "@/lib/format";
 
 const TREND_COLOR = { down: "#2f7a45", up: "#b4432a", same: "#77756e", first: "#77756e" };
 
@@ -140,11 +141,7 @@ export function MinimalBundleSize({
           transition={fast}
         >
           {ARROW[r.trend]}{" "}
-          {(r.trend === "down" || r.trend === "up") && (
-            <>
-              <RollingNumber value={r.delta} format={KB_FORMAT} suffix="%" />{" "}
-            </>
-          )}
+          {(r.trend === "down" || r.trend === "up") && <>{formatNumber(r.delta, KB_FORMAT)}% </>}
           <span className="text-(--ovio-muted)">
             {r.previous
               ? r.trend === "same"
@@ -163,7 +160,7 @@ function Row({ label, value, unit = " kB" }: { label: string; value: number; uni
     <div className="flex justify-between border-t border-(--ovio-line-2) py-2.5">
       <dt className="text-(--ovio-muted)">{label}</dt>
       <dd className="m-0 font-(family-name:--ovio-mono)">
-        <RollingNumber value={value} format={unit ? KB_FORMAT : undefined} />
+        {formatNumber(value, unit ? KB_FORMAT : undefined)}
         {unit}
       </dd>
     </div>

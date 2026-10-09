@@ -6,6 +6,7 @@ import { RollingNumber } from "@/components/shared/rolling-number";
 import { motionTokens, useOvioTransition, useReducedMotionSafe } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { barLabel, KB_FORMAT, signedDelta, type BundleSizeWorldProps } from "../bundle-size";
+import { formatNumber } from "@/lib/format";
 
 /** Each version tag is cut and stuck down a little crooked. */
 const TILT = [-3, 2, -1];
@@ -105,19 +106,11 @@ export function CraftBundleSize({
         </div>
 
         <dl className="m-0 mt-3.5 border-t border-dashed border-[#b9a88f] pt-2 font-(family-name:--ovio-mono) text-[12.5px] leading-[1.8]">
-          <Row label="gzip">
-            <RollingNumber value={r.gzip} format={KB_FORMAT} /> kB
-          </Row>
+          <Row label="gzip">{formatNumber(r.gzip, KB_FORMAT)} kB</Row>
           {r.brotli !== undefined && (
-            <Row label="brotli">
-              <RollingNumber value={r.brotli} format={KB_FORMAT} /> kB
-            </Row>
+            <Row label="brotli">{formatNumber(r.brotli, KB_FORMAT)} kB</Row>
           )}
-          {r.dependencies !== undefined && (
-            <Row label="deps">
-              <RollingNumber value={r.dependencies} />
-            </Row>
-          )}
+          {r.dependencies !== undefined && <Row label="deps">{r.dependencies}</Row>}
         </dl>
         {/* The stamp is decorative; this is its text. */}
         <p className="sr-only">

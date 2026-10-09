@@ -2,7 +2,7 @@
 
 import { motion } from "motion/react";
 import { AutoHeight } from "@/components/shared/auto-height";
-import { ToyKey, ToyPiece } from "@/components/shared/toy";
+import { ToyKey } from "@/components/shared/toy";
 import { motionTokens, useOvioTransition } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import type { GitBranchVisualizerWorldProps } from "../git-branch-visualizer";
@@ -86,9 +86,9 @@ function ToyLabel({ lane, ...s }: LabelProps) {
 
 function ToyTag({ text }: TagProps) {
   return (
-    <ToyPiece className="rounded-md bg-(--ovio-red) px-1.5 py-px text-[11px] font-extrabold whitespace-nowrap text-white shadow-[0_3px_0_var(--ovio-red-deep)]">
+    <span className="block rounded-md bg-(--ovio-red) px-1.5 py-px text-[11px] font-extrabold whitespace-nowrap text-white shadow-[0_3px_0_var(--ovio-red-deep)]">
       {text}
-    </ToyPiece>
+    </span>
   );
 }
 

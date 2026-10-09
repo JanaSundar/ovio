@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "motion/react";
-import { RollingNumber } from "@/components/shared/rolling-number";
 import { motionTokens, useOvioTransition } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { formatNumber } from "@/lib/format";
@@ -17,7 +16,6 @@ export function ToyStarHistory({
   name,
   label,
   animation,
-  entered,
   dataKey,
   className,
 }: StarHistoryWorldProps) {
@@ -57,10 +55,9 @@ export function ToyStarHistory({
               transition={{ duration: 0.9, repeat: Infinity, repeatType: "reverse" }}
             />
           )}
-          <RollingNumber
-            className="rounded-[4px] bg-(--ovio-surface) px-3 py-0.5 font-(family-name:--ovio-mono) text-[22px] leading-8 font-semibold shadow-[inset_0_-7px_6px_-5px_rgba(0,0,0,.25),inset_0_7px_6px_-5px_rgba(0,0,0,.25)]"
-            value={active?.stars ?? (entered ? shape.total : 0)}
-          />
+          <span className="rounded-[4px] bg-(--ovio-surface) px-3 py-0.5 font-(family-name:--ovio-mono) text-[22px] leading-8 font-semibold shadow-[inset_0_-7px_6px_-5px_rgba(0,0,0,.25),inset_0_7px_6px_-5px_rgba(0,0,0,.25)] tabular-nums">
+            {formatNumber(active?.stars ?? shape.total)}
+          </span>
         </div>
       </div>
       <div className="relative flex min-h-[220px] flex-1 items-end gap-1 rounded-xl bg-[#ebe6db] p-2 shadow-[inset_0_3px_6px_rgba(40,28,10,.2)]">

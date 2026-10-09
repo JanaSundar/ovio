@@ -1,11 +1,10 @@
 "use client";
 
 import { motion } from "motion/react";
-import { RollingNumber } from "@/components/shared/rolling-number";
 import { motionTokens, useOvioTransition } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { LinePlot, type LineLook } from "../line-plot";
-import { formatDate } from "@/lib/format";
+import { formatDate, formatNumber } from "@/lib/format";
 import { formatMonth, monthTicks } from "../shape";
 import type { StarHistoryWorldProps } from "../star-history";
 import { usePointScrubber } from "../use-scrubber";
@@ -27,7 +26,6 @@ export function MinimalStarHistory({
   name,
   label,
   animation,
-  entered,
   dataKey,
   className,
 }: StarHistoryWorldProps) {
@@ -49,10 +47,9 @@ export function MinimalStarHistory({
         </span>
         <span className="flex items-baseline gap-2.5">
           {active && <span className="text-xs text-(--ovio-muted)">{formatDate(active.time)}</span>}
-          <RollingNumber
-            className="text-2xl tracking-[-0.03em]"
-            value={active?.stars ?? (entered ? shape.total : 0)}
-          />
+          <span className="text-2xl tracking-[-0.03em] tabular-nums">
+            {formatNumber(active?.stars ?? shape.total)}
+          </span>
         </span>
       </div>
       <LinePlot

@@ -3,7 +3,6 @@
 import { motion } from "motion/react";
 import { Avatar } from "@/components/shared/avatar";
 import { QrCode } from "@/components/shared/qr-code";
-import { ToyKey, ToyPiece } from "@/components/shared/toy";
 import { motionTokens, useOvioTransition } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import type { DeveloperIdCardWorldProps } from "../developer-id-card";
@@ -32,7 +31,7 @@ export function ToyDeveloperIdCard({
   const place = location?.split(",")[0].toUpperCase();
 
   return (
-    <ToyPiece
+    <div
       data-ovio-world="toy"
       role="group"
       aria-label={`Developer ID card for ${name}`}
@@ -72,17 +71,14 @@ export function ToyDeveloperIdCard({
           {stack.map((tech, i) => {
             const [face, side, ink] = KEYS[i % KEYS.length];
             return (
-              <div key={tech} role="listitem" className="flex grow basis-[60px]">
-                <ToyKey
-                  depth={5}
-                  side={side}
-                  tabIndex={-1}
-                  className="w-full cursor-pointer rounded-[11px] border-0 px-2 py-2.5 font-(family-name:--ovio-font) text-xs font-extrabold touch-manipulation"
-                  style={{ background: face, color: ink }}
-                >
-                  {tech}
-                </ToyKey>
-              </div>
+              <span
+                key={tech}
+                role="listitem"
+                className="grow basis-[60px] rounded-[11px] px-2 py-2.5 text-center text-xs font-extrabold"
+                style={{ background: face, color: ink, boxShadow: `0 5px 0 ${side}` }}
+              >
+                {tech}
+              </span>
             );
           })}
         </div>
@@ -114,6 +110,6 @@ export function ToyDeveloperIdCard({
           {qrUrl && <QrCode value={qrUrl} border={0} className="size-[52px]" />}
         </div>
       )}
-    </ToyPiece>
+    </div>
   );
 }

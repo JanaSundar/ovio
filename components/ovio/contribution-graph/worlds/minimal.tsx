@@ -1,7 +1,6 @@
 "use client";
 
 import { memo, useRef } from "react";
-import { RollingNumber } from "@/components/shared/rolling-number";
 import { motionTokens } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import type { ContributionGraphWorldProps } from "../contribution-graph";
@@ -14,6 +13,7 @@ import {
   weeksMinWidth,
 } from "../grid";
 import { unit, type ContributionCell } from "../year";
+import { formatNumber } from "@/lib/format";
 
 const SCALE = ["#ebe9e4", "#c9c6bf", "#97938a", "#5d5a53", "#1d1c1a"];
 const WEEKDAY_LABELS = ["", "Mon", "", "Wed", "", "Fri", ""];
@@ -76,10 +76,9 @@ export function MinimalContributionGraph({
             Contribution activity · last {Math.round((year.weeks * 7) / 30.4)} months
           </div>
           <div className="flex flex-wrap items-baseline gap-x-3.5 gap-y-1">
-            <RollingNumber
-              className="text-[56px] leading-none font-normal tracking-[-0.04em]"
-              value={year.total}
-            />
+            <span className="text-[56px] leading-none font-normal tracking-[-0.04em]">
+              {formatNumber(year.total)}
+            </span>
             <span className="text-[15px] text-(--ovio-muted)">contributions</span>
           </div>
         </div>
@@ -159,7 +158,7 @@ export function MinimalContributionGraph({
         <div className="flex flex-wrap items-baseline gap-x-2.5 gap-y-1">
           {!active && <span className="text-(--ovio-muted)">Best day</span>}
           <span className="font-medium">
-            <RollingNumber value={day.count} /> {unit(day.count)}
+            <span className="tabular-nums">{formatNumber(day.count)}</span> {unit(day.count)}
           </span>
           <span className="text-(--ovio-muted)">on {day.label}</span>
         </div>

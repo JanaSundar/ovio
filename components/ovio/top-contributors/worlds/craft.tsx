@@ -6,6 +6,7 @@ import { RollingNumber } from "@/components/shared/rolling-number";
 import { motionTokens, useOvioTransition, useReducedMotionSafe } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { PERIOD_LABEL, type TopContributorsWorldProps } from "../top-contributors";
+import { formatNumber } from "@/lib/format";
 
 /** Photo tile colours and tilts, by rank. Light tiles take dark ink. */
 const TILES = ["#e0713a", "#3178c6", "#ffe27a", "#2f9a45", "#f2c9a0", "#b8471f"];
@@ -113,7 +114,7 @@ export function CraftTopContributors({
                   </span>
                 </div>
                 <div className="font-(family-name:--ovio-hand) text-[22px] leading-none text-(--ovio-ink-2)">
-                  <RollingNumber value={p.commits} /> commits
+                  {formatNumber(p.commits)} commits
                 </div>
                 {p.rank === 1 && (
                   <span className="absolute -top-3.5 -right-3.5 flex size-[50px] rotate-14 items-center justify-center rounded-full bg-[#ffe27a] text-[13px] font-extrabold shadow-[0_4px_8px_-2px_rgba(90,60,0,.4)]">

@@ -2,12 +2,12 @@
 
 import { motion } from "motion/react";
 import { memo, useRef } from "react";
-import { RollingNumber } from "@/components/shared/rolling-number";
 import { motionTokens, steps } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import type { ContributionGraphWorldProps } from "../contribution-graph";
 import { dayCellProps, useCellEntrance, weekColumns, weekScroller, weeksMinWidth } from "../grid";
 import type { ContributionCell } from "../year";
+import { formatNumber } from "@/lib/format";
 
 const SCALE = ["#0f2414", "#1d5a2b", "#2f9a45", "#4fdc68", "#b8ffc4"];
 const PAD3 = { minimumIntegerDigits: 3, useGrouping: false } as const;
@@ -97,7 +97,7 @@ export function RetroContributionGraph({
         <div className="mb-[26px] flex flex-wrap items-baseline gap-x-10 gap-y-1 text-base leading-[1.1] sm:text-[22px]">
           <div>
             TOTAL.......
-            <RollingNumber className="text-[#c9ffd2]" value={year.total} />
+            <span className="text-[#c9ffd2]">{formatNumber(year.total)}</span>
           </div>
           <div>
             MAX_STREAK..<span className="text-[#c9ffd2]">{year.longest}D</span>
@@ -134,7 +134,7 @@ export function RetroContributionGraph({
         <div className="mt-6 flex flex-wrap justify-between gap-4 text-lg leading-none sm:text-2xl">
           <span>
             &gt; {day.date} {day.label.slice(0, 3).toUpperCase()} ::{" "}
-            <RollingNumber value={day.count} format={PAD3} /> COMMITS{" "}
+            <span className="tabular-nums">{formatNumber(day.count, PAD3)}</span> COMMITS{" "}
             <span aria-hidden className="text-(--ovio-ink-2)">
               {"█".repeat(day.level) + "░".repeat(4 - day.level)}
             </span>

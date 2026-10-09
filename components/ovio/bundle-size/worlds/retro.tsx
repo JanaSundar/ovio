@@ -6,6 +6,7 @@ import { RollingNumber } from "@/components/shared/rolling-number";
 import { motionTokens, useReducedMotionSafe } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { ARROW, barLabel, deltaLabel, KB_FORMAT, type BundleSizeWorldProps } from "../bundle-size";
+import { formatNumber } from "@/lib/format";
 
 const CELLS = 20;
 
@@ -66,18 +67,18 @@ export function RetroBundleSize({
         </div>
         <div>
           {dots("GZIP")}
-          <RollingNumber value={r.gzip} format={KB_FORMAT} suffix=" KB" />
+          {formatNumber(r.gzip, KB_FORMAT)} KB
         </div>
         {r.brotli !== undefined && (
           <div>
             {dots("BROTLI")}
-            <RollingNumber value={r.brotli} format={KB_FORMAT} suffix=" KB" />
+            {formatNumber(r.brotli, KB_FORMAT)} KB
           </div>
         )}
         {r.dependencies !== undefined && (
           <div>
             {dots("DEPS")}
-            <RollingNumber value={r.dependencies} />
+            {r.dependencies}
           </div>
         )}
         <div
@@ -89,7 +90,7 @@ export function RetroBundleSize({
           )}
         >
           <span aria-hidden>
-            [<motion.span>{bar}</motion.span>] <RollingNumber value={r.percent} suffix="%" />
+            [<motion.span>{bar}</motion.span>] {r.percent}%
           </span>
         </div>
         <div style={{ color: TREND_COLOR[r.trend] }}>

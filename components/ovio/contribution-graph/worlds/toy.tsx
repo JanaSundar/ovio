@@ -18,12 +18,12 @@ import {
   useState,
   type PointerEvent,
 } from "react";
-import { RollingNumber } from "@/components/shared/rolling-number";
 import { motionTokens, useOvioTransition, useReducedMotionSafe } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import type { ContributionGraphWorldProps } from "../contribution-graph";
 import { dayCellProps, dayIndexOf } from "../grid";
 import { unit, type ContributionCell } from "../year";
+import { formatNumber } from "@/lib/format";
 
 /** Plastic by level: top colour, highlight and the darker lip under it. Level 0 is an empty socket. */
 const PLASTIC = [
@@ -318,27 +318,26 @@ export function ToyContributionGraph({
           <div className="font-(family-name:--ovio-mono) text-[11px] tracking-[0.08em] text-(--ovio-muted) uppercase">
             Contributions · last 12 months
           </div>
-          <RollingNumber
+          <div
             className="mt-1.5 text-[clamp(48px,6vw,72px)] leading-[0.95] font-extrabold tracking-[-0.04em]"
             style={{ fontStretch: "120%" }}
-            value={year.total}
-          />
+          >
+            {formatNumber(year.total)}
+          </div>
         </div>
         <div className="flex flex-wrap gap-3">
           <div className="rounded-(--ovio-radius) bg-(--ovio-surface) px-4 py-3 shadow-[inset_0_1px_0_#fff,0_5px_0_#d2ccbf,0_12px_14px_-8px_rgba(40,28,10,.4)]">
             <div className="font-(family-name:--ovio-mono) text-[11.5px] tracking-[0.08em] text-(--ovio-muted)">
               STREAK
             </div>
-            <div className="text-2xl font-extrabold tracking-[-0.02em]">
-              <RollingNumber value={year.longest} /> days
-            </div>
+            <div className="text-2xl font-extrabold tracking-[-0.02em]">{year.longest} days</div>
           </div>
           <div className="rounded-(--ovio-radius) bg-(--ovio-accent) px-4 py-3 text-(--ovio-on-accent) shadow-[inset_0_2px_0_rgba(255,255,255,.25),0_5px_0_var(--ovio-accent-deep),0_12px_14px_-8px_rgba(40,28,10,.4)]">
             <div className="font-(family-name:--ovio-mono) text-[11.5px] tracking-[0.08em]">
               PEAK
             </div>
             <div className="text-2xl font-extrabold tracking-[-0.02em]">
-              <RollingNumber value={year.best.count} /> / day
+              {formatNumber(year.best.count)} / day
             </div>
           </div>
         </div>
@@ -411,10 +410,9 @@ export function ToyContributionGraph({
         <div className="mt-2.5 flex justify-center px-4">
           <div className="flex items-center gap-4 rounded-xl bg-[#2a2925] px-4 py-2.5 text-(--ovio-surface) shadow-[inset_0_3px_6px_rgba(0,0,0,.6)]">
             <div className="flex items-baseline gap-[7px]">
-              <RollingNumber
-                className="text-[26px] leading-none font-extrabold tracking-[-0.02em]"
-                value={count}
-              />
+              <span className="text-[26px] leading-none font-extrabold tracking-[-0.02em] tabular-nums">
+                {formatNumber(count)}
+              </span>
               <span className="text-xs text-[#bdb6a8]">{active ? unit(count) : "this week"}</span>
             </div>
             <div className="flex flex-col gap-0.5 font-(family-name:--ovio-mono) text-[12px] leading-[1.25] text-[#bdb6a8]">

@@ -79,6 +79,8 @@ describe("keyToIndex", () => {
 describe("format", () => {
   it("formats numbers and counts", () => {
     expect(formatNumber(12450)).toBe("12,450");
+    expect(formatNumber(0.864, { style: "percent" })).toBe("86%");
+    expect(formatNumber(34.1, { minimumFractionDigits: 1, maximumFractionDigits: 1 })).toBe("34.1");
     expect(plural(1, "star")).toBe("star");
     expect(plural(2, "star")).toBe("stars");
     expect(formatCount(1, "star")).toBe("1 star");

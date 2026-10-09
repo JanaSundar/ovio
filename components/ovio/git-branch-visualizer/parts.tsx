@@ -2,8 +2,7 @@
 
 import { AnimatePresence, motion, type TargetAndTransition, type Transition } from "motion/react";
 import type { ReactNode } from "react";
-import { RollingNumber } from "@/components/shared/rolling-number";
-import { plural } from "@/lib/format";
+import { formatCount } from "@/lib/format";
 import { motionTokens, useOvioTransition, useReducedMotionSafe } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
@@ -58,12 +57,11 @@ export function Cursor({ className }: { className?: string }) {
   );
 }
 
-/** "11 commits · 3 branches", rolling as commits and branches are added. */
+/** "11 commits · 3 branches". */
 export function Counts({ commits, branches }: { commits: number; branches: number }) {
   return (
     <span>
-      <RollingNumber value={commits} /> {plural(commits, "commit")} ·{" "}
-      <RollingNumber value={branches} /> {plural(branches, "branch", "branches")}
+      {formatCount(commits, "commit")} · {formatCount(branches, "branch", "branches")}
     </span>
   );
 }

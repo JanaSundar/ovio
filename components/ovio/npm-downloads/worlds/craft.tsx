@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "motion/react";
-import { RollingNumber } from "@/components/shared/rolling-number";
 import { motionTokens, steps, useOvioTransition, useReducedMotionSafe } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { formatNumber } from "@/lib/format";
@@ -70,7 +69,7 @@ export function CraftNpmDownloads({
 
           <div className={cn("mt-2 flex justify-between pt-2 text-sm font-medium", RULE)}>
             <span>THIS WEEK</span>
-            <RollingNumber value={latest.downloads} />
+            {formatNumber(latest.downloads)}
           </div>
           <div className="flex justify-between text-[#7d6650]">
             <span>VS LAST</span>
@@ -78,7 +77,7 @@ export function CraftNpmDownloads({
           </div>
           <div className="flex justify-between text-[#7d6650]">
             <span>{points.length} WK TOTAL</span>
-            <RollingNumber value={total} />
+            {formatNumber(total)}
           </div>
           {goal !== undefined && (
             <>
@@ -88,7 +87,7 @@ export function CraftNpmDownloads({
               </div>
               <div className="flex justify-between">
                 <span>{goalProgress >= 1 ? "OVER BY" : "TO GO"}</span>
-                <RollingNumber value={Math.abs(goal - latest.downloads)} />
+                {formatNumber(Math.abs(goal - latest.downloads))}
               </div>
             </>
           )}

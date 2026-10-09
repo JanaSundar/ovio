@@ -6,6 +6,7 @@ import { ToyKey } from "@/components/shared/toy";
 import { motionTokens, useOvioTransition } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { barLabel, deltaLabel, KB_FORMAT, type BundleSizeWorldProps } from "../bundle-size";
+import { formatNumber } from "@/lib/format";
 
 const BLOCKS = 20;
 /** Blocks past this one are the red zone near the budget. */
@@ -93,11 +94,11 @@ export function ToyBundleSize({
 
         <div className="grid grid-cols-2 gap-2.5 font-(family-name:--ovio-mono) text-xs">
           <span className="rounded-[11px] bg-white px-3 py-2 shadow-[0_4px_0_#cfc8b8]">
-            gzip <RollingNumber className="font-bold" value={r.gzip} format={KB_FORMAT} />
+            gzip <span className="font-bold">{formatNumber(r.gzip, KB_FORMAT)}</span>
           </span>
           {r.brotli !== undefined && (
             <span className="rounded-[11px] bg-white px-3 py-2 shadow-[0_4px_0_#cfc8b8]">
-              brotli <RollingNumber className="font-bold" value={r.brotli} format={KB_FORMAT} />
+              brotli <span className="font-bold">{formatNumber(r.brotli, KB_FORMAT)}</span>
             </span>
           )}
         </div>

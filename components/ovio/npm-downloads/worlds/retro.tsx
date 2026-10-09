@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "motion/react";
-import { RollingNumber } from "@/components/shared/rolling-number";
 import { motionTokens, useReducedMotionSafe } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { formatNumber } from "@/lib/format";
@@ -57,7 +56,7 @@ export function RetroNpmDownloads({
       </div>
       <div className="flex">
         <span className="border-2 border-(--ovio-faint) bg-(--ovio-surface) px-3.5 text-[66px] leading-[72px] text-[#c9ffd2]">
-          <RollingNumber value={current.downloads} />
+          <span className="tabular-nums">{formatNumber(current.downloads)}</span>
         </span>
       </div>
 
@@ -110,7 +109,7 @@ export function RetroNpmDownloads({
               [{"█".repeat(filled)}
               {"░".repeat(CELLS - filled)}]
             </span>{" "}
-            <RollingNumber value={goalProgress} format={{ style: "percent" }} />
+            {formatNumber(goalProgress, { style: "percent" })}
           </div>
         )}
       </div>

@@ -13,7 +13,6 @@ import {
 import { useEffect, useRef, type PointerEvent, type ReactNode } from "react";
 import { AutoHeight } from "@/components/shared/auto-height";
 import { QrCode } from "@/components/shared/qr-code";
-import { ToyPiece } from "@/components/shared/toy";
 import type { World } from "@/components/shared/world-provider";
 import { useOvioTransition, useReducedMotionSafe } from "@/lib/motion";
 import { cn } from "@/lib/utils";
@@ -47,8 +46,6 @@ export type TicketLook = {
   /** CSS border shorthand for the perforation. */
   perf: string;
   stamp: string;
-  /** Toy: the stamp is a loose plastic piece you can pull around. */
-  stampPiece?: boolean;
   laser: string;
   sheen: string;
   sheenBlend: "soft-light" | "screen";
@@ -194,14 +191,27 @@ export function Ticket({ look, rootRef, ...p }: EventTicketWorldProps & { look: 
         ]
   ).filter((f): f is [string, string] => !!f[1]);
 
+  // Labelled and at least 44px tall, so the QR code is easy to find for anyone at the door.
   const flipButton = (
     <button
       type="button"
       onClick={p.flip}
-      aria-label={p.flipped ? "Show the front" : "Show the QR code"}
-      className={cn("flex-none cursor-pointer whitespace-nowrap", look.flipButton)}
+      className={cn(
+        "inline-flex min-h-11 flex-none cursor-pointer items-center gap-2 whitespace-nowrap",
+        look.flipButton,
+      )}
     >
-      {p.flipped ? "↺ Front" : "QR ↻"}
+      {p.flipped ? (
+        <span aria-hidden>←</span>
+      ) : (
+        <svg aria-hidden viewBox="0 0 16 16" className="size-4 flex-none" fill="currentColor">
+          <path
+            fillRule="evenodd"
+            d="M1 1h6v6H1zm2 2v2h2V3zm6-2h6v6H9zm2 2v2h2V3zM1 9h6v6H1zm2 2v2h2v-2zm6-2h2v2H9zm4 0h2v2h-2zm-2 2h2v2h-2zm-2 2h2v2H9zm4 0h2v2h-2z"
+          />
+        </svg>
+      )}
+      {p.flipped ? "Back to ticket" : "Show QR code"}
     </button>
   );
 
@@ -213,7 +223,6 @@ export function Ticket({ look, rootRef, ...p }: EventTicketWorldProps & { look: 
     />
   );
 
-  const Stamp = look.stampPiece ? ToyPiece : motion.div;
   const stamp = (
     <AnimatePresence>
       {p.torn && (
@@ -228,16 +237,16 @@ export function Ticket({ look, rootRef, ...p }: EventTicketWorldProps & { look: 
             animate={{ opacity: 1, scale: 1, rotate: -14 }}
             transition={stampT}
           >
-            <Stamp
+            <motion.div
               role="status"
               className={cn(
                 "px-4 py-2 text-[clamp(18px,6cqi,26px)] leading-none font-bold tracking-[0.08em] uppercase",
-                !look.stampPiece && "pointer-events-none",
+                "pointer-events-none",
                 look.stamp,
               )}
             >
               Admitted
-            </Stamp>
+            </motion.div>
           </motion.div>
         </div>
       )}
@@ -445,7 +454,7 @@ export function Ticket({ look, rootRef, ...p }: EventTicketWorldProps & { look: 
   const back = horizontal ? (
     <div className="@container flex h-full gap-[clamp(18px,4cqi,28px)] p-[clamp(20px,4cqi,30px)]">
       <div className="flex flex-none flex-col items-start gap-3">
-        <QrCode value={p.ticketId} dots={look.qrDots} className="w-[clamp(120px,22cqi,180px)]" />
+        <QrCode value={p.ticketId} dots={look.qrDots} className="w-[clamp(140px,25cqi,200px)]" />
         <span className={look.label}>Show at the door</span>
       </div>
       <div className="flex min-w-0 flex-1 flex-col">
@@ -468,11 +477,11 @@ export function Ticket({ look, rootRef, ...p }: EventTicketWorldProps & { look: 
       </div>
     </div>
   ) : (
-    <div className="relative flex h-full flex-col items-center justify-center gap-4 p-7 text-center">
-      <div className="absolute top-3 right-3">{flipButton}</div>
-      <QrCode value={p.ticketId} dots={look.qrDots} className="w-[min(200px,70%)]" />
+    <div className="relative flex h-full flex-col items-center justify-center gap-4 p-6 text-center">
+      <QrCode value={p.ticketId} dots={look.qrDots} className="w-[min(220px,75%)]" />
       <div className={look.display}>{name || p.event.name}</div>
       <div className={look.label}>Show at the door · {p.ticketId}</div>
+      {flipButton}
     </div>
   );
 

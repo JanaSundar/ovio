@@ -38,7 +38,6 @@ export function CraftDeveloperIdCard({
 }: DeveloperIdCardWorldProps) {
   const reduced = useReducedMotionSafe();
   const settle = useOvioTransition(motionTokens.craft.slow);
-  const piece = motionTokens.toy.piece;
   const [first, ...rest] = name.split(/\s+/);
 
   // Hover, focus or a drag lifts the card off its stack: the sheets fan out and the QR and note show.
@@ -72,17 +71,12 @@ export function CraftDeveloperIdCard({
         role="group"
         aria-label={`Developer ID card for ${name}`}
         tabIndex={0}
-        drag={!reduced}
-        dragSnapToOrigin
-        dragElastic={0.5}
-        dragTransition={{ bounceStiffness: piece.stiffness, bounceDamping: piece.damping }}
         initial={false}
         animate="rest"
         whileHover="lift"
         whileFocus="lift"
-        whileDrag="lift"
         className={cn(
-          "@container relative w-full max-w-[380px] cursor-grab font-(family-name:--ovio-font) text-(--ovio-ink) select-none active:cursor-grabbing",
+          "@container relative w-full max-w-[380px] font-(family-name:--ovio-font) text-(--ovio-ink)",
           className,
         )}
       >

@@ -319,7 +319,7 @@ export const COMPONENTS: ComponentDoc[] = [
   {
     slug: "sponsor-wall",
     name: "Sponsor Wall",
-    tech: "CSS · Motion for React (drag, layout)",
+    tech: "CSS · Motion for React (layout)",
     description: "Sponsors by tier, from a logo wall to blocks on a pegboard.",
     exportName: "SponsorWall",
     usage: '  sponsors={sponsors}\n  ctaHref="https://github.com/sponsors/ada-dev"',
@@ -367,7 +367,7 @@ export const COMPONENTS: ComponentDoc[] = [
   {
     slug: "developer-id-card",
     name: "Developer ID Card",
-    tech: "SVG · Motion for React (drag)",
+    tech: "SVG · Motion for React (hover)",
     description: "An identity card for a developer: name, role, stack, availability and a QR code.",
     exportName: "DeveloperIdCard",
     usage:

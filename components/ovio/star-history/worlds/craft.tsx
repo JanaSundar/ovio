@@ -1,11 +1,10 @@
 "use client";
 
 import { motion } from "motion/react";
-import { RollingNumber } from "@/components/shared/rolling-number";
 import { motionTokens, useOvioTransition } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { LinePlot, type LineLook } from "../line-plot";
-import { formatDate } from "@/lib/format";
+import { formatDate, formatNumber } from "@/lib/format";
 import type { StarHistoryWorldProps } from "../star-history";
 import { usePointScrubber } from "../use-scrubber";
 
@@ -27,7 +26,6 @@ export function CraftStarHistory({
   shape,
   label,
   animation,
-  entered,
   dataKey,
   className,
 }: StarHistoryWorldProps) {
@@ -56,11 +54,12 @@ export function CraftStarHistory({
               {formatDate(active.time)}
             </span>
           )}
-          <RollingNumber
-            className="font-(family-name:--ovio-hand) text-[28px] leading-none"
+          <span
+            className="font-(family-name:--ovio-hand) text-[28px] leading-none tabular-nums"
             style={{ color: PEN }}
-            value={active?.stars ?? (entered ? shape.total : 0)}
-          />
+          >
+            {formatNumber(active?.stars ?? shape.total)}
+          </span>
         </span>
       </div>
       <LinePlot

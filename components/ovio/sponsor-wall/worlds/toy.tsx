@@ -1,11 +1,10 @@
 "use client";
 
 import { AnimatePresence, motion } from "motion/react";
-import { useRef } from "react";
-import { TOY_PLASTIC, ToyKeyLink, ToyPiece } from "@/components/shared/toy";
+import { TOY_PLASTIC, ToyKeyLink } from "@/components/shared/toy";
 import { motionTokens, useOvioTransition, useReducedMotionSafe } from "@/lib/motion";
 import { cn } from "@/lib/utils";
-import { SponsorLink } from "../sponsor-link";
+import { SponsorName } from "../sponsor-link";
 import type { SponsorTier, SponsorWallWorldProps } from "../sponsor-wall";
 
 /** Plastic colours: face, side, ink. */
@@ -27,12 +26,12 @@ const BLOCK: Record<SponsorTier, string> = {
 
 const DEPTH: Record<SponsorTier, number> = { platinum: 6, gold: 5, backer: 4 };
 
-/** Toy: sponsors as plastic blocks hung on a pegboard. Grab one and it springs back to its peg. */
+const block = "flex items-center justify-center truncate no-underline select-none";
+
+/** Toy: sponsors as plastic blocks hung on a pegboard. A linked block is a key that opens its site. */
 export function ToySponsorWall({ groups, ctaHref, ctaLabel, className }: SponsorWallWorldProps) {
   const reduced = useReducedMotionSafe();
   const drop = useOvioTransition(motionTokens.toy.piece);
-  // A drag ends in a click on the link under it; that click must not open the sponsor.
-  const dragged = useRef(false);
 
   return (
     <section
@@ -61,13 +60,7 @@ export function ToySponsorWall({ groups, ctaHref, ctaLabel, className }: Sponsor
         )}
       </div>
 
-      <div
-        onPointerDownCapture={() => (dragged.current = false)}
-        onClickCapture={(e) => {
-          if (dragged.current) e.preventDefault();
-        }}
-        className="flex flex-col gap-3 rounded-[14px] bg-[#ebe6db] bg-[radial-gradient(circle,rgba(60,45,20,.16)_3px,transparent_3.5px)] bg-size-[20px_20px] bg-position-[4px_4px] p-3 pb-4 shadow-[inset_0_3px_6px_rgba(40,28,10,.22)] @md:p-3.5 @md:pb-[18px]"
-      >
+      <div className="flex flex-col gap-3 rounded-[14px] bg-[#ebe6db] bg-[radial-gradient(circle,rgba(60,45,20,.16)_3px,transparent_3.5px)] bg-size-[20px_20px] bg-position-[4px_4px] p-3 pb-4 shadow-[inset_0_3px_6px_rgba(40,28,10,.22)] @md:p-3.5 @md:pb-[18px]">
         {groups.map((g) => (
           <ul key={g.tier} aria-label={g.label} className={cn("m-0 list-none p-0", ROW[g.tier])}>
             <AnimatePresence>
@@ -84,23 +77,31 @@ export function ToySponsorWall({ groups, ctaHref, ctaLabel, className }: Sponsor
                     transition={{ ...drop, delay: reduced ? 0 : s.index * 0.04 }}
                     className="relative min-w-0 active:z-10"
                   >
-                    <ToyPiece
-                      onDragStart={() => (dragged.current = true)}
-                      className={cn("select-none", BLOCK[s.tier])}
-                      style={{
-                        background: face,
-                        color: ink,
-                        boxShadow: `0 ${DEPTH[s.tier]}px 0 ${side}, 0 ${DEPTH[s.tier] * 2}px 14px -6px rgba(40,28,10,.4), inset 0 2px 0 rgba(255,255,255,.3)`,
-                      }}
-                    >
-                      <SponsorLink
-                        sponsor={s}
-                        className={cn(
-                          "flex size-full items-center justify-center truncate text-inherit no-underline",
-                          s.tier !== "backer" && "px-2",
-                        )}
-                      />
-                    </ToyPiece>
+                    {s.url ? (
+                      <ToyKeyLink
+                        href={s.url}
+                        target="_blank"
+                        rel="noreferrer"
+                        draggable={false}
+                        depth={DEPTH[s.tier]}
+                        side={side}
+                        className={cn(block, BLOCK[s.tier], s.tier !== "backer" && "px-2")}
+                        style={{ background: face, color: ink }}
+                      >
+                        <SponsorName sponsor={s} />
+                      </ToyKeyLink>
+                    ) : (
+                      <span
+                        className={cn(block, BLOCK[s.tier], s.tier !== "backer" && "px-2")}
+                        style={{
+                          background: face,
+                          color: ink,
+                          boxShadow: `0 ${DEPTH[s.tier]}px 0 ${side}, 0 ${DEPTH[s.tier] * 2}px 14px -6px rgba(40,28,10,.4), inset 0 2px 0 rgba(255,255,255,.3)`,
+                        }}
+                      >
+                        <SponsorName sponsor={s} />
+                      </span>
+                    )}
                   </motion.li>
                 );
               })}
@@ -108,9 +109,6 @@ export function ToySponsorWall({ groups, ctaHref, ctaLabel, className }: Sponsor
           </ul>
         ))}
       </div>
-      <p className="m-0 font-(family-name:--ovio-mono) text-[11px] tracking-[0.08em] text-(--ovio-muted) uppercase">
-        Grab a block
-      </p>
     </section>
   );
 }

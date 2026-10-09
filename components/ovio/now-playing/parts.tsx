@@ -2,7 +2,6 @@
 
 import { useAnimate, type Transition } from "motion/react";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { RollingNumber } from "@/components/shared/rolling-number";
 import { motionTokens, steps, useOvioTransition, useReducedMotionSafe } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
@@ -13,18 +12,10 @@ export const VOLUME_STEPS = 11;
 export const formatTime = (seconds: number) =>
   `${Math.floor(seconds / 60)}:${String(Math.floor(seconds % 60)).padStart(2, "0")}`;
 
-const TWO_DIGITS = { minimumIntegerDigits: 2 } as const;
-
-/** m:ss with rolling digits. Seconds always roll forward, so 0:59 → 1:00 turns over like a counter. */
+/** m:ss in fixed-width digits, so the clock doesn't jitter as it ticks. */
 export function Time({ seconds, className }: { seconds: number; className?: string }) {
   return (
-    <span className={cn("inline-flex whitespace-nowrap", className)}>
-      <span aria-hidden className="inline-flex items-baseline">
-        <RollingNumber value={Math.floor(seconds / 60)} />:
-        <RollingNumber value={Math.floor(seconds % 60)} format={TWO_DIGITS} trend={1} />
-      </span>
-      <span className="sr-only">{formatTime(seconds)}</span>
-    </span>
+    <span className={cn("whitespace-nowrap tabular-nums", className)}>{formatTime(seconds)}</span>
   );
 }
 

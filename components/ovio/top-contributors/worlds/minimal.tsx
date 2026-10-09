@@ -7,6 +7,7 @@ import { RollingNumber } from "@/components/shared/rolling-number";
 import { motionTokens, useOvioTransition, useReducedMotionSafe } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { PERIOD_LABEL, PERIOD_SHORT, type TopContributorsWorldProps } from "../top-contributors";
+import { formatNumber } from "@/lib/format";
 
 export function MinimalTopContributors({
   people,
@@ -122,7 +123,7 @@ export function MinimalTopContributors({
                 />
               </span>
               <span className="text-right font-(family-name:--ovio-mono) text-[13px]">
-                <RollingNumber value={p.commits} />
+                {formatNumber(p.commits)}
                 <span className="sr-only"> commits</span>
               </span>
             </motion.li>

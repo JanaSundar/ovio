@@ -2,7 +2,6 @@
 
 import { motion, useMotionValue, useSpring } from "motion/react";
 import { useEffect, useRef, type PointerEvent } from "react";
-import { RollingNumber } from "@/components/shared/rolling-number";
 import { motionTokens, useOvioTransition, useReducedMotionSafe } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { formatNumber } from "@/lib/format";
@@ -147,7 +146,7 @@ export function ToyNpmDownloads({
           npm · {packageName} · downloads / week
         </div>
         <div className="flex w-max rounded-xl bg-[#2a2925] px-[18px] py-2.5 font-(family-name:--ovio-mono) text-[40px] leading-none font-semibold text-(--ovio-surface) shadow-[inset_0_3px_6px_rgba(0,0,0,.6)]">
-          <RollingNumber value={current.downloads} />
+          <span className="tabular-nums">{formatNumber(current.downloads)}</span>
         </div>
         <div role="img" aria-label={summary} className="flex h-[54px] items-end gap-[3px]">
           {points.map((p, i) => (
@@ -186,7 +185,7 @@ export function ToyNpmDownloads({
                 transition={slide}
               />
             </span>
-            <RollingNumber value={goalProgress} format={{ style: "percent" }} />
+            {formatNumber(goalProgress, { style: "percent" })}
           </div>
         )}
       </div>

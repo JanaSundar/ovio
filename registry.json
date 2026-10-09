@@ -411,7 +411,8 @@
         "JanaSundar/ovio/motion",
         "JanaSundar/ovio/rolling-number",
         "JanaSundar/ovio/toy",
-        "JanaSundar/ovio/avatar"
+        "JanaSundar/ovio/avatar",
+        "JanaSundar/ovio/format"
       ],
       "files": [
         {
@@ -543,7 +544,8 @@
         "JanaSundar/ovio/motion",
         "JanaSundar/ovio/rolling-number",
         "JanaSundar/ovio/toy",
-        "JanaSundar/ovio/keys"
+        "JanaSundar/ovio/keys",
+        "JanaSundar/ovio/format"
       ],
       "files": [
         {
@@ -826,7 +828,7 @@
       "type": "registry:ui",
       "title": "Git Branch Visualizer",
       "description": "Branches and commits as a graph. Hover a commit, pick a branch, merge or branch off.",
-      "dependencies": ["motion", "@number-flow/react"],
+      "dependencies": ["motion"],
       "registryDependencies": [
         "utils",
         "JanaSundar/ovio/theme",
@@ -834,7 +836,6 @@
         "JanaSundar/ovio/motion",
         "JanaSundar/ovio/keys",
         "JanaSundar/ovio/format",
-        "JanaSundar/ovio/rolling-number",
         "JanaSundar/ovio/toy",
         "JanaSundar/ovio/auto-height"
       ],

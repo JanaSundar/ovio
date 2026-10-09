@@ -1,10 +1,10 @@
 "use client";
 
 import { motion } from "motion/react";
-import { RollingNumber } from "@/components/shared/rolling-number";
 import { motionTokens, useReducedMotionSafe } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import type { RepositoryCardWorldProps } from "../repository-card";
+import { formatNumber } from "@/lib/format";
 
 const LABEL: Record<string, string> = { stars: "STARS", forks: "FORKS", issues: "ISSUES" };
 
@@ -67,7 +67,7 @@ export function RetroRepositoryCard({
         {lines.map((l, i) => (
           <motion.div key={l.label} {...line(i + 1)}>
             {dots(l.label)}
-            <RollingNumber value={l.value} />
+            {formatNumber(l.value)}
           </motion.div>
         ))}
         {language && (

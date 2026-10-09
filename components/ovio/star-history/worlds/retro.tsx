@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "motion/react";
-import { RollingNumber } from "@/components/shared/rolling-number";
 import { motionTokens } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { formatNumber } from "@/lib/format";
@@ -15,7 +14,6 @@ export function RetroStarHistory({
   shape,
   label,
   animation,
-  entered,
   dataKey,
   className,
 }: StarHistoryWorldProps) {
@@ -46,7 +44,7 @@ export function RetroStarHistory({
       <div className="flex justify-between gap-4 text-[22px]">
         <span>STAR_HISTORY.DAT</span>
         <span>
-          <RollingNumber value={active?.stars ?? (entered ? shape.total : 0)} /> ★
+          <span className="tabular-nums">{formatNumber(active?.stars ?? shape.total)}</span> ★
         </span>
       </div>
       <div className="relative flex h-60 items-end gap-1 border-b-[3px] border-l-[3px] border-(--ovio-line) pl-1">

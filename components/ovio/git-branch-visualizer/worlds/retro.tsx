@@ -23,6 +23,9 @@ const LOOK: GraphLook = {
   enter: motionTokens.retro.frames(1, 0.01),
   move: motionTokens.retro.frames(4, 0.24),
   stagger: 0.06,
+  // A dim phosphor grid.
+  canvas:
+    "linear-gradient(rgba(109,255,138,.08) 1px, transparent 1px) 0 0 / 24px 24px, linear-gradient(90deg, rgba(109,255,138,.08) 1px, transparent 1px) 0 0 / 24px 24px",
 };
 
 const block =

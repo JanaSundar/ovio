@@ -24,6 +24,8 @@ const LOOK: GraphLook = {
   enter: motionTokens.toy.piece,
   move: motionTokens.toy.slide,
   stagger: 0.045,
+  // Pegboard holes, like the Sponsor Wall's.
+  canvas: "radial-gradient(circle, rgba(60,45,20,.13) 3px, transparent 3.5px) 4px 4px / 24px 24px",
 };
 
 /** How far a bead's plastic side shows below its face. */

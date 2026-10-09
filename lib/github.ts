@@ -6,25 +6,29 @@ import type { Repository } from "@/components/ovio/repository-card/repository-ca
 import type { StarHistoryPoint } from "@/components/ovio/star-history/star-history";
 import type { Contributor } from "@/components/ovio/top-contributors/top-contributors";
 import { isoDate } from "@/lib/format";
+import {
+  fetchOk,
+  HttpError,
+  RateLimitError,
+  resetTime,
+  type FetchOptions as BaseOptions,
+  type RequestOptions,
+} from "@/lib/ovio-fetch";
 
 /**
  * Server-side GitHub fetchers. Unauthenticated GitHub allows 60 requests an hour per IP,
  * so pass a token (GITHUB_TOKEN) in production and cache the result.
  */
 
-type FetchOptions = { token?: string; revalidate?: number };
-
-type RequestOptions = Pick<RequestInit, "method" | "body" | "signal"> & {
-  headers?: Record<string, string>;
-};
+type FetchOptions = BaseOptions & { token?: string };
 
 /** The raw response, for callers that need headers or a 202. Throws on any other status. */
-async function ghResponse(
+function ghResponse(
   path: string,
-  { token = process.env.GITHUB_TOKEN, revalidate = 3600 }: FetchOptions = {},
+  { token = process.env.GITHUB_TOKEN, ...options }: FetchOptions = {},
   { headers, ...init }: RequestOptions = {},
 ) {
-  const res = await fetch(`https://api.github.com${path}`, {
+  return fetchOk(`https://api.github.com${path}`, options, {
     ...init,
     headers: {
       Accept: "application/vnd.github+json",
@@ -32,10 +36,7 @@ async function ghResponse(
       ...(token ? { Authorization: `Bearer ${token}` } : {}),
       ...headers,
     },
-    next: { revalidate },
   });
-  if (!res.ok) throw new Error(`GitHub ${path} responded ${res.status}`);
-  return res;
 }
 
 async function gh<T>(path: string, options?: FetchOptions, init?: RequestOptions) {
@@ -81,6 +82,7 @@ type Stargazer = { starred_at: string };
 /**
  * Cumulative stars by day for <StarHistory data={...} />, from "owner/name". Reads up to 15
  * pages of 100 stargazers, sampled evenly for bigger repos, and ends on today's star count.
+ * GitHub lists stargazers only to the repository's owner, so the token must be theirs.
  */
 export async function getStarHistory(
   fullName: string,
@@ -89,7 +91,11 @@ export async function getStarHistory(
   const path = `/repos/${fullName}/stargazers?per_page=100`;
   const [repo, first] = await Promise.all([
     gh<RepoResponse>(`/repos/${fullName}`, options),
-    ghResponse(`${path}&page=1`, options, { headers: STAR_HEADERS }),
+    ghResponse(`${path}&page=1`, options, { headers: STAR_HEADERS }).catch((e) => {
+      if (e instanceof HttpError && (e.status === 401 || e.status === 404))
+        throw new HttpError(`GitHub lists ${fullName}'s stargazers only to its owner`, e.status);
+      throw e;
+    }),
   ]);
   const last = Math.min(
     Number(first.headers.get("link")?.match(/[?&]page=(\d+)>; rel="last"/)?.[1] ?? 1),
@@ -121,13 +127,18 @@ export async function getStarHistory(
 }
 
 type ContributorStats = {
-  author: { login: string; avatar_url: string } | null;
+  author: { login: string; avatar_url: string; type: string } | null;
   total: number;
   /** Weeks, `w` in Unix seconds at the week's start, `c` commits. */
   weeks: { w: number; c: number }[];
 };
 
-type ContributorResponse = { login: string; avatar_url: string; contributions: number };
+type ContributorResponse = {
+  login: string;
+  avatar_url: string;
+  type: string;
+  contributions: number;
+};
 
 const DAY = 86_400_000;
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -138,7 +149,7 @@ const commitsSince = (days: number, weeks: ContributorStats["weeks"]) =>
  * Contributors for <TopContributors contributors={...} />, from "owner/name", most commits first.
  * Fills 30d, 90d and all-time counts from GitHub's weekly stats (the windows are whole weeks).
  * GitHub answers 202 while it computes those; after a few retries this falls back to all-time
- * commit counts only.
+ * commit counts only. Bot accounts are left out.
  */
 export async function getContributors(
   fullName: string,
@@ -146,16 +157,14 @@ export async function getContributors(
 ): Promise<Contributor[]> {
   for (let attempt = 0; attempt < 4; attempt++) {
     if (attempt) await wait(1500);
-    // A fresh signal skips Next's per-render memoization, which would replay the 202.
-    const res = await ghResponse(`/repos/${fullName}/stats/contributors`, options, {
-      signal: new AbortController().signal,
-    });
+    // fetchOk's signal skips Next's per-render memoization, which would replay the 202.
+    const res = await ghResponse(`/repos/${fullName}/stats/contributors`, options);
     if (res.status === 202) continue;
     const stats = (await res.json()) as ContributorStats[];
     return stats
       .sort((a, b) => b.total - a.total)
       .flatMap(({ author, total, weeks }) =>
-        author
+        author && author.type !== "Bot"
           ? [
               {
                 login: author.login,
@@ -175,7 +184,9 @@ export async function getContributors(
     `/repos/${fullName}/contributors?per_page=100`,
     options,
   );
-  return list.map((c) => ({ login: c.login, avatarUrl: c.avatar_url, commits: c.contributions }));
+  return list
+    .filter((c) => c.type !== "Bot")
+    .map((c) => ({ login: c.login, avatarUrl: c.avatar_url, commits: c.contributions }));
 }
 
 type ReleaseResponse = {
@@ -254,7 +265,7 @@ type CalendarResponse = {
       };
     } | null;
   };
-  errors?: { message: string }[];
+  errors?: { type?: string; message: string }[];
 };
 
 const CALENDAR_QUERY = `query($login: String!) {
@@ -279,11 +290,15 @@ export async function getContributions(
       "getContributions needs a GitHub token: the GraphQL API rejects anonymous requests. " +
         "Pass { token } or set GITHUB_TOKEN.",
     );
-  const res = await gh<CalendarResponse>(
+  const raw = await ghResponse(
     "/graphql",
     { ...options, token },
     { method: "POST", body: JSON.stringify({ query: CALENDAR_QUERY, variables: { login } }) },
   );
+  const res = (await raw.json()) as CalendarResponse;
+  // GraphQL reports a spent limit as a 200 with a RATE_LIMITED error.
+  if (res.errors?.some((e) => e.type === "RATE_LIMITED"))
+    throw new RateLimitError("github.com", 403, resetTime(raw.headers));
   if (res.errors?.length) throw new Error(`GitHub GraphQL: ${res.errors[0].message}`);
   const user = res.data?.user;
   if (!user) throw new Error(`GitHub user ${login} not found`);

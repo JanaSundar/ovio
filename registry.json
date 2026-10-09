@@ -161,12 +161,26 @@
       ]
     },
     {
+      "name": "fetch",
+      "type": "registry:lib",
+      "title": "Ovio fetch",
+      "description": "Native fetch with Next's data cache, a timeout, and typed errors: RateLimitError says when the limit resets.",
+      "files": [
+        {
+          "path": "lib/ovio-fetch.ts",
+          "type": "registry:lib",
+          "target": "lib/ovio-fetch.ts"
+        }
+      ]
+    },
+    {
       "name": "github",
       "type": "registry:lib",
       "title": "GitHub fetchers",
       "description": "Server-side helpers that fetch repository, star history, contributor, release and contribution data for Ovio components, with an optional token.",
       "dependencies": ["server-only"],
       "registryDependencies": [
+        "JanaSundar/ovio/fetch",
         "JanaSundar/ovio/format",
         "JanaSundar/ovio/repository-card",
         "JanaSundar/ovio/star-history",
@@ -189,6 +203,7 @@
       "description": "Server-side helpers that fetch weekly downloads from npm and bundle sizes from bundlephobia for Ovio components.",
       "dependencies": ["server-only"],
       "registryDependencies": [
+        "JanaSundar/ovio/fetch",
         "JanaSundar/ovio/format",
         "JanaSundar/ovio/npm-downloads",
         "JanaSundar/ovio/bundle-size"

@@ -8,6 +8,11 @@ export const DEMO_TARGETS = {
   "bundle-size": "sonner",
 } as const;
 
+/** Demos that can't be live with our token, with the reason printed on the stage. */
+export const SAMPLE_ONLY = {
+  "star-history": "GitHub hides stargazers",
+} as const;
+
 /** npm Downloads shows 12 weeks, plus the one before them that the first week's change needs. */
 export const DEMO_WEEKS = 13;
 

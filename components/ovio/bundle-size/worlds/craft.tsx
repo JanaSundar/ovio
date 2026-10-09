@@ -126,11 +126,16 @@ export function CraftBundleSize({
       </div>
 
       <div className="mt-3 flex flex-wrap items-center justify-between gap-2">
+        {/* Every note shares one cell, sized to the longest, so the tabs never move. */}
         <span
           aria-hidden
-          className="inline-block -rotate-3 font-(family-name:--ovio-hand) text-[25px] text-[#2b4a9b]"
+          className="inline-grid -rotate-3 font-(family-name:--ovio-hand) text-[25px] text-[#2b4a9b]"
         >
-          {NOTE[r.trend]}
+          {Object.entries(NOTE).map(([trend, note]) => (
+            <span key={trend} className={cn("[grid-area:1/1]", trend !== r.trend && "invisible")}>
+              {note}
+            </span>
+          ))}
         </span>
         <div
           role="tablist"

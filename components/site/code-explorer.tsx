@@ -148,8 +148,8 @@ export function CodeExplorer({ files }: { files: SourceFile[] }) {
   const tree = useMemo(() => buildTree(files), [files]);
   const [open, setOpen] = useState(() => new Set(allFolders(tree)));
   const [file, setFile] = useState(0);
-  // Rendered only on the client (behind the Code tab), so the media query is safe to read here.
-  const [sidebar, setSidebar] = useState(() => !window.matchMedia(NARROW).matches);
+  // Closed at first at every width, so the code gets the room; the files button opens it.
+  const [sidebar, setSidebar] = useState(false);
   const [focused, setFocused] = useState("f:0");
   const { copied, copy } = useCopy();
   const slide = useOvioTransition(SLIDE);

@@ -4,7 +4,7 @@ export const DEMO_TARGETS = {
   "star-history": "shadcn-ui/ui",
   "top-contributors": "withastro/starlight",
   changelog: "tailwindlabs/tailwindcss",
-  "contribution-graph": "yusukebe",
+  "contribution-graph": "shadcn",
   "npm-downloads": "hono",
   "bundle-size": "sonner",
 } as const;

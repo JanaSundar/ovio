@@ -3,19 +3,12 @@ import "server-only";
 import type { BundleVersion } from "@/components/ovio/bundle-size/bundle-size";
 import type { DownloadWeek } from "@/components/ovio/npm-downloads/npm-downloads";
 import { isoDate } from "@/lib/format";
+import { fetchJson, type FetchOptions } from "@/lib/ovio-fetch";
 
 /**
  * Server-side npm fetchers: download counts from the npm registry API and bundle sizes from
  * bundlephobia. Both are public and keyless; cache the result.
  */
-
-type FetchOptions = { revalidate?: number };
-
-async function getJson<T>(url: string, { revalidate = 3600 }: FetchOptions = {}) {
-  const res = await fetch(url, { next: { revalidate } });
-  if (!res.ok) throw new Error(`${url} responded ${res.status}`);
-  return (await res.json()) as T;
-}
 
 const DAY = 86_400_000;
 /** Midnight UTC of the Monday on or before a time. */
@@ -37,7 +30,7 @@ export async function getWeeklyDownloads(
   const monday = mondayOf(Date.now());
   const start = isoDate(monday - weeks * 7 * DAY);
   const end = isoDate(monday - DAY);
-  const { downloads } = await getJson<RangeResponse>(
+  const { downloads } = await fetchJson<RangeResponse>(
     `https://api.npmjs.org/downloads/range/${start}:${end}/${packageName}`,
     options,
   );
@@ -76,11 +69,14 @@ function compareVersions(a: string, b: string) {
   return (preA ?? "").localeCompare(preB ?? "", "en", { numeric: true });
 }
 
+type BundlephobiaHistory = { versions?: (BundlephobiaSize & { version: string })[] };
+
 /**
  * Minified and gzipped sizes (bytes) from bundlephobia for <BundleSize versions={...} />, newest
  * first. Pass `versions` to measure those, in that order; leave it out for the versions in
  * bundlephobia's history. Versions bundlephobia could not build are skipped. Bundlephobia does not
- * measure brotli, so that row stays hidden.
+ * measure brotli, so that row stays hidden. It allows only a few requests in a burst, and
+ * `versions` costs one request each, so the history (one request) is the safer choice.
  */
 export async function getBundleSizes(
   packageName: string,
@@ -89,21 +85,21 @@ export async function getBundleSizes(
 ): Promise<BundleVersion[]> {
   const api = "https://bundlephobia.com/api";
   if (versions) {
-    const sizes = await Promise.all(
-      versions.map((v) =>
-        getJson<BundlephobiaSize>(
-          `${api}/size?package=${encodeURIComponent(`${packageName}@${v}`)}`,
-          options,
-        ),
-      ),
-    );
-    return sizes.flatMap((s, i) => measured(versions[i], s));
+    const sizes: BundleVersion[] = [];
+    for (const v of versions) {
+      const s = await fetchJson<BundlephobiaSize>(
+        `${api}/size?package=${encodeURIComponent(`${packageName}@${v}`)}`,
+        options,
+      );
+      sizes.push(...measured(v, s));
+    }
+    return sizes;
   }
-  const history = await getJson<Record<string, BundlephobiaSize>>(
+  const { versions: history = [] } = await fetchJson<BundlephobiaHistory>(
     `${api}/package-history?package=${encodeURIComponent(packageName)}`,
     options,
   );
-  return Object.keys(history)
-    .sort((a, b) => compareVersions(b, a))
-    .flatMap((v) => measured(v, history[v]));
+  return history
+    .sort((a, b) => compareVersions(b.version, a.version))
+    .flatMap((s) => measured(s.version, s));
 }

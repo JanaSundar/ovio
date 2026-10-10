@@ -6,19 +6,8 @@ import { QrCode } from "@/components/shared/qr-code";
 import { dots } from "@/lib/format";
 import { motionTokens, useReducedMotionSafe } from "@/lib/motion";
 import { cn } from "@/lib/utils";
-import { cellsPath, type DeveloperIdCardWorldProps } from "../developer-id-card";
-
-/** A mirrored 8×8 sprite seeded by the name, so each developer gets the same face every time. */
-function sprite(name: string): string {
-  let s = 7;
-  for (const ch of name) s = (s * 31 + ch.charCodeAt(0)) % 2147483647;
-  const rand = () => (s = (s * 16807) % 2147483647) / 2147483647;
-  const rows = Array.from({ length: 8 }, () => {
-    const half = Array.from({ length: 4 }, () => rand() > 0.45);
-    return [...half, ...[...half].reverse()];
-  });
-  return cellsPath(rows);
-}
+import { sprite } from "../card";
+import type { DeveloperIdCardWorldProps } from "../developer-id-card";
 
 export function RetroDeveloperIdCard({
   name,

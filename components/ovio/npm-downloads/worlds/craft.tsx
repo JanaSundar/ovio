@@ -4,18 +4,11 @@ import { motion } from "motion/react";
 import { motionTokens, steps, useOvioTransition, useReducedMotionSafe } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { formatNumber } from "@/lib/format";
-import { formatDelta, type NpmDownloadsWorldProps } from "../npm-downloads";
+import { formatDelta, receiptNote } from "../chart";
+import type { NpmDownloadsWorldProps } from "../npm-downloads";
 
 const PAPER = "#fffdf8";
 const RULE = "border-t border-dashed border-[#b9a88f]";
-
-/** The handwritten note at the foot of the receipt. */
-function note(delta: number | null, hit: boolean) {
-  if (hit) return "goal hit, wow!";
-  if (delta === null) return "first week!";
-  if (delta >= 0) return `up ${delta.toFixed(1)}%, nice!`;
-  return `down ${Math.abs(delta).toFixed(1)}%, onwards`;
-}
 
 export function CraftNpmDownloads({
   packageName,
@@ -98,7 +91,7 @@ export function CraftNpmDownloads({
             animate={{ opacity: 1, scale: 1, rotate: -4 }}
             transition={pop}
           >
-            {note(latest.delta, goal !== undefined && goalProgress >= 1)}
+            {receiptNote(latest.delta, goal !== undefined && goalProgress >= 1)}
           </motion.div>
           <div
             aria-hidden

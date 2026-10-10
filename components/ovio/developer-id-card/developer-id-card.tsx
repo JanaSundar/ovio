@@ -1,8 +1,8 @@
 "use client";
 
 import type { ComponentType } from "react";
-import { initialsOf } from "@/components/shared/avatar";
 import { useWorld, type World } from "@/components/shared/world-provider";
+import { readIdCard } from "./card";
 import { MinimalDeveloperIdCard } from "./worlds/minimal";
 import { CraftDeveloperIdCard } from "./worlds/craft";
 import { RetroDeveloperIdCard } from "./worlds/retro";
@@ -56,19 +56,6 @@ export type DeveloperIdCardWorldProps = {
   className?: string;
 };
 
-/** Square cells as one path: `M x y h1v1h-1z` per dark cell. */
-export function cellsPath(cells: boolean[][]): string {
-  let d = "";
-  cells.forEach((row, y) =>
-    row.forEach((on, x) => {
-      if (on) d += `M${x} ${y}h1v1h-1z`;
-    }),
-  );
-  return d;
-}
-
-const stripProtocol = (url: string) => url.replace(/^https?:\/\//, "").replace(/\/$/, "");
-
 const VIEWS = {
   minimal: MinimalDeveloperIdCard,
   craft: CraftDeveloperIdCard,
@@ -94,19 +81,19 @@ export function DeveloperIdCard({
   const world = useWorld(variant);
 
   const props: DeveloperIdCardWorldProps = {
-    name,
-    initials: initialsOf(name),
-    title,
-    shortTitle: title?.replace(/^Senior\b/i, "Sr."),
-    stack,
-    profile: github ? `github.com/${github}` : undefined,
-    website: website ? stripProtocol(website) : undefined,
-    location,
-    available,
-    avatarUrl,
-    serial,
-    since,
-    qrUrl: url ?? (github ? `https://github.com/${github}` : undefined),
+    ...readIdCard({
+      name,
+      title,
+      stack,
+      github,
+      url,
+      website,
+      location,
+      available,
+      avatarUrl,
+      serial,
+      since,
+    }),
     className,
   };
 

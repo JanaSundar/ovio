@@ -2,6 +2,7 @@ import "server-only";
 
 import type { Release, ChangelogItem, ChangeType } from "@/components/ovio/changelog/changelog";
 import type { ContributionDay } from "@/components/ovio/contribution-graph/contribution-graph";
+import type { DeveloperIdCardProps } from "@/components/ovio/developer-id-card/developer-id-card";
 import type { GitCommit } from "@/components/ovio/git-branch-visualizer/git-branch-visualizer";
 import type { Repository } from "@/components/ovio/repository-card/repository-card";
 import type { StarHistoryPoint } from "@/components/ovio/star-history/star-history";
@@ -69,6 +70,61 @@ export async function getRepository(fullName: string, options?: FetchOptions): P
     issues: r.open_issues_count,
     updatedAt: r.pushed_at,
     url: r.html_url,
+  };
+}
+
+type UserResponse = {
+  login: string;
+  id: number;
+  type: "User" | "Organization";
+  name: string | null;
+  bio: string | null;
+  blog: string | null;
+  location: string | null;
+  hireable: boolean | null;
+  avatar_url: string;
+  created_at: string;
+};
+
+type OwnedRepo = { language: string | null; fork: boolean };
+
+/** How many languages a card lists, most used first. */
+const STACK_SIZE = 4;
+
+/** The profile fields a Developer ID Card shows, from a GitHub user. */
+export type Developer = Omit<DeveloperIdCardProps, "variant" | "className" | "url">;
+
+/**
+ * A developer's public GitHub profile for <DeveloperIdCard {...developer} />, from a login: name,
+ * the bio's first line as title, the languages of their own repos as stack, site, location, the
+ * year they joined, and "available" when they have marked themselves hireable. Two requests.
+ * Organisations aren't developers, so they answer 422.
+ */
+export async function getDeveloper(login: string, options?: FetchOptions): Promise<Developer> {
+  const [user, repos] = await Promise.all([
+    gh<UserResponse>(`/users/${login}`, options),
+    gh<OwnedRepo[]>(`/users/${login}/repos?type=owner&sort=pushed&per_page=100`, options),
+  ]);
+  if (user.type !== "User") throw new HttpError(`${user.login} is an organisation`, 422);
+
+  const languages = new Map<string, number>();
+  for (const r of repos)
+    if (r.language && !r.fork) languages.set(r.language, (languages.get(r.language) ?? 0) + 1);
+
+  return {
+    name: user.name?.trim() || user.login,
+    title: user.bio?.split(/\r?\n/)[0].trim() || undefined,
+    stack: [...languages]
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, STACK_SIZE)
+      .map(([language]) => language),
+    github: user.login,
+    website: user.blog?.trim() || undefined,
+    location: user.location?.trim() || undefined,
+    available: user.hireable ? true : undefined,
+    avatarUrl: `${user.avatar_url}${user.avatar_url.includes("?") ? "&" : "?"}s=240`,
+    serial: String(user.id % 1000).padStart(3, "0"),
+    since: new Date(user.created_at).getUTCFullYear(),
   };
 }
 

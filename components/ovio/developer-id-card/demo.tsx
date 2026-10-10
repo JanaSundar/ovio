@@ -1,20 +1,8 @@
 "use client";
 
+import { SAMPLE_DEVELOPER } from "@/content/samples";
 import { DeveloperIdCard } from "./developer-id-card";
 
 export function DeveloperIdCardDemo() {
-  return (
-    <DeveloperIdCard
-      name="Ada Park"
-      title="Senior Software Engineer"
-      stack={["React", "TypeScript", "Node", "Postgres"]}
-      github="ada-dev"
-      website="ada.dev"
-      url="https://janasundar.vercel.app"
-      location="Seoul, Korea"
-      available
-      serial="024"
-      since={2019}
-    />
-  );
+  return <DeveloperIdCard {...SAMPLE_DEVELOPER} url="https://janasundar.vercel.app" />;
 }

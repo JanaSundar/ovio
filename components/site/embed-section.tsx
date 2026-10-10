@@ -29,7 +29,7 @@ type Shown = { src: string; live: boolean };
 const READABLE = 0.6;
 
 /**
- * A docs page's README embed: type a GitHub repo, see the image in the page's world,
+ * A docs page's README embed: type a repo, package or user, see the image in the page's world,
  * copy the Markdown. Like the demos, the preview never shows a failure: when GitHub can't answer
  * it shows the embed drawn from sample data, labelled as such. The name field appears only once
  * the example has loaded live; with sample data alone there is nothing to try. A name that isn't
@@ -37,7 +37,7 @@ const READABLE = 0.6;
  */
 export function EmbedSection({ slug }: { slug: EmbedSlug }) {
   const world = useWorld();
-  const { param, example } = EMBEDS[slug];
+  const { param, example, field } = EMBEDS[slug];
   const [input, setInput] = useState<string>(example);
   const [subject, setSubject] = useState<string>(example);
   const [shown, setShown] = useState<Shown | null>(null);
@@ -83,7 +83,7 @@ export function EmbedSection({ slug }: { slug: EmbedSlug }) {
     <>
       {canTry && (
         <label className="embed-field">
-          <span>Repository</span>
+          <span>{field}</span>
           <input
             value={input}
             onChange={(e) => setInput(e.target.value)}

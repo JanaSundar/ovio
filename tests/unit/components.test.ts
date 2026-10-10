@@ -2,10 +2,10 @@ import { describe, expect, it } from "vitest";
 import { barLabel, deltaLabel, signedDelta } from "@/components/ovio/bundle-size/bundle-size";
 import { buildContributionYear } from "@/components/ovio/contribution-graph/year";
 import { relativeTime } from "@/components/ovio/repository-card/repository-card";
-import { cellsPath } from "@/components/ovio/developer-id-card/developer-id-card";
-import { initialsOf } from "@/components/shared/avatar";
+import { cellsPath } from "@/components/ovio/developer-id-card/card";
+import { initialsOf } from "@/components/shared/initials";
 import { hashString, random } from "@/components/ovio/event-ticket/seed";
-import { formatDelta } from "@/components/ovio/npm-downloads/npm-downloads";
+import { formatDelta } from "@/components/ovio/npm-downloads/chart";
 import { detents } from "@/components/ovio/physical-knob/physical-knob";
 import { nearestIndex, shapeStarHistory, smoothPath } from "@/components/ovio/star-history/shape";
 import { seeded } from "@/components/site/seeded";
@@ -90,6 +90,11 @@ describe("small formatters", () => {
     expect(formatDelta(12.44)).toBe("+12.4%");
     expect(formatDelta(-3.06)).toBe("−3.1%");
     expect(formatDelta(5, ["▲ ", "▼ "])).toBe("▲ 5.0%");
+    // Ten times up and more reads as a multiple, not a ten-digit percentage.
+    expect(formatDelta(999.9)).toBe("+999.9%");
+    expect(formatDelta(1100)).toBe("×12");
+    expect(formatDelta(9_999_999_800, ["↑ ", "↓ "])).toBe("↑ ×100M");
+    expect(formatDelta(-100)).toBe("−100.0%");
   });
 
   it("knob detents", () => {

@@ -60,7 +60,8 @@ export const TOY = {
 /** The families each world draws with, so an embed fetches only its own. */
 export const WORLD_FONTS = {
   minimal: [MINIMAL.font, MINIMAL.mono],
-  craft: [CRAFT.font, CRAFT.hand, CRAFT.mono],
+  // The npm receipt prints in Geist Mono, as the component's does.
+  craft: [CRAFT.font, CRAFT.hand, CRAFT.mono, MINIMAL.mono],
   // VT323 has no block characters (█ ░▒▓); Geist Mono draws them.
   retro: [RETRO.font, MINIMAL.mono],
   toy: [TOY.font, TOY.mono],

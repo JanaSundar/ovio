@@ -92,7 +92,7 @@ npx shadcn add JanaSundar/ovio/music    # lib/music.ts
 ```
 
 - `lib/github.ts`: `getRepository`, `getStarHistory`, `getContributors`, `getReleases`,
-  `getContributions` and `getCommitGraph`.
+  `getContributions`, `getCommitGraph` and `getDeveloper` (a profile as Developer ID Card props).
 - `lib/npm.ts`: `getWeeklyDownloads` (npm registry) and `getBundleSizes` (bundlephobia).
 - `lib/music.ts`: `getNowPlaying(services)` asks whichever music service is attached. `spotify()`
   and `lastfm()` read their credentials from the environment (see `.env.example`), and
@@ -152,20 +152,28 @@ Mount `<OvioToaster />` once, for example in your root layout.
 
 ## README embeds
 
-The Repository Card also comes as an image for a GitHub README, in any world. There's nothing to
+Three components also come as images for a GitHub README, in any world. There's nothing to
 install: paste the Markdown, and the image refreshes every hour.
 
 ```md
 [![honojs/hono](https://ovioui.vercel.app/embed/repository-card?repo=honojs/hono&world=toy)](https://github.com/honojs/hono)
+[![hono](https://ovioui.vercel.app/embed/npm-downloads?package=hono&world=retro)](https://www.npmjs.com/package/hono)
+[![JanaSundar](https://ovioui.vercel.app/embed/developer-id-card?user=JanaSundar&world=craft)](https://github.com/JanaSundar)
 ```
 
-- `?repo=owner/name` names the repository; `&world=` is `minimal` (default), `craft`, `retro` or
-  `toy`; `&format=png` returns a PNG at 2× instead of an SVG.
+| Embed             | Subject                          | Data                                                                     |
+| ----------------- | -------------------------------- | ------------------------------------------------------------------------ |
+| Repository Card   | `?repo=owner/name`               | GitHub's REST API: the repository                                        |
+| npm Downloads     | `?package=name` or `@scope/name` | npm's downloads API: the last 12 weeks                                   |
+| Developer ID Card | `?user=login`                    | GitHub's REST API: the profile and the languages of the user's own repos |
+
+- `&world=` is `minimal` (default), `craft`, `retro` or `toy`; `&format=png` returns a PNG at 2×
+  instead of an SVG.
 - Only public data anyone can read makes an embed. A user's contributions need GitHub's GraphQL
   API and their own token, so the Contribution Graph has no embed: render the component instead.
-- The docs page has a field to try a repository and copy its Markdown.
-- A repository that doesn't exist, or a GitHub outage, shows a small card saying so rather than a
-  broken image.
+- Each docs page with an embed has a field to try a name and copy its Markdown.
+- A name that doesn't exist, an organisation given as a developer, or an outage shows a small card
+  saying so rather than a broken image.
 
 ## Development
 

@@ -160,11 +160,27 @@ async function image(
 }
 
 /** A problem card, drawn in Minimal whatever world was asked for. */
-const problemImage = (message: string, format: EmbedFormat) =>
-  image(<Problem message={message} />, "minimal", format, {
-    "Cache-Control": CACHE_PROBLEM,
-    [PROBLEM_HEADER]: "1",
+const problemImage = async (message: string, format: EmbedFormat) => {
+  const headers = { "Cache-Control": CACHE_PROBLEM, [PROBLEM_HEADER]: "1" };
+  try {
+    return await image(<Problem message={message} />, "minimal", format, headers);
+  } catch {
+    return bareProblem(message, headers);
+  }
+};
+
+const escapeXml = (s: string) => s.replace(/[<>&"']/g, (c) => `&#${c.charCodeAt(0)};`);
+
+/**
+ * The problem card as hand-written SVG, for when Takumi or its fonts can't run at all: the
+ * viewer's own fonts draw the text, so a README still gets an image rather than a broken one.
+ */
+function bareProblem(message: string, headers: Record<string, string>) {
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="420" height="72" viewBox="0 0 420 72"><rect x=".5" y=".5" width="419" height="71" rx="8" fill="${MINIMAL.surface}" stroke="${MINIMAL.line}"/><text x="22" y="28" font-family="ui-monospace,monospace" font-size="11" letter-spacing="1" fill="${MINIMAL.faint}">OVIO EMBED</text><text x="22" y="50" font-family="system-ui,sans-serif" font-size="14" fill="${MINIMAL.ink}">${escapeXml(message.slice(0, 56))}</text></svg>`;
+  return new Response(svg, {
+    headers: { "Content-Type": "image/svg+xml; charset=utf-8", ...headers },
   });
+}
 
 /**
  * An embed as an image response. Problems answer 200 with a card that explains them, since
@@ -181,7 +197,13 @@ export async function embedResponse(request: EmbedRequest | EmbedProblem) {
     );
     return problemImage(problemOf(e, request), request.format);
   }
-  return image(node, request.world, request.format, { "Cache-Control": CACHE_OK });
+  try {
+    return await image(node, request.world, request.format, { "Cache-Control": CACHE_OK });
+  } catch (e) {
+    // A drawing that throws while it renders, or fonts that won't load, still answers an image.
+    console.error(`/embed/${request.slug}: drawing failed: ${e instanceof Error ? e.message : e}`);
+    return problemImage("This image couldn't be drawn. It will be back soon.", request.format);
+  }
 }
 
 /** An embed of the site's sample data, for the docs preview when the API can't answer. */

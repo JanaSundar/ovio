@@ -136,7 +136,7 @@ export function CraftDeveloperIdCard({
                 const [bg, fg] = STICKERS[i % STICKERS.length];
                 return (
                   <li
-                    key={tech}
+                    key={`${i}:${tech}`}
                     className="rounded-full px-2.5 py-[5px] text-[12.5px] font-bold"
                     style={{ background: bg, color: fg }}
                   >

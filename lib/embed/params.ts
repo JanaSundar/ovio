@@ -59,7 +59,8 @@ export type EmbedRequest = { slug: EmbedSlug; subject: string; world: World; for
 /** A query that doesn't make sense, said as a sentence, in the format the image was asked for. */
 export type EmbedProblem = { problem: string; format: EmbedFormat };
 
-export const isEmbedSlug = (slug: string): slug is EmbedSlug => slug in EMBEDS;
+// Own keys only: "constructor" or "toString" are in every object, and aren't embeds.
+export const isEmbedSlug = (slug: string): slug is EmbedSlug => Object.hasOwn(EMBEDS, slug);
 
 /**
  * Reads an embed URL's query: the subject (?repo=, ?package= or ?user=), the world (default minimal) and

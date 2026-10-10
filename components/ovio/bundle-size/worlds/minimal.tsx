@@ -4,7 +4,14 @@ import { motion } from "motion/react";
 import { RollingNumber } from "@/components/shared/rolling-number";
 import { motionTokens, useOvioTransition } from "@/lib/motion";
 import { cn } from "@/lib/utils";
-import { ARROW, barLabel, KB_FORMAT, type BundleSizeWorldProps } from "../bundle-size";
+import {
+  ARROW,
+  barLabel,
+  formatSize,
+  KB_FORMAT,
+  sizeUnit,
+  type BundleSizeWorldProps,
+} from "../bundle-size";
 import { formatNumber } from "@/lib/format";
 
 const TREND_COLOR = { down: "#2f7a45", up: "#b4432a", same: "#77756e", first: "#77756e" };
@@ -21,6 +28,8 @@ export function MinimalBundleSize({
   panelId,
   className,
 }: BundleSizeWorldProps) {
+  // The big number in the unit that reads best: 412 B, 7.2 kB, 12.5 MB.
+  const hero = sizeUnit(r.raw);
   const fast = useOvioTransition(motionTokens.minimal.base);
   const slide = useOvioTransition(motionTokens.minimal.slow);
 
@@ -85,10 +94,10 @@ export function MinimalBundleSize({
         <div className="flex items-baseline gap-1.5">
           <RollingNumber
             className="text-[52px] leading-none tracking-[-0.045em]"
-            value={r.raw}
-            format={KB_FORMAT}
+            value={hero.value}
+            format={hero.format}
           />
-          <span className="text-lg text-(--ovio-muted)">kB</span>
+          <span className="text-lg text-(--ovio-muted)">{hero.unit}</span>
         </div>
 
         <div>
@@ -118,18 +127,19 @@ export function MinimalBundleSize({
           </div>
           <div className="mt-2 flex justify-between gap-2 text-[11px] text-(--ovio-muted)">
             <span>0</span>
-            <span>{r.previous && `${r.previous.version}: ${r.previous.raw.toFixed(1)} kB`}</span>
+            <span>{r.previous && `${r.previous.version}: ${formatSize(r.previous.raw)}`}</span>
             <span>
-              {r.scale} kB{r.budget !== undefined && " budget"}
+              {formatSize(r.scale)}
+              {r.budget !== undefined && " budget"}
             </span>
           </div>
         </div>
 
         <dl className="m-0 flex flex-col text-[13px]">
-          <Row label="gzip" value={r.gzip} />
-          {r.brotli !== undefined && <Row label="brotli" value={r.brotli} />}
+          <Row label="gzip" value={formatSize(r.gzip)} />
+          {r.brotli !== undefined && <Row label="brotli" value={formatSize(r.brotli)} />}
           {r.dependencies !== undefined && (
-            <Row label="dependencies" value={r.dependencies} unit="" />
+            <Row label="dependencies" value={formatNumber(r.dependencies)} />
           )}
         </dl>
 
@@ -155,14 +165,11 @@ export function MinimalBundleSize({
   );
 }
 
-function Row({ label, value, unit = " kB" }: { label: string; value: number; unit?: string }) {
+function Row({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex justify-between border-t border-(--ovio-line-2) py-2.5">
       <dt className="text-(--ovio-muted)">{label}</dt>
-      <dd className="m-0 font-(family-name:--ovio-mono)">
-        {formatNumber(value, unit ? KB_FORMAT : undefined)}
-        {unit}
-      </dd>
+      <dd className="m-0 font-(family-name:--ovio-mono) tabular-nums">{value}</dd>
     </div>
   );
 }

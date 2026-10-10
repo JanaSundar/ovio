@@ -5,7 +5,14 @@ import { useEffect } from "react";
 import { RollingNumber } from "@/components/shared/rolling-number";
 import { motionTokens, useReducedMotionSafe } from "@/lib/motion";
 import { cn } from "@/lib/utils";
-import { ARROW, barLabel, deltaLabel, KB_FORMAT, type BundleSizeWorldProps } from "../bundle-size";
+import {
+  ARROW,
+  barLabel,
+  deltaLabel,
+  formatSize,
+  sizeUnit,
+  type BundleSizeWorldProps,
+} from "../bundle-size";
 import { dots, formatNumber } from "@/lib/format";
 
 const CELLS = 20;
@@ -26,6 +33,8 @@ export function RetroBundleSize({
   panelId,
   className,
 }: BundleSizeWorldProps) {
+  // The big number in the unit that reads best: 412 B, 7.2 kB, 12.5 MB.
+  const hero = sizeUnit(r.raw);
   const reduced = useReducedMotionSafe();
   const target = Math.round(r.fill * CELLS);
 
@@ -61,23 +70,27 @@ export function RetroBundleSize({
         <div>
           {dots("RAW", COLUMN)}
           <span className="text-[#c9ffd2]">
-            <RollingNumber value={r.raw} format={KB_FORMAT} suffix=" KB" />
+            <RollingNumber
+              value={hero.value}
+              format={hero.format}
+              suffix={` ${hero.unit.toUpperCase()}`}
+            />
           </span>
         </div>
         <div>
           {dots("GZIP", COLUMN)}
-          {formatNumber(r.gzip, KB_FORMAT)} KB
+          {formatSize(r.gzip).toUpperCase()}
         </div>
         {r.brotli !== undefined && (
           <div>
             {dots("BROTLI", COLUMN)}
-            {formatNumber(r.brotli, KB_FORMAT)} KB
+            {formatSize(r.brotli).toUpperCase()}
           </div>
         )}
         {r.dependencies !== undefined && (
           <div>
             {dots("DEPS", COLUMN)}
-            {r.dependencies}
+            {formatNumber(r.dependencies)}
           </div>
         )}
         <div

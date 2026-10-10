@@ -5,7 +5,13 @@ import type { ReactNode } from "react";
 import { RollingNumber } from "@/components/shared/rolling-number";
 import { motionTokens, useOvioTransition, useReducedMotionSafe } from "@/lib/motion";
 import { cn } from "@/lib/utils";
-import { barLabel, KB_FORMAT, signedDelta, type BundleSizeWorldProps } from "../bundle-size";
+import {
+  barLabel,
+  formatSize,
+  signedDelta,
+  sizeUnit,
+  type BundleSizeWorldProps,
+} from "../bundle-size";
 import { formatNumber } from "@/lib/format";
 
 /** Each version tag is cut and stuck down a little crooked. */
@@ -30,6 +36,8 @@ export function CraftBundleSize({
   panelId,
   className,
 }: BundleSizeWorldProps) {
+  // The big number in the unit that reads best: 412 B, 7.2 kB, 12.5 MB.
+  const hero = sizeUnit(r.raw);
   const reduced = useReducedMotionSafe();
   const settle = useOvioTransition(motionTokens.craft.base);
   const fill = useOvioTransition(motionTokens.craft.slow);
@@ -71,10 +79,10 @@ export function CraftBundleSize({
         <div className="mt-3.5 mb-1.5 flex items-baseline gap-1.5">
           <RollingNumber
             className="text-[60px] leading-[.95] font-extrabold tracking-[-0.05em]"
-            value={r.raw}
-            format={KB_FORMAT}
+            value={hero.value}
+            format={hero.format}
           />
-          <span className="text-xl font-bold text-[#7d6650]">kB</span>
+          <span className="text-xl font-bold text-[#7d6650]">{hero.unit}</span>
         </div>
 
         {/* A ruler with a strip of orange tape laid along it. */}
@@ -99,18 +107,17 @@ export function CraftBundleSize({
         </div>
         <div className="flex justify-between font-(family-name:--ovio-mono) text-[11.5px] text-[#7d6650]">
           <span>0</span>
-          <span>{r.scale / 2}</span>
+          <span>{formatSize(r.scale / 2)}</span>
           <span>
-            {r.scale} kB{r.budget !== undefined && r.over && " · over budget"}
+            {formatSize(r.scale)}
+            {r.budget !== undefined && r.over && " · over budget"}
           </span>
         </div>
 
         <dl className="m-0 mt-3.5 border-t border-dashed border-[#b9a88f] pt-2 font-(family-name:--ovio-mono) text-[12.5px] leading-[1.8]">
-          <Row label="gzip">{formatNumber(r.gzip, KB_FORMAT)} kB</Row>
-          {r.brotli !== undefined && (
-            <Row label="brotli">{formatNumber(r.brotli, KB_FORMAT)} kB</Row>
-          )}
-          {r.dependencies !== undefined && <Row label="deps">{r.dependencies}</Row>}
+          <Row label="gzip">{formatSize(r.gzip)}</Row>
+          {r.brotli !== undefined && <Row label="brotli">{formatSize(r.brotli)}</Row>}
+          {r.dependencies !== undefined && <Row label="deps">{formatNumber(r.dependencies)}</Row>}
         </dl>
         {/* The stamp is decorative; this is its text. */}
         <p className="sr-only">

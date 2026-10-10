@@ -100,7 +100,7 @@ export function RetroChangelog({ releases, className }: ChangelogWorldProps) {
             <ul className="m-0 list-none p-0">
               {r.items.map((item, j) => (
                 <motion.li
-                  key={item.text}
+                  key={`${j}:${item.text}`}
                   className="pl-6 text-(--ovio-ink-2)"
                   {...line(plan.lines[i].items[j])}
                 >

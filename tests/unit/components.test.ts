@@ -1,5 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { barLabel, deltaLabel, signedDelta } from "@/components/ovio/bundle-size/bundle-size";
+import {
+  barLabel,
+  deltaLabel,
+  formatSize,
+  signedDelta,
+} from "@/components/ovio/bundle-size/bundle-size";
 import { buildContributionYear } from "@/components/ovio/contribution-graph/year";
 import { relativeTime } from "@/components/ovio/repository-card/repository-card";
 import { cellsPath } from "@/components/ovio/developer-id-card/card";
@@ -34,6 +39,19 @@ describe("initialsOf", () => {
     expect(initialsOf("Ada Okafor Park")).toBe("AP");
     expect(initialsOf("ada-dev")).toBe("AD");
     expect(initialsOf("jana")).toBe("JA");
+  });
+
+  // break-ui worst cases: emoji, suffixes, CJK, accents, stray spaces, nothing at all.
+  it("reads whole graphemes and skips what isn't a name", () => {
+    expect(initialsOf("🦊 Fox")).toBe("FO");
+    expect(initialsOf("👩🏽‍💻 Priya Raman")).toBe("PR");
+    expect(initialsOf("Christopher Alexander Montgomery III")).toBe("CM");
+    expect(initialsOf("Ólafur Darri Ólafsson")).toBe("ÓÓ");
+    expect(initialsOf("王秀英")).toBe("王秀");
+    expect(initialsOf("  Sam   Lee ")).toBe("SL");
+    expect(initialsOf("Jo")).toBe("JO");
+    expect(initialsOf("🦊")).toBe("");
+    expect(initialsOf("")).toBe("");
   });
 });
 
@@ -126,6 +144,17 @@ describe("small formatters", () => {
       "FIRST RELEASE",
       "12.3 kB of a 40 kB scale, 31%",
     ]);
+  });
+
+  // break-ui: a few bytes and tens of MB both read in their own unit, not as "0.0 kB" / "12480.3 kB".
+  it("bundle sizes in the unit that reads best", () => {
+    expect([
+      formatSize(0.038),
+      formatSize(0.412),
+      formatSize(7.2),
+      formatSize(40),
+      formatSize(12_480.3),
+    ]).toEqual(["38 B", "412 B", "7.2 kB", "40 kB", "12.5 MB"]);
   });
 
   it("QR cells path", () => {

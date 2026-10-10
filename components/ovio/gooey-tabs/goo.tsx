@@ -147,7 +147,7 @@ export function GooTabs({ look, ...p }: GooeyTabsWorldProps & { look: GooLook })
             const active = i === p.index;
             return (
               <motion.button
-                key={tab}
+                key={`${i}:${tab}`}
                 ref={p.tabRef(i)}
                 id={p.tabId(i)}
                 role="tab"

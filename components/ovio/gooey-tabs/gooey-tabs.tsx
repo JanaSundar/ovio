@@ -122,6 +122,8 @@ export function GooeyTabs({
     className,
   };
 
+  // No tabs, nothing to show: an empty bar would size its pill as 100% / 0.
+  if (tabs.length === 0) return null;
   const View = VIEWS[world] ?? VIEWS.minimal;
   return <View {...props} />;
 }

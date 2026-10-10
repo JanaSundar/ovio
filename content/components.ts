@@ -1,6 +1,6 @@
 /** The component catalogue. */
 
-import { EMBEDS } from "../lib/embed/params";
+import { isEmbedSlug } from "../lib/embed/params";
 import { WORLDS } from "../lib/world";
 
 type PropDoc = {
@@ -657,5 +657,5 @@ export type DocSectionId = (typeof DOC_SECTIONS)[number]["id"];
 /** A page's sections: Data only on components that fetch real data, README embed where one exists. */
 export const docSections = (slug: string) =>
   DOC_SECTIONS.filter(
-    (s) => (s.id !== "data" || getComponent(slug)?.data) && (s.id !== "embed" || slug in EMBEDS),
+    (s) => (s.id !== "data" || getComponent(slug)?.data) && (s.id !== "embed" || isEmbedSlug(slug)),
   );

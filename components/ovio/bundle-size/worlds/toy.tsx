@@ -5,8 +5,13 @@ import { RollingNumber } from "@/components/shared/rolling-number";
 import { ToyKey } from "@/components/shared/toy";
 import { motionTokens, useOvioTransition } from "@/lib/motion";
 import { cn } from "@/lib/utils";
-import { barLabel, deltaLabel, KB_FORMAT, type BundleSizeWorldProps } from "../bundle-size";
-import { formatNumber } from "@/lib/format";
+import {
+  barLabel,
+  deltaLabel,
+  formatSize,
+  sizeUnit,
+  type BundleSizeWorldProps,
+} from "../bundle-size";
 
 const BLOCKS = 20;
 /** Blocks past this one are the red zone near the budget. */
@@ -31,6 +36,8 @@ export function ToyBundleSize({
   panelId,
   className,
 }: BundleSizeWorldProps) {
+  // The big number in the unit that reads best: 412 B, 7.2 kB, 12.5 MB.
+  const hero = sizeUnit(r.raw);
   const pop = useOvioTransition(motionTokens.toy.piece);
   const lit = Math.round(r.fill * BLOCKS);
   const stagger = "stiffness" in pop;
@@ -56,8 +63,12 @@ export function ToyBundleSize({
       >
         {/* A little LCD set into the plastic. */}
         <div className="flex items-baseline gap-2 rounded-[14px] bg-[#2a2925] px-[18px] py-2.5 font-(family-name:--ovio-mono) font-semibold text-(--ovio-surface) shadow-[inset_0_3px_6px_rgba(0,0,0,.6)]">
-          <RollingNumber className="text-[44px] leading-none" value={r.raw} format={KB_FORMAT} />
-          <span className="text-lg text-[#bdb6a8]">kB</span>
+          <RollingNumber
+            className="text-[44px] leading-none"
+            value={hero.value}
+            format={hero.format}
+          />
+          <span className="text-lg text-[#bdb6a8]">{hero.unit}</span>
         </div>
 
         {/* A row of blocks that pop up out of their tray, one after another. */}
@@ -94,11 +105,11 @@ export function ToyBundleSize({
 
         <div className="grid grid-cols-2 gap-2.5 font-(family-name:--ovio-mono) text-xs">
           <span className="rounded-[11px] bg-white px-3 py-2 shadow-[0_4px_0_#cfc8b8]">
-            gzip <span className="font-bold">{formatNumber(r.gzip, KB_FORMAT)}</span>
+            gzip <span className="font-bold tabular-nums">{formatSize(r.gzip)}</span>
           </span>
           {r.brotli !== undefined && (
             <span className="rounded-[11px] bg-white px-3 py-2 shadow-[0_4px_0_#cfc8b8]">
-              brotli <span className="font-bold">{formatNumber(r.brotli, KB_FORMAT)}</span>
+              brotli <span className="font-bold tabular-nums">{formatSize(r.brotli)}</span>
             </span>
           )}
         </div>

@@ -9,6 +9,7 @@ import {
   type KeyboardEvent,
 } from "react";
 import { useWorld, type World } from "@/components/shared/world-provider";
+import { formatNumber } from "@/lib/format";
 import { keyToIndex } from "@/lib/keys";
 import { MinimalBundleSize } from "./worlds/minimal";
 import { CraftBundleSize } from "./worlds/craft";
@@ -87,8 +88,18 @@ function readBundle(versions: BundleVersion[], index: number, budget?: number) {
   const prev = versions[index + 1];
   const raw = kB(current.raw);
   const largest = Math.max(...versions.map((v) => kB(v.raw)));
-  const scale = budget ?? Math.max(10, Math.ceil(largest / 10) * 10);
-  const delta = prev ? round1(((raw - kB(prev.raw)) / kB(prev.raw)) * 100) : 0;
+  // A budget of 0 or less can't be a scale; fall back to the largest version.
+  const limit = budget !== undefined && budget > 0 ? budget : undefined;
+  const scale = limit ?? Math.max(10, Math.ceil(largest / 10) * 10);
+  const before = prev ? kB(prev.raw) : 0;
+  // From nothing, any size is up; a 0-byte previous version can't give a percentage.
+  const delta = !prev
+    ? 0
+    : before > 0
+      ? round1(((raw - before) / before) * 100)
+      : raw > 0
+        ? 100
+        : 0;
 
   return {
     version: current.version,
@@ -100,11 +111,11 @@ function readBundle(versions: BundleVersion[], index: number, budget?: number) {
     delta: Math.abs(delta),
     trend: !prev ? "first" : delta < 0 ? "down" : delta > 0 ? "up" : "same",
     scale,
-    budget,
+    budget: limit,
     fill: clamp01(raw / scale),
     previousFill: prev && clamp01(kB(prev.raw) / scale),
     percent: Math.round((raw / scale) * 100),
-    over: budget !== undefined && raw > budget,
+    over: limit !== undefined && raw > limit,
   } satisfies BundleReading;
 }
 
@@ -122,6 +133,23 @@ export function deltaLabel(r: BundleReading) {
 export const ARROW: Record<BundleTrend, string> = { down: "↓", up: "↑", same: "=", first: "·" };
 
 export const KB_FORMAT = { minimumFractionDigits: 1, maximumFractionDigits: 1 } as const;
+
+/** A size in kB in the unit that reads best: bytes under 1 kB, MB from 1,000 kB. */
+export function sizeUnit(kb: number): {
+  value: number;
+  unit: "B" | "kB" | "MB";
+  format: { minimumFractionDigits?: number; maximumFractionDigits?: number };
+} {
+  if (kb < 1) return { value: Math.round(kb * 1000), unit: "B", format: {} };
+  if (kb >= 1000) return { value: kb / 1000, unit: "MB", format: KB_FORMAT };
+  return { value: kb, unit: "kB", format: KB_FORMAT };
+}
+
+/** "412 B", "7.2 kB", "40 kB", "12.5 MB": one decimal at most, none when it would be .0. */
+export function formatSize(kb: number) {
+  const { value, unit } = sizeUnit(kb);
+  return `${formatNumber(value, { maximumFractionDigits: unit === "B" ? 0 : 1 })} ${unit}`;
+}
 
 const VIEWS = {
   minimal: MinimalBundleSize,
@@ -173,6 +201,7 @@ export function BundleSize({ packageName, versions, budget, variant, className }
 
 /** Text equivalent of the size bar. */
 export function barLabel(r: BundleReading) {
-  const of = r.budget !== undefined ? `${r.budget} kB budget` : `a ${r.scale} kB scale`;
-  return `${r.raw.toFixed(1)} kB of ${of}, ${r.percent}%${r.over ? ", over budget" : ""}`;
+  const of =
+    r.budget !== undefined ? `${formatSize(r.budget)} budget` : `a ${formatSize(r.scale)} scale`;
+  return `${formatSize(r.raw)} of ${of}, ${r.percent}%${r.over ? ", over budget" : ""}`;
 }

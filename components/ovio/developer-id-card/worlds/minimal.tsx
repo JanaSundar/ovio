@@ -73,9 +73,9 @@ export function MinimalDeveloperIdCard({
 
       {stack.length > 0 && (
         <ul aria-label="Stack" className="m-0 flex list-none flex-wrap gap-1.5 p-0">
-          {stack.map((tech) => (
+          {stack.map((tech, i) => (
             <li
-              key={tech}
+              key={`${i}:${tech}`}
               className="rounded-full border border-(--ovio-line) px-2.5 py-1 text-xs text-(--ovio-ink-2)"
             >
               {tech}

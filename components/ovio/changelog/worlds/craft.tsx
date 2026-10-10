@@ -109,8 +109,8 @@ export function CraftChangelog({ releases, top, next, className }: ChangelogWorl
                 <div className="mt-2 border-t-2 border-[rgba(214,80,60,.4)] bg-[linear-gradient(transparent_31px,rgba(49,120,198,.18)_32px)] bg-size-[100%_32px] pt-1">
                   <h3 className="m-0 text-[17px] leading-8 font-bold">{r.title}</h3>
                   <ul className="m-0 list-none p-0">
-                    {r.items.map((item) => (
-                      <li key={item.text} className="text-sm leading-8 text-[#4a3a2a]">
+                    {r.items.map((item, j) => (
+                      <li key={`${j}:${item.text}`} className="text-sm leading-8 text-[#4a3a2a]">
                         <span aria-hidden>• </span>
                         {item.type && (
                           <span

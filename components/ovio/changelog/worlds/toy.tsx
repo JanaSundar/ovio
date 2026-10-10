@@ -142,8 +142,8 @@ function Header({ release: r, index }: RowProps) {
 function Notes({ release: r, className }: { release: ChangelogEntry; className?: string }) {
   return (
     <span className={cn("flex flex-col gap-1 px-4 pt-0.5 pb-3.5", className)}>
-      {r.items.map((item) => (
-        <span key={item.text} className="text-sm leading-[1.45] text-(--ovio-ink-2)">
+      {r.items.map((item, j) => (
+        <span key={`${j}:${item.text}`} className="text-sm leading-[1.45] text-(--ovio-ink-2)">
           {item.type ? (
             <span
               className="mr-1.5 rounded-[5px] px-1.5 py-px align-[1px] font-(family-name:--ovio-mono) text-[11px] font-semibold tracking-[0.06em] text-white uppercase"

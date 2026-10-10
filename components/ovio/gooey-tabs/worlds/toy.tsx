@@ -120,7 +120,7 @@ export function ToyGooeyTabs(p: GooeyTabsWorldProps) {
         >
           {p.tabs.map((tab, i) => (
             <button
-              key={tab}
+              key={`${i}:${tab}`}
               ref={p.tabRef(i)}
               id={p.tabId(i)}
               role="tab"

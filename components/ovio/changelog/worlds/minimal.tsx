@@ -40,8 +40,11 @@ export function MinimalChangelog({ releases, className }: ChangelogWorldProps) {
             <div>
               <h3 className="m-0 mb-1.5 text-[15px] font-medium">{r.title}</h3>
               <ul className="m-0 list-none p-0">
-                {r.items.map((item) => (
-                  <li key={item.text} className="text-[13px] leading-[1.6] text-(--ovio-ink-2)">
+                {r.items.map((item, j) => (
+                  <li
+                    key={`${j}:${item.text}`}
+                    className="text-[13px] leading-[1.6] text-(--ovio-ink-2)"
+                  >
                     {item.type ? (
                       <span className="mr-2 font-(family-name:--ovio-mono) text-[11.5px] tracking-[0.06em] text-(--ovio-faint) uppercase">
                         {TYPE_LABEL[item.type]}

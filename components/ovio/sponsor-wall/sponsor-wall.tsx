@@ -64,7 +64,7 @@ function groupSponsors(sponsors: Sponsor[]): SponsorGroup[] {
     label: TIER_LABEL[tier],
     sponsors: sponsors
       .filter((s) => s.tier === tier)
-      .map((s) => ({ ...s, key: `${tier}:${s.name}`, index: index++ })),
+      .map((s) => ({ ...s, key: `${tier}:${index}:${s.name}`, index: index++ })),
   })).filter((g) => g.sponsors.length > 0);
 }
 

@@ -72,7 +72,7 @@ export function ToyDeveloperIdCard({
             const [face, side, ink] = KEYS[i % KEYS.length];
             return (
               <span
-                key={tech}
+                key={`${i}:${tech}`}
                 role="listitem"
                 className="grow basis-[60px] rounded-[11px] px-2 py-2.5 text-center text-xs font-extrabold"
                 style={{ background: face, color: ink, boxShadow: `0 5px 0 ${side}` }}

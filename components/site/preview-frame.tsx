@@ -1,7 +1,7 @@
 "use client";
 
-import { AnimatePresence, motion } from "motion/react";
-import type { ReactNode } from "react";
+import { AnimatePresence, motion, PresenceContext } from "motion/react";
+import { useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import { useElementHeight } from "@/components/shared/auto-height";
 import { OvioProvider, useWorld } from "@/components/shared/world-provider";
 import { ease, useOvioTransition, useReducedMotionSafe } from "@/lib/motion";
@@ -22,7 +22,9 @@ const STAGE_IN = {
 /**
  * A demo stage: the world's backdrop around a component. Switching worlds fades the new one in,
  * while the frame's height eases to the new world's, so the page below never jumps.
- * Retro adds CRT scanlines over the whole stage.
+ * Retro adds CRT scanlines over the whole stage. The first world plays its entrance; after a switch
+ * the incoming world arrives settled, since the stage fade already bridges it and replaying every
+ * entrance on each 1–4 press made comparing worlds slow.
  */
 export function PreviewFrame({
   children,
@@ -37,6 +39,9 @@ export function PreviewFrame({
   const reduced = useReducedMotionSafe();
   const resize = useOvioTransition(RESIZE);
   const [ref, height] = useElementHeight<HTMLDivElement>();
+  const [first] = useState(world);
+  const [switched, setSwitched] = useState(false);
+  if (!switched && world !== first) setSwitched(true);
 
   return (
     <motion.div
@@ -47,22 +52,46 @@ export function PreviewFrame({
     >
       {/* popLayout takes the outgoing world out of flow, so this measures the incoming one. */}
       <div ref={ref} className="relative flex" style={{ minHeight }}>
-        <AnimatePresence mode="popLayout" initial={false}>
+        {/* The first stage shows at once; its own `initial`, not the presence, keeps it still, so
+            the component inside still plays its entrance on page load. */}
+        <AnimatePresence mode="popLayout">
           <motion.div
             key={world}
             data-ovio-world={world}
             className="ovio-stage relative flex min-w-0 flex-1 items-center justify-center bg-(--ovio-stage) px-3 py-6 sm:px-8 sm:py-12"
-            initial={reduced ? false : STAGE_IN.initial}
+            initial={reduced || !switched ? false : STAGE_IN.initial}
             animate={STAGE_IN.animate}
             exit={{ opacity: 0, pointerEvents: "none", transition: { duration: 0.15 } }}
             transition={STAGE_IN.transition}
           >
             {/* Pins the world, so the outgoing stage keeps rendering its own world while it fades. */}
-            <OvioProvider world={world}>{children}</OvioProvider>
+            <Settled skip={switched}>
+              <OvioProvider world={world}>{children}</OvioProvider>
+            </Settled>
             {world === "retro" && <div aria-hidden className="ovio-scanlines" />}
           </motion.div>
         </AnimatePresence>
       </div>
     </motion.div>
   );
+}
+
+/**
+ * Mounts its children already settled when `skip` is set: for one frame they see a presence with
+ * `initial: false`, so Motion skips their entrances. Anything that mounts later (a booked stamp, a
+ * redrawn table) still animates in; AnimatePresence's own `initial={false}` would block those too.
+ */
+function Settled({ skip, children }: { skip: boolean; children: ReactNode }) {
+  const outer = useContext(PresenceContext);
+  const [blocked, setBlocked] = useState(skip);
+  useEffect(() => {
+    if (!blocked) return;
+    const frame = requestAnimationFrame(() => setBlocked(false));
+    return () => cancelAnimationFrame(frame);
+  }, [blocked]);
+  const value = useMemo(
+    () => (blocked && outer ? { ...outer, initial: false as const } : outer),
+    [blocked, outer],
+  );
+  return <PresenceContext.Provider value={value}>{children}</PresenceContext.Provider>;
 }

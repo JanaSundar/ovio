@@ -32,12 +32,17 @@ export function ToyRepositoryCard({
       )}
     >
       <div className="relative rounded-(--ovio-radius) bg-(--ovio-accent) px-5 pt-[18px] pb-5 text-white shadow-[inset_0_-4px_0_rgba(0,0,0,.2),inset_0_2px_0_rgba(255,255,255,.2)]">
-        <div className="font-(family-name:--ovio-mono) text-[11px] tracking-[0.08em] uppercase">
+        {/* Clear of the two dots in the corner. */}
+        <div className="pr-10 font-(family-name:--ovio-mono) text-[11px] tracking-[0.08em] uppercase [overflow-wrap:anywhere]">
           {repo.owner} /
         </div>
         <h3
-          className="m-0 mt-1 text-[46px] leading-none font-extrabold tracking-[-0.03em]"
-          style={{ fontStretch: "118%" }}
+          className="m-0 mt-1 leading-none font-extrabold tracking-[-0.03em] [overflow-wrap:anywhere]"
+          // 46px fits about eleven letters on the plate; longer names step down to 28px, then wrap.
+          style={{
+            fontStretch: "118%",
+            fontSize: Math.round(Math.max(28, Math.min(46, (46 * 11) / repo.name.length))),
+          }}
         >
           {repo.name}
         </h3>
@@ -47,9 +52,14 @@ export function ToyRepositoryCard({
         </div>
       </div>
       {repo.description && (
-        <p className="mx-1.5 my-0 text-sm leading-[1.45] text-(--ovio-ink-2)">{repo.description}</p>
+        <p
+          title={repo.description}
+          className="mx-1.5 my-0 line-clamp-3 text-sm leading-[1.45] text-(--ovio-ink-2) [overflow-wrap:anywhere]"
+        >
+          {repo.description}
+        </p>
       )}
-      <div className="grid grid-cols-[1.4fr_1fr_64px] items-stretch gap-2.5">
+      <div className="grid grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)_64px] items-stretch gap-2.5">
         {stats.includes("stars") && (
           <ToyKey
             depth={6}

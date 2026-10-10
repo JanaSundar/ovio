@@ -44,7 +44,7 @@ export function ToyTopContributors({
           >
             Top contributors
           </h3>
-          <span className="font-(family-name:--ovio-mono) text-[11px] tracking-[0.08em] text-(--ovio-muted) uppercase">
+          <span className="font-(family-name:--ovio-mono) text-[11px] tracking-[0.08em] text-(--ovio-muted) uppercase [overflow-wrap:anywhere]">
             {repo && `${repo} · `}
             <RollingNumber value={total} /> {plural(total, "commit")}
           </span>
@@ -81,7 +81,11 @@ export function ToyTopContributors({
       ) : (
         <ol
           className="m-0 grid list-none items-end gap-1.5 p-0 @md:gap-2.5"
-          style={{ gridTemplateColumns: `repeat(${people.length}, minmax(0, 1fr))` }}
+          // Columns stop at 120px, so one or two people stand as podiums, not as slabs.
+          style={{
+            gridTemplateColumns: `repeat(${people.length}, minmax(0, 120px))`,
+            justifyContent: "center",
+          }}
         >
           {people.map((p, i) => {
             const [face, side, ink] = PIECES[i % PIECES.length];

@@ -27,10 +27,19 @@ export function MinimalRepositoryCard({
         className,
       )}
     >
-      <div className="mb-1.5 text-xs text-(--ovio-muted)">{repo.owner} /</div>
-      <h3 className="m-0 text-[22px] font-medium tracking-[-0.02em]">{repo.name}</h3>
+      <div className="mb-1.5 text-xs text-(--ovio-muted) [overflow-wrap:anywhere]">
+        {repo.owner} /
+      </div>
+      <h3 className="m-0 text-[22px] font-medium tracking-[-0.02em] [overflow-wrap:anywhere]">
+        {repo.name}
+      </h3>
       {repo.description && (
-        <p className="mt-3 mb-6 text-sm leading-normal text-(--ovio-ink-2)">{repo.description}</p>
+        <p
+          title={repo.description}
+          className="mt-3 mb-6 line-clamp-3 text-sm leading-normal text-(--ovio-ink-2) [overflow-wrap:anywhere]"
+        >
+          {repo.description}
+        </p>
       )}
       <div className="flex flex-wrap items-center gap-[22px] border-t border-(--ovio-line-2) pt-4 text-[13px] text-(--ovio-ink-2)">
         {language && (

@@ -36,7 +36,7 @@ export function MinimalTopContributors({
       {(repo || periods.length > 1) && (
         <div className="flex flex-wrap items-center justify-between gap-3">
           {repo && (
-            <span className="font-(family-name:--ovio-mono) text-xs text-(--ovio-muted)">
+            <span className="min-w-0 font-(family-name:--ovio-mono) text-xs text-(--ovio-muted) [overflow-wrap:anywhere]">
               {repo}
             </span>
           )}
@@ -96,7 +96,7 @@ export function MinimalTopContributors({
               initial={reduced ? false : { opacity: 0, y: 6 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ ...transition, delay: reduced ? 0 : i * 0.04 }}
-              className="grid grid-cols-[22px_30px_minmax(0,1fr)_52px] items-center gap-3 border-b border-(--ovio-line-2) py-[11px] @md:grid-cols-[28px_34px_minmax(0,1fr)_minmax(0,1.2fr)_60px] @md:gap-3.5"
+              className="grid grid-cols-[22px_30px_minmax(0,1fr)_minmax(52px,auto)] items-center gap-3 border-b border-(--ovio-line-2) py-[11px] @md:grid-cols-[28px_34px_minmax(0,1fr)_minmax(0,1.2fr)_minmax(60px,auto)] @md:gap-3.5"
             >
               <span className="font-(family-name:--ovio-mono) text-[11px] text-(--ovio-faint)">
                 <span className="sr-only">Rank </span>
@@ -109,7 +109,10 @@ export function MinimalTopContributors({
               />
               <span className="flex min-w-0 flex-col">
                 <span className="truncate text-sm font-medium">{p.name}</span>
-                <span className="truncate text-xs text-(--ovio-muted)">@{p.login}</span>
+                {/* Live data has no names, only logins: don't print the login twice. */}
+                {p.name !== p.login && (
+                  <span className="truncate text-xs text-(--ovio-muted)">@{p.login}</span>
+                )}
               </span>
               <span
                 aria-hidden

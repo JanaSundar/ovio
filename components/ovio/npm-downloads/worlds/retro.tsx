@@ -48,14 +48,14 @@ export function RetroNpmDownloads({
         className,
       )}
     >
-      <div className="flex justify-between text-[22px]">
-        <span>NPM://{packageName.toUpperCase()}</span>
-        <span className="text-(--ovio-ink-2)">
+      <div className="flex justify-between gap-4 text-[22px]">
+        <span className="min-w-0 [overflow-wrap:anywhere]">NPM://{packageName.toUpperCase()}</span>
+        <span className="shrink-0 text-(--ovio-ink-2)">
           {current.ago === 0 ? "DL/WK" : `${current.label.toUpperCase()} · -${current.ago}WK`}
         </span>
       </div>
       <div className="flex">
-        <span className="border-2 border-(--ovio-faint) bg-(--ovio-surface) px-3.5 text-[66px] leading-[72px] text-[#c9ffd2]">
+        <span className="border-2 border-(--ovio-faint) bg-(--ovio-surface) px-3.5 text-[clamp(40px,13vw,66px)] leading-[1.1] text-[#c9ffd2]">
           <span className="tabular-nums">{formatNumber(current.downloads)}</span>
         </span>
       </div>

@@ -142,10 +142,10 @@ export function ToyNpmDownloads({
       )}
     >
       <div className="flex min-w-0 flex-[1_1_280px] flex-col gap-3.5">
-        <div className="font-(family-name:--ovio-mono) text-[11px] tracking-[0.08em] text-(--ovio-muted) uppercase">
+        <div className="font-(family-name:--ovio-mono) text-[11px] tracking-[0.08em] text-(--ovio-muted) uppercase [overflow-wrap:anywhere]">
           npm · {packageName} · downloads / week
         </div>
-        <div className="flex w-max rounded-xl bg-[#2a2925] px-[18px] py-2.5 font-(family-name:--ovio-mono) text-[40px] leading-none font-semibold text-(--ovio-surface) shadow-[inset_0_3px_6px_rgba(0,0,0,.6)]">
+        <div className="flex max-w-full self-start rounded-xl bg-[#2a2925] px-[18px] py-2.5 font-(family-name:--ovio-mono) text-[clamp(26px,9vw,40px)] leading-none font-semibold text-(--ovio-surface) shadow-[inset_0_3px_6px_rgba(0,0,0,.6)]">
           <span className="tabular-nums">{formatNumber(current.downloads)}</span>
         </div>
         <div role="img" aria-label={summary} className="flex h-[54px] items-end gap-[3px]">

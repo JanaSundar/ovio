@@ -34,18 +34,24 @@ export function CraftRepositoryCard({
       {language && (
         <span
           title={language.name}
-          className="absolute -top-[18px] -right-3.5 flex size-[58px] -rotate-10 items-center justify-center rounded-full text-xl font-extrabold text-white shadow-[0_4px_10px_-3px_rgba(20,40,90,.5)]"
-          style={{ background: language.color }}
+          className="absolute -top-[18px] -right-3.5 flex size-[58px] -rotate-10 items-center justify-center rounded-full text-xl font-extrabold shadow-[0_4px_10px_-3px_rgba(20,40,90,.5)]"
+          style={{ background: language.color, color: language.ink }}
         >
           {language.short}
         </span>
       )}
-      <div className="text-[13px] text-(--ovio-muted)">{repo.owner} /</div>
-      <h3 className="m-0 text-[32px] leading-tight font-extrabold tracking-[-0.035em]">
+      {/* Clear of the language badge in the corner. */}
+      <div className="pr-12 text-[13px] text-(--ovio-muted) [overflow-wrap:anywhere]">
+        {repo.owner} /
+      </div>
+      <h3 className="m-0 pr-8 text-[32px] leading-tight font-extrabold tracking-[-0.035em] [overflow-wrap:anywhere]">
         {repo.name}
       </h3>
       {repo.description && (
-        <p className="mt-2 mb-[18px] text-[15px] leading-[1.45] text-(--ovio-ink-2)">
+        <p
+          title={repo.description}
+          className="mt-2 mb-[18px] line-clamp-3 text-[15px] leading-[1.45] text-(--ovio-ink-2) [overflow-wrap:anywhere]"
+        >
           {repo.description}
         </p>
       )}

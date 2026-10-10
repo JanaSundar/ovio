@@ -1,8 +1,15 @@
 /** The component catalogue. */
 
+import { EMBEDS } from "../lib/embed/params";
 import { WORLDS } from "../lib/world";
 
-type PropDoc = { name: string; type: string; description: string };
+type PropDoc = {
+  name: string;
+  type: string;
+  description: string;
+  /** The value used when the prop is left out, when it is a single value. */
+  default?: string;
+};
 
 /** Where an API-backed component's data comes from, for its docs page. */
 type DataDoc = {
@@ -38,7 +45,8 @@ const ANIMATION_TYPE = union(["none", "enter-exit", "always"]);
 const V: PropDoc = {
   name: "variant",
   type: WORLDS_TYPE,
-  description: "Which world to render. Defaults to the nearest OvioProvider, then minimal.",
+  description: "Which world to render. Uses the nearest OvioProvider when there is one.",
+  default: "minimal",
 };
 const CL: PropDoc = { name: "className", type: "string", description: "Merged onto the root." };
 
@@ -62,7 +70,8 @@ export const COMPONENTS: ComponentDoc[] = [
         name: "animation",
         type: ANIMATION_TYPE,
         description:
-          'Default "enter-exit". "always" adds the Retro flicker and roll bar. Forced to "none" under reduced motion.',
+          '"always" adds the Retro flicker and roll bar. Forced to "none" under reduced motion.',
+        default: "enter-exit",
       },
       {
         name: "endDate",
@@ -170,7 +179,7 @@ export const COMPONENTS: ComponentDoc[] = [
         description: "Deploy indicator. Hidden when left out.",
       },
       { name: "panels", type: "ReactNode[]", description: "Panel content per tab." },
-      { name: "goo", type: "number", description: "Blur strength of the filter. Default 9." },
+      { name: "goo", type: "number", description: "Blur strength of the filter.", default: "9" },
       CL,
     ],
   },
@@ -198,7 +207,8 @@ export const COMPONENTS: ComponentDoc[] = [
         name: "animation",
         type: ANIMATION_TYPE,
         description:
-          'Default "enter-exit". "always" keeps a live marker on the latest point. Forced to "none" under reduced motion.',
+          '"always" keeps a live marker on the latest point. Forced to "none" under reduced motion.',
+        default: "enter-exit",
       },
       CL,
     ],
@@ -260,11 +270,12 @@ export const COMPONENTS: ComponentDoc[] = [
       },
       V,
       { name: "repo", type: "string", description: 'Header label, e.g. "ada-dev/lumen".' },
-      { name: "limit", type: "number", description: "Max people shown. Default 6." },
+      { name: "limit", type: "number", description: "Max people shown.", default: "6" },
       {
         name: "period / defaultPeriod",
         type: '"30d" | "90d" | "all"',
-        description: 'Time window, controlled or not. Default "90d".',
+        description: "Time window, controlled or not.",
+        default: "90d",
       },
       {
         name: "onPeriodChange",
@@ -303,7 +314,7 @@ export const COMPONENTS: ComponentDoc[] = [
         description: "Weekly history, oldest first.",
       },
       V,
-      { name: "weeks", type: "number", description: "Latest weeks shown. Default 12." },
+      { name: "weeks", type: "number", description: "Latest weeks shown.", default: "12" },
       { name: "goal", type: "number", description: "Weekly target. Hidden when left out." },
       CL,
     ],
@@ -335,7 +346,7 @@ export const COMPONENTS: ComponentDoc[] = [
         type: "string",
         description: "Become-a-sponsor link. Hidden when left out.",
       },
-      { name: "ctaLabel", type: "string", description: 'Link text. Default "Become a sponsor".' },
+      { name: "ctaLabel", type: "string", description: "Link text.", default: "Become a sponsor" },
       CL,
     ],
   },
@@ -354,7 +365,12 @@ export const COMPONENTS: ComponentDoc[] = [
         type: "number",
         description: "Controlled value, or the starting one (72).",
       },
-      { name: "min / max", type: "number", description: "Range, default 0–100." },
+      {
+        name: "min / max",
+        type: "number",
+        description: "The range of values.",
+        default: "0 / 100",
+      },
       {
         name: "onValueChange",
         type: "(value: number) => void",
@@ -462,7 +478,8 @@ export const COMPONENTS: ComponentDoc[] = [
       {
         name: "actions",
         type: "boolean",
-        description: "Shows Merge, Branch from and Reset, played out locally. Default true.",
+        description: "Shows Merge, Branch from and Reset, played out locally.",
+        default: "true",
       },
       { name: "onMerge", type: "(commit) => void", description: "Fires with the merge commit." },
       {
@@ -524,7 +541,8 @@ export const COMPONENTS: ComponentDoc[] = [
       {
         name: "playing / defaultPlaying",
         type: "boolean",
-        description: "Playing state, controlled or not. Plays by default.",
+        description: "Playing state, controlled or not.",
+        default: "true",
       },
       {
         name: "onPlayingChange",
@@ -544,7 +562,8 @@ export const COMPONENTS: ComponentDoc[] = [
       {
         name: "volume / defaultVolume",
         type: "number",
-        description: "0–10, default 6. Turned with the Toy knob.",
+        description: "0–10. Turned with the Toy knob.",
+        default: "6",
       },
       { name: "onVolumeChange", type: "(volume: number) => void", description: "Volume changed." },
       {
@@ -579,7 +598,8 @@ export const COMPONENTS: ComponentDoc[] = [
       {
         name: "position",
         type: '"top-left" | "top-center" | "top-right" | "bottom-left" | "bottom-center" | "bottom-right"',
-        description: 'Corner the toasts stack in. Default "bottom-right".',
+        description: "Corner the toasts stack in.",
+        default: "bottom-right",
       },
       {
         name: "ovioToast.success / error / info",
@@ -607,6 +627,9 @@ export const getComponent = (slug: string) => COMPONENTS.find((c) => c.slug === 
 /** Where "Docs" links land: the first component. /docs redirects here too. */
 export const DOCS_HREF = `/docs/${COMPONENTS[0].slug}`;
 
+/** Where the site is served, for links that leave it (README embeds, share images). */
+export const SITE_URL = "https://ovioui.vercel.app";
+
 /** The GitHub repository that serves as the shadcn registry. */
 export const REPO = "JanaSundar/ovio";
 
@@ -625,11 +648,14 @@ export const DOC_SECTIONS = [
   { id: "installation", label: "Installation" },
   { id: "usage", label: "Usage" },
   { id: "data", label: "Data" },
+  { id: "embed", label: "Readme embed" },
   { id: "props", label: "Props" },
 ] as const;
 
 export type DocSectionId = (typeof DOC_SECTIONS)[number]["id"];
 
-/** A page's sections: Data only on components that fetch real data. */
+/** A page's sections: Data only on components that fetch real data, README embed where one exists. */
 export const docSections = (slug: string) =>
-  DOC_SECTIONS.filter((s) => s.id !== "data" || getComponent(slug)?.data);
+  DOC_SECTIONS.filter(
+    (s) => (s.id !== "data" || getComponent(slug)?.data) && (s.id !== "embed" || slug in EMBEDS),
+  );

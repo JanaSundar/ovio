@@ -4,9 +4,7 @@ import { motion } from "motion/react";
 import { motionTokens, useOvioTransition } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import type { RepositoryCardWorldProps } from "../repository-card";
-import { formatNumber } from "@/lib/format";
-
-const COMPACT = { notation: "compact", maximumFractionDigits: 1 } as const;
+import { COMPACT, formatNumber } from "@/lib/format";
 
 export function CraftRepositoryCard({
   repo,

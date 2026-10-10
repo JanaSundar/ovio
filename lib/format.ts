@@ -52,3 +52,11 @@ export const plural = (n: number, noun: string, many = `${noun}s`) => (n === 1 ?
 /** "1 star", "2,400 stars". */
 export const formatCount = (n: number, noun: string, many?: string) =>
   `${formatNumber(n)} ${plural(n, noun, many)}`;
+
+/** Number options shared by the worlds: "12.7K" (lowercase it to taste) and "054". */
+export const COMPACT = { notation: "compact", maximumFractionDigits: 1 } as const;
+export const PAD3 = { minimumIntegerDigits: 3, useGrouping: false } as const;
+
+/** "STARS....." : a label padded with dots to a fixed column, like a terminal listing. */
+export const dots = (label: string, width = 10) =>
+  label + ".".repeat(Math.max(1, width - label.length));

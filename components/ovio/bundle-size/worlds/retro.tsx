@@ -6,12 +6,11 @@ import { RollingNumber } from "@/components/shared/rolling-number";
 import { motionTokens, useReducedMotionSafe } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { ARROW, barLabel, deltaLabel, KB_FORMAT, type BundleSizeWorldProps } from "../bundle-size";
-import { formatNumber } from "@/lib/format";
+import { dots, formatNumber } from "@/lib/format";
 
 const CELLS = 20;
 
-/** Pads a label with dots to a fixed column, like a terminal listing. */
-const dots = (label: string, width = 11) => label + ".".repeat(Math.max(1, width - label.length));
+const COLUMN = 11;
 
 const TREND_COLOR = { down: "#6dff8a", up: "#ffd34d", same: "#3fae55", first: "#3fae55" };
 
@@ -60,24 +59,24 @@ export function RetroBundleSize({
 
       <div id={panelId} role="tabpanel" aria-labelledby={tabId(index)}>
         <div>
-          {dots("RAW")}
+          {dots("RAW", COLUMN)}
           <span className="text-[#c9ffd2]">
             <RollingNumber value={r.raw} format={KB_FORMAT} suffix=" KB" />
           </span>
         </div>
         <div>
-          {dots("GZIP")}
+          {dots("GZIP", COLUMN)}
           {formatNumber(r.gzip, KB_FORMAT)} KB
         </div>
         {r.brotli !== undefined && (
           <div>
-            {dots("BROTLI")}
+            {dots("BROTLI", COLUMN)}
             {formatNumber(r.brotli, KB_FORMAT)} KB
           </div>
         )}
         {r.dependencies !== undefined && (
           <div>
-            {dots("DEPS")}
+            {dots("DEPS", COLUMN)}
             {r.dependencies}
           </div>
         )}

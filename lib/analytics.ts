@@ -10,6 +10,8 @@ type Events = {
   design_world_changed: { design_world: World };
   /** The install command was copied, from the homepage or a docs page. */
   install_command_copied: { command_variant: "command" | "install-box" };
+  /** A README embed's Markdown was copied from a docs page. */
+  embed_markdown_copied: { component_slug: string; design_world: World };
   /** A docs page switched between the live specimen and its source. */
   component_view_changed: { component_slug: string; view: "preview" | "code" };
   /** A source file was copied from the docs code explorer. */

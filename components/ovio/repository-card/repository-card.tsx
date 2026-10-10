@@ -8,22 +8,9 @@ import { MinimalRepositoryCard } from "./worlds/minimal";
 import { CraftRepositoryCard } from "./worlds/craft";
 import { RetroRepositoryCard } from "./worlds/retro";
 import { ToyRepositoryCard } from "./worlds/toy";
+import type { Repository } from "./types";
 
-export type Repository = {
-  owner: string;
-  name: string;
-  description?: string;
-  /** Primary language, as GitHub names it ("TypeScript"). */
-  language?: string;
-  /** Language colour; defaults to GitHub's colour for common languages. */
-  languageColor?: string;
-  stars: number;
-  forks: number;
-  issues?: number;
-  /** Last push, ISO 8601. */
-  updatedAt?: string;
-  url?: string;
-};
+export type { Repository } from "./types";
 
 export type RepositoryStat = "stars" | "forks" | "issues";
 

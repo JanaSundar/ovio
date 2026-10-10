@@ -8,20 +8,9 @@ import { MinimalGitBranchVisualizer } from "./worlds/minimal";
 import { CraftGitBranchVisualizer } from "./worlds/craft";
 import { RetroGitBranchVisualizer } from "./worlds/retro";
 import { ToyGitBranchVisualizer } from "./worlds/toy";
+import type { GitCommit } from "./types";
 
-export type GitCommit = {
-  /** Commit SHA; the first seven characters are shown. */
-  id: string;
-  branch: string;
-  message: string;
-  author: string;
-  /** ISO 8601. */
-  date: string;
-  /** Parent ids, first parent first. Two parents make a merge. */
-  parents?: string[];
-  /** Release tag drawn above the commit, e.g. "v1.0.0". */
-  tag?: string;
-};
+export type { GitCommit } from "./types";
 
 export type GitBranchVisualizerProps = {
   /** History, oldest first: every parent comes before its children. */

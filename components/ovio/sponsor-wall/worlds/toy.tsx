@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { TOY_PLASTIC, ToyKeyLink } from "@/components/shared/toy";
 import { motionTokens, useOvioTransition, useReducedMotionSafe } from "@/lib/motion";
 import { cn } from "@/lib/utils";
-import { SponsorName } from "../sponsor-link";
+import { SponsorName } from "../parts";
 import type { SponsorTier, SponsorWallWorldProps } from "../sponsor-wall";
 
 /** Plastic colours: face, side, ink. */

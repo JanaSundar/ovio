@@ -202,22 +202,47 @@
       "title": "GitHub fetchers",
       "description": "Server-side helpers that fetch repository, star history, contributor, release and contribution data for Ovio components, with an optional token.",
       "dependencies": ["server-only"],
-      "registryDependencies": [
-        "JanaSundar/ovio/fetch",
-        "JanaSundar/ovio/format",
-        "JanaSundar/ovio/repository-card",
-        "JanaSundar/ovio/star-history",
-        "JanaSundar/ovio/top-contributors",
-        "JanaSundar/ovio/changelog",
-        "JanaSundar/ovio/contribution-graph",
-        "JanaSundar/ovio/git-branch-visualizer",
-        "JanaSundar/ovio/developer-id-card"
-      ],
+      "registryDependencies": ["JanaSundar/ovio/fetch", "JanaSundar/ovio/format"],
       "files": [
         {
           "path": "lib/github.ts",
           "type": "registry:lib",
           "target": "lib/github.ts"
+        },
+        {
+          "path": "components/ovio/repository-card/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/repository-card/types.ts"
+        },
+        {
+          "path": "components/ovio/star-history/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/star-history/types.ts"
+        },
+        {
+          "path": "components/ovio/top-contributors/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/top-contributors/types.ts"
+        },
+        {
+          "path": "components/ovio/changelog/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/changelog/types.ts"
+        },
+        {
+          "path": "components/ovio/contribution-graph/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/contribution-graph/types.ts"
+        },
+        {
+          "path": "components/ovio/git-branch-visualizer/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/git-branch-visualizer/types.ts"
+        },
+        {
+          "path": "components/ovio/developer-id-card/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/developer-id-card/types.ts"
         }
       ]
     },
@@ -227,17 +252,22 @@
       "title": "npm fetchers",
       "description": "Server-side helpers that fetch weekly downloads from npm and bundle sizes from bundlephobia for Ovio components.",
       "dependencies": ["server-only"],
-      "registryDependencies": [
-        "JanaSundar/ovio/fetch",
-        "JanaSundar/ovio/format",
-        "JanaSundar/ovio/npm-downloads",
-        "JanaSundar/ovio/bundle-size"
-      ],
+      "registryDependencies": ["JanaSundar/ovio/fetch", "JanaSundar/ovio/format"],
       "files": [
         {
           "path": "lib/npm.ts",
           "type": "registry:lib",
           "target": "lib/npm.ts"
+        },
+        {
+          "path": "components/ovio/npm-downloads/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/npm-downloads/types.ts"
+        },
+        {
+          "path": "components/ovio/bundle-size/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/bundle-size/types.ts"
         }
       ]
     },
@@ -247,12 +277,17 @@
       "title": "Now playing fetchers",
       "description": "Server-side getNowPlaying for <NowPlaying />, from any attached music service: Spotify and Last.fm ready-made, musicService() for any JSON API.",
       "dependencies": ["server-only"],
-      "registryDependencies": ["JanaSundar/ovio/fetch", "JanaSundar/ovio/now-playing"],
+      "registryDependencies": ["JanaSundar/ovio/fetch"],
       "files": [
         {
           "path": "lib/music.ts",
           "type": "registry:lib",
           "target": "lib/music.ts"
+        },
+        {
+          "path": "components/ovio/now-playing/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/now-playing/types.ts"
         }
       ]
     },
@@ -277,6 +312,11 @@
           "target": "components/ovio/contribution-graph/contribution-graph.tsx"
         },
         {
+          "path": "components/ovio/contribution-graph/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/contribution-graph/types.ts"
+        },
+        {
           "path": "components/ovio/contribution-graph/grid.ts",
           "type": "registry:lib",
           "target": "components/ovio/contribution-graph/grid.ts"
@@ -285,6 +325,11 @@
           "path": "components/ovio/contribution-graph/year.ts",
           "type": "registry:lib",
           "target": "components/ovio/contribution-graph/year.ts"
+        },
+        {
+          "path": "components/ovio/contribution-graph/use-cell-entrance.ts",
+          "type": "registry:hook",
+          "target": "components/ovio/contribution-graph/use-cell-entrance.ts"
         },
         {
           "path": "components/ovio/contribution-graph/worlds/minimal.tsx",
@@ -330,9 +375,14 @@
           "target": "components/ovio/star-history/star-history.tsx"
         },
         {
-          "path": "components/ovio/star-history/line-plot.tsx",
+          "path": "components/ovio/star-history/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/star-history/types.ts"
+        },
+        {
+          "path": "components/ovio/star-history/parts.tsx",
           "type": "registry:ui",
-          "target": "components/ovio/star-history/line-plot.tsx"
+          "target": "components/ovio/star-history/parts.tsx"
         },
         {
           "path": "components/ovio/star-history/shape.ts",
@@ -388,6 +438,11 @@
           "target": "components/ovio/repository-card/repository-card.tsx"
         },
         {
+          "path": "components/ovio/repository-card/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/repository-card/types.ts"
+        },
+        {
           "path": "components/ovio/repository-card/language.ts",
           "type": "registry:lib",
           "target": "components/ovio/repository-card/language.ts"
@@ -437,6 +492,11 @@
           "target": "components/ovio/top-contributors/top-contributors.tsx"
         },
         {
+          "path": "components/ovio/top-contributors/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/top-contributors/types.ts"
+        },
+        {
           "path": "components/ovio/top-contributors/worlds/minimal.tsx",
           "type": "registry:ui",
           "target": "components/ovio/top-contributors/worlds/minimal.tsx"
@@ -478,6 +538,11 @@
           "path": "components/ovio/npm-downloads/npm-downloads.tsx",
           "type": "registry:ui",
           "target": "components/ovio/npm-downloads/npm-downloads.tsx"
+        },
+        {
+          "path": "components/ovio/npm-downloads/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/npm-downloads/types.ts"
         },
         {
           "path": "components/ovio/npm-downloads/chart.ts",
@@ -575,6 +640,11 @@
           "target": "components/ovio/bundle-size/bundle-size.tsx"
         },
         {
+          "path": "components/ovio/bundle-size/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/bundle-size/types.ts"
+        },
+        {
           "path": "components/ovio/bundle-size/worlds/minimal.tsx",
           "type": "registry:ui",
           "target": "components/ovio/bundle-size/worlds/minimal.tsx"
@@ -617,9 +687,9 @@
           "target": "components/ovio/gooey-tabs/gooey-tabs.tsx"
         },
         {
-          "path": "components/ovio/gooey-tabs/goo.tsx",
+          "path": "components/ovio/gooey-tabs/parts.tsx",
           "type": "registry:ui",
-          "target": "components/ovio/gooey-tabs/goo.tsx"
+          "target": "components/ovio/gooey-tabs/parts.tsx"
         },
         {
           "path": "components/ovio/gooey-tabs/worlds/minimal.tsx",
@@ -662,6 +732,11 @@
           "path": "components/ovio/changelog/changelog.tsx",
           "type": "registry:ui",
           "target": "components/ovio/changelog/changelog.tsx"
+        },
+        {
+          "path": "components/ovio/changelog/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/changelog/types.ts"
         },
         {
           "path": "components/ovio/changelog/worlds/minimal.tsx",
@@ -709,29 +784,34 @@
           "target": "components/ovio/event-ticket/event-ticket.tsx"
         },
         {
-          "path": "components/ovio/event-ticket/art.tsx",
-          "type": "registry:ui",
-          "target": "components/ovio/event-ticket/art.tsx"
-        },
-        {
-          "path": "components/ovio/event-ticket/book-button.tsx",
-          "type": "registry:ui",
-          "target": "components/ovio/event-ticket/book-button.tsx"
-        },
-        {
-          "path": "components/ovio/event-ticket/parts.tsx",
-          "type": "registry:ui",
-          "target": "components/ovio/event-ticket/parts.tsx"
+          "path": "components/ovio/event-ticket/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/event-ticket/types.ts"
         },
         {
           "path": "components/ovio/event-ticket/seed.ts",
-          "type": "registry:ui",
+          "type": "registry:lib",
           "target": "components/ovio/event-ticket/seed.ts"
         },
         {
-          "path": "components/ovio/event-ticket/ticket.tsx",
+          "path": "components/ovio/event-ticket/parts/art.tsx",
           "type": "registry:ui",
-          "target": "components/ovio/event-ticket/ticket.tsx"
+          "target": "components/ovio/event-ticket/parts/art.tsx"
+        },
+        {
+          "path": "components/ovio/event-ticket/parts/barcode.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/event-ticket/parts/barcode.tsx"
+        },
+        {
+          "path": "components/ovio/event-ticket/parts/book-button.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/event-ticket/parts/book-button.tsx"
+        },
+        {
+          "path": "components/ovio/event-ticket/parts/ticket.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/event-ticket/parts/ticket.tsx"
         },
         {
           "path": "components/ovio/event-ticket/worlds/minimal.tsx",
@@ -775,9 +855,14 @@
           "target": "components/ovio/sponsor-wall/sponsor-wall.tsx"
         },
         {
-          "path": "components/ovio/sponsor-wall/sponsor-link.tsx",
+          "path": "components/ovio/sponsor-wall/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/sponsor-wall/types.ts"
+        },
+        {
+          "path": "components/ovio/sponsor-wall/parts.tsx",
           "type": "registry:ui",
-          "target": "components/ovio/sponsor-wall/sponsor-link.tsx"
+          "target": "components/ovio/sponsor-wall/parts.tsx"
         },
         {
           "path": "components/ovio/sponsor-wall/worlds/minimal.tsx",
@@ -822,6 +907,11 @@
           "path": "components/ovio/developer-id-card/developer-id-card.tsx",
           "type": "registry:ui",
           "target": "components/ovio/developer-id-card/developer-id-card.tsx"
+        },
+        {
+          "path": "components/ovio/developer-id-card/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/developer-id-card/types.ts"
         },
         {
           "path": "components/ovio/developer-id-card/card.ts",
@@ -873,14 +963,19 @@
           "target": "components/ovio/git-branch-visualizer/git-branch-visualizer.tsx"
         },
         {
-          "path": "components/ovio/git-branch-visualizer/graph.tsx",
-          "type": "registry:ui",
-          "target": "components/ovio/git-branch-visualizer/graph.tsx"
+          "path": "components/ovio/git-branch-visualizer/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/git-branch-visualizer/types.ts"
         },
         {
-          "path": "components/ovio/git-branch-visualizer/parts.tsx",
+          "path": "components/ovio/git-branch-visualizer/parts/graph.tsx",
           "type": "registry:ui",
-          "target": "components/ovio/git-branch-visualizer/parts.tsx"
+          "target": "components/ovio/git-branch-visualizer/parts/graph.tsx"
+        },
+        {
+          "path": "components/ovio/git-branch-visualizer/parts/readout.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/git-branch-visualizer/parts/readout.tsx"
         },
         {
           "path": "components/ovio/git-branch-visualizer/worlds/minimal.tsx",
@@ -926,6 +1021,11 @@
           "target": "components/ovio/now-playing/now-playing.tsx"
         },
         {
+          "path": "components/ovio/now-playing/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/now-playing/types.ts"
+        },
+        {
           "path": "components/ovio/now-playing/parts.tsx",
           "type": "registry:ui",
           "target": "components/ovio/now-playing/parts.tsx"
@@ -968,6 +1068,11 @@
           "path": "components/ovio/toast/toast.tsx",
           "type": "registry:ui",
           "target": "components/ovio/toast/toast.tsx"
+        },
+        {
+          "path": "components/ovio/toast/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/toast/types.ts"
         },
         {
           "path": "components/ovio/toast/worlds/minimal.tsx",

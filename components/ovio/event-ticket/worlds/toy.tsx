@@ -1,9 +1,9 @@
 "use client";
 
 import { motionTokens } from "@/lib/motion";
-import { ToyBookButton } from "../book-button";
+import { ToyBookButton } from "../parts/book-button";
 import type { EventTicketWorldProps } from "../event-ticket";
-import { Ticket, type TicketLook } from "../ticket";
+import { Ticket, type TicketLook } from "../parts/ticket";
 
 const LOOK: TicketLook = {
   world: "toy",

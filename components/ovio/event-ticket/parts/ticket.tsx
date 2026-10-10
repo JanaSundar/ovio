@@ -17,8 +17,8 @@ import type { World } from "@/components/shared/world-provider";
 import { useOvioTransition, useReducedMotionSafe } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { TicketArt } from "./art";
-import { Barcode } from "./parts";
-import type { EventTicketWorldProps } from "./event-ticket";
+import { Barcode } from "./barcode";
+import type { EventTicketWorldProps } from "../event-ticket";
 
 /** How a world dresses the ticket. All four share the geometry, flip, tilt and tear. */
 export type TicketLook = {

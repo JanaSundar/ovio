@@ -3,7 +3,7 @@
 import { AnimatePresence, motion } from "motion/react";
 import { motionTokens, useOvioTransition, useReducedMotionSafe } from "@/lib/motion";
 import { cn } from "@/lib/utils";
-import { SponsorLink } from "../sponsor-link";
+import { SponsorLink } from "../parts";
 import type { SponsorWallWorldProps } from "../sponsor-wall";
 
 /** Weight and tracking per sponsor, so plain text reads as a row of different wordmarks. */

@@ -3,7 +3,7 @@
 import { AnimatePresence, motion } from "motion/react";
 import { motionTokens, useOvioTransition, useReducedMotionSafe } from "@/lib/motion";
 import { cn } from "@/lib/utils";
-import { SponsorLink } from "../sponsor-link";
+import { SponsorLink } from "../parts";
 import type { PlacedSponsor, SponsorWallWorldProps } from "../sponsor-wall";
 
 /** Sticker paper and ink. */

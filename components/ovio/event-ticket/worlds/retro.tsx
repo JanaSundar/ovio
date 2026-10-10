@@ -1,9 +1,9 @@
 "use client";
 
 import { motionTokens, steps } from "@/lib/motion";
-import { GooBookButton, type GooBookLook } from "../book-button";
+import { GooBookButton, type GooBookLook } from "../parts/book-button";
 import type { EventTicketWorldProps } from "../event-ticket";
-import { Ticket, type TicketLook } from "../ticket";
+import { Ticket, type TicketLook } from "../parts/ticket";
 
 const frames = motionTokens.retro.frames;
 

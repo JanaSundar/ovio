@@ -11,7 +11,7 @@ import {
 } from "react";
 import { useOvioTransition, useReducedMotionSafe } from "@/lib/motion";
 import { cn } from "@/lib/utils";
-import type { GitBranchVisualizerWorldProps, GraphLane, GraphNode } from "./git-branch-visualizer";
+import type { GitBranchVisualizerWorldProps, GraphLane, GraphNode } from "../git-branch-visualizer";
 
 /** How a world draws the graph. */
 export type GraphLook = {

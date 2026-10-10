@@ -4,14 +4,8 @@ import { memo, useRef, type CSSProperties } from "react";
 import { motionTokens } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import type { ContributionGraphWorldProps } from "../contribution-graph";
-import {
-  cssEase,
-  dayCellProps,
-  useCellEntrance,
-  weekColumns,
-  weekScroller,
-  weeksMinWidth,
-} from "../grid";
+import { cssEase, dayCellProps, weekColumns, weekScroller, weeksMinWidth } from "../grid";
+import { useCellEntrance } from "../use-cell-entrance";
 import { unit, type ContributionCell } from "../year";
 import { formatNumber } from "@/lib/format";
 

@@ -4,7 +4,7 @@ import { motion, type Transition } from "motion/react";
 import { useMemo } from "react";
 import { useReducedMotionSafe } from "@/lib/motion";
 import { cn } from "@/lib/utils";
-import { hashString, random } from "./seed";
+import { hashString, random } from "../seed";
 
 /** Bars for the stub, drawn from the ticket number, with a laser sweeping across them. */
 export function Barcode({

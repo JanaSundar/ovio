@@ -15,17 +15,9 @@ import { MinimalBundleSize } from "./worlds/minimal";
 import { CraftBundleSize } from "./worlds/craft";
 import { RetroBundleSize } from "./worlds/retro";
 import { ToyBundleSize } from "./worlds/toy";
+import type { BundleVersion } from "./types";
 
-/** One published version. Sizes are in bytes. */
-export type BundleVersion = {
-  version: string;
-  raw: number;
-  gzip: number;
-  /** Leave out to hide the row. */
-  brotli?: number;
-  /** Runtime dependency count. Leave out to hide the row. */
-  dependencies?: number;
-};
+export type { BundleVersion } from "./types";
 
 export type BundleSizeProps = {
   packageName: string;

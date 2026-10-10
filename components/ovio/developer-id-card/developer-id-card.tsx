@@ -3,35 +3,18 @@
 import type { ComponentType } from "react";
 import { useWorld, type World } from "@/components/shared/world-provider";
 import { readIdCard } from "./card";
+import type { Developer } from "./types";
 import { MinimalDeveloperIdCard } from "./worlds/minimal";
 import { CraftDeveloperIdCard } from "./worlds/craft";
 import { RetroDeveloperIdCard } from "./worlds/retro";
 import { ToyDeveloperIdCard } from "./worlds/toy";
 
-export type DeveloperIdCardProps = {
-  /** Printed name. */
-  name: string;
+export type { Developer } from "./types";
+
+export type DeveloperIdCardProps = Developer & {
   variant?: World;
-  /** Job title. */
-  title?: string;
-  /** Technologies, most important first. */
-  stack?: string[];
-  /** GitHub handle, without the @. The QR code opens this profile unless `url` is set. */
-  github?: string;
   /** What the QR code opens. Defaults to the GitHub profile. */
   url?: string;
-  /** Personal site, printed without the protocol ("jana.dev"). */
-  website?: string;
-  /** "Chennai, India". */
-  location?: string;
-  /** Open to work. Leave out to hide the status. */
-  available?: boolean;
-  /** Photo. Leave out (or let it fail) and initials are shown instead. */
-  avatarUrl?: string;
-  /** Card number, e.g. "024". */
-  serial?: string;
-  /** Year the developer started, printed in Craft ("Est. 2019"). */
-  since?: number;
   className?: string;
 };
 

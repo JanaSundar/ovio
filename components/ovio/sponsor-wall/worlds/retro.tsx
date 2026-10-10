@@ -4,7 +4,7 @@ import { motion, useAnimationFrame, useMotionValue } from "motion/react";
 import { useLayoutEffect, useRef, type FocusEvent } from "react";
 import { motionTokens, useReducedMotionSafe } from "@/lib/motion";
 import { cn } from "@/lib/utils";
-import { SponsorLink } from "../sponsor-link";
+import { SponsorLink } from "../parts";
 import type { SponsorWallWorldProps } from "../sponsor-wall";
 
 /** Height of the credits window, in px (h-[340px] below). */

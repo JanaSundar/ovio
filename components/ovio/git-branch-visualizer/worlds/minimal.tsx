@@ -5,8 +5,14 @@ import { AutoHeight } from "@/components/shared/auto-height";
 import { motionTokens, useOvioTransition } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import type { GitBranchVisualizerWorldProps } from "../git-branch-visualizer";
-import { Graph, type GraphLook, type LabelProps, type NodeProps, type TagProps } from "../graph";
-import { Counts, Cursor, Swap } from "../parts";
+import {
+  Graph,
+  type GraphLook,
+  type LabelProps,
+  type NodeProps,
+  type TagProps,
+} from "../parts/graph";
+import { Counts, Cursor, Swap } from "../parts/readout";
 
 const LOOK: GraphLook = {
   colors: ["#161614", "#8d8a82", "#2f9a45", "#3178c6", "#c0bdb5"],

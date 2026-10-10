@@ -6,8 +6,14 @@ import { ToyKey } from "@/components/shared/toy";
 import { motionTokens, useOvioTransition } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import type { GitBranchVisualizerWorldProps } from "../git-branch-visualizer";
-import { Graph, type GraphLook, type LabelProps, type NodeProps, type TagProps } from "../graph";
-import { Counts, Cursor, Swap } from "../parts";
+import {
+  Graph,
+  type GraphLook,
+  type LabelProps,
+  type NodeProps,
+  type TagProps,
+} from "../parts/graph";
+import { Counts, Cursor, Swap } from "../parts/readout";
 
 const LOOK: GraphLook = {
   colors: ["#2c55e0", "#ef4f2b", "#f4b52a", "#33b07a", "#9b59d0"],

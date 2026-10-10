@@ -8,19 +8,9 @@ import { MinimalStarHistory } from "./worlds/minimal";
 import { CraftStarHistory } from "./worlds/craft";
 import { RetroStarHistory } from "./worlds/retro";
 import { ToyStarHistory } from "./worlds/toy";
+import type { StarHistoryPoint, StarHistoryAnnotation } from "./types";
 
-/** One day of history: the cumulative star count on that date. */
-export type StarHistoryPoint = {
-  /** ISO 8601 date, "2025-07-14". */
-  date: string;
-  stars: number;
-};
-
-/** A callout pinned to the curve at a date, like "hit the HN front page!". */
-export type StarHistoryAnnotation = {
-  date: string;
-  label: string;
-};
+export type { StarHistoryPoint, StarHistoryAnnotation } from "./types";
 
 export type StarHistoryAnimation = OvioAnimation;
 

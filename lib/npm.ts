@@ -1,7 +1,7 @@
 import "server-only";
 
-import type { BundleVersion } from "@/components/ovio/bundle-size/bundle-size";
-import type { DownloadWeek } from "@/components/ovio/npm-downloads/npm-downloads";
+import type { BundleVersion } from "@/components/ovio/bundle-size/types";
+import type { DownloadWeek } from "@/components/ovio/npm-downloads/types";
 import { isoDate } from "@/lib/format";
 import { fetchJson, type FetchOptions } from "@/lib/ovio-fetch";
 

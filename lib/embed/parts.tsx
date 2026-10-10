@@ -88,12 +88,6 @@ export function firstSentence(text: string) {
 export const fitSize = (text: string, max: number, room: number) =>
   Math.round(max * Math.max(0.6, Math.min(1, room / text.length)));
 
-/** Ink or white, whichever reads on a colour: JavaScript's yellow needs ink, TypeScript's blue white. */
-export function inkOn(hex: string) {
-  const [r, g, b] = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255);
-  return 0.2126 * r + 0.7152 * g + 0.0722 * b > 0.6 ? CRAFT.ink : "#ffffff";
-}
-
 /** The strip of tape holding a Craft card up, with the mark printed on it like a label. */
 export function CraftTape({
   left,

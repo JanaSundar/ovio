@@ -46,7 +46,7 @@ export function CraftNpmDownloads({
         transition={lift}
       >
         <div className="px-[22px] pt-[22px] pb-3.5" style={{ background: PAPER }}>
-          <div className="text-center font-(family-name:--ovio-font) text-xl font-extrabold tracking-[-0.02em]">
+          <div className="text-center font-(family-name:--ovio-font) text-xl font-extrabold tracking-[-0.02em] [overflow-wrap:anywhere]">
             npm · {packageName}
           </div>
           <div className="mb-3 text-center text-[#7d6650]">weekly downloads receipt</div>

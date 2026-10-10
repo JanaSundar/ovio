@@ -59,7 +59,7 @@ export function RetroBundleSize({
         className,
       )}
     >
-      <h3 className="m-0 font-normal text-[#c9ffd2]">
+      <h3 className="m-0 font-normal text-[#c9ffd2] [overflow-wrap:anywhere]">
         C:\&gt; bundle-size {packageName}@{r.version}
       </h3>
       <div aria-hidden className="my-2.5 text-(--ovio-muted)">

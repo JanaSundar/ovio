@@ -43,7 +43,11 @@ export function CraftTopContributors({
           </span>
         </h3>
         <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-[13px] text-(--ovio-muted)">
-          {repo && <span className="font-(family-name:--ovio-mono) text-xs">{repo}</span>}
+          {repo && (
+            <span className="min-w-0 font-(family-name:--ovio-mono) text-xs [overflow-wrap:anywhere]">
+              {repo}
+            </span>
+          )}
           <span>
             <RollingNumber value={total} /> {plural(total, "commit")}
           </span>

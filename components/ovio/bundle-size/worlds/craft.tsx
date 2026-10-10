@@ -71,7 +71,7 @@ export function CraftBundleSize({
         </motion.div>
       </AnimatePresence>
 
-      <h3 className="m-0 font-(family-name:--ovio-mono) text-[12px] font-normal tracking-[0.14em] text-[#7d6650] uppercase">
+      <h3 className="m-0 font-(family-name:--ovio-mono) text-[12px] font-normal tracking-[0.14em] text-[#7d6650] uppercase [overflow-wrap:anywhere]">
         Package label · {packageName}
       </h3>
 

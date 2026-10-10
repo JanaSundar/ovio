@@ -42,7 +42,7 @@ export function MinimalBundleSize({
       )}
     >
       <div className="flex items-center justify-between gap-3">
-        <h3 className="m-0 font-(family-name:--ovio-mono) text-[13px] font-normal">
+        <h3 className="m-0 min-w-0 font-(family-name:--ovio-mono) text-[13px] font-normal [overflow-wrap:anywhere]">
           {packageName}
         </h3>
         <div

@@ -46,7 +46,7 @@ export function RetroRepositoryCard({
         <span aria-hidden>[X]</span>
       </div>
       <div className="px-[18px] py-4 text-[22px] leading-[1.2]">
-        <h3 className="m-0 font-normal">
+        <h3 className="m-0 font-normal [overflow-wrap:anywhere]">
           &gt; {repo.owner.toUpperCase()}/{repo.name.toUpperCase()}
           <motion.span
             aria-hidden
@@ -57,7 +57,11 @@ export function RetroRepositoryCard({
           </motion.span>
         </h3>
         {repo.description && (
-          <motion.p className="mt-2 mb-3.5 text-(--ovio-ink-2) uppercase" {...line(0)}>
+          <motion.p
+            title={repo.description}
+            className="mt-2 mb-3.5 line-clamp-4 text-(--ovio-ink-2) uppercase [overflow-wrap:anywhere]"
+            {...line(0)}
+          >
             {repo.description.replace(/\.$/, "")}
           </motion.p>
         )}

@@ -37,11 +37,11 @@ export function MinimalNpmDownloads({
       )}
     >
       <div className="flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <div className="mb-2.5 text-[11px] tracking-[0.12em] text-(--ovio-muted) uppercase">
+        <div className="min-w-0">
+          <div className="mb-2.5 text-[11px] tracking-[0.12em] text-(--ovio-muted) uppercase [overflow-wrap:anywhere]">
             {current.ago === 0 ? "Weekly downloads" : `Week of ${current.label}`} · {packageName}
           </div>
-          <span className="text-[52px] leading-none tracking-[-0.045em] tabular-nums">
+          <span className="text-[clamp(34px,11vw,52px)] leading-none tracking-[-0.045em] tabular-nums">
             {formatNumber(current.downloads)}
           </span>
         </div>

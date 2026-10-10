@@ -51,7 +51,7 @@ export function ToyBundleSize({
       )}
     >
       <div className="flex items-center justify-between gap-3 font-(family-name:--ovio-mono) text-[11px] text-(--ovio-muted)">
-        <h3 className="m-0 font-normal tracking-[0.08em] uppercase">Bundle size · {packageName}</h3>
+        <h3 className="m-0 font-normal tracking-[0.08em] uppercase [overflow-wrap:anywhere]">Bundle size · {packageName}</h3>
         <span>{deltaLabel(r)}</span>
       </div>
 

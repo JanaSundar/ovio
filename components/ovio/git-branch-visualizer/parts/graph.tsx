@@ -417,7 +417,7 @@ export function Graph({
                         onKeyDown={(e) => onNodeKeyDown(e, id)}
                       >
                         <motion.g
-                          initial={reduced ? false : { scale: 0, opacity: 0 }}
+                          initial={reduced ? false : { scale: 0.6, opacity: 0 }}
                           animate={{ scale: 1, opacity: 1 }}
                           transition={{
                             ...enter,

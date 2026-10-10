@@ -45,7 +45,7 @@ function WeekKnob({
     count > 1 ? Math.round(((angle - MIN) / SPAN) * (count - 1)) : 0;
 
   const onPointerDown = (e: PointerEvent<HTMLDivElement>) => {
-    if (e.button !== 0) return;
+    if (!e.isPrimary || e.button !== 0) return;
     const r = e.currentTarget.getBoundingClientRect();
     const cx = r.left + r.width / 2;
     const cy = r.top + r.height / 2;
@@ -179,9 +179,12 @@ export function ToyNpmDownloads({
               className="relative h-3 flex-1 rounded-full bg-(--ovio-track) shadow-[inset_0_2px_3px_rgba(40,28,10,.3)]"
             >
               <motion.span
-                className="absolute inset-y-0.5 left-0.5 rounded-full bg-(--ovio-yellow) shadow-[inset_0_-2px_0_var(--ovio-yellow-deep)]"
+                className="absolute inset-0.5 rounded-full bg-(--ovio-yellow) shadow-[inset_0_-2px_0_var(--ovio-yellow-deep)]"
                 initial={false}
-                animate={{ width: `calc(${(goalProgress * 100).toFixed(1)}% - 4px)` }}
+                // Clipped rather than resized, so the fill moves on the compositor and keeps its round end.
+                animate={{
+                  clipPath: `inset(0 ${((1 - goalProgress) * 100).toFixed(1)}% 0 0 round 99px)`,
+                }}
                 transition={slide}
               />
             </span>

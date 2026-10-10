@@ -234,11 +234,9 @@ export function ToyContributionGraph({
     setFront(f);
     if (reduced) return;
     const dir = Math.sign(angle.getVelocity()) || 1;
-    animate(tick, [0, dir * 22, -dir * 6, 0], {
-      duration: 0.22,
-      times: [0, 0.25, 0.6, 1],
-      ease: [0.22, 1, 0.36, 1],
-    });
+    // Kicked, then sprung back: a spring retargets cleanly when the next week arrives mid-flick.
+    tick.set(dir * 22);
+    animate(tick, 0, motionTokens.toy.piece);
   });
 
   // Sideways wheel and trackpad swipes push the drum; it needs a non-passive listener to keep the page still.
@@ -261,7 +259,7 @@ export function ToyContributionGraph({
   });
 
   const down = (e: PointerEvent<HTMLDivElement>) => {
-    if (e.button !== 0) return;
+    if (!e.isPrimary || e.button !== 0) return;
     play(null);
     drag.current = {
       x: e.clientX,

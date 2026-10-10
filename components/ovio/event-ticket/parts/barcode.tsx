@@ -44,14 +44,20 @@ export function Barcode({
         <path d={d} fill="currentColor" />
       </svg>
       {!reduced && (
-        <motion.span
-          aria-hidden
-          className="absolute inset-y-0 -ml-px w-[3px]"
-          style={{ background: laser, boxShadow: `0 0 12px 2px ${laser}` }}
-          initial={{ left: "0%" }}
-          animate={{ left: ["0%", "100%", "0%"] }}
-          transition={{ ...sweep, repeat: Infinity }}
-        />
+        // The track spans the bars and slides by its own width, so the laser moves on transform only.
+        <span aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+          <motion.span
+            className="absolute inset-0"
+            initial={{ x: "0%" }}
+            animate={{ x: ["0%", "100%", "0%"] }}
+            transition={{ ...sweep, repeat: Infinity }}
+          >
+            <span
+              className="absolute inset-y-0 left-0 -ml-px w-[3px]"
+              style={{ background: laser, boxShadow: `0 0 12px 2px ${laser}` }}
+            />
+          </motion.span>
+        </span>
       )}
     </div>
   );

@@ -82,7 +82,7 @@ export function RetroContributionGraph({
             C:\&gt; ACTIVITY.EXE /YEAR:{year.days[year.days.length - 1].date.slice(0, 4)}
             <motion.span
               aria-hidden
-              animate={enter ? { opacity: [1, 0] } : undefined}
+              animate={always ? { opacity: [1, 0] } : undefined}
               transition={motionTokens.retro.blink}
             >
               █

@@ -1,9 +1,11 @@
 "use client";
 
+import { motion } from "motion/react";
 import { useState } from "react";
 import { track } from "@/lib/analytics";
 import { useWorld, type World } from "@/components/shared/world-provider";
 import { worldInfo } from "@/content/worlds";
+import { motionTokens, useReducedMotionSafe } from "@/lib/motion";
 import { CodeBlock } from "./code-block";
 import { CodeExplorer, type SourceFile } from "./code-explorer";
 import { Demo, DEMOS } from "./demos";
@@ -21,6 +23,9 @@ export function ComponentPreview({
   files: SourceFile[];
 }) {
   const [tab, setTab] = useState<"preview" | "code">("preview");
+  // The first view shows at once; only a switch fades in.
+  const [switched, setSwitched] = useState(false);
+  const reduced = useReducedMotionSafe();
   const world = useWorld();
   const demo = DEMOS[slug];
 
@@ -38,6 +43,7 @@ export function ComponentPreview({
                 onClick={() => {
                   if (tab === t) return;
                   setTab(t);
+                  setSwitched(true);
                   track("component_view_changed", {
                     component_slug: slug,
                     view: t,
@@ -53,13 +59,21 @@ export function ComponentPreview({
         )}
         <WorldSwitcher />
       </div>
-      {tab === "preview" ? (
-        <PreviewFrame minHeight={demo?.minHeight ?? 400}>
-          <Demo slug={slug} />
-        </PreviewFrame>
-      ) : (
-        <CodeExplorer files={files} />
-      )}
+      {/* Enter only, never waiting on an exit, so the tab answers the click at once. */}
+      <motion.div
+        key={tab}
+        initial={switched ? { opacity: 0, y: reduced ? 0 : 4 } : false}
+        animate={{ opacity: 1, y: 0 }}
+        transition={motionTokens.minimal.slow}
+      >
+        {tab === "preview" ? (
+          <PreviewFrame minHeight={demo?.minHeight ?? 400}>
+            <Demo slug={slug} />
+          </PreviewFrame>
+        ) : (
+          <CodeExplorer files={files} />
+        )}
+      </motion.div>
       <div className="preview-caption">
         <span>
           &lt;{exportName} variant=&quot;<b>{world}</b>&quot; /&gt;

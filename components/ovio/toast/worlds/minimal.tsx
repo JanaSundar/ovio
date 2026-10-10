@@ -27,7 +27,7 @@ export function MinimalToast({ kind, title, description, action, dismiss }: Toas
         <button
           type="button"
           onClick={action.onClick}
-          className="shrink-0 cursor-pointer rounded-[6px] border-0 bg-(--ovio-accent) px-2.5 py-1 font-(family-name:--ovio-font) text-[12px] text-(--ovio-on-accent)"
+          className="shrink-0 cursor-pointer rounded-[6px] border-0 bg-(--ovio-accent) px-2.5 py-1 transition-transform duration-[80ms] ease-[cubic-bezier(0.2,0,0,1)] active:scale-[0.97] font-(family-name:--ovio-font) text-[12px] text-(--ovio-on-accent)"
         >
           {action.label}
         </button>

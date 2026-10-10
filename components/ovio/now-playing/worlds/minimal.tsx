@@ -89,11 +89,11 @@ export function MinimalNowPlaying({
               {...seekProps}
               className="group/seek relative flex h-3 flex-1 cursor-pointer touch-none items-center"
             >
-              <span className="relative h-0.5 w-full overflow-hidden bg-(--ovio-line-2) transition-[height] duration-200 group-hover/seek:h-1 motion-reduce:transition-none">
+              <span className="relative h-0.5 w-full overflow-hidden bg-(--ovio-line-2) transition-transform duration-200 ease-[cubic-bezier(0.2,0,0,1)] group-hover/seek:scale-y-200 motion-reduce:transition-none">
                 <motion.span
-                  className="absolute inset-y-0 left-0 bg-(--ovio-accent)"
+                  className="absolute inset-0 origin-left bg-(--ovio-accent)"
                   initial={false}
-                  animate={{ width: `${ratio * 100}%` }}
+                  animate={{ scaleX: ratio }}
                   transition={fill}
                 />
               </span>

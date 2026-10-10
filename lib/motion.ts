@@ -67,13 +67,14 @@ export const motionTokens = {
   },
 } as const;
 
-const INSTANT: Transition = { duration: 0 };
+/** Reduced motion: movement resolves at once, but opacity still fades, so changes don't flash. */
+const REDUCED: Transition = { duration: 0, opacity: { duration: 0.15, ease: ease.minimal } };
 
 export function useReducedMotionSafe(): boolean {
   return useReducedMotion() ?? false;
 }
 
-/** Returns the transition, or an instant one under prefers-reduced-motion (springs resolve instantly). */
+/** Returns the transition or, under prefers-reduced-motion, one that only fades (springs resolve instantly). */
 export function useOvioTransition(transition: Transition): Transition {
-  return useReducedMotionSafe() ? INSTANT : transition;
+  return useReducedMotionSafe() ? REDUCED : transition;
 }

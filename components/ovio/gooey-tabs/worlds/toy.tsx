@@ -65,7 +65,7 @@ export function ToyGooeyTabs(p: GooeyTabsWorldProps) {
   };
 
   const onPointerDown = (e: PointerEvent<HTMLDivElement>) => {
-    if (e.button !== 0) return;
+    if (!e.isPrimary || e.button !== 0) return;
     x.stop();
     drag.current = { start: e.clientX, moved: false, pointer: e.pointerId };
     e.currentTarget.setPointerCapture(e.pointerId);

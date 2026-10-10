@@ -194,7 +194,7 @@ export function NowPlaying({
         seek(i);
       },
       onPointerDown: (e) => {
-        if (e.button !== 0) return;
+        if (!e.isPrimary || e.button !== 0) return;
         e.currentTarget.setPointerCapture(e.pointerId);
         scrub(e);
       },

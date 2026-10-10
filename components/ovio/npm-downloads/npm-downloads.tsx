@@ -9,14 +9,11 @@ import { MinimalNpmDownloads } from "./worlds/minimal";
 import { CraftNpmDownloads } from "./worlds/craft";
 import { RetroNpmDownloads } from "./worlds/retro";
 import { ToyNpmDownloads } from "./worlds/toy";
+import type { DownloadWeek } from "./types";
+
+export type { DownloadWeek } from "./types";
 
 export { formatDelta } from "./chart";
-
-export type DownloadWeek = {
-  /** Start of the week, ISO 8601 date ("2026-09-28"). */
-  week: string;
-  downloads: number;
-};
 
 export type NpmDownloadsProps = {
   /** Package name, used as the label. */

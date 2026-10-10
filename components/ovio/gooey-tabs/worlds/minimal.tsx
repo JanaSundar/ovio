@@ -1,7 +1,7 @@
 "use client";
 
 import { ease } from "@/lib/motion";
-import { GooTabs, type GooLook } from "../goo";
+import { GooTabs, type GooLook } from "../parts";
 import type { GooeyTabsWorldProps } from "../gooey-tabs";
 
 const look: GooLook = {

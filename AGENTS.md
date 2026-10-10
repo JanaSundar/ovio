@@ -19,3 +19,19 @@ When you add a component:
 - Open `/og/<slug>` on the dev server and check the 1200×630 card: nothing clipped, and it reads as the component at a glance.
 
 Without an entry the image silently borrows the Contribution Graph drawing; `tests/unit/components.test.ts` fails when that happens.
+
+# Every component folder has the same shape
+
+`tests/unit/structure.test.ts` holds each folder in `components/ovio/<slug>/` to this layout:
+
+```
+<slug>.tsx       the component: props, data shaping, the world switch
+types.ts         the data it takes, as plain types; lib/github.ts, npm.ts and music.ts import these
+demo.tsx         the docs demo (site only, not in the registry)
+parts.tsx        pieces two or more worlds share, or parts/<name>.tsx when there are several
+use-<name>.ts    hooks the worlds share
+<name>.ts        plain logic with no React, safe for server code (README embeds, OG images)
+worlds/          minimal.tsx, craft.tsx, retro.tsx, toy.tsx — they render, they don't derive data
+```
+
+The registry item lists every file in the folder except `demo.tsx`, and the component appears in `COMPONENTS` and `DEMOS`. Run `node scripts/check-registry.mjs` after moving code between files.

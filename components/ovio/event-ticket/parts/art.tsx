@@ -2,7 +2,7 @@
 
 import { memo, useId, type ReactNode } from "react";
 import type { World } from "@/components/shared/world-provider";
-import { random } from "./seed";
+import { random } from "../seed";
 
 /** Art is drawn in a fixed box per layout and sliced to fill its panel, cropping the far side or the ends. */
 const BOX = { tall: [156, 400], wide: [400, 220] } as const;

@@ -15,16 +15,9 @@ import { MinimalNowPlaying } from "./worlds/minimal";
 import { CraftNowPlaying } from "./worlds/craft";
 import { RetroNowPlaying } from "./worlds/retro";
 import { ToyNowPlaying } from "./worlds/toy";
+import type { Track } from "./types";
 
-export type Track = {
-  title: string;
-  artist: string;
-  album?: string;
-  /** Length in seconds. */
-  duration: number;
-  /** Cover image. Leave out and a printed placeholder is drawn. */
-  artwork?: string;
-};
+export type { Track } from "./types";
 
 export type NowPlayingProps = {
   track: Track;

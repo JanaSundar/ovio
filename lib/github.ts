@@ -1,12 +1,12 @@
 import "server-only";
 
-import type { Release, ChangelogItem, ChangeType } from "@/components/ovio/changelog/changelog";
-import type { ContributionDay } from "@/components/ovio/contribution-graph/contribution-graph";
-import type { DeveloperIdCardProps } from "@/components/ovio/developer-id-card/developer-id-card";
-import type { GitCommit } from "@/components/ovio/git-branch-visualizer/git-branch-visualizer";
-import type { Repository } from "@/components/ovio/repository-card/repository-card";
-import type { StarHistoryPoint } from "@/components/ovio/star-history/star-history";
-import type { Contributor } from "@/components/ovio/top-contributors/top-contributors";
+import type { Release, ChangelogItem, ChangeType } from "@/components/ovio/changelog/types";
+import type { ContributionDay } from "@/components/ovio/contribution-graph/types";
+import type { Developer } from "@/components/ovio/developer-id-card/types";
+import type { GitCommit } from "@/components/ovio/git-branch-visualizer/types";
+import type { Repository } from "@/components/ovio/repository-card/types";
+import type { StarHistoryPoint } from "@/components/ovio/star-history/types";
+import type { Contributor } from "@/components/ovio/top-contributors/types";
 import { isoDate } from "@/lib/format";
 import {
   fetchOk,
@@ -91,8 +91,7 @@ type OwnedRepo = { language: string | null; fork: boolean };
 /** How many languages a card lists, most used first. */
 const STACK_SIZE = 4;
 
-/** The profile fields a Developer ID Card shows, from a GitHub user. */
-export type Developer = Omit<DeveloperIdCardProps, "variant" | "className" | "url">;
+export type { Developer };
 
 /**
  * A developer's public GitHub profile for <DeveloperIdCard {...developer} />, from a login: name,

@@ -1,6 +1,6 @@
 import "server-only";
 
-import type { Track } from "@/components/ovio/now-playing/now-playing";
+import type { Track } from "@/components/ovio/now-playing/types";
 import { fetchJson, fetchOk, type FetchOptions, type RequestOptions } from "@/lib/ovio-fetch";
 
 /**

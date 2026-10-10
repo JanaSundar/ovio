@@ -3,7 +3,7 @@
 import { motion } from "motion/react";
 import { motionTokens, useOvioTransition } from "@/lib/motion";
 import { cn } from "@/lib/utils";
-import { LinePlot, type LineLook } from "../line-plot";
+import { LinePlot, type LineLook } from "../parts";
 import { formatDate, formatNumber } from "@/lib/format";
 import { formatMonth, monthTicks } from "../shape";
 import type { StarHistoryWorldProps } from "../star-history";

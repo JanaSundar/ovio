@@ -7,10 +7,9 @@ import { MinimalToast } from "./worlds/minimal";
 import { CraftToast } from "./worlds/craft";
 import { RetroToast } from "./worlds/retro";
 import { ToyToast } from "./worlds/toy";
+import type { ToastKind, ToastAction } from "./types";
 
-export type ToastKind = "success" | "error" | "info";
-
-export type ToastAction = { label: string; onClick: () => void };
+export type { ToastKind, ToastAction } from "./types";
 
 export type OvioToastOptions = Pick<ExternalToast, "id" | "duration" | "toasterId"> & {
   description?: string;

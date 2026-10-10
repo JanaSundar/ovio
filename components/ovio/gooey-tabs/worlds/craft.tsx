@@ -1,6 +1,6 @@
 "use client";
 
-import { GooTabs, type GooLook } from "../goo";
+import { GooTabs, type GooLook } from "../parts";
 import type { GooeyTabsWorldProps } from "../gooey-tabs";
 
 const OVERSHOOT = [0.34, 1.56, 0.64, 1] as const;

@@ -1,12 +1,11 @@
 import { plural } from "@/lib/format";
+import type { ContributionDay } from "./types";
 
 /**
  * Shapes sparse daily counts into a GitHub-style year: columns are weeks (Sunday first),
  * rows are weekdays, every missing day is zero. Dates are calendar days ("YYYY-MM-DD") read in UTC,
  * so the grid is the same on the server and in every time zone.
  */
-
-export type ContributionDay = { date: string; count: number };
 
 type ContributionLevel = 0 | 1 | 2 | 3 | 4;
 

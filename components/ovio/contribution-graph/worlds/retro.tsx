@@ -5,7 +5,8 @@ import { memo, useRef } from "react";
 import { motionTokens, steps } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import type { ContributionGraphWorldProps } from "../contribution-graph";
-import { dayCellProps, useCellEntrance, weekColumns, weekScroller, weeksMinWidth } from "../grid";
+import { dayCellProps, weekColumns, weekScroller, weeksMinWidth } from "../grid";
+import { useCellEntrance } from "../use-cell-entrance";
 import type { ContributionCell } from "../year";
 import { formatNumber, PAD3 } from "@/lib/format";
 

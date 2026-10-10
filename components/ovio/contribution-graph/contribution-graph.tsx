@@ -13,12 +13,8 @@ import {
 import { useWorld, type World } from "@/components/shared/world-provider";
 import { useReducedMotionSafe, type OvioAnimation } from "@/lib/motion";
 import { dayIndexOf } from "./grid";
-import {
-  buildContributionYear,
-  type ContributionCell,
-  type ContributionDay,
-  type ContributionYear,
-} from "./year";
+import type { ContributionDay } from "./types";
+import { buildContributionYear, type ContributionCell, type ContributionYear } from "./year";
 import { MinimalContributionGraph } from "./worlds/minimal";
 import { CraftContributionGraph } from "./worlds/craft";
 import { RetroContributionGraph } from "./worlds/retro";

@@ -34,10 +34,12 @@ export type ChangelogProps = {
 
 /** A release shaped for drawing: date formatted, items tagged, hash and commit kind filled in. */
 export type ChangelogEntry = {
+  /** As shown: "v4.1.14" for a version number, the tag as given otherwise ("nightly", "@scope/pkg@1.0.0"). */
   version: string;
   date: string;
   /** Machine-readable date for <time>, when the date was given as ISO. */
   dateTime?: string;
+  /** Empty when the release has no title of its own (GitHub falls back to the tag). */
   title: string;
   items: { type?: ChangeType; text: string }[];
   hash: string;
@@ -76,13 +78,17 @@ function shortHash(text: string): string {
 function toEntry(release: Release): ChangelogEntry {
   const iso = /^\d{4}-\d{2}-\d{2}/.test(release.date) ? release.date : undefined;
   const items = release.items.map((item) => (typeof item === "string" ? { text: item } : item));
-  const patch = Number(release.version.split(".")[2] ?? 0) > 0;
+  // The patch number of a semver ("1.0.1-beta.1" is a patch), 0 for anything else.
+  const patch = Number(/^v?\d+\.\d+\.(\d+)/.exec(release.version)?.[1] ?? 0) > 0;
+  const bare = release.version.replace(/^v(?=\d)/, "");
+  const version = /^\d/.test(bare) ? `v${bare}` : bare;
+  const same = (t: string) => t.trim().replace(/^v(?=\d)/, "") === bare;
   const fixOnly = items.length > 0 && items.every((item) => item.type === "fixed");
   return {
-    version: release.version.replace(/^v/, ""),
+    version,
     date: iso ? formatDate(iso) : release.date,
     dateTime: iso,
-    title: release.title,
+    title: same(release.title) ? "" : release.title,
     items,
     hash: release.hash?.slice(0, 7) ?? shortHash(release.version),
     kind: patch || fixOnly ? "fix" : "feat",

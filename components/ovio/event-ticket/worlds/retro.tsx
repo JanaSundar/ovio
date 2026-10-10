@@ -18,7 +18,8 @@ const BOOK: GooBookLook = {
 
 const LOOK: TicketLook = {
   world: "retro",
-  kicker: (name) => `> TICKET.SYS / ${name.replace(/\W/g, "")}`,
+  // Letters and digits in any script: "東京デザインウィーク" and "Ölçek/26" keep their letters.
+  kicker: (name) => `> TICKET.SYS / ${name.replace(/[^\p{L}\p{N}]/gu, "")}`,
   card: "border-[3px] border-double border-(--ovio-accent) bg-(--ovio-surface) uppercase shadow-[0_0_0_4px_#1c2a1d,0_0_40px_rgba(80,255,120,.15)] [text-shadow:var(--ovio-glow)]",
   stub: "bg-[#0c2411]",
   art: "",

@@ -363,7 +363,8 @@ export const COMPONENTS: ComponentDoc[] = [
       {
         name: "value / defaultValue",
         type: "number",
-        description: "Controlled value, or the starting one (72).",
+        description:
+          "Controlled value, or the starting one: 72% of the way from min to max by default.",
       },
       {
         name: "min / max",

@@ -1,16 +1,21 @@
 "use client";
 
 import { useAnimate, type Transition } from "motion/react";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { type ReactNode, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { motionTokens, steps, useOvioTransition, useReducedMotionSafe } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
 /** Volume runs 0–10. */
 export const VOLUME_STEPS = 11;
 
-/** 134 → "2:14". */
-export const formatTime = (seconds: number) =>
-  `${Math.floor(seconds / 60)}:${String(Math.floor(seconds % 60)).padStart(2, "0")}`;
+/** 134 → "2:14", 36000 → "10:00:00". Anything that isn't a time reads 0:00. */
+export function formatTime(seconds: number) {
+  const s = Number.isFinite(seconds) ? Math.max(0, Math.floor(seconds)) : 0;
+  const pad = (n: number) => String(n).padStart(2, "0");
+  const h = Math.floor(s / 3600);
+  const m = Math.floor((s % 3600) / 60);
+  return h > 0 ? `${h}:${pad(m)}:${pad(s % 60)}` : `${m}:${pad(s % 60)}`;
+}
 
 /** m:ss in fixed-width digits, so the clock doesn't jitter as it ticks. */
 export function Time({ seconds, className }: { seconds: number; className?: string }) {
@@ -114,8 +119,13 @@ export function useFit(width: number) {
   return [ref, fit] as const;
 }
 
-/** Cover art filling its (positioned) parent. */
-export function Artwork({ src }: { src: string }) {
+/**
+ * Cover art filling its (positioned) parent, or the world's printed placeholder when there is no
+ * cover or it won't load: services hand out cover URLs that expire.
+ */
+export function Artwork({ src, fallback }: { src?: string; fallback: ReactNode }) {
+  const [failed, setFailed] = useState<string>();
+  if (!src || failed === src) return <>{fallback}</>;
   return (
     // A plain img: covers come from any host, and next/image would need each one configured.
     // oxlint-disable-next-line next/no-img-element
@@ -125,6 +135,7 @@ export function Artwork({ src }: { src: string }) {
       loading="lazy"
       decoding="async"
       draggable={false}
+      onError={() => setFailed(src)}
       className="absolute inset-0 size-full object-cover"
     />
   );

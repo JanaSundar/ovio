@@ -582,6 +582,7 @@ html.lenis-smooth .stage-frame {
   white-space: nowrap;
 }
 .command button {
+  min-width: 4.6em;
   border: 0;
   background: var(--lime);
   border-radius: 3px;
@@ -941,6 +942,8 @@ html.lenis-smooth .stage-frame {
   white-space: nowrap;
 }
 .install-box button {
+  /* Wide enough for "Copied" or "Failed", so the label swap never nudges the command. */
+  min-width: 4.6em;
   margin: 7px;
   border: 0;
   border-radius: 3px;

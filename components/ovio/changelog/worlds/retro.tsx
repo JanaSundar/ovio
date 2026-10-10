@@ -52,7 +52,10 @@ function schedule(releases: ChangelogEntry[]) {
 
   const prompt = type(PROMPT, TYPE_RATE);
   const lines = releases.map((r) => ({
-    head: type(`${r.hash} (tag: v${r.version}) ${r.kind}: ${r.title.toUpperCase()}`, PRINT_RATE),
+    head: type(
+      `${r.hash} (tag: ${r.version}) ${r.kind}${r.title ? `: ${r.title.toUpperCase()}` : ""}`,
+      PRINT_RATE,
+    ),
     items: r.items.map(print),
   }));
   return { prompt, lines, cursor: print() };
@@ -89,13 +92,14 @@ export function RetroChangelog({ releases, className }: ChangelogWorldProps) {
             >
               <span className="text-[#ffd34d]">{r.hash}</span>{" "}
               <span className="text-(--ovio-ink-2)">
-                (tag: v{r.version}
+                (tag: {r.version}
                 <time dateTime={r.dateTime} className="sr-only">
                   , {r.date}
                 </time>
                 )
               </span>{" "}
-              {r.kind}: {r.title.toUpperCase()}
+              {r.kind}
+              {r.title && `: ${r.title.toUpperCase()}`}
             </motion.h3>
             <ul className="m-0 list-none p-0">
               {r.items.map((item, j) => (

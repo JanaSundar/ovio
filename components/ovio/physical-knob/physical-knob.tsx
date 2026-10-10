@@ -102,7 +102,7 @@ const VIEWS = {
 export function PhysicalKnob({
   variant,
   value: valueProp,
-  defaultValue = 72,
+  defaultValue,
   min = 0,
   max = 100,
   onValueChange,
@@ -111,7 +111,8 @@ export function PhysicalKnob({
   className,
 }: PhysicalKnobProps) {
   const world = useWorld(variant);
-  const [inner, setInner] = useState(defaultValue);
+  // 72% of the way round by default, whatever the range: 72 on 0–100, -16.8 on -60–0.
+  const [inner, setInner] = useState(defaultValue ?? min + 0.72 * (max - min));
   const value = Math.max(min, Math.min(max, valueProp ?? inner));
 
   const setValue = (next: number) => {

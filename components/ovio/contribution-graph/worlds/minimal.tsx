@@ -13,7 +13,7 @@ import {
   weeksMinWidth,
 } from "../grid";
 import { unit, type ContributionCell } from "../year";
-import { formatNumber } from "@/lib/format";
+import { formatNumber, plural } from "@/lib/format";
 
 const SCALE = ["#ebe9e4", "#c9c6bf", "#97938a", "#5d5a53", "#1d1c1a"];
 const WEEKDAY_LABELS = ["", "Mon", "", "Wed", "", "Fri", ""];
@@ -79,13 +79,15 @@ export function MinimalContributionGraph({
             <span className="text-[56px] leading-none font-normal tracking-[-0.04em]">
               {formatNumber(year.total)}
             </span>
-            <span className="text-[15px] text-(--ovio-muted)">contributions</span>
+            <span className="text-[15px] text-(--ovio-muted)">
+              {plural(year.total, "contribution")}
+            </span>
           </div>
         </div>
         <dl className="m-0 flex flex-wrap gap-y-4">
           {[
-            ["Longest streak", `${year.longest} days`],
-            ["Current streak", `${year.current} days`],
+            ["Longest streak", `${year.longest} ${plural(year.longest, "day")}`],
+            ["Current streak", `${year.current} ${plural(year.current, "day")}`],
             ["Busiest day", year.busiestWeekday],
           ].map(([label, value], i) => (
             <div

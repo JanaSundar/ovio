@@ -96,7 +96,7 @@ export function CraftChangelog({ releases, top, next, className }: ChangelogWorl
               >
                 <div className="flex h-8 items-baseline justify-between">
                   <span className="text-2xl leading-8 font-extrabold tracking-[-0.03em]">
-                    v{r.version}
+                    {r.version}
                   </span>
                   <time
                     dateTime={r.dateTime}
@@ -107,7 +107,7 @@ export function CraftChangelog({ releases, top, next, className }: ChangelogWorl
                 </div>
                 {/* Ruled like an index card: a red header rule, then blue lines under each line of text. */}
                 <div className="mt-2 border-t-2 border-[rgba(214,80,60,.4)] bg-[linear-gradient(transparent_31px,rgba(49,120,198,.18)_32px)] bg-size-[100%_32px] pt-1">
-                  <h3 className="m-0 text-[17px] leading-8 font-bold">{r.title}</h3>
+                  {r.title && <h3 className="m-0 text-[17px] leading-8 font-bold">{r.title}</h3>}
                   <ul className="m-0 list-none p-0">
                     {r.items.map((item, j) => (
                       <li key={`${j}:${item.text}`} className="text-sm leading-8 text-[#4a3a2a]">

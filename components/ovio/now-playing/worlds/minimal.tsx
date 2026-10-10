@@ -36,7 +36,7 @@ export function MinimalNowPlaying({
           whileHover="hover"
           className="group relative flex aspect-square w-full cursor-pointer items-end overflow-hidden rounded-[6px] border-0 bg-(--ovio-track) bg-[repeating-linear-gradient(135deg,rgba(0,0,0,.05)_0_6px,transparent_6px_12px)] p-1.5 text-left font-(family-name:--ovio-mono) text-[9px] text-(--ovio-faint)"
         >
-          {track.artwork ? <Artwork src={track.artwork} /> : "cover"}
+          <Artwork src={track.artwork} fallback="cover" />
           <motion.span
             aria-hidden
             className="absolute inset-0 m-auto flex size-8 items-center justify-center rounded-full bg-(--ovio-accent) text-[11px] text-(--ovio-on-accent)"

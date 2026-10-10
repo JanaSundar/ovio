@@ -106,7 +106,8 @@ export function NowPlaying({
   className,
 }: NowPlayingProps) {
   const world = useWorld(variant);
-  const duration = Math.max(0, Math.round(track.duration));
+  // A length that isn't a number (a broken upstream value) is no length at all.
+  const duration = Number.isFinite(track.duration) ? Math.max(0, Math.round(track.duration)) : 0;
   const [playingState, setPlayingState] = useState(defaultPlaying);
   const [progressState, setProgressState] = useState(defaultProgress);
   const [volumeState, setVolumeState] = useState(defaultVolume);

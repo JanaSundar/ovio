@@ -7,7 +7,8 @@ import { NpmDownloads, type DownloadWeek } from "./npm-downloads";
 
 /** The next round milestone above the busiest week: 86M → 100M. */
 function goalFor(data: DownloadWeek[]) {
-  const peak = Math.max(...data.map((w) => w.downloads));
+  const peak = Math.max(0, ...data.map((w) => w.downloads));
+  if (peak <= 0) return undefined;
   const step = 10 ** Math.floor(Math.log10(peak));
   return Math.ceil((peak * 1.1) / step) * step;
 }

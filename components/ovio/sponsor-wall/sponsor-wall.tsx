@@ -59,13 +59,16 @@ const TIER_LABEL: Record<SponsorTier, string> = {
 /** Groups sponsors by tier, keeping their order within a tier. */
 function groupSponsors(sponsors: Sponsor[]): SponsorGroup[] {
   let index = 0;
-  return TIERS.map((tier) => ({
-    tier,
-    label: TIER_LABEL[tier],
-    sponsors: sponsors
-      .filter((s) => s.tier === tier)
-      .map((s) => ({ ...s, key: `${tier}:${index}:${s.name}`, index: index++ })),
-  })).filter((g) => g.sponsors.length > 0);
+  return TIERS.map((tier) => {
+    // A blank name would draw an empty sticker, tile or block.
+    const members = sponsors.filter((s) => s.tier === tier && s.name.trim());
+    return {
+      tier,
+      // "Backers" for a crowd, "Backer" for one.
+      label: tier === "backer" && members.length === 1 ? "Backer" : TIER_LABEL[tier],
+      sponsors: members.map((s) => ({ ...s, key: `${tier}:${index}:${s.name}`, index: index++ })),
+    };
+  }).filter((g) => g.sponsors.length > 0);
 }
 
 const VIEWS = {

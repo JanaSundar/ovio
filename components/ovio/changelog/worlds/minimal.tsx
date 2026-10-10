@@ -32,13 +32,13 @@ export function MinimalChangelog({ releases, className }: ChangelogWorldProps) {
             className="grid grid-cols-1 gap-x-6 gap-y-2 border-t border-(--ovio-line-2) py-4 sm:grid-cols-[120px_minmax(0,1fr)]"
           >
             <div>
-              <div className="font-(family-name:--ovio-mono) text-[13px]">v{r.version}</div>
+              <div className="font-(family-name:--ovio-mono) text-[13px]">{r.version}</div>
               <time dateTime={r.dateTime} className="mt-0.5 block text-xs text-(--ovio-muted)">
                 {r.date}
               </time>
             </div>
             <div>
-              <h3 className="m-0 mb-1.5 text-[15px] font-medium">{r.title}</h3>
+              {r.title && <h3 className="m-0 mb-1.5 text-[15px] font-medium">{r.title}</h3>}
               <ul className="m-0 list-none p-0">
                 {r.items.map((item, j) => (
                   <li

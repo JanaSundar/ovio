@@ -1,7 +1,7 @@
 import type { ReactElement } from "react";
 import { repoLanguage, type RepoLanguage } from "@/components/ovio/repository-card/language";
 import type { Repository } from "@/components/ovio/repository-card/repository-card";
-import { COMPACT, dots, formatNumber } from "@/lib/format";
+import { COMPACT, dots, formatNumber, plural } from "@/lib/format";
 import type { World } from "@/lib/world";
 import {
   clampLines,
@@ -191,8 +191,10 @@ function Craft({ repo, language, description }: Props) {
             </span>
             {compact(repo.stars)}
           </span>
-          <Pill>{`${compact(repo.forks)} forks`}</Pill>
-          {repo.issues !== undefined && <Pill>{`${compact(repo.issues)} issues`}</Pill>}
+          <Pill>{`${compact(repo.forks)} ${plural(repo.forks, "fork")}`}</Pill>
+          {repo.issues !== undefined && (
+            <Pill>{`${compact(repo.issues)} ${plural(repo.issues, "issue")}`}</Pill>
+          )}
         </div>
       </div>
     </Margin>

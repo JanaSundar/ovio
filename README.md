@@ -150,6 +150,23 @@ const { data } = useLiveData("/api/stars", sampleStars, {
 
 Mount `<OvioToaster />` once, for example in your root layout.
 
+## README embeds
+
+The Repository Card also comes as an image for a GitHub README, in any world. There's nothing to
+install: paste the Markdown, and the image refreshes every hour.
+
+```md
+[![honojs/hono](https://ovioui.vercel.app/embed/repository-card?repo=honojs/hono&world=toy)](https://github.com/honojs/hono)
+```
+
+- `?repo=owner/name` names the repository; `&world=` is `minimal` (default), `craft`, `retro` or
+  `toy`; `&format=png` returns a PNG at 2× instead of an SVG.
+- Only public data anyone can read makes an embed. A user's contributions need GitHub's GraphQL
+  API and their own token, so the Contribution Graph has no embed: render the component instead.
+- The docs page has a field to try a repository and copy its Markdown.
+- A repository that doesn't exist, or a GitHub outage, shows a small card saying so rather than a
+  broken image.
+
 ## Development
 
 This repo is the docs site at [ovioui.vercel.app](https://ovioui.vercel.app) and the registry source.
@@ -176,6 +193,7 @@ registry-checked. Skip them once with `LEFTHOOK=0`, e.g. `LEFTHOOK=0 git commit 
 - `registry.json`: the registry. The shadcn CLI reads it and the source files straight from this
   repository.
 - `app/`, `components/site/`, `content/`: the docs site.
+- `app/embed/`, `lib/embed/`: the README embeds, drawn for each world and rendered with Takumi.
 
 ## Tech stack
 

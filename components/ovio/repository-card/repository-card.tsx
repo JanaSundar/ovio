@@ -3,6 +3,7 @@
 import { type ComponentType, useState, useSyncExternalStore } from "react";
 import { useWorld, type World } from "@/components/shared/world-provider";
 import { formatShortDate } from "@/lib/format";
+import { repoLanguage, type RepoLanguage } from "./language";
 import { MinimalRepositoryCard } from "./worlds/minimal";
 import { CraftRepositoryCard } from "./worlds/craft";
 import { RetroRepositoryCard } from "./worlds/retro";
@@ -46,33 +47,9 @@ export type RepositoryCardWorldProps = {
   /** Star count including the viewer's own star. */
   starCount: number;
   toggleStar: () => void;
-  language?: { name: string; short: string; color: string };
+  language?: RepoLanguage;
   updated?: string;
   className?: string;
-};
-
-const LANGUAGE_COLORS: Record<string, string> = {
-  TypeScript: "#3178c6",
-  JavaScript: "#f1e05a",
-  Python: "#3572a5",
-  Rust: "#dea584",
-  Go: "#00add8",
-  Swift: "#f05138",
-  Kotlin: "#a97bff",
-  Ruby: "#701516",
-  CSS: "#563d7c",
-  HTML: "#e34c26",
-};
-
-const LANGUAGE_SHORT: Record<string, string> = {
-  TypeScript: "TS",
-  JavaScript: "JS",
-  Python: "PY",
-  Rust: "RS",
-  Go: "GO",
-  Swift: "SW",
-  Kotlin: "KT",
-  Ruby: "RB",
 };
 
 /** "2h ago", "3d ago". */
@@ -129,21 +106,13 @@ export function RepositoryCard({
     onStarredChange?.(next);
   };
 
-  const language = repo.language
-    ? {
-        name: repo.language,
-        short: LANGUAGE_SHORT[repo.language] ?? repo.language.slice(0, 2).toUpperCase(),
-        color: repo.languageColor ?? LANGUAGE_COLORS[repo.language] ?? "#8d8b83",
-      }
-    : undefined;
-
   const props: RepositoryCardWorldProps = {
     repo,
     stats: stats ?? (world === "craft" ? ["stars", "forks", "issues"] : ["stars", "forks"]),
     starred,
     starCount: repo.stars + (starred ? 1 : 0),
     toggleStar,
-    language,
+    language: repoLanguage(repo),
     updated: repo.updatedAt
       ? painted
         ? relativeTime(repo.updatedAt)

@@ -3,6 +3,7 @@
 import { motion } from "motion/react";
 import { useMemo, type ReactNode } from "react";
 import { QrCode } from "@/components/shared/qr-code";
+import { dots } from "@/lib/format";
 import { motionTokens, useReducedMotionSafe } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { cellsPath, type DeveloperIdCardWorldProps } from "../developer-id-card";
@@ -18,9 +19,6 @@ function sprite(name: string): string {
   });
   return cellsPath(rows);
 }
-
-/** Pads a label with dots to a fixed column, like a terminal listing. */
-const dots = (label: string, width = 10) => label + ".".repeat(Math.max(1, width - label.length));
 
 export function RetroDeveloperIdCard({
   name,

@@ -7,10 +7,9 @@ import { cn } from "@/lib/utils";
 import type { ContributionGraphWorldProps } from "../contribution-graph";
 import { dayCellProps, useCellEntrance, weekColumns, weekScroller, weeksMinWidth } from "../grid";
 import type { ContributionCell } from "../year";
-import { formatNumber } from "@/lib/format";
+import { formatNumber, PAD3 } from "@/lib/format";
 
 const SCALE = ["#0f2414", "#1d5a2b", "#2f9a45", "#4fdc68", "#b8ffc4"];
-const PAD3 = { minimumIntegerDigits: 3, useGrouping: false } as const;
 
 type CellProps = { cell: ContributionCell; tabbable: boolean; active: boolean };
 

@@ -24,9 +24,12 @@ export function useCopy() {
 export function CopyCommand({
   command,
   variant = "command",
+  onCopy = () => track("install_command_copied", { command_variant: variant }),
 }: {
   command: string;
   variant?: "command" | "install-box";
+  /** Reports the copy; an install command by default. */
+  onCopy?: () => void;
 }) {
   const { copied, copy } = useCopy();
   return (
@@ -36,7 +39,7 @@ export function CopyCommand({
         type="button"
         onClick={() => {
           copy(command);
-          track("install_command_copied", { command_variant: variant });
+          onCopy();
         }}
         aria-live="polite"
       >

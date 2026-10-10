@@ -377,6 +377,11 @@
           "target": "components/ovio/repository-card/repository-card.tsx"
         },
         {
+          "path": "components/ovio/repository-card/language.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/repository-card/language.ts"
+        },
+        {
           "path": "components/ovio/repository-card/worlds/minimal.tsx",
           "type": "registry:ui",
           "target": "components/ovio/repository-card/worlds/minimal.tsx"
@@ -793,7 +798,8 @@
         "JanaSundar/ovio/motion",
         "JanaSundar/ovio/toy",
         "JanaSundar/ovio/qr-code",
-        "JanaSundar/ovio/avatar"
+        "JanaSundar/ovio/avatar",
+        "JanaSundar/ovio/format"
       ],
       "files": [
         {

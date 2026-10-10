@@ -4,12 +4,9 @@ import { motion } from "motion/react";
 import { motionTokens, useReducedMotionSafe } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import type { RepositoryCardWorldProps } from "../repository-card";
-import { formatNumber } from "@/lib/format";
+import { dots, formatNumber } from "@/lib/format";
 
 const LABEL: Record<string, string> = { stars: "STARS", forks: "FORKS", issues: "ISSUES" };
-
-/** Pads a label with dots to a fixed column, like a terminal listing. */
-const dots = (label: string, width = 10) => label + ".".repeat(Math.max(1, width - label.length));
 
 export function RetroRepositoryCard({
   repo,

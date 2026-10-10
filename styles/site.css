@@ -1058,6 +1058,98 @@ html.lenis-smooth .stage-frame {
 .prop-table td:last-child {
   width: 47%;
 }
+.prop-name {
+  display: block;
+}
+/* The value used when the prop is left out. */
+.prop-default {
+  display: inline-block;
+  margin-top: 5px;
+  padding: 1px 6px;
+  border: 1px dotted var(--line-strong);
+  border-radius: 3px;
+  background: #eae9e3;
+  color: #5d5f58;
+  font: 11px/1.5 var(--mono);
+  white-space: nowrap;
+}
+/* A union of strings, one chip per value. */
+.prop-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  white-space: normal;
+}
+.prop-chips code {
+  padding: 1px 7px;
+  border: 1px solid #ddd7f7;
+  border-radius: 999px;
+  background: #efecfb;
+  font: 12.5px/1.5 var(--mono);
+  color: #7560df;
+  white-space: nowrap;
+}
+/* Below 640px each prop is a card: name and default, what it does, then its type. */
+@media (max-width: 640px) {
+  .prop-scroll:has(.prop-list) {
+    overflow: visible;
+  }
+  .prop-list,
+  .prop-list tbody {
+    display: block;
+  }
+  .prop-list thead {
+    display: none;
+  }
+  .prop-list tr {
+    display: grid;
+    gap: 10px;
+    margin-bottom: 10px;
+    padding: 14px;
+    border: 1px dotted var(--line-strong);
+    border-radius: 6px;
+    background: var(--paper-2);
+  }
+  /* :nth-child(n) outranks the table's column widths, which don't apply to a card. */
+  .prop-list td:nth-child(n) {
+    display: block;
+    width: auto;
+    padding: 0;
+    border: 0;
+  }
+  .prop-list td:first-child {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 6px 10px;
+    font-weight: 600;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+  .prop-list .prop-default {
+    margin-top: 0;
+    font-weight: 400;
+  }
+  .prop-list td:first-child {
+    grid-row: 1;
+  }
+  .prop-list td:last-child {
+    grid-row: 2;
+  }
+  .prop-list td:nth-child(2) {
+    grid-row: 3;
+  }
+  /* A type that isn't chips gets a code box of its own. */
+  .prop-list td:nth-child(2):not(:has(.prop-chips)) {
+    padding: 10px 12px;
+    border: 1px dotted var(--line-strong);
+    border-radius: 4px;
+    background: #f1efe9;
+    font-size: 12.5px;
+    overflow-wrap: anywhere;
+  }
+}
 .data-table td:first-child {
   width: 1%;
   padding-right: 24px;
@@ -1487,4 +1579,72 @@ html.lenis-smooth .stage-frame {
   .doc-section h2 {
     font-size: 22px;
   }
+}
+
+/* README embed: a field for the user or repo, the image as GitHub shows it, and its Markdown. */
+.embed-field {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: 420px;
+  margin-bottom: 12px;
+  font: 500 13px var(--sans);
+  color: #474942;
+}
+.embed-field input {
+  flex: 1;
+  min-width: 0;
+  height: 36px;
+  padding: 0 10px;
+  border: 1px solid var(--line-strong);
+  border-radius: 4px;
+  background: #fff;
+  font: 14px var(--mono);
+  color: var(--ink);
+}
+.embed-field input:focus-visible {
+  outline: 2px solid var(--purple);
+  outline-offset: 1px;
+}
+.embed-stage {
+  position: relative;
+  min-height: 140px;
+  margin-bottom: 12px;
+  /* The top padding keeps the Live / Sample label clear of the image. */
+  padding: 40px 0 24px;
+  border: 1px dotted var(--line-strong);
+  background: #f6f8fa;
+}
+/* Centres an embed that fits; one too wide to read when shrunk scrolls sideways instead. */
+.embed-scroll {
+  display: flex;
+  overflow-x: auto;
+  padding: 0 16px;
+  scrollbar-width: thin;
+}
+.embed-scroll img {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+  height: auto;
+}
+/* On a phone the image's own transparent margins are padding enough. */
+@media (max-width: 640px) {
+  .embed-scroll {
+    padding: 0;
+  }
+}
+.embed-stage .demo-source {
+  max-width: calc(100% - 24px);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: var(--muted);
+  /* The stage isn't a world, so --ovio-mono is unset there and .demo-source's own font drops out. */
+  font: 10.5px/1 var(--mono);
+}
+.embed-stage .demo-skeleton {
+  width: min(560px, calc(100% - 32px));
+  height: 160px;
+  margin: 0 auto;
 }

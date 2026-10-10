@@ -7,8 +7,9 @@ import { notFound } from "next/navigation";
 import type { SourceFile } from "@/components/site/code-explorer";
 import { ComponentPreview, MotionInfo, UsageSnippet } from "@/components/site/component-doc";
 import { CopyCommand } from "@/components/site/copy-command";
-import { formatType } from "@/components/site/format-type";
+import { EmbedSection } from "@/components/site/embed-section";
 import { highlight } from "@/components/site/highlight";
+import { PropTable } from "@/components/site/prop-table";
 import {
   COMPONENTS,
   getComponent,
@@ -18,6 +19,7 @@ import {
 } from "@/content/components";
 import { DEMO_TARGETS, isLiveSlug, SAMPLE_ONLY } from "@/content/demo-sources";
 import { registryItem } from "@/content/registry";
+import { isEmbedSlug } from "@/lib/embed/params";
 import { DEFAULT_REVALIDATE } from "@/lib/ovio-fetch";
 import { WORLDS, type World } from "@/lib/world";
 
@@ -175,28 +177,22 @@ export default async function ComponentPage({ params }: PageProps<"/docs/[slug]"
           </DocSection>
         )}
 
+        {isEmbedSlug(c.slug) && (
+          <DocSection id="embed">
+            <h2>Readme embed</h2>
+            <p>
+              The same component as an image for a GitHub README, drawn in the world picked above
+              and refreshed every hour. No install, no token: paste the Markdown.
+            </p>
+            <EmbedSection slug={c.slug} />
+          </DocSection>
+        )}
+
         <DocSection id="props">
           <h2>Props</h2>
           <p>Control the data, selected world, animation behavior, and callbacks.</p>
           <div className="prop-scroll">
-            <table className="prop-table">
-              <thead>
-                <tr>
-                  <th>Prop</th>
-                  <th>Type</th>
-                  <th>Description</th>
-                </tr>
-              </thead>
-              <tbody>
-                {c.props.map((p) => (
-                  <tr key={p.name}>
-                    <td>{p.name}</td>
-                    <td>{formatType(p.type)}</td>
-                    <td>{p.description}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            <PropTable props={c.props} />
           </div>
         </DocSection>
 

@@ -18,7 +18,7 @@
   },
   "overrides": [
     {
-      "files": ["lib/og/**", "app/og/**"],
+      "files": ["lib/og/**", "app/og/**", "lib/embed/**"],
       "rules": {
         "nextjs/no-img-element": "off"
       }

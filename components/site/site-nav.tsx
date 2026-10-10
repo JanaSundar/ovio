@@ -21,8 +21,16 @@ export function Page({ children }: { children: ReactNode }) {
 
 const PAGES = [
   { label: "Home", href: "/" },
+  { label: "Gallery", href: "/gallery" },
   { label: "Docs", href: DOCS_HREF },
 ];
+
+/** Home, the gallery (and its recipes), or a docs page. */
+function navIndex(pathname: string) {
+  if (pathname.startsWith("/docs")) return 2;
+  if (pathname.startsWith("/gallery") || pathname.startsWith("/recipes")) return 1;
+  return 0;
+}
 
 /**
  * The top bar. It lives in the root layout so it stays mounted across pages, which lets the
@@ -31,7 +39,7 @@ const PAGES = [
 export function SiteNav() {
   const pathname = usePathname();
   const router = useRouter();
-  const current = pathname.startsWith("/docs") ? 1 : 0;
+  const current = navIndex(pathname);
   // Moves the indicator at once; the route catches up, and back/forward bring it along too.
   const [tab, setTab] = useState(current);
   const [shown, setShown] = useState(current);
@@ -40,7 +48,11 @@ export function SiteNav() {
     setTab(current);
   }
 
-  useEffect(() => router.prefetch(DOCS_HREF), [router]);
+  useEffect(() => {
+    router.prefetch(DOCS_HREF);
+    router.prefetch("/gallery");
+    router.prefetch("/recipes");
+  }, [router]);
 
   return (
     <header className="nav row-12">

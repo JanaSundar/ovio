@@ -3,21 +3,12 @@ import { CopyCommand } from "@/components/site/copy-command";
 import { HomeShowcase } from "@/components/site/home-showcase";
 import { SiteFooter } from "@/components/site/site-nav";
 import { WorldCompass } from "@/components/site/world-compass";
-import { AUTHOR_URL, COMPONENTS, DOCS_HREF, installCommand, pad2 } from "@/content/components";
-
-/** The six components the catalog leads with, each with a glyph and a one-line pitch. */
-const FEATURED = [
-  { slug: "contribution-graph", glyph: "▦", pitch: "A year of activity, one cell per day." },
-  { slug: "repository-card", glyph: "◈", pitch: "The story behind a project at a glance." },
-  { slug: "star-history", glyph: "↗", pitch: "Stargazers over time, with a scrubber." },
-  { slug: "gooey-tabs", glyph: "▤", pitch: "Tabs with a liquid indicator and a deploy status." },
-  { slug: "top-contributors", glyph: "◎", pitch: "Put project people in the foreground." },
-  { slug: "physical-knob", glyph: "◉", pitch: "A tactile control with genuine inertia." },
-];
+import { groupedCatalog } from "@/content/catalog";
+import { AUTHOR_URL, COMPONENTS, installCommand, pad2 } from "@/content/components";
 
 export default function HomePage() {
   const count = COMPONENTS.length;
-  const featured = FEATURED.map((f) => ({ ...f, ...COMPONENTS.find((c) => c.slug === f.slug)! }));
+  const groups = groupedCatalog();
 
   return (
     <>
@@ -91,30 +82,43 @@ export default function HomePage() {
               <br />
               own language.
             </h2>
-            <p>Start with a useful component. Give it an unmistakable point of view.</p>
-            <Link href={DOCS_HREF}>Browse all {count} components ↗</Link>
+            <p>Fifteen components, grouped by what a developer site actually shows.</p>
+            <Link href="/gallery">Open the live gallery ↗</Link>
           </div>
           <div className="catalog-list">
-            {featured.map((c) => (
-              <Link key={c.slug} className="catalog-item" href={`/docs/${c.slug}`}>
-                <span aria-hidden className="glyph">
-                  {c.glyph}
-                </span>
-                <span>
-                  <b>{c.name}</b>
-                  <small>{c.pitch}</small>
-                </span>
-                <span aria-hidden className="arrow">
-                  ↗
-                </span>
-              </Link>
+            {groups.map((group) => (
+              <div key={group.id} className="catalog-group">
+                <p className="catalog-group-label">
+                  {group.label}
+                  <span>{group.blurb}</span>
+                </p>
+                {group.items.map((c) => (
+                  <Link key={c.slug} className="catalog-item" href={`/docs/${c.slug}`}>
+                    <span aria-hidden className="glyph">
+                      {c.glyph}
+                    </span>
+                    <span>
+                      <b>{c.name}</b>
+                      <small>{c.pitch}</small>
+                    </span>
+                    <span aria-hidden className="arrow">
+                      ↗
+                    </span>
+                  </Link>
+                ))}
+              </div>
             ))}
           </div>
           <div className="catalog-footer">
             <span>{count} components built for the things developers show</span>
-            <Link className="btn-outline" href={DOCS_HREF}>
-              Open the component docs →
-            </Link>
+            <span className="catalog-actions">
+              <Link className="btn-outline" href="/gallery">
+                Gallery →
+              </Link>
+              <Link className="btn-outline" href="/recipes">
+                Recipes →
+              </Link>
+            </span>
           </div>
         </section>
 

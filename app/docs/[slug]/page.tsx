@@ -64,16 +64,20 @@ async function readSources(files: string[]): Promise<SourceFile[]> {
   );
 }
 
-/** The usage snippet for each world, highlighted here so no highlighter ships to the client. */
-const usageSnippets = (c: ComponentDoc) =>
-  Object.fromEntries(
+/** The usage snippet for each world, as source and as highlighted HTML. */
+function usageFor(c: ComponentDoc) {
+  const source = Object.fromEntries(
     WORLDS.map((w) => [
       w,
-      highlight(
-        `import { ${c.exportName} } from "@/components/ovio/${c.slug}/${c.slug}"\n\n<${c.exportName}\n  variant="${w}"\n${c.usage}\n/>`,
-      ),
+      `import { ${c.exportName} } from "@/components/ovio/${c.slug}/${c.slug}"\n\n<${c.exportName}\n  variant="${w}"\n${c.usage}\n/>`,
     ]),
   ) as Record<World, string>;
+  const html = Object.fromEntries(WORLDS.map((w) => [w, highlight(source[w])])) as Record<
+    World,
+    string
+  >;
+  return { source, html };
+}
 
 const CACHING = `Cached for an hour by default (revalidate: ${DEFAULT_REVALIDATE}), so traffic adds no API calls. A failed refresh keeps serving the last good data, and a spent limit throws RateLimitError with the time it resets.`;
 
@@ -111,6 +115,7 @@ export default async function ComponentPage({ params }: PageProps<"/docs/[slug]"
   const next = COMPONENTS[(i + 1) % COMPONENTS.length];
   const item = registryItem(c.slug);
   const files = await readSources(item.files);
+  const usage = usageFor(c);
 
   return (
     <>
@@ -148,7 +153,7 @@ export default async function ComponentPage({ params }: PageProps<"/docs/[slug]"
             Set the visual world on the component, or wrap the page in an OvioProvider to set a
             default for everything inside it.
           </p>
-          <UsageSnippet html={usageSnippets(c)} />
+          <UsageSnippet slug={c.slug} html={usage.html} source={usage.source} />
           <MotionInfo tech={c.tech} />
         </DocSection>
 

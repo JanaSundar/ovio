@@ -144,6 +144,8 @@ export function DocsSidebar() {
           <b>Every component has four worlds.</b>
           <br />
           Same props. A different point of view.
+          <Link href="/gallery">Open the gallery ↗</Link>
+          <Link href="/recipes">See recipes ↗</Link>
         </p>
       </div>
     </aside>

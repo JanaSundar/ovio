@@ -2,10 +2,16 @@ import "server-only";
 
 import type { ReactElement } from "react";
 import { render, renderSvg } from "takumi-js";
-import type { Repository } from "@/components/ovio/repository-card/repository-card";
-import { SAMPLE_REPOSITORY } from "@/content/samples";
-import { getRepository } from "@/lib/github";
-import { HttpError, RateLimitError } from "@/lib/ovio-fetch";
+import {
+  SAMPLE_DEVELOPER,
+  SAMPLE_DOWNLOADS,
+  SAMPLE_PACKAGE,
+  SAMPLE_REPOSITORY,
+} from "@/content/samples";
+import { getDeveloper, getRepository } from "@/lib/github";
+import { getWeeklyDownloads } from "@/lib/npm";
+import { fetchOk, HttpError, RateLimitError } from "@/lib/ovio-fetch";
+import { DeveloperIdCardEmbed } from "./developer-id-card";
 import { embedFonts } from "./fonts";
 import {
   PROBLEM_HEADER,
@@ -15,6 +21,7 @@ import {
   type EmbedSlug,
 } from "./params";
 import { col } from "./parts";
+import { NpmDownloadsEmbed } from "./npm-downloads";
 import { RepositoryCardEmbed } from "./repository-card";
 import { MINIMAL } from "./tokens";
 import type { World } from "@/lib/world";
@@ -29,28 +36,83 @@ const CACHE_PROBLEM = "public, max-age=300, s-maxage=300";
 /** A sample is the same for every request, so it can be cached as long as the site lasts. */
 const CACHE_SAMPLE = "public, max-age=86400, s-maxage=31536000";
 
-/** An embed's data, fetched for a live image or taken from the site's samples. */
-type EmbedData = { repo: Repository };
+/** Where an embed's data comes from, how it's drawn, and what to say when the subject is missing. */
+type Source = {
+  service: "GitHub" | "npm";
+  missing: (subject: string) => string;
+  live: (subject: string, world: World) => Promise<ReactElement>;
+  sample: (world: World) => ReactElement;
+};
 
-const draw = ({ repo }: EmbedData, world: World): ReactElement => (
-  <RepositoryCardEmbed world={world} repo={repo} />
-);
+/** A source from its fetch and drawing, so live and sample images are drawn the same way. */
+function source<D>(s: {
+  service: Source["service"];
+  missing: Source["missing"];
+  fetch: (subject: string) => Promise<D>;
+  draw: (data: D, world: World) => ReactElement;
+  sample: D;
+}): Source {
+  return {
+    service: s.service,
+    missing: s.missing,
+    live: async (subject, world) => s.draw(await s.fetch(subject), world),
+    sample: (world) => s.draw(s.sample, world),
+  };
+}
 
-const fetchData = async ({ subject }: EmbedRequest): Promise<EmbedData> => ({
-  repo: await getRepository(subject),
-});
+/** A remote image as a data URI, or undefined when it can't be read, so a card falls back. */
+async function inline(url: string | undefined) {
+  if (!url) return undefined;
+  try {
+    const res = await fetchOk(url, { timeout: 4000 });
+    const type = res.headers.get("content-type") ?? "image/png";
+    return `data:${type};base64,${Buffer.from(await res.arrayBuffer()).toString("base64")}`;
+  } catch {
+    return undefined;
+  }
+}
 
-/** The site's sample data, the same that its demos fall back to. */
-const SAMPLES: Record<EmbedSlug, EmbedData> = {
-  "repository-card": { repo: SAMPLE_REPOSITORY },
+/** The npm chart shows 12 weeks; the one before them gives the first week its change. */
+const NPM_WEEKS = 13;
+
+const SOURCES: Record<EmbedSlug, Source> = {
+  "repository-card": source({
+    service: "GitHub",
+    missing: (repo) => `GitHub has no public repository "${repo}"`,
+    fetch: getRepository,
+    draw: (repo, world) => <RepositoryCardEmbed world={world} repo={repo} />,
+    sample: SAMPLE_REPOSITORY,
+  }),
+  "npm-downloads": source({
+    service: "npm",
+    missing: (name) => `npm has no package "${name}"`,
+    fetch: async (name) => ({ name, weeks: await getWeeklyDownloads(name, NPM_WEEKS) }),
+    draw: ({ name, weeks }, world) => (
+      <NpmDownloadsEmbed world={world} packageName={name} data={weeks} />
+    ),
+    sample: { name: SAMPLE_PACKAGE, weeks: SAMPLE_DOWNLOADS },
+  }),
+  "developer-id-card": source({
+    service: "GitHub",
+    missing: (login) => `GitHub has no user "${login}"`,
+    fetch: async (login) => {
+      const developer = await getDeveloper(login);
+      return { ...developer, avatarUrl: await inline(developer.avatarUrl) };
+    },
+    draw: (developer, world) => <DeveloperIdCardEmbed world={world} developer={developer} />,
+    sample: SAMPLE_DEVELOPER,
+  }),
 };
 
 /** What went wrong, in words a README visitor can act on. */
-function problemOf(e: unknown, subject: string) {
-  if (e instanceof RateLimitError) return "GitHub is busy right now. This image will be back soon.";
-  if (e instanceof HttpError && e.status === 404)
-    return `GitHub has no public repository "${subject}"`;
-  return "Couldn't reach GitHub. This image will be back soon.";
+function problemOf(e: unknown, { slug, subject }: EmbedRequest) {
+  const { service, missing } = SOURCES[slug];
+  if (e instanceof RateLimitError)
+    return `${service} is busy right now. This image will be back soon.`;
+  if (e instanceof HttpError && e.status === 404) return missing(subject);
+  if (e instanceof HttpError && e.status === 422)
+    return `"${subject}" is an organisation, not a developer`;
+  return `Couldn't reach ${service}. This image will be back soon.`;
 }
 
 /** A small, quiet card that says what's wrong in place of the embed. */
@@ -110,20 +172,18 @@ const problemImage = (message: string, format: EmbedFormat) =>
  */
 export async function embedResponse(request: EmbedRequest | EmbedProblem) {
   if ("problem" in request) return problemImage(request.problem, request.format);
-  let data: EmbedData;
+  let node: ReactElement;
   try {
-    data = await fetchData(request);
+    node = await SOURCES[request.slug].live(request.subject, request.world);
   } catch (e) {
     console.warn(
       `/embed/${request.slug}?${request.subject}: ${e instanceof Error ? e.message : e}`,
     );
-    return problemImage(problemOf(e, request.subject), request.format);
+    return problemImage(problemOf(e, request), request.format);
   }
-  return image(draw(data, request.world), request.world, request.format, {
-    "Cache-Control": CACHE_OK,
-  });
+  return image(node, request.world, request.format, { "Cache-Control": CACHE_OK });
 }
 
-/** An embed of the site's sample data, for the docs preview when GitHub can't answer. */
+/** An embed of the site's sample data, for the docs preview when the API can't answer. */
 export const sampleResponse = (slug: EmbedSlug, world: World) =>
-  image(draw(SAMPLES[slug], world), world, "svg", { "Cache-Control": CACHE_SAMPLE });
+  image(SOURCES[slug].sample(world), world, "svg", { "Cache-Control": CACHE_SAMPLE });

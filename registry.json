@@ -115,6 +115,11 @@
           "path": "components/shared/qr-code.tsx",
           "type": "registry:component",
           "target": "components/shared/qr-code.tsx"
+        },
+        {
+          "path": "components/shared/qr.ts",
+          "type": "registry:lib",
+          "target": "components/shared/qr.ts"
         }
       ]
     },
@@ -129,6 +134,11 @@
           "path": "components/shared/avatar.tsx",
           "type": "registry:component",
           "target": "components/shared/avatar.tsx"
+        },
+        {
+          "path": "components/shared/initials.ts",
+          "type": "registry:lib",
+          "target": "components/shared/initials.ts"
         }
       ]
     },
@@ -200,7 +210,8 @@
         "JanaSundar/ovio/top-contributors",
         "JanaSundar/ovio/changelog",
         "JanaSundar/ovio/contribution-graph",
-        "JanaSundar/ovio/git-branch-visualizer"
+        "JanaSundar/ovio/git-branch-visualizer",
+        "JanaSundar/ovio/developer-id-card"
       ],
       "files": [
         {
@@ -467,6 +478,11 @@
           "path": "components/ovio/npm-downloads/npm-downloads.tsx",
           "type": "registry:ui",
           "target": "components/ovio/npm-downloads/npm-downloads.tsx"
+        },
+        {
+          "path": "components/ovio/npm-downloads/chart.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/npm-downloads/chart.ts"
         },
         {
           "path": "components/ovio/npm-downloads/worlds/minimal.tsx",
@@ -806,6 +822,11 @@
           "path": "components/ovio/developer-id-card/developer-id-card.tsx",
           "type": "registry:ui",
           "target": "components/ovio/developer-id-card/developer-id-card.tsx"
+        },
+        {
+          "path": "components/ovio/developer-id-card/card.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/developer-id-card/card.ts"
         },
         {
           "path": "components/ovio/developer-id-card/worlds/minimal.tsx",

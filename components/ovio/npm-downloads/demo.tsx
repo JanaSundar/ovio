@@ -1,24 +1,9 @@
 "use client";
 
 import { LiveDemo } from "@/components/site/live-demo";
-import { seeded } from "@/components/site/seeded";
-import { DEMO_TARGETS, DEMO_WEEKS } from "@/content/demo-sources";
+import { DEMO_TARGETS } from "@/content/demo-sources";
+import { SAMPLE_DOWNLOADS, SAMPLE_PACKAGE } from "@/content/samples";
 import { NpmDownloads, type DownloadWeek } from "./npm-downloads";
-
-/** The sample: steady growth with some noise, from a fixed seed so SSR and client agree. */
-function sampleWeeks(): DownloadWeek[] {
-  const rnd = seeded(4821);
-  const start = Date.UTC(2026, 6, 6);
-  const weeks = Array.from({ length: DEMO_WEEKS }, (_, i) => ({
-    week: new Date(start + i * 7 * 86400000).toISOString().slice(0, 10),
-    downloads: Math.round(31000 * Math.pow(1.034, i) * (0.9 + rnd() * 0.2)),
-  }));
-  weeks[11].downloads = 42890;
-  weeks[12].downloads = 48210;
-  return weeks;
-}
-
-const DOWNLOADS = sampleWeeks();
 
 /** The next round milestone above the busiest week: 86M → 100M. */
 function goalFor(data: DownloadWeek[]) {
@@ -29,7 +14,7 @@ function goalFor(data: DownloadWeek[]) {
 
 export function NpmDownloadsDemo() {
   return (
-    <LiveDemo slug="npm-downloads" fallback={DOWNLOADS}>
+    <LiveDemo slug="npm-downloads" fallback={SAMPLE_DOWNLOADS}>
       {(data, live) =>
         live ? (
           <NpmDownloads
@@ -38,7 +23,7 @@ export function NpmDownloadsDemo() {
             goal={goalFor(data)}
           />
         ) : (
-          <NpmDownloads packageName="lumen" data={data} goal={50000} />
+          <NpmDownloads packageName={SAMPLE_PACKAGE} data={data} goal={50000} />
         )
       }
     </LiveDemo>

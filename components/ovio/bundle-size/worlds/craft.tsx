@@ -96,10 +96,10 @@ export function CraftBundleSize({
           }}
         >
           <motion.div
-            className="absolute bottom-0 left-0 h-3"
+            className="absolute inset-x-0 bottom-0 h-3 origin-left"
             initial={false}
             animate={{
-              width: `${r.fill * 100}%`,
+              scaleX: r.fill,
               backgroundColor: r.over ? "#b8471f" : "#e0713a",
             }}
             transition={fill}

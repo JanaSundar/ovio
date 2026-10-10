@@ -23,18 +23,29 @@
   border-radius: 6px;
   background: #fbfaf6;
   font: 600 14px var(--sans);
-  transition: 0.15s;
+  transition:
+    background-color 0.15s var(--ease-out),
+    border-color 0.15s var(--ease-out),
+    color 0.15s var(--ease-out),
+    transform 0.16s var(--ease-out);
 }
-.nf-btn:hover {
-  border-color: var(--ink);
+.nf-btn:active {
+  transform: scale(0.97);
+}
+@media (hover: hover) and (pointer: fine) {
+  .nf-btn:hover {
+    border-color: var(--ink);
+  }
 }
 .nf-btn.dark {
   border-color: var(--ink);
   background: var(--ink);
   color: #fff;
 }
-.nf-btn.dark:hover {
-  background: #3a3c37;
+@media (hover: hover) and (pointer: fine) {
+  .nf-btn.dark:hover {
+    background: #3a3c37;
+  }
 }
 
 /* Minimal: the empty cell */
@@ -289,10 +300,15 @@
   white-space: nowrap;
   transform: rotate(-90deg);
 }
-.nf-tab:hover,
 .nf-tab:focus-visible {
   outline: none;
   box-shadow: 0 6px 10px -4px rgba(70, 45, 20, 0.35);
+}
+@media (hover: hover) and (pointer: fine) {
+  .nf-tab:hover {
+    outline: none;
+    box-shadow: 0 6px 10px -4px rgba(70, 45, 20, 0.35);
+  }
 }
 .nf-tab.gone {
   border-right-color: transparent;
@@ -393,12 +409,19 @@
   cursor: pointer;
 }
 .nf-keys button.sel,
-.nf-keys button:hover,
 .nf-keys button:focus-visible {
   outline: none;
   background: #4fdc68;
   color: #061108;
   text-shadow: none;
+}
+@media (hover: hover) and (pointer: fine) {
+  .nf-keys button:hover {
+    outline: none;
+    background: #4fdc68;
+    color: #061108;
+    text-shadow: none;
+  }
 }
 @keyframes nf-blink {
   50% {
@@ -513,8 +536,10 @@
   letter-spacing: 0.02em;
   transition: transform 0.12s cubic-bezier(0.3, 1.6, 0.5, 1);
 }
-.nf-key:hover span {
-  transform: translateY(2px);
+@media (hover: hover) and (pointer: fine) {
+  .nf-key:hover span {
+    transform: translateY(2px);
+  }
 }
 .nf-key:active span {
   transform: translateY(clamp(5px, 1.1cqw, 8px));

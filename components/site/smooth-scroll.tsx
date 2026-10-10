@@ -3,6 +3,7 @@
 import { ReactLenis, useLenis } from "lenis/react";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, type ReactNode } from "react";
+import { useReducedMotionSafe } from "@/lib/motion";
 
 /**
  * Lenis smooths the page's scroll. In-page anchors (#components, the docs contents) glide to
@@ -10,6 +11,7 @@ import { useEffect, useRef, type ReactNode } from "react";
  * own scroll, and reduced motion turns the smoothing off.
  */
 export function SmoothScroll({ children }: { children: ReactNode }) {
+  const reduced = useReducedMotionSafe();
   return (
     <ReactLenis
       root
@@ -18,7 +20,8 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
         // Higher lerp = shorter glide tail; wheelMultiplier = more distance per wheel tick.
         lerp: 0.3,
         wheelMultiplier: 2,
-        anchors: { offset: -24 },
+        smoothWheel: !reduced,
+        anchors: { offset: -24, immediate: reduced },
         allowNestedScroll: true,
         stopInertiaOnNavigate: true,
       }}

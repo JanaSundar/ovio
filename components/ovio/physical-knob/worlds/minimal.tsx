@@ -74,6 +74,7 @@ export function MinimalKnob({
       </div>
       <div className="flex items-baseline gap-1">
         <RollingNumber
+          timing="quick"
           className="text-5xl leading-none tracking-[-0.045em]"
           value={Math.round(percent)}
         />

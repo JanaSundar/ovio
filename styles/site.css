@@ -14,6 +14,8 @@
   --lime: #d7fb58;
   --purple: #8170ef;
   --mono: var(--font-dm-mono), ui-monospace, monospace;
+  /* Strong ease-out for UI transitions: starts fast, so presses and hovers feel immediate. */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --sans: var(--font-dm-sans), system-ui, sans-serif;
   --display: var(--font-space-grotesk), system-ui, sans-serif;
 }
@@ -98,13 +100,23 @@
   padding: 8px 10px;
   border-radius: 5px;
   background: #fbfaf6;
-  transition: 0.15s;
+  transition:
+    background-color 0.15s var(--ease-out),
+    border-color 0.15s var(--ease-out),
+    color 0.15s var(--ease-out),
+    transform 0.16s var(--ease-out);
 }
-.nav-action a:hover,
-.btn-outline:hover {
-  background: var(--ink);
-  color: #fff;
-  border-color: var(--ink);
+.nav-action a:active,
+.btn-outline:active {
+  transform: scale(0.97);
+}
+@media (hover: hover) and (pointer: fine) {
+  .nav-action a:hover,
+  .btn-outline:hover {
+    background: var(--ink);
+    color: #fff;
+    border-color: var(--ink);
+  }
 }
 
 /* Home: intro */
@@ -141,8 +153,10 @@
   color: #3e403a;
   border-bottom: 1px solid currentColor;
 }
-.world-count a:hover {
-  color: #7560ec;
+@media (hover: hover) and (pointer: fine) {
+  .world-count a:hover {
+    color: #7560ec;
+  }
 }
 .world-count {
   font: 12px/1.75 var(--mono);
@@ -200,9 +214,11 @@
   border-bottom: 1px solid var(--ink);
   padding-bottom: 4px;
 }
-.inline-link:hover {
-  color: #7560ec;
-  border-color: #7560ec;
+@media (hover: hover) and (pointer: fine) {
+  .inline-link:hover {
+    color: #7560ec;
+    border-color: #7560ec;
+  }
 }
 .intro-side {
   grid-column: 10 / span 3;
@@ -293,8 +309,10 @@
     0 1px 2px #20211f30;
   transition: transform 0.25s;
 }
-.compass-point:hover {
-  color: var(--ink);
+@media (hover: hover) and (pointer: fine) {
+  .compass-point:hover {
+    color: var(--ink);
+  }
 }
 .compass-point[aria-checked="true"] {
   color: var(--ink);
@@ -433,28 +451,34 @@ html.lenis-smooth .stage-frame {
   gap: 8px;
   align-items: start;
   background: #f7f6f2;
-  transition: 0.15s;
+  transition: background-color 0.15s var(--ease-out);
 }
 .catalog-item:nth-child(4n + 2),
 .catalog-item:nth-child(4n + 3) {
   background: transparent;
 }
-.catalog-item:hover {
-  background: #fff;
+@media (hover: hover) and (pointer: fine) {
+  .catalog-item:hover {
+    background: #fff;
+  }
 }
 .catalog-item .arrow {
   transition:
     transform 0.2s,
     color 0.2s;
 }
-.catalog-item:hover .arrow {
-  color: var(--ink);
-  transform: translate(2px, -2px);
+@media (hover: hover) and (pointer: fine) {
+  .catalog-item:hover .arrow {
+    color: var(--ink);
+    transform: translate(2px, -2px);
+  }
 }
-.catalog-item:hover b {
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  text-decoration-thickness: 1px;
+@media (hover: hover) and (pointer: fine) {
+  .catalog-item:hover b {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+  }
 }
 .catalog-item .glyph {
   font: 14px var(--mono);
@@ -583,6 +607,7 @@ html.lenis-smooth .stage-frame {
 }
 .command button {
   min-width: 4.6em;
+  overflow: hidden;
   border: 0;
   background: var(--lime);
   border-radius: 3px;
@@ -591,9 +616,12 @@ html.lenis-smooth .stage-frame {
   font: 600 13px var(--sans);
   flex-shrink: 0;
   cursor: pointer;
+  transition: transform 0.16s var(--ease-out);
 }
-.command button:hover {
-  filter: brightness(0.96);
+@media (hover: hover) and (pointer: fine) {
+  .command button:hover {
+    filter: brightness(0.96);
+  }
 }
 
 /* Footer */
@@ -617,8 +645,10 @@ html.lenis-smooth .stage-frame {
   display: flex;
   gap: 17px;
 }
-.footer a:hover {
-  color: #353731;
+@media (hover: hover) and (pointer: fine) {
+  .footer a:hover {
+    color: #353731;
+  }
 }
 
 /* Docs: header */
@@ -743,9 +773,11 @@ html.lenis-smooth .stage-frame {
   color: #73756f;
   font-size: 14px;
 }
-.side-links a:hover {
-  background: #ebeae4;
-  color: var(--ink);
+@media (hover: hover) and (pointer: fine) {
+  .side-links a:hover {
+    background: #ebeae4;
+    color: var(--ink);
+  }
 }
 .side-links {
   position: relative;
@@ -757,8 +789,10 @@ html.lenis-smooth .stage-frame {
   color: var(--ink);
   font-weight: 600;
 }
-.side-links a[aria-current]:hover {
-  background: none;
+@media (hover: hover) and (pointer: fine) {
+  .side-links a[aria-current]:hover {
+    background: none;
+  }
 }
 /* The active link's background, one piece that glides from link to link under them. */
 .side-active {
@@ -814,8 +848,10 @@ html.lenis-smooth .stage-frame {
   color: #7e8079;
   font-size: 14px;
 }
-.toc a:hover {
-  color: #332f63;
+@media (hover: hover) and (pointer: fine) {
+  .toc a:hover {
+    color: #332f63;
+  }
 }
 .toc a[aria-current] {
   color: #292b25;
@@ -944,6 +980,7 @@ html.lenis-smooth .stage-frame {
 .install-box button {
   /* Wide enough for "Copied" or "Failed", so the label swap never nudges the command. */
   min-width: 4.6em;
+  overflow: hidden;
   margin: 7px;
   border: 0;
   border-radius: 3px;
@@ -952,9 +989,12 @@ html.lenis-smooth .stage-frame {
   padding: 7px 9px;
   font: 600 13px var(--sans);
   cursor: pointer;
+  transition: transform 0.16s var(--ease-out);
 }
-.install-box button:hover {
-  background: #4a4c44;
+@media (hover: hover) and (pointer: fine) {
+  .install-box button:hover {
+    background: #4a4c44;
+  }
 }
 .callout {
   display: flex;
@@ -992,8 +1032,15 @@ html.lenis-smooth .stage-frame {
 .snippet-tabs button {
   cursor: pointer;
 }
-.snippet-tabs button:hover {
-  color: #2e302a;
+/* Press feedback for the site's copy buttons: a small scale-down, quick enough for every click. */
+.command button:active,
+.install-box button:active {
+  transform: scale(0.97);
+}
+@media (hover: hover) and (pointer: fine) {
+  .snippet-tabs button:hover {
+    color: #2e302a;
+  }
 }
 .snippet-tabs [aria-selected="true"],
 .snippet-tabs .active {
@@ -1183,8 +1230,10 @@ html.lenis-smooth .stage-frame {
   color: #40423c;
   font: 600 18px var(--display);
 }
-.pager a:hover b {
-  color: #715fe5;
+@media (hover: hover) and (pointer: fine) {
+  .pager a:hover b {
+    color: #715fe5;
+  }
 }
 .docs-footer {
   border-top: 1px dotted var(--line-strong);
@@ -1257,6 +1306,10 @@ html.lenis-smooth .stage-frame {
   background: #fff;
   font-size: 13px;
   cursor: pointer;
+  transition: transform 0.16s var(--ease-out);
+}
+.fab-head button:active {
+  transform: scale(0.94);
 }
 .fab-sheet .side-links {
   display: grid;
@@ -1630,6 +1683,12 @@ html.lenis-smooth .stage-frame {
   margin: 0 auto;
   max-width: 100%;
   height: auto;
+  /* Fades in over the skeleton once loaded, rather than popping. Opacity only, so it stays under reduced motion. */
+  opacity: 0;
+  transition: opacity 0.2s var(--ease-out);
+}
+.embed-scroll img[data-loaded] {
+  opacity: 1;
 }
 /* On a phone the image's own transparent margins are padding enough. */
 @media (max-width: 640px) {

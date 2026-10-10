@@ -93,6 +93,7 @@ export function MinimalBundleSize({
       >
         <div className="flex items-baseline gap-1.5">
           <RollingNumber
+            timing="quick"
             className="text-[52px] leading-none tracking-[-0.045em]"
             value={hero.value}
             format={hero.format}
@@ -104,13 +105,14 @@ export function MinimalBundleSize({
           <div
             role="img"
             aria-label={barLabel(r)}
-            className="relative h-1.5 rounded-[3px] bg-(--ovio-line-2)"
+            // A size container, so the previous-size marker can travel in cqw of the bar.
+            className="relative h-1.5 rounded-[3px] bg-(--ovio-line-2) [container-type:inline-size]"
           >
             <motion.div
-              className="absolute inset-y-0 left-0 rounded-[3px]"
+              className="absolute inset-0 rounded-[3px]"
               initial={false}
               animate={{
-                width: `${r.fill * 100}%`,
+                clipPath: `inset(0 ${(1 - r.fill) * 100}% 0 0 round 3px)`,
                 backgroundColor: r.over ? "#b4432a" : "#161614",
               }}
               transition={slide}
@@ -118,9 +120,9 @@ export function MinimalBundleSize({
             {r.previousFill !== undefined && (
               <motion.div
                 aria-hidden
-                className="absolute -inset-y-1 w-[1.5px] bg-(--ovio-faint)"
+                className="absolute -inset-y-1 left-0 w-[1.5px] bg-(--ovio-faint)"
                 initial={false}
-                animate={{ left: `${r.previousFill * 100}%` }}
+                animate={{ x: `${r.previousFill * 100}cqw` }}
                 transition={slide}
               />
             )}

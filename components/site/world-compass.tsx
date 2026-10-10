@@ -4,7 +4,11 @@ import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
 import { useEffect, useRef, type KeyboardEvent, type PointerEvent } from "react";
 import { WORLD_INFO } from "@/content/worlds";
 import { keyToIndex } from "@/lib/keys";
+import { useReducedMotionSafe } from "@/lib/motion";
 import { useSiteWorld } from "./site-world";
+
+/** A spring stiff and damped enough to land at once, without overshoot. */
+const SNAP = { stiffness: 1200, damping: 120 };
 
 /** The four worlds sit on the cardinal points, clockwise from north. */
 const POINTS = [
@@ -48,8 +52,10 @@ export function WorldCompass() {
   const face = useRef<HTMLDivElement>(null);
   const drag = useRef<{ id: number; x: number; y: number; turning: boolean } | null>(null);
 
+  // Reduced motion: the needle snaps to its point, with no swing past it.
+  const reduced = useReducedMotionSafe();
   const angle = useMotionValue(index * 90);
-  const rotate = useSpring(angle, { stiffness: 140, damping: 9, mass: 0.8 });
+  const rotate = useSpring(angle, reduced ? SNAP : { stiffness: 140, damping: 9, mass: 0.8 });
   const pullX = useMotionValue(0);
   const pullY = useMotionValue(0);
   const x = useSpring(pullX, { stiffness: 170, damping: 14, mass: 0.6 });
@@ -71,6 +77,8 @@ export function WorldCompass() {
   };
 
   const onPointerDown = (e: PointerEvent<HTMLDivElement>) => {
+    // One finger turns the needle; a second one mid-turn is ignored.
+    if (!e.isPrimary || drag.current) return;
     drag.current = { id: e.pointerId, x: e.clientX, y: e.clientY, turning: false };
   };
 
@@ -98,7 +106,7 @@ export function WorldCompass() {
 
   /** The magnet: the compass leans toward a mouse anywhere over its zone. */
   const onZoneMove = (e: PointerEvent<HTMLDivElement>) => {
-    if (e.pointerType !== "mouse" || drag.current?.turning) return;
+    if (reduced || e.pointerType !== "mouse" || drag.current?.turning) return;
     const r = e.currentTarget.getBoundingClientRect();
     const clamp = (v: number) => Math.max(-REACH, Math.min(REACH, v));
     pullX.set(clamp((e.clientX - (r.left + r.width / 2)) * PULL));

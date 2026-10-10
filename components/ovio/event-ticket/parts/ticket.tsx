@@ -144,7 +144,7 @@ export function Ticket({ look, rootRef, ...p }: EventTicketWorldProps & { look: 
 
   const canTear = !p.torn && !p.flipped;
   const down = (e: PointerEvent<HTMLDivElement>) => {
-    if (!canTear || e.button !== 0) return;
+    if (!canTear || !e.isPrimary || e.button !== 0) return;
     // Fields and buttons keep their own pointer; the rest of the stub is the handle.
     if ((e.target as HTMLElement).closest("input, button")) return;
     drag.current = { x: e.clientX, y: e.clientY, moved: false };

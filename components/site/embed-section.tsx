@@ -76,6 +76,7 @@ export function EmbedSection({ slug }: { slug: EmbedSlug }) {
   // Never smaller than readable: past that, the stage scrolls.
   const onLoad = (e: SyntheticEvent<HTMLImageElement>) => {
     const img = e.currentTarget;
+    img.dataset.loaded = "";
     img.style.minWidth = `${Math.round(img.naturalWidth * READABLE)}px`;
   };
 

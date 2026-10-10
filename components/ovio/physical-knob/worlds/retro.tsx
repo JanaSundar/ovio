@@ -99,7 +99,7 @@ export function RetroKnob({
         </div>
       </div>
       <div className="border-2 border-[#1c2a1d] [border-style:inset] bg-(--ovio-stage) px-3.5 py-1 text-[30px] tracking-[0.06em] text-(--ovio-ink) [text-shadow:var(--ovio-glow)]">
-        VOL <RollingNumber value={index} /> / 10
+        VOL <RollingNumber timing="none" value={index} /> / 10
       </div>
     </div>
   );

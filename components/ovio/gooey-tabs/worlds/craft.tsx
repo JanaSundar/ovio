@@ -21,9 +21,9 @@ const look: GooLook = {
   statusText: "text-xl font-bold",
   // Paper settles with a springy overshoot, each blob a beat behind the last.
   trail: [
-    { duration: 0.36, ease: OVERSHOOT },
-    { duration: 0.45, ease: OVERSHOOT },
-    { duration: 0.55, ease: OVERSHOOT },
+    { duration: 0.3, ease: OVERSHOOT },
+    { duration: 0.38, ease: OVERSHOOT },
+    { duration: 0.46, ease: OVERSHOOT },
   ],
   dots: ["#c9b9a0", "#ee9f63", "#2f9a45"],
   colorDelay: 0.12,

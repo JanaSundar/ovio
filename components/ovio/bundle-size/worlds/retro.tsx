@@ -71,6 +71,7 @@ export function RetroBundleSize({
           {dots("RAW", COLUMN)}
           <span className="text-[#c9ffd2]">
             <RollingNumber
+              timing="none"
               value={hero.value}
               format={hero.format}
               suffix={` ${hero.unit.toUpperCase()}`}

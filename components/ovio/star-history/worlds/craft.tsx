@@ -17,7 +17,8 @@ const look: LineLook = {
   stroke: PEN,
   strokeWidth: 3.5,
   draw: { duration: DRAW, ease: [0.4, 0, 0.2, 1] },
-  follow: motionTokens.craft.base,
+  // The marker tracks the pointer: quick and without overshoot, so it never lags the finger.
+  follow: motionTokens.minimal.fast,
   marker: PEN,
   rule: "rgba(43,74,155,.35)",
 };
@@ -31,16 +32,14 @@ export function CraftStarHistory({
 }: StarHistoryWorldProps) {
   const scrub = usePointScrubber(shape, label);
   const active = scrub.index === null ? null : shape.points[scrub.index];
-  const settle = useOvioTransition(motionTokens.craft.base);
   const stick = useOvioTransition(motionTokens.craft.slow);
 
   return (
-    <motion.figure
+    // The sheet stays put while hovered: the whole surface is a scrubber, so lifting it would
+    // move the chart under the pointer.
+    <figure
       data-ovio-world="craft"
-      initial={false}
-      animate={{ rotate: -0.8, y: 0 }}
-      whileHover={{ rotate: 0, y: -4 }}
-      transition={settle}
+      style={{ rotate: "-0.8deg" }}
       className={cn(
         "m-0 flex w-full max-w-[680px] flex-col gap-3 rounded-[4px] bg-[#fdfbf5] bg-[linear-gradient(rgba(49,120,198,.12)_1px,transparent_1px),linear-gradient(90deg,rgba(49,120,198,.12)_1px,transparent_1px)] bg-size-[16px_16px] px-6 py-[22px] font-(family-name:--ovio-font) text-(--ovio-ink) shadow-(--ovio-shadow)",
         className,
@@ -83,7 +82,7 @@ export function CraftStarHistory({
               >
                 <motion.div
                   className="bg-[#ffe27a] px-3 py-2 font-(family-name:--ovio-hand) text-[21px] leading-none whitespace-nowrap shadow-[0_5px_10px_-3px_rgba(90,60,0,.35)]"
-                  initial={animation === "none" ? false : { opacity: 0, scale: 0.6, rotate: -14 }}
+                  initial={animation === "none" ? false : { opacity: 0, scale: 0.9, rotate: -14 }}
                   animate={{ opacity: 1, scale: 1, rotate: -5 }}
                   transition={{ ...stick, delay: DRAW * a.point.x + 0.1 }}
                 >
@@ -95,6 +94,6 @@ export function CraftStarHistory({
         }
       </LinePlot>
       <figcaption className="sr-only">{shape.summary}</figcaption>
-    </motion.figure>
+    </figure>
   );
 }

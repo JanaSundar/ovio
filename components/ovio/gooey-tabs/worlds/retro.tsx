@@ -17,8 +17,8 @@ const look: GooLook = {
   // Old hardware: the indicator jumps in hard frames.
   trail: [
     { duration: 0.26, ease: steps(4) },
-    { duration: 0.4, ease: steps(5) },
-    { duration: 0.52, ease: steps(6) },
+    { duration: 0.36, ease: steps(5) },
+    { duration: 0.46, ease: steps(6) },
   ],
   dots: ["#1d5a2b", "#ffd34d", "#4fdc68"],
   colorDelay: 0.12,

@@ -213,7 +213,7 @@ export function DocsFab() {
         aria-haspopup="dialog"
         aria-expanded={open}
         onClick={() => setOpen(true)}
-        whileTap={{ scale: 0.92 }}
+        whileTap={{ scale: 0.97 }}
       >
         <svg viewBox="0 0 20 20" aria-hidden>
           <rect x="3" y="3" width="6" height="6" rx="1.5" />
@@ -242,9 +242,9 @@ export function DocsFab() {
               aria-label="Components"
               className="fab-sheet"
               style={{ transformOrigin: "100% 100%" }}
-              initial={reduced ? { opacity: 0 } : { opacity: 0, scale: 0.6, y: 24 }}
+              initial={reduced ? { opacity: 0 } : { opacity: 0, scale: 0.95, y: 12 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={reduced ? { opacity: 0 } : { opacity: 0, scale: 0.85, y: 16 }}
+              exit={reduced ? { opacity: 0 } : { opacity: 0, scale: 0.95, y: 12 }}
               transition={{ type: "spring", stiffness: 420, damping: 34 }}
             >
               <div className="fab-head">

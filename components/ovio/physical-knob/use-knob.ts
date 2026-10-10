@@ -125,7 +125,7 @@ export function useKnob({ ref, steps, follow, wheel, index, onIndex, disabled }:
     (Math.atan2(e.clientY - cy, e.clientX - cx) * 180) / Math.PI;
 
   const onPointerDown = (e: PointerEvent<HTMLDivElement>) => {
-    if (disabled || e.button !== 0) return;
+    if (disabled || !e.isPrimary || e.button !== 0) return;
     const r = e.currentTarget.getBoundingClientRect();
     const cx = r.left + r.width / 2;
     const cy = r.top + r.height / 2;

@@ -96,7 +96,7 @@ export function CraftKnob({
       </div>
       <div className="flex items-baseline gap-2.5">
         <span className="text-[40px] leading-none font-extrabold tracking-[-0.04em]">
-          <RollingNumber value={Math.round(percent)} />%
+          <RollingNumber timing="quick" value={Math.round(percent)} />%
         </span>
         <span className="inline-block -rotate-4 font-(family-name:--ovio-hand) text-[26px] text-(--ovio-accent-deep)">
           turn me

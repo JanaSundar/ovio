@@ -57,7 +57,7 @@ export function ToyKnob({
       )}
     >
       <div className="flex items-center gap-2.5 rounded-xl bg-[#2a2925] px-[18px] py-2 font-(family-name:--ovio-mono) text-4xl leading-none font-semibold text-(--ovio-surface) shadow-[inset_0_3px_6px_rgba(0,0,0,.6)]">
-        <RollingNumber value={Math.round(percent)} />
+        <RollingNumber timing="quick" value={Math.round(percent)} />
         <span className="text-lg text-[#bdb6a8]">%</span>
       </div>
       <div className="relative mt-2.5 size-[260px]">

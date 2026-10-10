@@ -57,7 +57,7 @@ function VolumeKnob({ volume, setVolume }: Pick<NowPlayingWorldProps, "volume" |
           setVolume(i);
         }}
         onPointerDown={(e) => {
-          if (e.button !== 0) return;
+          if (!e.isPrimary || e.button !== 0) return;
           e.currentTarget.setPointerCapture(e.pointerId);
           drag.current = { last: pointerAngle(e), acc: 0, start: volume };
         }}
@@ -138,9 +138,9 @@ export function ToyNowPlaying({
             <div {...seekProps} className="mt-2 flex h-3.5 cursor-pointer touch-none items-center">
               <span className="relative h-1.5 w-full overflow-hidden rounded-[3px] bg-[#45433d]">
                 <motion.span
-                  className="absolute inset-y-0 left-0 rounded-[3px] bg-(--ovio-yellow)"
+                  className="absolute inset-0 rounded-[3px] bg-(--ovio-yellow)"
                   initial={false}
-                  animate={{ width: `${ratio * 100}%` }}
+                  animate={{ clipPath: `inset(0 ${(1 - ratio) * 100}% 0 0 round 3px)` }}
                   transition={fill}
                 />
               </span>

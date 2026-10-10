@@ -137,9 +137,10 @@ export function CraftNowPlaying({
           >
             <span className="h-0.5 w-full rounded-full bg-[repeating-linear-gradient(90deg,rgba(42,31,20,.35)_0_4px,transparent_4px_7px)]" />
             <motion.span
-              className="absolute left-0 h-[3px] rounded-full bg-(--ovio-accent-deep)"
+              className="absolute inset-x-0 h-[3px] rounded-full bg-(--ovio-accent-deep)"
               initial={false}
-              animate={{ width: `${ratio * 100}%` }}
+              // Clipped rather than resized, so the fill moves on the compositor and keeps its round end.
+              animate={{ clipPath: `inset(0 ${(1 - ratio) * 100}% 0 0 round 99px)` }}
               transition={fill}
             />
           </div>

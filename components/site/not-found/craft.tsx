@@ -4,7 +4,7 @@ import { motion } from "motion/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { DOCS_HREF, GITHUB_URL } from "@/content/components";
-import { useReducedMotionSafe } from "@/lib/motion";
+import { motionTokens, useReducedMotionSafe } from "@/lib/motion";
 import { RequestedPath } from "./requested-path";
 
 /** The tear-off tabs; the null is one someone already took. */
@@ -74,10 +74,13 @@ export function CraftNotFound() {
                 animate={
                   torn === i ? { y: 90, rotate: 14, opacity: 0 } : { y: 0, rotate: 0, opacity: 1 }
                 }
-                // Tabs lift on hover and fall away when torn.
+                // Tabs lift on hover with the paper settle, and fall away (ease-in) when torn.
                 whileHover={torn === null ? { y: 5, rotate: 2 } : undefined}
                 whileFocus={torn === null ? { y: 5, rotate: 2 } : undefined}
-                transition={{ duration: 0.4, ease: [0.5, 0, 0.75, 0] }}
+                whileTap={torn === null ? { scale: 0.97 } : undefined}
+                transition={
+                  torn === i ? { duration: 0.4, ease: [0.5, 0, 0.75, 0] } : motionTokens.craft.base
+                }
               >
                 <span>→ {tab.label}</span>
               </motion.button>

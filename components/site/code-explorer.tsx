@@ -6,7 +6,7 @@ import { track } from "@/lib/analytics";
 import { ease, useOvioTransition } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { CodeBlock } from "./code-block";
-import { copyLabel, useCopy } from "./copy-command";
+import { CopyLabel, copyLabel, useCopy } from "./copy-command";
 
 /** A source file with its highlighted markup, made on the server. */
 export type SourceFile = { path: string; html: string };
@@ -138,7 +138,7 @@ function SidebarIcon() {
 }
 
 const toolButton =
-  "flex h-7 cursor-pointer items-center gap-1.5 rounded-md border-0 bg-transparent px-2 font-mono text-[11px] text-code-muted hover:bg-[#2c2b28] hover:text-paper";
+  "flex h-7 cursor-pointer items-center gap-1.5 rounded-md border-0 bg-transparent px-2 font-mono text-[11px] text-code-muted transition-transform duration-[160ms] ease-(--ease-out) hover:bg-[#2c2b28] hover:text-paper active:scale-[0.97]";
 
 /**
  * The Code tab: a VS Code-style explorer over a component's source files, with a collapsible
@@ -250,7 +250,9 @@ export function CodeExplorer({ files }: { files: SourceFile[] }) {
               : `Copy ${current?.path.split("/").pop()}`
           }
         >
-          <span aria-live="polite">{copyLabel(copyState)}</span>
+          <span aria-live="polite">
+            <CopyLabel state={copyState} />
+          </span>
         </button>
       </div>
       <div className="relative flex h-[min(560px,70vh)]">

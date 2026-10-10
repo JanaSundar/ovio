@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
-import { motionTokens, steps, useOvioTransition, useReducedMotionSafe } from "@/lib/motion";
+import { ease, motionTokens, useOvioTransition, useReducedMotionSafe } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { formatNumber } from "@/lib/format";
 import { formatDelta, receiptNote } from "../chart";
@@ -9,6 +9,9 @@ import type { NpmDownloadsWorldProps } from "../npm-downloads";
 
 const PAPER = "#fffdf8";
 const RULE = "border-t border-dashed border-[#b9a88f]";
+
+/** Seconds the receipt takes to feed out. */
+const FEED = 0.5;
 
 export function CraftNpmDownloads({
   packageName,
@@ -22,7 +25,7 @@ export function CraftNpmDownloads({
 }: NpmDownloadsWorldProps) {
   const reduced = useReducedMotionSafe();
   const lift = useOvioTransition(motionTokens.craft.base);
-  const pop = useOvioTransition({ ...motionTokens.craft.slow, delay: 1.4 });
+  const pop = useOvioTransition({ ...motionTokens.craft.slow, delay: FEED });
   // The six weeks before the latest one, printed as line items.
   const recent = points.slice(-7, -1);
 
@@ -30,10 +33,10 @@ export function CraftNpmDownloads({
     <motion.figure
       data-ovio-world="craft"
       aria-label={summary}
-      // The receipt feeds out of a printer: it drops and unclips in 14 hard steps.
+      // The receipt feeds out of a printer: it drops and unrolls, then the note is slapped on.
       initial={reduced ? false : { y: -40, clipPath: "inset(0% 0% 100% 0%)" }}
       animate={{ y: 0, clipPath: "inset(0% 0% 0% 0%)" }}
-      transition={reduced ? { duration: 0 } : { duration: 1.4, ease: steps(14) }}
+      transition={reduced ? { duration: 0 } : { duration: FEED, ease: ease.minimal }}
       className={cn(
         "m-0 w-[280px] font-(family-name:--ovio-font-geist-mono) text-xs leading-[1.7] text-(--ovio-ink) drop-shadow-[0_14px_18px_rgba(70,45,20,.3)]",
         className,
@@ -87,7 +90,7 @@ export function CraftNpmDownloads({
 
           <motion.div
             className="mt-2.5 text-center font-(family-name:--ovio-hand) text-[26px] leading-tight text-(--ovio-accent-deep)"
-            initial={reduced ? false : { opacity: 0, scale: 0.6, rotate: -12 }}
+            initial={reduced ? false : { opacity: 0, scale: 0.9, rotate: -12 }}
             animate={{ opacity: 1, scale: 1, rotate: -4 }}
             transition={pop}
           >

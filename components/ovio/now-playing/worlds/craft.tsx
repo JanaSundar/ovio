@@ -87,18 +87,19 @@ export function CraftNowPlaying({
         </motion.button>
 
         <div className="absolute top-0 left-0 flex size-[240px] -rotate-3 flex-col justify-end overflow-hidden rounded-[4px] bg-[#f2c9a0] bg-[repeating-linear-gradient(135deg,rgba(90,50,20,.06)_0_8px,transparent_8px_16px)] p-3.5 shadow-[0_2px_4px_rgba(70,45,20,.15),0_18px_30px_-12px_rgba(70,45,20,.45)]">
-          {track.artwork ? (
-            <Artwork src={track.artwork} />
-          ) : (
-            <>
-              <span className="font-(family-name:--ovio-hand) text-[34px] leading-none text-[#7d5a3a]">
-                {track.album ?? track.title}
-              </span>
-              <span className="mt-1 font-(family-name:--ovio-mono) text-[10px] tracking-[0.08em] text-[#9a7552] uppercase">
-                {track.artist} · LP
-              </span>
-            </>
-          )}
+          <Artwork
+            src={track.artwork}
+            fallback={
+              <>
+                <span className="font-(family-name:--ovio-hand) text-[34px] leading-none text-[#7d5a3a]">
+                  {track.album ?? track.title}
+                </span>
+                <span className="mt-1 font-(family-name:--ovio-mono) text-[10px] tracking-[0.08em] text-[#9a7552] uppercase">
+                  {track.artist} · LP
+                </span>
+              </>
+            }
+          />
         </div>
         <span
           aria-hidden

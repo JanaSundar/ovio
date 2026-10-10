@@ -70,10 +70,13 @@ export function NpmDownloads({
   packageName,
   data,
   weeks = 12,
-  goal,
+  goal: goalProp,
   variant,
   className,
 }: NpmDownloadsProps) {
+  // Only a real, positive target is a goal: 0 or NaN would print "Goal 0" or "Goal NaN".
+  const goal =
+    goalProp !== undefined && Number.isFinite(goalProp) && goalProp > 0 ? goalProp : undefined;
   const world = useWorld(variant);
   const { points, latest, total, peak, goalHeight, summary } = readDownloads(
     packageName,

@@ -102,6 +102,9 @@ const VIEWS = {
   toy: ToyEventTicket,
 } satisfies Record<World, ComponentType<EventTicketWorldProps>>;
 
+/** An ISO date-time's calendar day as written, so its own time zone decides the day. */
+const wallDate = (date: string) => (/^\d{4}-\d{2}-\d{2}/.test(date) ? date.slice(0, 10) : date);
+
 export function EventTicket({
   event,
   variant,
@@ -163,8 +166,10 @@ export function EventTicket({
     ticketId: ticketId ?? `TKT-${String(hashString(event.name) % 1e6).padStart(6, "0")}`,
     layout,
     rootRef,
-    date: formatDate(event.date),
-    shortDate: formatShortDate(event.date),
+    // The day printed is the day at the venue: "2027-03-14T19:00-07:00" is March 14 there,
+    // though it's already the 15th in UTC.
+    date: formatDate(wallDate(event.date)),
+    shortDate: formatShortDate(wallDate(event.date)),
     status: attendee ? "booked" : sending ? "sending" : "form",
     attendee,
     draft,

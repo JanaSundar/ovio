@@ -25,7 +25,8 @@ export function RetroNowPlaying({
   const reduced = useReducedMotionSafe();
   const fill = useFillTransition(ticking, true);
   const scrolling = playing && !reduced;
-  const marquee = `*** ${track.title.toUpperCase()} *** ${(track.album ?? track.artist).toUpperCase()}`;
+  const marquee =
+    `*** ${track.title} *** ${[track.artist, track.album].filter(Boolean).join(" · ")}`.toUpperCase();
 
   const keys = [
     { label: "|◀", name: "Previous", on: false, run: previous },

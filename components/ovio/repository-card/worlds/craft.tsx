@@ -4,7 +4,7 @@ import { motion } from "motion/react";
 import { motionTokens, useOvioTransition } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import type { RepositoryCardWorldProps } from "../repository-card";
-import { COMPACT, formatNumber } from "@/lib/format";
+import { COMPACT, formatCount, formatNumber } from "@/lib/format";
 
 export function CraftRepositoryCard({
   repo,
@@ -63,7 +63,7 @@ export function CraftRepositoryCard({
               key={stat}
               className="rounded-full bg-(--ovio-surface-2) px-2.5 py-[5px] text-[13px]"
             >
-              {formatNumber(stat === "forks" ? repo.forks : (repo.issues ?? 0))} {stat}
+              {formatCount(stat === "forks" ? repo.forks : (repo.issues ?? 0), stat.slice(0, -1))}
             </span>
           ),
         )}

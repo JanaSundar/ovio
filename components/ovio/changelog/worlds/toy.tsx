@@ -126,7 +126,7 @@ function Header({ release: r, index }: RowProps) {
         className="rounded-[9px] px-2.5 py-1.5 text-sm font-extrabold shadow-[inset_0_-3px_0_rgba(0,0,0,.2)]"
         style={{ background: chip, color: chipInk, fontStretch: "110%" }}
       >
-        v{r.version}
+        {r.version}
       </span>
       <span className="min-w-0 flex-1 text-base font-bold">{r.title}</span>
       <time

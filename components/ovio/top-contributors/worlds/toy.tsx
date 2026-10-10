@@ -7,7 +7,7 @@ import { TOY_PLASTIC, ToyKey } from "@/components/shared/toy";
 import { motionTokens, useOvioTransition, useReducedMotionSafe } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { PERIOD_LABEL, PERIOD_SHORT, type TopContributorsWorldProps } from "../top-contributors";
-import { formatNumber } from "@/lib/format";
+import { formatNumber, plural } from "@/lib/format";
 
 /** Plastic piece colours by rank: face, side, ink. */
 const { red, blue, yellow, green, black, white } = TOY_PLASTIC;
@@ -46,10 +46,10 @@ export function ToyTopContributors({
           </h3>
           <span className="font-(family-name:--ovio-mono) text-[11px] tracking-[0.08em] text-(--ovio-muted) uppercase">
             {repo && `${repo} · `}
-            <RollingNumber value={total} /> commits
+            <RollingNumber value={total} /> {plural(total, "commit")}
           </span>
         </div>
-        {periods.length > 0 && (
+        {periods.length > 1 && (
           <div role="group" aria-label="Time window" className="flex gap-2 pb-1.5">
             {periods.map((p) => (
               <ToyKey

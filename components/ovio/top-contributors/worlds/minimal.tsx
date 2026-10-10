@@ -7,7 +7,7 @@ import { RollingNumber } from "@/components/shared/rolling-number";
 import { motionTokens, useOvioTransition, useReducedMotionSafe } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { PERIOD_LABEL, PERIOD_SHORT, type TopContributorsWorldProps } from "../top-contributors";
-import { formatNumber } from "@/lib/format";
+import { formatNumber, plural } from "@/lib/format";
 
 export function MinimalTopContributors({
   people,
@@ -33,14 +33,14 @@ export function MinimalTopContributors({
         className,
       )}
     >
-      {(repo || periods.length > 0) && (
+      {(repo || periods.length > 1) && (
         <div className="flex flex-wrap items-center justify-between gap-3">
           {repo && (
             <span className="font-(family-name:--ovio-mono) text-xs text-(--ovio-muted)">
               {repo}
             </span>
           )}
-          {periods.length > 0 && (
+          {periods.length > 1 && (
             <div
               role="group"
               aria-label="Time window"
@@ -79,7 +79,7 @@ export function MinimalTopContributors({
           Top contributors · {PERIOD_LABEL[period]}
         </h3>
         <span className="text-[13px] text-(--ovio-muted)">
-          <RollingNumber value={total} /> commits
+          <RollingNumber value={total} /> {plural(total, "commit")}
         </span>
       </div>
 

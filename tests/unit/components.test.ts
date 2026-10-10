@@ -11,6 +11,7 @@ import { cellsPath } from "@/components/ovio/developer-id-card/card";
 import { initialsOf } from "@/components/shared/initials";
 import { hashString, random } from "@/components/ovio/event-ticket/seed";
 import { formatDelta } from "@/components/ovio/npm-downloads/chart";
+import { formatTime } from "@/components/ovio/now-playing/parts";
 import { detents } from "@/components/ovio/physical-knob/physical-knob";
 import { nearestIndex, shapeStarHistory, smoothPath } from "@/components/ovio/star-history/shape";
 import { seeded } from "@/components/site/seeded";
@@ -113,6 +114,16 @@ describe("small formatters", () => {
     expect(formatDelta(1100)).toBe("×12");
     expect(formatDelta(9_999_999_800, ["↑ ", "↓ "])).toBe("↑ ×100M");
     expect(formatDelta(-100)).toBe("−100.0%");
+  });
+
+  it("track times past an hour, and nonsense lengths", () => {
+    expect([
+      formatTime(134),
+      formatTime(3599),
+      formatTime(36_000),
+      formatTime(NaN),
+      formatTime(-5),
+    ]).toEqual(["2:14", "59:59", "10:00:00", "0:00", "0:00"]);
   });
 
   it("knob detents", () => {

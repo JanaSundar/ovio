@@ -121,12 +121,18 @@ export function TopContributors({
   period: periodProp,
   defaultPeriod = "90d",
   onPeriodChange,
-  periods = PERIODS,
+  periods: periodsProp = PERIODS,
   className,
 }: TopContributorsProps) {
   const world = useWorld(variant);
   const [inner, setInner] = useState(defaultPeriod);
-  const period = periodProp ?? inner;
+  // A window nobody has a count for would show all-time commits under "30 days" (GitHub's stats
+  // aren't always ready), so only the windows the data covers are offered. All time always is.
+  const periods = periodsProp.filter(
+    (p) => p === "all" || contributors.some((c) => c.byPeriod?.[p] !== undefined),
+  );
+  const asked = periodProp ?? inner;
+  const period = periods.includes(asked) ? asked : (periods[periods.length - 1] ?? "all");
 
   const setPeriod = (next: ContributorPeriod) => {
     if (next === period) return;

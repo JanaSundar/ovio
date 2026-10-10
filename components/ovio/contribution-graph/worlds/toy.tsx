@@ -23,7 +23,7 @@ import { cn } from "@/lib/utils";
 import type { ContributionGraphWorldProps } from "../contribution-graph";
 import { dayCellProps, dayIndexOf } from "../grid";
 import { unit, type ContributionCell } from "../year";
-import { formatNumber } from "@/lib/format";
+import { formatNumber, plural } from "@/lib/format";
 
 /** Plastic by level: top colour, highlight and the darker lip under it. Level 0 is an empty socket. */
 const PLASTIC = [
@@ -330,7 +330,9 @@ export function ToyContributionGraph({
             <div className="font-(family-name:--ovio-mono) text-[11.5px] tracking-[0.08em] text-(--ovio-muted)">
               STREAK
             </div>
-            <div className="text-2xl font-extrabold tracking-[-0.02em]">{year.longest} days</div>
+            <div className="text-2xl font-extrabold tracking-[-0.02em]">
+              {year.longest} {plural(year.longest, "day")}
+            </div>
           </div>
           <div className="rounded-(--ovio-radius) bg-(--ovio-accent) px-4 py-3 text-(--ovio-on-accent) shadow-[inset_0_2px_0_rgba(255,255,255,.25),0_5px_0_var(--ovio-accent-deep),0_12px_14px_-8px_rgba(40,28,10,.4)]">
             <div className="font-(family-name:--ovio-mono) text-[11.5px] tracking-[0.08em]">

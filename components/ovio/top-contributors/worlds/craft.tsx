@@ -6,7 +6,7 @@ import { RollingNumber } from "@/components/shared/rolling-number";
 import { motionTokens, useOvioTransition, useReducedMotionSafe } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { PERIOD_LABEL, type TopContributorsWorldProps } from "../top-contributors";
-import { formatNumber } from "@/lib/format";
+import { formatNumber, plural } from "@/lib/format";
 
 /** Photo tile colours and tilts, by rank. Light tiles take dark ink. */
 const TILES = ["#e0713a", "#3178c6", "#ffe27a", "#2f9a45", "#f2c9a0", "#b8471f"];
@@ -45,9 +45,9 @@ export function CraftTopContributors({
         <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-[13px] text-(--ovio-muted)">
           {repo && <span className="font-(family-name:--ovio-mono) text-xs">{repo}</span>}
           <span>
-            <RollingNumber value={total} /> commits
+            <RollingNumber value={total} /> {plural(total, "commit")}
           </span>
-          {periods.length > 0 && (
+          {periods.length > 1 && (
             <div role="group" aria-label="Time window" className="flex gap-1.5">
               {periods.map((p, i) => (
                 <motion.button

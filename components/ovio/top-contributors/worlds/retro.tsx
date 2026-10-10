@@ -58,7 +58,7 @@ export function RetroTopContributors({
       </h3>
       <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-xl text-(--ovio-ink-2)">
         {repo && <span>{repo.toUpperCase()}</span>}
-        {periods.length > 0 && (
+        {periods.length > 1 && (
           <div role="group" aria-label="Time window" className="flex gap-1">
             {periods.map((p) => (
               <button

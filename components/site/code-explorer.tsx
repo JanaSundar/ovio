@@ -6,7 +6,7 @@ import { track } from "@/lib/analytics";
 import { ease, useOvioTransition } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { CodeBlock } from "./code-block";
-import { useCopy } from "./copy-command";
+import { copyLabel, useCopy } from "./copy-command";
 
 /** A source file with its highlighted markup, made on the server. */
 export type SourceFile = { path: string; html: string };
@@ -151,7 +151,8 @@ export function CodeExplorer({ files }: { files: SourceFile[] }) {
   // Closed at first at every width, so the code gets the room; the files button opens it.
   const [sidebar, setSidebar] = useState(false);
   const [focused, setFocused] = useState("f:0");
-  const { copied, copy } = useCopy();
+  const copyState = useCopy();
+  const { copied, copy } = copyState;
   const slide = useOvioTransition(SLIDE);
   const treeRef = useRef<HTMLUListElement>(null);
   const codeRef = useRef<HTMLDivElement>(null);
@@ -243,9 +244,13 @@ export function CodeExplorer({ files }: { files: SourceFile[] }) {
             copy(codeRef.current?.textContent ?? "");
             track("source_code_copied");
           }}
-          aria-label={copied ? "Copied" : `Copy ${current?.path.split("/").pop()}`}
+          aria-label={
+            copied || copyState.failed
+              ? copyLabel(copyState)
+              : `Copy ${current?.path.split("/").pop()}`
+          }
         >
-          <span aria-live="polite">{copied ? "Copied" : "Copy"}</span>
+          <span aria-live="polite">{copyLabel(copyState)}</span>
         </button>
       </div>
       <div className="relative flex h-[min(560px,70vh)]">

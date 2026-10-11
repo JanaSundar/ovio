@@ -1,16 +1,18 @@
 "use client";
 
-import { motion, useAnimate, type Transition } from "motion/react";
+import { useAnimate, type Transition } from "motion/react";
 import { useEffect, type CSSProperties } from "react";
 import { GooFilter } from "@/components/shared/goo-filter";
 import { useReducedMotionSafe } from "@/lib/motion";
 import { cn } from "@/lib/utils";
-import { STATUS_INDEX, type GooeyTabsWorldProps } from "./gooey-tabs";
+import { STATUS_INDEX, type LiquidTabsWorldProps } from "./liquid-tabs";
+import { useLiquid, type Liquid } from "./use-liquid";
 
-/** How a world draws the goo tab bar. Minimal, Craft and Retro share the renderer and differ here. */
-export type GooLook = {
+/** How a world draws the tab bar. Minimal, Craft and Retro share the renderer and differ here. */
+export type LiquidLook = {
   world: "minimal" | "craft" | "retro";
   track: CSSProperties;
+  /** The indicator's colour, and its corner radius at rest. */
   blob: string;
   blobRadius: string;
   /** Text colour on and off the indicator. */
@@ -19,11 +21,10 @@ export type GooLook = {
   tab: string;
   label: string;
   statusText: string;
-  /** One transition per blob: the trailing blobs arrive later, which stretches the goo. */
-  trail: [Transition, Transition, Transition];
+  /** How the indicator travels between tabs. */
+  liquid: Liquid;
   /** Status dot colours: offline, building, online. */
   dots: [string, string, string];
-  colorDelay: number;
 };
 
 /**
@@ -49,7 +50,7 @@ function StatusDots({
   filterId,
 }: {
   status: number;
-  colors: GooLook["dots"];
+  colors: LiquidLook["dots"];
   filterId: string;
 }) {
   const reduced = useReducedMotionSafe();
@@ -95,17 +96,25 @@ function StatusDots({
   );
 }
 
-export function GooTabs({ look, ...p }: GooeyTabsWorldProps & { look: GooLook }) {
+export function LiquidBar({ look, ...p }: LiquidTabsWorldProps & { look: LiquidLook }) {
   const reduced = useReducedMotionSafe();
   const n = p.tabs.length;
   const w = 100 / n;
-  const left = `${p.index * w}%`;
-  const blobs = [
-    { top: "0%", width: w, ml: 0, radius: look.blobRadius },
-    { top: "10%", width: w * 0.8, ml: w * 0.1, radius: "999px" },
-    { top: "24%", width: w * 0.48, ml: w * 0.26, radius: "999px" },
-  ];
   const st = p.status ? STATUS_INDEX[p.status] : 0;
+  const columns = { gridTemplateColumns: `repeat(${n}, minmax(0, 1fr))` };
+  // Where the pill rests, in shares of the row: CSS places it, so it is right before any script runs.
+  const from = `${p.index * w}%`;
+  const to = `${100 - (p.index + 1) * w}%`;
+
+  const { box, rest, pieces, capL, body, capR, labels } = useLiquid({
+    index: p.index,
+    count: n,
+    liquid: look.liquid,
+    reduced,
+  });
+
+  const piece = { background: look.blob };
+  const cap = { ...piece, borderRadius: look.liquid.round ? "999px" : 0 };
 
   return (
     <div
@@ -115,38 +124,31 @@ export function GooTabs({ look, ...p }: GooeyTabsWorldProps & { look: GooLook })
         p.className,
       )}
     >
-      <GooFilter id={p.filterId} blur={p.goo} />
+      {p.status && <GooFilter id={p.filterId} blur={p.goo} />}
       <div className="relative w-full max-w-[540px] p-1.5" style={look.track}>
-        <div aria-hidden className="absolute inset-1.5" style={{ filter: `url(#${p.filterId})` }}>
-          {blobs.map((b, j) => (
-            <motion.div
-              key={j}
-              className="absolute"
-              initial={false}
-              animate={{ left }}
-              transition={reduced ? { duration: 0 } : look.trail[j]}
-              style={{
-                top: b.top,
-                bottom: b.top,
-                width: `${b.width}%`,
-                marginLeft: `${b.ml}%`,
-                background: look.blob,
-                borderRadius: b.radius,
-              }}
-            />
-          ))}
+        <div ref={box} aria-hidden className="absolute inset-1.5">
+          <div
+            ref={rest}
+            className="absolute inset-y-0"
+            style={{ left: from, right: to, background: look.blob, borderRadius: look.blobRadius }}
+          />
+          <div ref={pieces} className="invisible absolute inset-0">
+            <div ref={body} className="absolute inset-y-0 left-0 origin-left" style={piece} />
+            <div ref={capL} className="absolute inset-y-0 left-0" style={cap} />
+            <div ref={capR} className="absolute inset-y-0 left-0" style={cap} />
+          </div>
         </div>
         <div
           role="tablist"
           aria-label={p.label}
           onKeyDown={p.onKeyDown}
           className="relative grid"
-          style={{ gridTemplateColumns: `repeat(${n}, minmax(0, 1fr))` }}
+          style={columns}
         >
           {p.tabs.map((tab, i) => {
             const active = i === p.index;
             return (
-              <motion.button
+              <button
                 key={`${i}:${tab}`}
                 ref={p.tabRef(i)}
                 id={p.tabId(i)}
@@ -157,14 +159,34 @@ export function GooTabs({ look, ...p }: GooeyTabsWorldProps & { look: GooLook })
                 tabIndex={active ? 0 : -1}
                 onClick={() => p.select(i)}
                 className={cn("cursor-pointer border-0 bg-transparent font-[inherit]", look.tab)}
-                initial={false}
-                animate={{ color: active ? look.on : look.off }}
-                transition={reduced ? { duration: 0 } : { duration: 0.25, delay: look.colorDelay }}
+                style={{ color: look.off }}
               >
                 {tab}
-              </motion.button>
+              </button>
             );
           })}
+        </div>
+        {/* The labels again in the "on" colour, clipped to the pill: letters change colour exactly
+            where it covers them, mid-move included. */}
+        <div
+          ref={labels}
+          aria-hidden
+          className="pointer-events-none absolute inset-1.5 grid"
+          style={{
+            ...columns,
+            color: look.on,
+            clipPath: `inset(0 ${to} 0 ${from} round ${look.blobRadius})`,
+          }}
+        >
+          {p.tabs.map((tab, i) => (
+            <span
+              key={`${i}:${tab}`}
+              data-liquid-label
+              className={cn("block text-center", look.tab)}
+            >
+              {tab}
+            </span>
+          ))}
         </div>
       </div>
 

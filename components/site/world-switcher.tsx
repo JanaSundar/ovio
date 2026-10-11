@@ -1,18 +1,18 @@
 "use client";
 
-import { GooeyTabs } from "@/components/ovio/gooey-tabs/gooey-tabs";
+import { LiquidTabs } from "@/components/ovio/liquid-tabs/liquid-tabs";
 import { WORLD_INFO } from "@/content/worlds";
 import { useSiteWorld } from "./site-world";
 
 const LABELS = WORLD_INFO.map((w) => w.id[0].toUpperCase() + w.id.slice(1));
 
-/** The site's world picker over the live specimens: Ovio's own Gooey Tabs, in Minimal. */
+/** The site's world picker over the live specimens: Ovio's own Liquid Tabs, in Minimal. */
 export function WorldSwitcher() {
   const { world, setWorld } = useSiteWorld();
   return (
-    <GooeyTabs
+    <LiquidTabs
       variant="minimal"
-      className="world-gooey"
+      className="world-tabs"
       label="Design world"
       tabs={LABELS}
       value={WORLD_INFO.findIndex((w) => w.id === world)}

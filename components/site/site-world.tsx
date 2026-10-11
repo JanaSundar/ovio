@@ -5,6 +5,7 @@ import {
   createContext,
   useCallback,
   useContext,
+  useDeferredValue,
   useEffect,
   useRef,
   useState,
@@ -55,10 +56,14 @@ export function SiteWorldProvider({ children }: { children: ReactNode }) {
     return () => clearTimeout(id);
   }, []);
 
+  // The pickers follow the new world at once; the demos render it as a deferred, interruptible
+  // update, so mounting a whole world doesn't freeze the picker's own animation, which matters on phones.
+  const shown = useDeferredValue(world);
+
   return (
     <Ctx.Provider value={{ world, setWorld: selectWorld }}>
       <MotionConfig reducedMotion="user">
-        <OvioProvider world={world}>{children}</OvioProvider>
+        <OvioProvider world={shown}>{children}</OvioProvider>
       </MotionConfig>
     </Ctx.Provider>
   );

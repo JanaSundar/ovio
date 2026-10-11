@@ -43,7 +43,7 @@ export function CraftToast({ kind, title, description, action, dismiss }: ToastW
         <button
           type="button"
           onClick={action.onClick}
-          className="mt-2.5 -rotate-2 cursor-pointer border-0 bg-[#ffe27a] px-2.5 py-1 font-(family-name:--ovio-mono) text-[11px] text-(--ovio-ink) shadow-[0_3px_6px_-2px_rgba(70,45,20,.4)] transition-transform hover:rotate-0"
+          className="mt-2.5 -rotate-2 cursor-pointer border-0 bg-[#ffe27a] px-2.5 py-1 font-(family-name:--ovio-mono) text-[11px] text-(--ovio-ink) shadow-[0_3px_6px_-2px_rgba(70,45,20,.4)] transition-[rotate] duration-300 ease-[cubic-bezier(.34,1.5,.5,1)] motion-reduce:transition-none hover:rotate-0"
         >
           {action.label}
         </button>

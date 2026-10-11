@@ -4,6 +4,7 @@ import {
   animate,
   motion,
   useMotionValue,
+  useMotionTemplate,
   useMotionValueEvent,
   useTransform,
   useVelocity,
@@ -26,10 +27,11 @@ export function ToyGooeyTabs(p: GooeyTabsWorldProps) {
   const track = useRef<HTMLDivElement>(null);
   const x = useMotionValue(p.index);
   const v = useVelocity(x);
-  const translate = useTransform(x, (t) => `${t * 100}%`);
-  const squash = useTransform(v, (s) => Math.min(0.22, Math.abs(s) * 0.035));
-  const scaleX = useTransform(squash, (q) => 1 + q);
-  const scaleY = useTransform(squash, (q) => 1 - q * 0.6);
+  const percent = useTransform(() => x.get() * 100);
+  const translate = useMotionTemplate`${percent}%`;
+  const squash = useTransform(() => Math.min(0.22, Math.abs(v.get()) * 0.035));
+  const scaleX = useTransform(() => 1 + squash.get());
+  const scaleY = useTransform(() => 1 - squash.get() * 0.6);
   const [near, setNear] = useState(p.index);
   useMotionValueEvent(x, "change", (t) => setNear(Math.max(0, Math.min(n - 1, Math.round(t)))));
 

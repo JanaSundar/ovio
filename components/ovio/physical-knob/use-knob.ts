@@ -62,7 +62,8 @@ export function useKnob({ ref, steps, follow, wheel, index, onIndex, disabled }:
   const reduced = useReducedMotionSafe();
   const target = useMotionValue(indexToAngle(index, steps));
   const sprung = useSpring(target, follow === "step" ? { stiffness: 1000, damping: 100 } : follow);
-  const stepped = useTransform(target, (a) => {
+  const stepped = useTransform(() => {
+    const a = target.get();
     const span = SPAN / (steps - 1);
     return ANGLE_MIN + Math.round((clamp(a, ANGLE_MIN, ANGLE_MAX) - ANGLE_MIN) / span) * span;
   });

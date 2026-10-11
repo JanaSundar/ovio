@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "motion/react";
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import { RollingNumber } from "@/components/shared/rolling-number";
 import { motionTokens, useOvioTransition, useReducedMotionSafe } from "@/lib/motion";
 import { cn } from "@/lib/utils";
@@ -62,8 +62,8 @@ export function CraftBundleSize({
           key={r.version}
           aria-hidden
           className="absolute top-[18px] right-5 rounded border-[3px] border-(--ovio-accent-deep) px-2.5 py-1.5 text-lg font-extrabold tracking-[0.02em] text-(--ovio-accent-deep)"
-          initial={reduced ? false : { opacity: 0, scale: 1.5, rotate: 18 }}
-          animate={{ opacity: 1, scale: 1, rotate: 9 }}
+          initial={reduced ? false : { opacity: 0, transform: "scale(1.5) rotate(18deg)" }}
+          animate={{ opacity: 1, transform: "scale(1) rotate(9deg)" }}
           exit={{ opacity: 0, transition: { duration: reduced ? 0 : 0.12 } }}
           transition={settle}
         >
@@ -99,7 +99,7 @@ export function CraftBundleSize({
             className="absolute inset-x-0 bottom-0 h-3 origin-left"
             initial={false}
             animate={{
-              scaleX: r.fill,
+              transform: `scaleX(${r.fill})`,
               backgroundColor: r.over ? "#b8471f" : "#e0713a",
             }}
             transition={fill}
@@ -144,7 +144,7 @@ export function CraftBundleSize({
           className="flex flex-wrap gap-1.5"
         >
           {versions.map((v, i) => (
-            <motion.button
+            <button
               key={v}
               ref={tabRef(i)}
               id={tabId(i)}
@@ -154,19 +154,14 @@ export function CraftBundleSize({
               aria-controls={panelId}
               tabIndex={i === index ? 0 : -1}
               onClick={() => select(i)}
-              initial={false}
-              animate={{
-                rotate: TILT[i % TILT.length],
-                y: 0,
-                backgroundColor: i === index ? "#ffe27a" : "#efe3c8",
-              }}
-              whileHover={{ rotate: 0, y: -3 }}
-              whileFocus={{ rotate: 0, y: -3 }}
-              transition={settle}
-              className="cursor-pointer border-0 px-[9px] py-1 font-(family-name:--ovio-mono) text-[11px] text-(--ovio-ink) shadow-[0_3px_6px_-2px_rgba(70,45,20,.4)]"
+              style={{ "--tilt": `${TILT[i % TILT.length]}deg` } as CSSProperties}
+              className={cn(
+                "cursor-pointer rotate-(--tilt) border-0 px-[9px] py-1 font-(family-name:--ovio-mono) text-[11px] text-(--ovio-ink) shadow-[0_3px_6px_-2px_rgba(70,45,20,.4)] transition-[rotate,translate,background-color] duration-300 ease-[cubic-bezier(.34,1.5,.5,1)] motion-reduce:transition-none hover:-translate-y-[3px] hover:rotate-0 focus-visible:-translate-y-[3px] focus-visible:rotate-0",
+                i === index ? "bg-[#ffe27a]" : "bg-[#efe3c8]",
+              )}
             >
               {v}
-            </motion.button>
+            </button>
           ))}
         </div>
       </div>

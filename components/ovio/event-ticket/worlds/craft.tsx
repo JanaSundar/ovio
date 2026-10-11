@@ -39,7 +39,7 @@ const LOOK: TicketLook = {
   sheen: "rgba(255,255,255,.45)",
   sheenBlend: "soft-light",
   flipButton:
-    "-rotate-2 rounded-sm bg-(--ovio-tape) px-3.5 font-(family-name:--ovio-hand) text-[22px] leading-none tracking-normal text-(--ovio-ink) normal-case shadow-[0_1px_2px_rgba(70,45,20,.15)] transition-transform hover:rotate-0",
+    "-rotate-2 rounded-sm bg-(--ovio-tape) px-3.5 font-(family-name:--ovio-hand) text-[22px] leading-none tracking-normal text-(--ovio-ink) normal-case shadow-[0_1px_2px_rgba(70,45,20,.15)] transition-[rotate] duration-300 ease-[cubic-bezier(.34,1.5,.5,1)] motion-reduce:transition-none hover:rotate-0",
   book: (sending) => <GooBookButton sending={sending} look={BOOK} />,
   stubDecor: (
     <span

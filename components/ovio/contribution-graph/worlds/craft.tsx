@@ -1,6 +1,6 @@
 "use client";
 
-import { memo, useRef, type CSSProperties } from "react";
+import { memo, useMemo, useRef, type CSSProperties } from "react";
 import { motionTokens } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import type { ContributionGraphWorldProps } from "../contribution-graph";
@@ -14,41 +14,72 @@ const SCALE = ["#e6dcc8", "#f2c9a0", "#ee9f63", "#e0713a", "#b8471f"];
 /** A small fixed tilt per tile (-7° to 7°), from its index, so tiles look hand-placed. */
 const tilt = (i: number) => ((Math.imul(i + 1, 2654435761) >>> 16) % 1400) / 100 - 7;
 
-type CellProps = { cell: ContributionCell; tabbable: boolean; active: boolean };
-
-/** Where a tile rests: raised by its level and tilted, or lifted and squared up when active. */
-function tileStyle(cell: ContributionCell, active: boolean): CSSProperties {
-  const lvl = cell.level;
-  if (active) {
-    return {
-      background: SCALE[lvl],
-      transform: "translateY(-6px) scale(1.35)",
-      boxShadow: "0 8px 10px -2px rgba(90,50,20,.45)",
-      zIndex: 1,
-    };
-  }
-  return {
-    background: SCALE[lvl],
-    transform: `translateY(${-lvl * 1.5}px) rotate(${lvl ? tilt(cell.index) : 0}deg)`,
-    boxShadow: lvl
-      ? `0 ${1 + lvl}px ${2 + lvl * 1.5}px rgba(90,50,20,${(0.14 + lvl * 0.06).toFixed(2)}), inset 0 1px 0 rgba(255,255,255,.4)`
-      : "inset 0 1px 2px rgba(70,45,20,.15)",
-  };
-}
+/** The resting look of each level: its paper colour and the shadow that raises it. Written out so Tailwind sees them. */
+const LEVEL = [
+  "before:bg-[#e6dcc8] before:shadow-[inset_0_1px_2px_rgba(70,45,20,.15)]",
+  "before:bg-[#f2c9a0] before:shadow-[0_2px_3.5px_rgba(90,50,20,.2),inset_0_1px_0_rgba(255,255,255,.4)]",
+  "before:bg-[#ee9f63] before:shadow-[0_3px_5px_rgba(90,50,20,.26),inset_0_1px_0_rgba(255,255,255,.4)]",
+  "before:bg-[#e0713a] before:shadow-[0_4px_6.5px_rgba(90,50,20,.32),inset_0_1px_0_rgba(255,255,255,.4)]",
+  "before:bg-[#b8471f] before:shadow-[0_5px_8px_rgba(90,50,20,.38),inset_0_1px_0_rgba(255,255,255,.4)]",
+];
 
 /**
- * A paper tile, raised by its level, lifted and squared up when hovered. Plain elements with a
- * CSS transition: a year is 371 tiles, and a Motion component per tile made switching to Craft lag.
+ * A tile is one element and two pseudo-elements: the cell is the steady hit area, `before` is the paper
+ * and `after` carries the lifted shadow. Hovering moves the paper on `transform` and fades the shadow in
+ * on `opacity`, so a hover never repaints a shadow, and a year costs 371 nodes instead of 742.
  */
+const TILE = cn(
+  "relative aspect-square rounded-[3px] data-active:z-10",
+  "before:absolute before:inset-0 before:rounded-[3px] before:[transform:translateY(var(--lift))_scale(1)_rotate(var(--tilt))] before:transition-transform before:duration-300 before:ease-[cubic-bezier(.34,1.5,.5,1)] data-active:before:[transform:translateY(-6px)_scale(1.35)_rotate(0deg)]",
+  "after:absolute after:inset-0 after:rounded-[3px] after:opacity-0 after:shadow-[0_8px_10px_-2px_rgba(90,50,20,.45)] after:transition-opacity after:duration-300 after:[transform:translateY(-6px)_scale(1.35)] data-active:after:opacity-100",
+  "motion-reduce:before:transition-none motion-reduce:after:transition-none",
+);
+
+type CellProps = { cell: ContributionCell; tabbable: boolean; active: boolean };
+
 const Cell = memo(function Cell({ cell, tabbable, active }: CellProps) {
   const p = dayCellProps(cell, tabbable);
+  const lvl = cell.level;
   return (
-    <div {...p} className="aspect-square rounded-[3px]">
-      <span
-        aria-hidden
-        className="relative block size-full rounded-[3px] transition-[transform,box-shadow] duration-[300ms] ease-[cubic-bezier(.34,1.5,.5,1)] motion-reduce:transition-none"
-        style={tileStyle(cell, active)}
-      />
+    <div
+      {...p}
+      data-active={active || undefined}
+      className={cn(TILE, LEVEL[lvl])}
+      style={
+        {
+          gridRow: cell.weekday + 1,
+          "--lift": `${-lvl * 1.5}px`,
+          "--tilt": `${lvl ? tilt(cell.index) : 0}deg`,
+        } as CSSProperties
+      }
+    />
+  );
+});
+
+type ColumnProps = {
+  week: number;
+  days: ContributionCell[];
+  focusIndex: number;
+  activeIndex: number;
+};
+
+/** One week. Columns, not tiles, drop in on entrance: 53 native animations instead of 371. */
+const Column = memo(function Column({ week, days, focusIndex, activeIndex }: ColumnProps) {
+  return (
+    <div
+      role="row"
+      data-week={week}
+      className="grid grid-rows-subgrid"
+      style={{ gridColumn: week + 1, gridRow: "1 / span 7" }}
+    >
+      {days.map((cell) => (
+        <Cell
+          key={cell.date}
+          cell={cell}
+          tabbable={cell.index === focusIndex}
+          active={cell.index === activeIndex}
+        />
+      ))}
     </div>
   );
 });
@@ -60,7 +91,7 @@ const DROP: Keyframe[] = [
 const DROP_TIMING = {
   duration: motionTokens.craft.slow.duration,
   easing: cssEase(motionTokens.craft.slow.ease),
-  delay: (week: number, weekday: number) => week * 0.009 + weekday * 0.008,
+  delay: (week: number) => week * 0.009,
 };
 
 /** Craft: tiles on a taped paper card. Taller tiles, busier days; a sticker counts the streak. */
@@ -76,7 +107,11 @@ export function CraftContributionGraph({
   const day = active ?? year.best;
   const gridRef = useRef<HTMLDivElement>(null);
   // Tiles drop into place, column by column.
-  useCellEntrance(gridRef, enter, DROP, DROP_TIMING);
+  useCellEntrance(gridRef, enter, DROP, DROP_TIMING, "[data-week]");
+  const weeks = useMemo(
+    () => Array.from({ length: year.weeks }, (_, w) => year.days.slice(w * 7, w * 7 + 7)),
+    [year],
+  );
 
   const minWidth = weeksMinWidth(year.weeks);
   // The card tilts only on desktop: a tilted parent blurs the grid while it scrolls on smaller screens.
@@ -122,18 +157,20 @@ export function CraftContributionGraph({
             className="grid gap-[0.45cqw]"
             style={weekColumns(year.weeks)}
           >
-            {year.rows.map((row, r) => (
-              <div key={r} role="row" className="contents">
-                {row.map((cell) => (
-                  <Cell
-                    key={cell.date}
-                    cell={cell}
-                    tabbable={cell.index === focusIndex}
-                    active={cell.index === active?.index}
-                  />
-                ))}
-              </div>
-            ))}
+            {weeks.map((days, w) => {
+              const first = w * 7;
+              const inWeek = (i: number | undefined) =>
+                i !== undefined && i >= first && i < first + 7 ? i : -1;
+              return (
+                <Column
+                  key={w}
+                  week={w}
+                  days={days}
+                  focusIndex={inWeek(focusIndex)}
+                  activeIndex={inWeek(active?.index)}
+                />
+              );
+            })}
           </div>
         </div>
       </div>

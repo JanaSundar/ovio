@@ -40,7 +40,8 @@ export function RetroBundleSize({
 
   // The ASCII bar fills or empties one cell per frame, like a progress meter on old hardware.
   const cells = useMotionValue(target);
-  const bar = useTransform(cells, (c) => {
+  const bar = useTransform(() => {
+    const c = cells.get();
     const n = Math.round(c);
     return "█".repeat(n) + "░".repeat(CELLS - n);
   });

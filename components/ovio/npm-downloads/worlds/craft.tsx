@@ -24,7 +24,6 @@ export function CraftNpmDownloads({
   className,
 }: NpmDownloadsWorldProps) {
   const reduced = useReducedMotionSafe();
-  const lift = useOvioTransition(motionTokens.craft.base);
   const pop = useOvioTransition({ ...motionTokens.craft.slow, delay: FEED });
   // The six weeks before the latest one, printed as line items.
   const recent = points.slice(-7, -1);
@@ -34,20 +33,17 @@ export function CraftNpmDownloads({
       data-ovio-world="craft"
       aria-label={summary}
       // The receipt feeds out of a printer: it drops and unrolls, then the note is slapped on.
-      initial={reduced ? false : { y: -40, clipPath: "inset(0% 0% 100% 0%)" }}
-      animate={{ y: 0, clipPath: "inset(0% 0% 0% 0%)" }}
+      initial={
+        reduced ? false : { transform: "translateY(-40px)", clipPath: "inset(0% 0% 100% 0%)" }
+      }
+      animate={{ transform: "translateY(0px)", clipPath: "inset(0% 0% 0% 0%)" }}
       transition={reduced ? { duration: 0 } : { duration: FEED, ease: ease.minimal }}
       className={cn(
         "m-0 w-[280px] font-(family-name:--ovio-font-geist-mono) text-xs leading-[1.7] text-(--ovio-ink) drop-shadow-[0_14px_18px_rgba(70,45,20,.3)]",
         className,
       )}
     >
-      <motion.div
-        initial={false}
-        animate={{ rotate: -1.5, y: 0 }}
-        whileHover={{ rotate: 0, y: -6 }}
-        transition={lift}
-      >
+      <div className="-rotate-[1.5deg] transition-[rotate,translate] duration-300 ease-[cubic-bezier(.34,1.5,.5,1)] motion-reduce:transition-none hover:-translate-y-1.5 hover:rotate-0">
         <div className="px-[22px] pt-[22px] pb-3.5" style={{ background: PAPER }}>
           <div className="text-center font-(family-name:--ovio-font) text-xl font-extrabold tracking-[-0.02em] [overflow-wrap:anywhere]">
             npm · {packageName}
@@ -90,8 +86,8 @@ export function CraftNpmDownloads({
 
           <motion.div
             className="mt-2.5 text-center font-(family-name:--ovio-hand) text-[26px] leading-tight text-(--ovio-accent-deep)"
-            initial={reduced ? false : { opacity: 0, scale: 0.9, rotate: -12 }}
-            animate={{ opacity: 1, scale: 1, rotate: -4 }}
+            initial={reduced ? false : { opacity: 0, transform: "scale(0.9) rotate(-12deg)" }}
+            animate={{ opacity: 1, transform: "scale(1) rotate(-4deg)" }}
             transition={pop}
           >
             {receiptNote(latest.delta, goal !== undefined && goalProgress >= 1)}
@@ -113,7 +109,7 @@ export function CraftNpmDownloads({
             background: `linear-gradient(-45deg,transparent 6px,${PAPER} 0) 0 0/12px 12px repeat-x,linear-gradient(45deg,transparent 6px,${PAPER} 0) 0 0/12px 12px repeat-x`,
           }}
         />
-      </motion.div>
+      </div>
     </motion.figure>
   );
 }

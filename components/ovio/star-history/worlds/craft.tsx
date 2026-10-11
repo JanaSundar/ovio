@@ -82,8 +82,12 @@ export function CraftStarHistory({
               >
                 <motion.div
                   className="bg-[#ffe27a] px-3 py-2 font-(family-name:--ovio-hand) text-[21px] leading-none whitespace-nowrap shadow-[0_5px_10px_-3px_rgba(90,60,0,.35)]"
-                  initial={animation === "none" ? false : { opacity: 0, scale: 0.9, rotate: -14 }}
-                  animate={{ opacity: 1, scale: 1, rotate: -5 }}
+                  initial={
+                    animation === "none"
+                      ? false
+                      : { opacity: 0, transform: "scale(0.9) rotate(-14deg)" }
+                  }
+                  animate={{ opacity: 1, transform: "scale(1) rotate(-5deg)" }}
                   transition={{ ...stick, delay: DRAW * a.point.x + 0.1 }}
                 >
                   {a.label}

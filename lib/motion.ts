@@ -43,7 +43,7 @@ export const motionTokens = {
   },
   craft: {
     base: { duration: 0.3, ease: ease.craft },
-    slow: { duration: 0.4, ease: ease.craft },
+    slow: { duration: 0.32, ease: ease.craft },
   },
   retro: {
     frames: (n: number, duration: number) => ({ duration, ease: steps(n) }),

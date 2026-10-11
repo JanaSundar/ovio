@@ -4,7 +4,10 @@ import {
   animate,
   motion,
   useMotionValue,
+  useMotionTemplate,
   useMotionValueEvent,
+  useSpring,
+  useVelocity,
   useTransform,
   type AnimationPlaybackControls,
   type MotionValue,
@@ -47,6 +50,10 @@ const DECAY = 700;
 /** Fastest spin in deg/s, so a hard flick or a long swipe stays readable. */
 const MAX_SPIN = 1400;
 
+/** The pin leans with the drum's speed: this many deg/s swings it to its furthest, PIN_MAX degrees. */
+const PIN_AT = 500;
+const PIN_MAX = 26;
+
 /** Signed distance in degrees from angle `a` to angle `b`, in -180..180. */
 const toward = (a: number, b: number) => ((((b - a) % 360) + 540) % 360) - 180;
 
@@ -65,7 +72,8 @@ type FaceProps = {
 /** One week on the drum: a column of seven pieces, shaded as it turns away from the front. */
 const Face = memo(function Face({ week, step, cells, month, angle, active, tabbable }: FaceProps) {
   const lift = useOvioTransition(motionTokens.toy.key);
-  const shade = useTransform(angle, (a) => {
+  const shade = useTransform(() => {
+    const a = angle.get();
     const d = (toward(a, week * step) * Math.PI) / 180;
     return Math.min(0.5, (1 - Math.cos(d)) * 0.6);
   });
@@ -143,8 +151,13 @@ export function ToyContributionGraph({
     () => Array.from({ length: n }, (_, w) => year.days.slice(w * 7, w * 7 + 7)),
     [year, n],
   );
-  const drum = useTransform(angle, (a) => `translateZ(-${RADIUS}px) rotateY(${-a}deg)`);
-  const tick = useMotionValue(0);
+  const back = useTransform(() => -angle.get());
+  const drum = useMotionTemplate`translateZ(-${RADIUS}px) rotateY(${back}deg)`;
+  // The pin is a flapper the pegs push: it leans the way the drum turns, as far as it is fast, and
+  // springs about on the Toy piece spring. Under reduced motion it stays upright.
+  const reach = reduced ? 0 : PIN_MAX;
+  const lean = useTransform(useVelocity(angle), [-PIN_AT, 0, PIN_AT], [-reach, 0, reach]);
+  const pin = useSpring(lean, motionTokens.toy.piece);
   const [front, setFront] = useState(n - 1);
   const run = useRef<AnimationPlaybackControls | null>(null);
   /** The drag in progress: last x and time, smoothed velocity in deg/s, and the day it started on. */
@@ -227,16 +240,10 @@ export function ToyContributionGraph({
     return () => ro.disconnect();
   }, []);
 
-  // The pointer flicks each time a new week passes under it.
+  // Re-render only when a new week reaches the front, not on every frame of the spin.
   useMotionValueEvent(angle, "change", (a) => {
     const f = weekOf(a);
-    if (f === front) return;
-    setFront(f);
-    if (reduced) return;
-    const dir = Math.sign(angle.getVelocity()) || 1;
-    // Kicked, then sprung back: a spring retargets cleanly when the next week arrives mid-flick.
-    tick.set(dir * 22);
-    animate(tick, 0, motionTokens.toy.piece);
+    if (f !== front) setFront(f);
   });
 
   // Sideways wheel and trackpad swipes push the drum; it needs a non-passive listener to keep the page still.
@@ -398,7 +405,7 @@ export function ToyContributionGraph({
             <motion.div
               aria-hidden
               className="pointer-events-none absolute top-0 left-1/2 z-[5] -ml-[13px] h-10 w-[26px] origin-[50%_9px] drop-shadow-[0_3px_2px_rgba(40,28,10,.35)]"
-              style={{ rotate: tick }}
+              style={{ rotate: pin }}
             >
               <span className="absolute top-[22px] left-1/2 -ml-2 border-x-8 border-t-16 border-x-transparent border-t-[#e0432a]" />
               <span className="absolute top-0 left-1/2 -ml-3 size-6 rounded-full bg-[radial-gradient(circle_at_38%_32%,#ff8a6a,#e0432a_60%)] shadow-[inset_0_-2px_0_rgba(0,0,0,.2)]" />

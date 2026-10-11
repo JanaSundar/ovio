@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
+import type { CSSProperties } from "react";
 import { AutoHeight } from "@/components/shared/auto-height";
 import { ease, motionTokens, useOvioTransition } from "@/lib/motion";
 import { cn } from "@/lib/utils";
@@ -44,6 +45,10 @@ const LOOP = (() => {
   }
   return `M${pts.join("L")}`;
 })();
+
+/** A paper tag button: crooked at rest by --tilt. */
+const TAG =
+  "rotate-(--tilt) transition-[rotate,translate] duration-300 ease-[cubic-bezier(.34,1.5,.5,1)] motion-reduce:transition-none not-disabled:hover:-translate-y-0.5 not-disabled:hover:rotate-0 not-disabled:active:translate-y-px";
 
 const tagButton =
   "cursor-pointer border-0 px-2.5 py-1 font-(family-name:--ovio-font) text-[13px] font-bold text-(--ovio-ink) shadow-[0_3px_6px_-2px_rgba(70,45,20,.4)] disabled:cursor-default disabled:opacity-45";
@@ -97,11 +102,10 @@ function CraftLabel({ lane, ...s }: LabelProps) {
     >
       <motion.span
         aria-hidden
-        className="absolute inset-x-0 top-1/2 h-[60%] -translate-y-1/2 -skew-x-6 bg-[#ffe27a]"
+        className="absolute inset-x-0 top-1/2 h-[60%] origin-left -translate-y-1/2 -skew-x-6 bg-[#ffe27a]"
         initial={false}
-        animate={{ scaleX: s.active ? 1 : 0, opacity: s.active ? 0.8 : 0 }}
+        animate={{ transform: `scaleX(${s.active ? 1 : 0})`, opacity: s.active ? 0.8 : 0 }}
         transition={settle}
-        style={{ originX: 0 }}
       />
       <span className="relative truncate">{lane.name}</span>
     </button>
@@ -126,15 +130,8 @@ export function CraftGitBranchVisualizer({
   className,
   ...rest
 }: GitBranchVisualizerWorldProps) {
-  const settle = useOvioTransition(motionTokens.craft.base);
-
-  const paperTag = (tilt: number) => ({
-    initial: false as const,
-    animate: { rotate: tilt, y: 0 },
-    whileHover: { rotate: 0, y: -2 },
-    whileTap: { y: 1 },
-    transition: settle,
-  });
+  // A paper tag is stuck down crooked: it straightens and lifts on hover and presses back on tap.
+  const tilt = (deg: number) => ({ "--tilt": `${deg}deg` }) as CSSProperties;
 
   return (
     <section
@@ -160,27 +157,27 @@ export function CraftGitBranchVisualizer({
 
       {actions && (
         <div className="flex flex-wrap items-center gap-2.5 px-[18px] pt-3">
-          <motion.button
+          <button
             type="button"
             disabled={!actions.mergeTarget}
             onClick={actions.merge}
-            className={cn(tagButton, "bg-[#ffe27a]")}
-            {...paperTag(-1.5)}
+            style={tilt(-1.5)}
+            className={cn(tagButton, TAG, "bg-[#ffe27a]")}
           >
             {actions.mergeTarget ? `merge ${actions.mergeTarget}` : "all merged"}
-          </motion.button>
-          <motion.button
+          </button>
+          <button
             type="button"
             disabled={!actions.branchFrom}
             onClick={actions.branch}
-            className={cn(tagButton, "bg-[#f2c9a0]")}
-            {...paperTag(1)}
+            style={tilt(1)}
+            className={cn(tagButton, TAG, "bg-[#f2c9a0]")}
           >
             branch from{" "}
             <span className="font-(family-name:--ovio-mono) text-xs">
               {actions.branchFrom ?? "HEAD"}
             </span>
-          </motion.button>
+          </button>
           <button
             type="button"
             disabled={!actions.dirty}
@@ -206,8 +203,8 @@ export function CraftGitBranchVisualizer({
         {current && (
           <Swap
             id={current.commit.id}
-            from={{ opacity: 0, y: 8, rotate: -1 }}
-            to={{ opacity: 1, y: 0, rotate: 0 }}
+            from={{ opacity: 0, transform: "translateY(8px) rotate(-1deg)" }}
+            to={{ opacity: 1, transform: "translateY(0px) rotate(0deg)" }}
             transition={motionTokens.craft.base}
           >
             <div className="break-words">

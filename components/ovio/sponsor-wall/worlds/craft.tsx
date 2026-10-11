@@ -1,7 +1,8 @@
 "use client";
 
+import type { CSSProperties } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { motionTokens, useOvioTransition, useReducedMotionSafe } from "@/lib/motion";
+import { useOvioTransition, useReducedMotionSafe } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { SponsorLink } from "../parts";
 import type { PlacedSponsor, SponsorWallWorldProps } from "../sponsor-wall";
@@ -34,13 +35,16 @@ function scatter(sponsors: PlacedSponsor[][]): PlacedSponsor[] {
     .map((x) => x.s);
 }
 
+/** A sticker presses flat and lifts on hover or focus; its resting tilt arrives as --tilt. */
+const STICK =
+  "transition-[rotate,scale,translate] duration-300 ease-[cubic-bezier(.34,1.5,.5,1)] motion-reduce:transition-none hover:rotate-0 focus-within:rotate-0";
+
 const tilt = (i: number) => ((i * 37) % 24) - 12;
-const nudge = (i: number) => ({ x: ((i * 29) % 9) - 4, y: ((i * 53) % 17) - 8 });
+const nudge = (i: number) => ({ translate: `${((i * 29) % 9) - 4}px ${((i * 53) % 17) - 8}px` });
 
 /** Craft: the sponsors as stickers slapped on a laptop lid. Hover one to press it flat. */
 export function CraftSponsorWall({ groups, ctaHref, ctaLabel, className }: SponsorWallWorldProps) {
   const reduced = useReducedMotionSafe();
-  const press = useOvioTransition(motionTokens.craft.base);
   const stick = useOvioTransition({ duration: 0.3, ease: [0.34, 1.6, 0.64, 1] });
   const stickers = scatter(groups.map((g) => g.sponsors));
 
@@ -65,19 +69,19 @@ export function CraftSponsorWall({ groups, ctaHref, ctaLabel, className }: Spons
                 <motion.li
                   key={s.key}
                   layout={!reduced}
-                  initial={{ opacity: 0, scale: 1.6 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.8 }}
+                  initial={{ opacity: 0, transform: "scale(1.6)" }}
+                  animate={{ opacity: 1, transform: "scale(1)" }}
+                  exit={{ opacity: 0, transform: "scale(0.8)" }}
                   transition={{ ...stick, delay: reduced ? 0 : i * 0.045 }}
                   className="relative min-w-0 focus-within:z-10 hover:z-10"
                   style={nudge(i)}
                 >
-                  <motion.div
-                    initial={false}
-                    animate={{ rotate: tilt(i), scale: 1, y: 0 }}
-                    whileHover={{ rotate: 0, scale: 1.12, y: -4 }}
-                    whileFocus={{ rotate: 0, scale: 1.12, y: -4 }}
-                    transition={press}
+                  <div
+                    className={cn(
+                      STICK,
+                      "rotate-(--tilt) hover:scale-[1.12] focus-within:scale-[1.12] hover:-translate-y-1 focus-within:-translate-y-1",
+                    )}
+                    style={{ "--tilt": `${tilt(i)}deg` } as CSSProperties}
                   >
                     <SponsorLink
                       sponsor={s}
@@ -88,7 +92,7 @@ export function CraftSponsorWall({ groups, ctaHref, ctaLabel, className }: Spons
                       )}
                       style={{ background: paper, color: ink }}
                     />
-                  </motion.div>
+                  </div>
                 </motion.li>
               );
             })}
@@ -100,19 +104,14 @@ export function CraftSponsorWall({ groups, ctaHref, ctaLabel, className }: Spons
               animate={{ opacity: 1 }}
               transition={{ ...stick, delay: reduced ? 0 : stickers.length * 0.045 }}
             >
-              <motion.a
+              <a
                 href={ctaHref}
                 target="_blank"
                 rel="noreferrer"
-                initial={false}
-                animate={{ rotate: 4, y: 0 }}
-                whileHover={{ rotate: 0, y: -3 }}
-                whileFocus={{ rotate: 0, y: -3 }}
-                transition={press}
-                className="block rounded-[10px] border-2 border-dashed border-white/80 px-3 py-1 font-(family-name:--ovio-hand) text-xl leading-tight font-bold text-[#4d5156] no-underline"
+                className="block rotate-4 rounded-[10px] border-2 border-dashed border-white/80 px-3 py-1 font-(family-name:--ovio-hand) text-xl leading-tight font-bold text-[#4d5156] no-underline transition-[rotate,translate] duration-300 ease-[cubic-bezier(.34,1.5,.5,1)] motion-reduce:transition-none hover:-translate-y-[3px] hover:rotate-0 focus-visible:-translate-y-[3px] focus-visible:rotate-0"
               >
                 + {ctaLabel}
-              </motion.a>
+              </a>
             </motion.li>
           )}
         </ul>

@@ -37,7 +37,7 @@ export function RetroRepositoryCard({
     <article
       data-ovio-world="retro"
       className={cn(
-        "w-full max-w-[420px] border-4 border-double border-(--ovio-accent) font-(family-name:--ovio-font) text-(--ovio-ink) [text-shadow:var(--ovio-glow)]",
+        "w-full max-w-105 border-4 border-double border-(--ovio-accent) font-(family-name:--ovio-font) text-(--ovio-ink) [text-shadow:var(--ovio-glow)]",
         className,
       )}
     >

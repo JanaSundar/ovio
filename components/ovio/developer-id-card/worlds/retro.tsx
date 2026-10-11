@@ -51,7 +51,7 @@ export function RetroDeveloperIdCard({
       data-ovio-world="retro"
       aria-label={`Developer ID card for ${name}`}
       className={cn(
-        "@container w-full max-w-[420px] border-4 border-double border-(--ovio-accent) bg-(--ovio-stage) font-(family-name:--ovio-font) text-(--ovio-ink) [text-shadow:var(--ovio-glow)]",
+        "@container w-full max-w-105 border-4 border-double border-(--ovio-accent) bg-(--ovio-stage) font-(family-name:--ovio-font) text-(--ovio-ink) [text-shadow:var(--ovio-glow)]",
         className,
       )}
     >

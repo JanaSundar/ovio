@@ -19,6 +19,9 @@ const PILE = [
   { x: -5, y: 11, rotate: -2.2 },
   { x: 2, y: 15, rotate: 2.8 },
 ];
+/** A card's position as one transform string, so Motion runs it as a native animation. */
+const pose = (x: number, y: number, rotate: number, scale = 1) =>
+  `translate(${x}px, ${y}px) rotate(${rotate}deg) scale(${scale})`;
 /** How far the front card lifts before it is tucked under the pile, in px. */
 const LIFT = 130;
 /** Keyframe times of the tuck: lift, hang (where it is re-stacked), settle. */
@@ -69,17 +72,19 @@ export function CraftChangelog({ releases, top, next, className }: ChangelogWorl
               <motion.article
                 key={r.version}
                 aria-hidden={d !== 0}
-                initial={dealt ? false : { opacity: 0, y: 30, rotate: -6 }}
+                initial={dealt ? false : { opacity: 0, transform: pose(0, 30, -6) }}
                 animate={
                   tucked
                     ? {
                         opacity: 1,
-                        x: [0, 26, 26, at.x],
-                        y: [0, -LIFT, -LIFT * 0.85, at.y],
-                        rotate: [PILE[0].rotate, 5, 4, at.rotate],
-                        scale: [1, 1.03, 1, 1],
+                        transform: [
+                          pose(0, 0, PILE[0].rotate),
+                          pose(26, -LIFT, 5, 1.03),
+                          pose(26, -LIFT * 0.85, 4),
+                          pose(at.x, at.y, at.rotate),
+                        ],
                       }
-                    : { opacity: d < PILE.length ? 1 : 0, ...at, scale: 1 }
+                    : { opacity: d < PILE.length ? 1 : 0, transform: pose(at.x, at.y, at.rotate) }
                 }
                 transition={
                   tucked

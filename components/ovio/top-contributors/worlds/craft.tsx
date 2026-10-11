@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
+import type { CSSProperties } from "react";
 import { Avatar } from "@/components/shared/avatar";
 import { RollingNumber } from "@/components/shared/rolling-number";
 import { motionTokens, useOvioTransition, useReducedMotionSafe } from "@/lib/motion";
@@ -23,7 +24,6 @@ export function CraftTopContributors({
   className,
 }: TopContributorsWorldProps) {
   const reduced = useReducedMotionSafe();
-  const settle = useOvioTransition(motionTokens.craft.base);
   const drop = useOvioTransition(motionTokens.craft.slow);
 
   return (
@@ -54,25 +54,23 @@ export function CraftTopContributors({
           {periods.length > 1 && (
             <div role="group" aria-label="Time window" className="flex gap-1.5">
               {periods.map((p, i) => (
-                <motion.button
+                <button
                   key={p}
                   type="button"
                   aria-pressed={p === period}
                   onClick={() => setPeriod(p)}
-                  initial={false}
-                  animate={{ rotate: p === period ? 0 : i % 2 ? 2 : -2, y: p === period ? -2 : 0 }}
-                  whileHover={{ y: -3 }}
-                  whileFocus={{ rotate: 0, y: -3 }}
-                  transition={settle}
+                  style={
+                    { "--tilt": p === period ? "0deg" : i % 2 ? "2deg" : "-2deg" } as CSSProperties
+                  }
                   className={cn(
-                    "cursor-pointer rounded-[4px] border-0 px-2.5 py-1 text-xs font-bold shadow-[0_1px_2px_rgba(70,45,20,.18)]",
+                    "cursor-pointer rotate-(--tilt) rounded-[4px] border-0 px-2.5 py-1 text-xs font-bold shadow-[0_1px_2px_rgba(70,45,20,.18)] transition-[rotate,translate,background-color,color] duration-300 ease-[cubic-bezier(.34,1.5,.5,1)] motion-reduce:transition-none hover:-translate-y-[3px] focus-visible:-translate-y-[3px] focus-visible:rotate-0",
                     p === period
-                      ? "bg-(--ovio-accent) text-(--ovio-on-accent)"
+                      ? "-translate-y-0.5 bg-(--ovio-accent) text-(--ovio-on-accent)"
                       : "bg-(--ovio-surface) text-(--ovio-ink-2)",
                   )}
                 >
                   {PERIOD_LABEL[p]}
-                </motion.button>
+                </button>
               ))}
             </div>
           )}
@@ -89,16 +87,13 @@ export function CraftTopContributors({
             <motion.li
               key={p.login}
               layout={!reduced}
-              initial={reduced ? false : { opacity: 0, y: -24 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={reduced ? false : { opacity: 0, transform: "translateY(-24px)" }}
+              animate={{ opacity: 1, transform: "translateY(0px)" }}
               transition={{ ...drop, delay: reduced ? 0 : i * 0.055 }}
             >
-              <motion.div
-                initial={false}
-                animate={{ rotate: TILT[i % TILT.length], y: 0, scale: 1 }}
-                whileHover={{ rotate: 0, y: -8, scale: 1.04 }}
-                transition={settle}
-                className="relative w-[150px] rounded-md bg-(--ovio-surface) px-3 pt-3 pb-3.5 shadow-(--ovio-shadow)"
+              <div
+                style={{ "--tilt": `${TILT[i % TILT.length]}deg` } as CSSProperties}
+                className="relative w-37.5 rotate-(--tilt) rounded-md bg-(--ovio-surface) px-3 pt-3 pb-3.5 shadow-(--ovio-shadow) transition-[rotate,scale,translate] duration-300 ease-[cubic-bezier(.34,1.5,.5,1)] motion-reduce:transition-none hover:-translate-y-2 hover:rotate-0 hover:scale-[1.04]"
               >
                 <Avatar
                   initials={p.initials}
@@ -125,7 +120,7 @@ export function CraftTopContributors({
                     MVP
                   </span>
                 )}
-              </motion.div>
+              </div>
             </motion.li>
           ))}
         </ol>

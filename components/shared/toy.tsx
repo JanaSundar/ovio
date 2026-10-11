@@ -4,6 +4,7 @@ import {
   motion,
   useMotionValue,
   useTransform,
+  useMotionTemplate,
   useVelocity,
   type HTMLMotionProps,
 } from "motion/react";
@@ -41,10 +42,10 @@ type ToyKeyLinkProps = Omit<HTMLMotionProps<"a">, "style"> &
 function useToyKey({ depth = 6, side = "rgba(0,0,0,.25)" }: KeyProps) {
   const transition = useOvioTransition(motionTokens.toy.key);
   const y = useMotionValue(0);
-  const boxShadow = useTransform(y, (v) => {
-    const lift = Math.max(0, depth - v);
-    return `0 ${lift.toFixed(2)}px 0 ${side}, 0 ${(lift * 1.4 + 3).toFixed(1)}px ${(lift * 1.6 + 6).toFixed(1)}px -5px rgba(40,28,10,.32)`;
-  });
+  const lift = useTransform(() => Math.max(0, depth - y.get()));
+  const fall = useTransform(() => lift.get() * 1.4 + 3);
+  const blur = useTransform(() => lift.get() * 1.6 + 6);
+  const boxShadow = useMotionTemplate`0 ${lift}px 0 ${side}, 0 ${fall}px ${blur}px -5px rgba(40,28,10,.32)`;
   return {
     whileHover: { y: -2 },
     whileTap: { y: depth - 1 },
@@ -81,7 +82,7 @@ export function ToyPiece({ style, ...props }: ToyPieceProps) {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   const vx = useVelocity(x);
-  const rotate = useTransform(vx, (v) => Math.max(-14, Math.min(14, v * 0.014)));
+  const rotate = useTransform(() => Math.max(-14, Math.min(14, vx.get() * 0.014)));
   const spring = "stiffness" in back ? back : { stiffness: 10000, damping: 1000 };
 
   return (

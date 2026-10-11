@@ -61,8 +61,8 @@ export function WorldCompass() {
   const x = useSpring(pullX, { stiffness: 170, damping: 14, mass: 0.6 });
   const y = useSpring(pullY, { stiffness: 170, damping: 14, mass: 0.6 });
   // The glass and needle drift further than the bezel, so the instrument reads as having depth.
-  const capX = useTransform(x, (v) => v * 0.5);
-  const capY = useTransform(y, (v) => v * 0.5);
+  const capX = useTransform(() => x.get() * 0.5);
+  const capY = useTransform(() => y.get() * 0.5);
 
   // Follow world changes from the tabs and number keys; a drag is already pointing the needle.
   useEffect(() => {

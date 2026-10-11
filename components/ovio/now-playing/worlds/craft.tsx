@@ -1,7 +1,7 @@
 "use client";
 
-import { motion, useAnimationFrame, useMotionValue, useSpring } from "motion/react";
-import { useEffect } from "react";
+import { animate, motion } from "motion/react";
+import { useEffect, useRef } from "react";
 import { motionTokens, useOvioTransition, useReducedMotionSafe } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import type { NowPlayingWorldProps } from "../now-playing";
@@ -11,7 +11,7 @@ import { Artwork, Time, useFillTransition, useFit } from "../parts";
 const W = 430;
 const H = 292;
 /** One turn every 1.8s, near 33⅓ rpm. */
-const DEG_PER_MS = 360 / 1800;
+const SPIN_MS = 1800;
 /** Tonearm angles: lifted clear of the record, then outer to inner groove as the track plays. */
 const ARM_REST = 4;
 const ARM_START = 22;
@@ -32,17 +32,36 @@ export function CraftNowPlaying({
   const fill = useFillTransition(ticking);
   const [ref, fit] = useFit(W);
 
-  // The platter spins up and winds down instead of stopping dead.
-  const rotate = useMotionValue(0);
-  const speed = useSpring(0, { stiffness: 30, damping: 14 });
+  // One endless native spin, run on the compositor; only its playback rate is eased, so the platter
+  // spins up and winds down instead of stopping dead, and nothing runs on the main thread while it turns.
+  const platter = useRef<HTMLSpanElement>(null);
+  const spin = useRef<Animation>(null);
   useEffect(() => {
-    if (reduced) speed.jump(0);
-    else speed.set(playing ? 1 : 0);
-  }, [playing, reduced, speed]);
-  useAnimationFrame((_, delta) => {
-    const s = speed.get();
-    if (s > 0.001) rotate.set((rotate.get() + s * delta * DEG_PER_MS) % 360);
-  });
+    const el = platter.current;
+    if (!el) return;
+    const a = el.animate([{ transform: "rotate(0deg)" }, { transform: "rotate(360deg)" }], {
+      duration: SPIN_MS,
+      iterations: Infinity,
+    });
+    a.playbackRate = 0;
+    spin.current = a;
+    return () => a.cancel();
+  }, []);
+  useEffect(() => {
+    const a = spin.current;
+    if (!a) return;
+    if (reduced) {
+      a.playbackRate = 0;
+      return;
+    }
+    const run = animate(a.playbackRate, playing ? 1 : 0, {
+      type: "spring",
+      stiffness: 30,
+      damping: 14,
+      onUpdate: (v) => (a.playbackRate = Math.max(0, v)),
+    });
+    return () => run.stop();
+  }, [playing, reduced]);
 
   return (
     <article
@@ -64,14 +83,14 @@ export function CraftNowPlaying({
           onClick={togglePlay}
           aria-label={playing ? "Pause" : "Play"}
           initial={false}
-          animate={{ x: playing ? 0 : -46 }}
+          animate={{ transform: `translateX(${playing ? 0 : -46}px)` }}
           transition={settle}
           className="absolute top-5 left-[124px] size-[224px] cursor-pointer rounded-full border-0 p-0 shadow-[0_10px_20px_-6px_rgba(40,25,10,.5)]"
         >
-          <motion.span
+          <span
+            ref={platter}
             aria-hidden
             className="absolute inset-0 rounded-full bg-[repeating-radial-gradient(circle,#1a140e_0_2px,#2a211a_2px_4px)]"
-            style={{ rotate }}
           >
             <span className="absolute inset-0 m-auto flex size-[78px] items-center justify-center rounded-full bg-(--ovio-accent)">
               <span className="absolute top-2.5 font-(family-name:--ovio-hand) text-sm leading-none text-(--ovio-on-accent)">
@@ -79,7 +98,7 @@ export function CraftNowPlaying({
               </span>
               <span className="size-2 rounded-full bg-(--ovio-stage)" />
             </span>
-          </motion.span>
+          </span>
           <span
             aria-hidden
             className="absolute inset-0 rounded-full bg-[conic-gradient(from_20deg,transparent_0_12%,rgba(255,255,255,.1)_16%,transparent_22%_62%,rgba(255,255,255,.07)_66%,transparent_72%)]"
@@ -110,7 +129,7 @@ export function CraftNowPlaying({
           aria-hidden
           className="absolute top-[22px] left-[384px] h-[186px] w-0 origin-top"
           initial={false}
-          animate={{ rotate: playing ? ARM_START + ratio * ARM_SPAN : ARM_REST }}
+          animate={{ transform: `rotate(${playing ? ARM_START + ratio * ARM_SPAN : ARM_REST}deg)` }}
           transition={ticking && playing ? { duration: 1, ease: "linear" } : settle}
         >
           <span className="absolute top-3 -left-[3px] h-[160px] w-1.5 rounded-full bg-[linear-gradient(90deg,#b9b2a6,#efe9df,#a49c90)] shadow-[2px_3px_4px_rgba(40,25,10,.3)]" />
@@ -121,7 +140,7 @@ export function CraftNowPlaying({
         <motion.div
           className="absolute top-[190px] left-[230px] w-[194px] bg-[#ffe27a] px-4 pt-3.5 pb-3 shadow-[0_6px_12px_-4px_rgba(90,60,0,.4)]"
           initial={false}
-          animate={{ rotate: playing ? 4 : 1.5 }}
+          animate={{ transform: `rotate(${playing ? 4 : 1.5}deg)` }}
           transition={settle}
         >
           <h3 className="m-0 truncate font-(family-name:--ovio-hand) text-[26px] leading-none font-bold">

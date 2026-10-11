@@ -23,7 +23,7 @@ export function MinimalRepositoryCard({
       whileHover={{ y: -2, borderColor: "#c9c6bf" }}
       transition={transition}
       className={cn(
-        "w-full max-w-[420px] rounded-(--ovio-radius) border border-(--ovio-line) bg-(--ovio-surface) px-7 py-[26px] font-(family-name:--ovio-font) text-(--ovio-ink)",
+        "w-full max-w-105 rounded-(--ovio-radius) border border-(--ovio-line) bg-(--ovio-surface) px-7 py-[26px] font-(family-name:--ovio-font) text-(--ovio-ink)",
         className,
       )}
     >

@@ -53,7 +53,7 @@ export function CraftDeveloperIdCard({
       // oxlint-disable-next-line jsx-a11y/no-noninteractive-tabindex
       tabIndex={0}
       className={cn(
-        "group @container relative w-full max-w-[380px] font-(family-name:--ovio-font) text-(--ovio-ink)",
+        "group @container relative w-full max-w-95 font-(family-name:--ovio-font) text-(--ovio-ink)",
         className,
       )}
     >
@@ -73,14 +73,14 @@ export function CraftDeveloperIdCard({
       />
       <article
         className={cn(
-          "relative isolate rounded-lg bg-(--ovio-surface) px-7 pt-[26px] pb-6 shadow-[0_2px_4px_rgba(70,45,20,.12),0_14px_24px_-10px_rgba(70,45,20,.4)] @max-[320px]:px-5",
+          "relative isolate rounded-lg bg-(--ovio-surface) px-7 pt-6.5 pb-6 shadow-[0_2px_4px_rgba(70,45,20,.12),0_14px_24px_-10px_rgba(70,45,20,.4)] @max-[320px]:px-5",
           LIFT,
         )}
         style={{ backgroundImage: PAPER }}
       >
         <span
           aria-hidden
-          className="absolute -top-[13px] left-1/2 -ml-12 h-[26px] w-24 -rotate-[2.5deg] bg-(--ovio-tape) shadow-[0_1px_2px_rgba(0,0,0,.1)]"
+          className="absolute -top-[13px] left-1/2 -ml-12 h-6.5 w-24 -rotate-[2.5deg] bg-(--ovio-tape) shadow-[0_1px_2px_rgba(0,0,0,.1)]"
         />
         <div
           className={cn(
@@ -91,14 +91,14 @@ export function CraftDeveloperIdCard({
           <span>Developer{serial && ` / ${serial}`}</span>
           {since && <span>Est. {since}</span>}
         </div>
-        <div className="mt-2.5 mb-[18px] h-px bg-(--ovio-line) opacity-80" />
+        <div className="mt-2.5 mb-4.5 h-px bg-(--ovio-line) opacity-80" />
 
-        <div className="flex items-end gap-[18px] @max-[320px]:gap-3.5">
+        <div className="flex items-end gap-4.5 @max-[320px]:gap-3.5">
           <Avatar
             src={avatarUrl}
-            className="h-[124px] w-[104px] -rotate-[1.5deg] rounded bg-(--ovio-accent) bg-[repeating-linear-gradient(135deg,rgba(255,255,255,.16)_0_7px,transparent_7px_14px)] shadow-[0_2px_4px_rgba(70,45,20,.25)] @max-[320px]:h-[96px] @max-[320px]:w-20"
+            className="h-31 w-26 -rotate-[1.5deg] rounded bg-(--ovio-accent) bg-[repeating-linear-gradient(135deg,rgba(255,255,255,.16)_0_7px,transparent_7px_14px)] shadow-[0_2px_4px_rgba(70,45,20,.25)] @max-[320px]:h-24 @max-[320px]:w-20"
           >
-            <span className="absolute -top-2 -right-2 flex size-[34px] rotate-12 items-center justify-center rounded-full bg-[#ffe27a] font-(family-name:--ovio-font) text-xs font-extrabold text-(--ovio-ink) shadow-[0_3px_6px_-2px_rgba(90,60,0,.5)]">
+            <span className="absolute -top-2 -right-2 flex size-8.5 rotate-12 items-center justify-center rounded-full bg-[#ffe27a] font-(family-name:--ovio-font) text-xs font-extrabold text-(--ovio-ink) shadow-[0_3px_6px_-2px_rgba(90,60,0,.5)]">
               {initials}
             </span>
           </Avatar>
@@ -176,7 +176,7 @@ export function CraftDeveloperIdCard({
             <div className="shrink-0 rotate-[1.5deg] rounded bg-white p-1.5 shadow-[0_2px_4px_rgba(70,45,20,.2)]">
               <div
                 className={cn(
-                  "size-[74px] opacity-[.18] motion-reduce:opacity-100 group-hover:opacity-100 group-focus:opacity-100 @max-[320px]:size-16",
+                  "size-18.5 opacity-[.18] motion-reduce:opacity-100 group-hover:opacity-100 group-focus:opacity-100 @max-[320px]:size-16",
                   MOVE,
                 )}
               >
@@ -192,7 +192,7 @@ export function CraftDeveloperIdCard({
             className={cn(
               "pointer-events-none absolute opacity-0 motion-reduce:opacity-100 group-hover:translate-x-7 group-hover:opacity-100 group-focus:translate-x-7 group-focus:opacity-100",
               MOVE,
-              " -bottom-[26px] left-[clamp(16px,28%,110px)] -rotate-4 font-(family-name:--ovio-hand) text-[26px] whitespace-nowrap text-(--ovio-accent-deep)",
+              " -bottom-6.5 left-[clamp(16px,28%,110px)] -rotate-4 font-(family-name:--ovio-hand) text-[26px] whitespace-nowrap text-(--ovio-accent-deep)",
             )}
           >
             open to work ✦

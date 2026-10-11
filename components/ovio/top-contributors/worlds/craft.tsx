@@ -93,7 +93,7 @@ export function CraftTopContributors({
             >
               <div
                 style={{ "--tilt": `${TILT[i % TILT.length]}deg` } as CSSProperties}
-                className="relative w-[150px] rotate-(--tilt) rounded-md bg-(--ovio-surface) px-3 pt-3 pb-3.5 shadow-(--ovio-shadow) transition-[rotate,scale,translate] duration-300 ease-[cubic-bezier(.34,1.5,.5,1)] motion-reduce:transition-none hover:-translate-y-2 hover:rotate-0 hover:scale-[1.04]"
+                className="relative w-37.5 rotate-(--tilt) rounded-md bg-(--ovio-surface) px-3 pt-3 pb-3.5 shadow-(--ovio-shadow) transition-[rotate,scale,translate] duration-300 ease-[cubic-bezier(.34,1.5,.5,1)] motion-reduce:transition-none hover:-translate-y-2 hover:rotate-0 hover:scale-[1.04]"
               >
                 <Avatar
                   initials={p.initials}

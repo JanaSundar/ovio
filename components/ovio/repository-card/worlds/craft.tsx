@@ -15,7 +15,7 @@ export function CraftRepositoryCard({
     <article
       data-ovio-world="craft"
       className={cn(
-        "relative w-full max-w-[380px] rounded-(--ovio-radius) bg-(--ovio-surface) px-7 py-[26px] font-(family-name:--ovio-font) text-(--ovio-ink) shadow-(--ovio-shadow) rotate-[1.4deg] transition-[rotate,translate] duration-300 ease-[cubic-bezier(.34,1.5,.5,1)] motion-reduce:transition-none hover:-translate-y-1.5 hover:rotate-0",
+        "relative w-full max-w-95 rounded-(--ovio-radius) bg-(--ovio-surface) px-7 py-6.5 font-(family-name:--ovio-font) text-(--ovio-ink) shadow-(--ovio-shadow) rotate-[1.4deg] transition-[rotate,translate] duration-300 ease-[cubic-bezier(.34,1.5,.5,1)] motion-reduce:transition-none hover:-translate-y-1.5 hover:rotate-0",
         className,
       )}
     >

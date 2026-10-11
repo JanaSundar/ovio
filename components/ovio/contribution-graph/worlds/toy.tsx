@@ -136,7 +136,7 @@ const Face = memo(function Face({ week, step, cells, month, angle, active, tabba
  */
 export function ToyContributionGraph({
   year,
-  active,
+  active: hovered,
   focusIndex,
   animation,
   grid,
@@ -305,6 +305,8 @@ export function ToyContributionGraph({
   const shown = weeks[front];
   const weekTotal = shown.reduce((s, c) => s + c.count, 0);
   const short = (c?: ContributionCell) => c?.label.slice(5) ?? "";
+  // At rest on the latest week the drum points at the current day; turn away and it reads the week.
+  const active = hovered ?? (front === n - 1 ? year.days[year.days.length - 1] : null);
   const count = active ? active.count : weekTotal;
 
   const arrow =

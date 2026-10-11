@@ -11,22 +11,22 @@ import {
 } from "react";
 import { useWorld, type World } from "@/components/shared/world-provider";
 import { keyToIndex } from "@/lib/keys";
-import { MinimalGooeyTabs } from "./worlds/minimal";
-import { CraftGooeyTabs } from "./worlds/craft";
-import { RetroGooeyTabs } from "./worlds/retro";
-import { ToyGooeyTabs } from "./worlds/toy";
+import { MinimalLiquidTabs } from "./worlds/minimal";
+import { CraftLiquidTabs } from "./worlds/craft";
+import { RetroLiquidTabs } from "./worlds/retro";
+import { ToyLiquidTabs } from "./worlds/toy";
 
-export type GooeyStatus = "offline" | "building" | "online";
+export type DeployStatus = "offline" | "building" | "online";
 
-export type GooeyTabsProps = {
+export type LiquidTabsProps = {
   tabs: string[];
   variant?: World;
   value?: number;
   defaultValue?: number;
   onValueChange?: (index: number) => void;
   /** Deploy indicator state. Leave out to hide the indicator. */
-  status?: GooeyStatus;
-  /** Blur strength of the goo filter. */
+  status?: DeployStatus;
+  /** Blur strength of the deploy status goo. */
   goo?: number;
   /** Content for each tab's panel, by index. */
   panels?: ReactNode[];
@@ -35,7 +35,7 @@ export type GooeyTabsProps = {
   className?: string;
 };
 
-export type GooeyTabsWorldProps = {
+export type LiquidTabsWorldProps = {
   tabs: string[];
   index: number;
   select: (index: number) => void;
@@ -46,29 +46,29 @@ export type GooeyTabsWorldProps = {
   /** A filter id unique to this instance, so several tab bars can share a page. */
   filterId: string;
   goo: number;
-  status?: GooeyStatus;
+  status?: DeployStatus;
   statusLabel?: string;
   panel?: ReactNode;
   label: string;
   className?: string;
 };
 
-const STATUS_LABEL: Record<GooeyStatus, string> = {
+const STATUS_LABEL: Record<DeployStatus, string> = {
   offline: "Offline",
   building: "Building…",
   online: "Online",
 };
 
-export const STATUS_INDEX: Record<GooeyStatus, number> = { offline: 0, building: 1, online: 2 };
+export const STATUS_INDEX: Record<DeployStatus, number> = { offline: 0, building: 1, online: 2 };
 
 const VIEWS = {
-  minimal: MinimalGooeyTabs,
-  craft: CraftGooeyTabs,
-  retro: RetroGooeyTabs,
-  toy: ToyGooeyTabs,
-} satisfies Record<World, ComponentType<GooeyTabsWorldProps>>;
+  minimal: MinimalLiquidTabs,
+  craft: CraftLiquidTabs,
+  retro: RetroLiquidTabs,
+  toy: ToyLiquidTabs,
+} satisfies Record<World, ComponentType<LiquidTabsWorldProps>>;
 
-export function GooeyTabs({
+export function LiquidTabs({
   tabs,
   variant,
   value,
@@ -79,7 +79,7 @@ export function GooeyTabs({
   panels,
   label = "Sections",
   className,
-}: GooeyTabsProps) {
+}: LiquidTabsProps) {
   const world = useWorld(variant);
   const [inner, setInner] = useState(defaultValue);
   const index = Math.max(0, Math.min(tabs.length - 1, value ?? inner));
@@ -103,7 +103,7 @@ export function GooeyTabs({
     refs.current[next]?.focus();
   };
 
-  const props: GooeyTabsWorldProps = {
+  const props: LiquidTabsWorldProps = {
     tabs,
     index,
     select,

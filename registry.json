@@ -667,10 +667,10 @@
       ]
     },
     {
-      "name": "gooey-tabs",
+      "name": "liquid-tabs",
       "type": "registry:ui",
-      "title": "Gooey Tabs",
-      "description": "Tab bar with a moving indicator and a deploy status. In Toy, the indicator is a piece you can drag and flick.",
+      "title": "Liquid Tabs",
+      "description": "Tab bar whose indicator stretches between tabs like a drop of liquid, and a deploy status. In Toy, the indicator is a piece you can drag and flick.",
       "dependencies": ["motion"],
       "registryDependencies": [
         "utils",
@@ -682,34 +682,39 @@
       ],
       "files": [
         {
-          "path": "components/ovio/gooey-tabs/gooey-tabs.tsx",
+          "path": "components/ovio/liquid-tabs/liquid-tabs.tsx",
           "type": "registry:ui",
-          "target": "components/ovio/gooey-tabs/gooey-tabs.tsx"
+          "target": "components/ovio/liquid-tabs/liquid-tabs.tsx"
         },
         {
-          "path": "components/ovio/gooey-tabs/parts.tsx",
+          "path": "components/ovio/liquid-tabs/parts.tsx",
           "type": "registry:ui",
-          "target": "components/ovio/gooey-tabs/parts.tsx"
+          "target": "components/ovio/liquid-tabs/parts.tsx"
         },
         {
-          "path": "components/ovio/gooey-tabs/worlds/minimal.tsx",
+          "path": "components/ovio/liquid-tabs/use-liquid.ts",
           "type": "registry:ui",
-          "target": "components/ovio/gooey-tabs/worlds/minimal.tsx"
+          "target": "components/ovio/liquid-tabs/use-liquid.ts"
         },
         {
-          "path": "components/ovio/gooey-tabs/worlds/craft.tsx",
+          "path": "components/ovio/liquid-tabs/worlds/minimal.tsx",
           "type": "registry:ui",
-          "target": "components/ovio/gooey-tabs/worlds/craft.tsx"
+          "target": "components/ovio/liquid-tabs/worlds/minimal.tsx"
         },
         {
-          "path": "components/ovio/gooey-tabs/worlds/retro.tsx",
+          "path": "components/ovio/liquid-tabs/worlds/craft.tsx",
           "type": "registry:ui",
-          "target": "components/ovio/gooey-tabs/worlds/retro.tsx"
+          "target": "components/ovio/liquid-tabs/worlds/craft.tsx"
         },
         {
-          "path": "components/ovio/gooey-tabs/worlds/toy.tsx",
+          "path": "components/ovio/liquid-tabs/worlds/retro.tsx",
           "type": "registry:ui",
-          "target": "components/ovio/gooey-tabs/worlds/toy.tsx"
+          "target": "components/ovio/liquid-tabs/worlds/retro.tsx"
+        },
+        {
+          "path": "components/ovio/liquid-tabs/worlds/toy.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/liquid-tabs/worlds/toy.tsx"
         }
       ]
     },
@@ -1109,7 +1114,7 @@
         "JanaSundar/ovio/npm-downloads",
         "JanaSundar/ovio/physical-knob",
         "JanaSundar/ovio/bundle-size",
-        "JanaSundar/ovio/gooey-tabs",
+        "JanaSundar/ovio/liquid-tabs",
         "JanaSundar/ovio/changelog",
         "JanaSundar/ovio/event-ticket",
         "JanaSundar/ovio/sponsor-wall",

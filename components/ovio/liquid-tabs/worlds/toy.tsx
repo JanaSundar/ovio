@@ -5,23 +5,23 @@ import {
   motion,
   useMotionValue,
   useMotionTemplate,
-  useMotionValueEvent,
   useTransform,
   useVelocity,
 } from "motion/react";
-import { useEffect, useRef, useState, type PointerEvent } from "react";
+import { useEffect, useRef, type PointerEvent } from "react";
 import { motionTokens, useReducedMotionSafe } from "@/lib/motion";
 import { cn } from "@/lib/utils";
-import { STATUS_INDEX, type GooeyTabsWorldProps } from "../gooey-tabs";
+import { STATUS_INDEX, type LiquidTabsWorldProps } from "../liquid-tabs";
 
 const PAD = 8;
 const DOTS = ["#a69e90", "#f4b52a", "#33b07a"];
+const LABEL = "py-3.5 font-[inherit] text-[15px] font-extrabold";
 
 /**
  * Toy: the indicator is a plastic piece in a track. Click a tab, or drag and flick the piece;
  * it slides on a spring (k420 c20), squashes with its speed and snaps to the nearest tab.
  */
-export function ToyGooeyTabs(p: GooeyTabsWorldProps) {
+export function ToyLiquidTabs(p: LiquidTabsWorldProps) {
   const reduced = useReducedMotionSafe();
   const n = p.tabs.length;
   const track = useRef<HTMLDivElement>(null);
@@ -32,8 +32,11 @@ export function ToyGooeyTabs(p: GooeyTabsWorldProps) {
   const squash = useTransform(() => Math.min(0.22, Math.abs(v.get()) * 0.035));
   const scaleX = useTransform(() => 1 + squash.get());
   const scaleY = useTransform(() => 1 - squash.get() * 0.6);
-  const [near, setNear] = useState(p.index);
-  useMotionValueEvent(x, "change", (t) => setNear(Math.max(0, Math.min(n - 1, Math.round(t)))));
+  // The labels in white, clipped to the piece: letters turn white exactly where it covers them,
+  // while it slides and while it is dragged.
+  const from = useTransform(() => (x.get() * 100) / n);
+  const to = useTransform(() => 100 - ((x.get() + 1) * 100) / n);
+  const clip = useMotionTemplate`inset(0 ${to}% 0 ${from}% round 12px)`;
 
   // The tab the piece is currently heading for, so external changes don't restart a flick.
   const heading = useRef(p.index);
@@ -135,14 +138,25 @@ export function ToyGooeyTabs(p: GooeyTabsWorldProps) {
                 if (e.detail === 0) goTo(i);
               }}
               className={cn(
-                "pointer-events-auto cursor-pointer border-0 bg-transparent py-3.5 font-[inherit] text-[15px] font-extrabold transition-colors duration-100",
-                i === near ? "text-white" : "text-[#4a463e]",
+                LABEL,
+                "pointer-events-auto cursor-pointer border-0 bg-transparent text-[#4a463e]",
               )}
             >
               {tab}
             </button>
           ))}
         </div>
+        <motion.div
+          aria-hidden
+          className="pointer-events-none absolute inset-2 grid text-white"
+          style={{ gridTemplateColumns: `repeat(${n}, minmax(0, 1fr))`, clipPath: clip }}
+        >
+          {p.tabs.map((tab, i) => (
+            <span key={`${i}:${tab}`} className={cn(LABEL, "block text-center")}>
+              {tab}
+            </span>
+          ))}
+        </motion.div>
       </div>
 
       {p.status && (

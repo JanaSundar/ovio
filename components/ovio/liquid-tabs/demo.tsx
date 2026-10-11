@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useReducedMotionSafe } from "@/lib/motion";
-import { GooeyTabs, type GooeyStatus } from "./gooey-tabs";
+import { LiquidTabs, type DeployStatus } from "./liquid-tabs";
 
 const TABS = ["Overview", "Commits", "Issues", "Releases"];
 const PANELS = [
@@ -11,9 +11,9 @@ const PANELS = [
   "37 open · 412 closed",
   "v2.4.0 is latest",
 ];
-const STATUSES: GooeyStatus[] = ["offline", "building", "online"];
+const STATUSES: DeployStatus[] = ["offline", "building", "online"];
 
-export function GooeyTabsDemo() {
+export function LiquidTabsDemo() {
   const [status, setStatus] = useState(1);
   const reduced = useReducedMotionSafe();
   // The deploy status cycles so every state can be seen; it holds on "building" under reduced motion.
@@ -23,6 +23,6 @@ export function GooeyTabsDemo() {
     return () => clearInterval(id);
   }, [reduced]);
   return (
-    <GooeyTabs tabs={TABS} panels={PANELS} status={STATUSES[status]} label="Repository sections" />
+    <LiquidTabs tabs={TABS} panels={PANELS} status={STATUSES[status]} label="Repository sections" />
   );
 }

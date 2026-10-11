@@ -20,7 +20,7 @@ All motion respects `prefers-reduced-motion`.
 | Component                                                                     | Status    | Description                                                                           |
 | ----------------------------------------------------------------------------- | --------- | ------------------------------------------------------------------------------------- |
 | [Contribution Graph](https://ovioui.vercel.app/docs/contribution-graph)       | Available | A year of activity, one cell per day.                                                 |
-| [Gooey Tabs](https://ovioui.vercel.app/docs/gooey-tabs)                       | Available | A tab bar with a moving indicator and a deploy status.                                |
+| [Liquid Tabs](https://ovioui.vercel.app/docs/liquid-tabs)                     | Available | A tab bar with a moving indicator and a deploy status.                                |
 | [Star History](https://ovioui.vercel.app/docs/star-history)                   | Available | Stargazers over time, with annotated spikes.                                          |
 | [Repository Card](https://ovioui.vercel.app/docs/repository-card)             | Available | A repo at a glance: name, description, stars, forks and language.                     |
 | [Top Contributors](https://ovioui.vercel.app/docs/top-contributors)           | Available | The people behind a project, ranked by commits.                                       |

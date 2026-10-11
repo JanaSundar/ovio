@@ -46,7 +46,7 @@ export function ToyBundleSize({
     <div
       data-ovio-world="toy"
       className={cn(
-        "flex w-full max-w-[420px] flex-col gap-4 rounded-[24px] bg-(--ovio-surface) p-5 font-(family-name:--ovio-font) text-(--ovio-ink) shadow-[inset_0_1px_0_#fff,0_8px_0_#d2ccbf,0_26px_32px_-16px_rgba(40,28,10,.45)]",
+        "flex w-full max-w-105 flex-col gap-4 rounded-[24px] bg-(--ovio-surface) p-5 font-(family-name:--ovio-font) text-(--ovio-ink) shadow-[inset_0_1px_0_#fff,0_8px_0_#d2ccbf,0_26px_32px_-16px_rgba(40,28,10,.45)]",
         className,
       )}
     >

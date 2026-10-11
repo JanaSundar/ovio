@@ -153,12 +153,12 @@ export const COMPONENTS: ComponentDoc[] = [
     ],
   },
   {
-    slug: "gooey-tabs",
-    name: "Gooey Tabs",
-    tech: "SVG goo filter · Motion for React (Toy: spring drag)",
+    slug: "liquid-tabs",
+    name: "Liquid Tabs",
+    tech: "Spring-sampled WAAPI · clip-path labels · SVG goo status (Toy: spring drag)",
     description:
-      "A tab bar with a moving indicator and a deploy status. In Toy, the indicator is a piece you can drag and flick.",
-    exportName: "GooeyTabs",
+      "A tab bar whose indicator stretches between tabs like a drop of liquid, and a deploy status. In Toy, the indicator is a piece you can drag and flick.",
+    exportName: "LiquidTabs",
     usage: '  tabs={["Overview", "Commits", "Issues", "Releases"]}',
     props: [
       V,
@@ -179,7 +179,12 @@ export const COMPONENTS: ComponentDoc[] = [
         description: "Deploy indicator. Hidden when left out.",
       },
       { name: "panels", type: "ReactNode[]", description: "Panel content per tab." },
-      { name: "goo", type: "number", description: "Blur strength of the filter.", default: "9" },
+      {
+        name: "goo",
+        type: "number",
+        description: "Blur strength of the deploy status goo.",
+        default: "9",
+      },
       CL,
     ],
   },

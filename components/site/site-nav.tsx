@@ -2,7 +2,7 @@
 
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
-import { GooeyTabs } from "@/components/ovio/gooey-tabs/gooey-tabs";
+import { LiquidTabs } from "@/components/ovio/liquid-tabs/liquid-tabs";
 import { AUTHOR_URL, DOCS_HREF, GITHUB_URL } from "@/content/components";
 import { LogoLink } from "./logo";
 
@@ -26,7 +26,7 @@ const PAGES = [
 
 /**
  * The top bar. It lives in the root layout so it stays mounted across pages, which lets the
- * Home / Docs goo indicator travel between tabs as the page changes.
+ * Home / Docs liquid indicator travel between tabs as the page changes.
  */
 export function SiteNav() {
   const pathname = usePathname();
@@ -49,7 +49,7 @@ export function SiteNav() {
       </div>
       <div className="nav-note">An open component system for developer sites</div>
       <div className="nav-links">
-        <GooeyTabs
+        <LiquidTabs
           variant="minimal"
           className="nav-tabs"
           label="Main"

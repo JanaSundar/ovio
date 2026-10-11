@@ -516,8 +516,8 @@ const ARTS: Record<string, Art> = {
     footer: ["BOOK", "TEAR", "FLIP"],
     draw: Ticket,
   },
-  "gooey-tabs": {
-    label: "Gooey tabs",
+  "liquid-tabs": {
+    label: "Liquid tabs",
     metric: "4 TABS",
     footer: ["OFFLINE", "BUILDING", "ONLINE"],
     draw: Tabs,

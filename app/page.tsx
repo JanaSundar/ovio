@@ -10,7 +10,7 @@ const FEATURED = [
   { slug: "contribution-graph", glyph: "▦", pitch: "A year of activity, one cell per day." },
   { slug: "repository-card", glyph: "◈", pitch: "The story behind a project at a glance." },
   { slug: "star-history", glyph: "↗", pitch: "Stargazers over time, with a scrubber." },
-  { slug: "gooey-tabs", glyph: "▤", pitch: "Tabs with a liquid indicator and a deploy status." },
+  { slug: "liquid-tabs", glyph: "▤", pitch: "Tabs with a liquid indicator and a deploy status." },
   { slug: "top-contributors", glyph: "◎", pitch: "Put project people in the foreground." },
   { slug: "physical-knob", glyph: "◉", pitch: "A tactile control with genuine inertia." },
 ];

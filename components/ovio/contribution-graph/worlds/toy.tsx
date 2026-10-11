@@ -10,7 +10,6 @@ import {
   useVelocity,
   useTransform,
   type AnimationPlaybackControls,
-  type MotionValue,
 } from "motion/react";
 import {
   memo,
@@ -28,13 +27,15 @@ import { dayCellProps, dayIndexOf } from "../grid";
 import { unit, type ContributionCell } from "../year";
 import { formatNumber, plural } from "@/lib/format";
 
-/** Plastic by level: top colour, highlight and the darker lip under it. Level 0 is an empty socket. */
-const PLASTIC = [
-  { top: "#ddd4bf", hi: "#f7edd5", lip: "#9f9889" },
-  { top: "#f6d77a", hi: "#fff088", lip: "#b19a57" },
-  { top: "#f4b52a", hi: "#ffca2f", lip: "#af821e" },
-  { top: "#ef7a2b", hi: "#ff8830", lip: "#ac571e" },
-  { top: "#e0432a", hi: "#fa4b2f", lip: "#a1301e" },
+/**
+ * Studs for levels 1 to 4: face colour, highlight and the lip under it. Quiet days stay empty
+ * peg holes, picked or not.
+ */
+const STUD = [
+  { top: "#ffe08a", hi: "#fff6d2", lip: "#c4a447" },
+  { top: "#f4b52a", hi: "#ffd877", lip: "#b47e17" },
+  { top: "#ef7a2b", hi: "#ffa76c", lip: "#ae5016" },
+  { top: "#ef4f2b", hi: "#ff8467", lip: "#ad2f17" },
 ];
 
 /** Drum radius in px: 53 faces of 24px make the circumference. */
@@ -62,70 +63,86 @@ type FaceProps = {
   step: number;
   cells: ContributionCell[];
   month?: string;
-  angle: MotionValue<number>;
+  /** The latest week, labelled NOW. */
+  now: boolean;
   /** Index of the active day when it is in this week. */
   active: number | null;
   /** Index of the tab stop when it is in this week. */
   tabbable: number | null;
 };
 
-/** One week on the drum: a column of seven pieces, shaded as it turns away from the front. */
-const Face = memo(function Face({ week, step, cells, month, angle, active, tabbable }: FaceProps) {
-  const lift = useOvioTransition(motionTokens.toy.key);
-  const shade = useTransform(() => {
-    const a = angle.get();
-    const d = (toward(a, week * step) * Math.PI) / 180;
-    return Math.min(0.5, (1 - Math.cos(d)) * 0.6);
-  });
+/**
+ * One week on the drum: a slat of blue plastic with seven peg holes. Busier days hold taller studs;
+ * the picked day pops up. The light is fixed in the window, not painted per slat, so the drum reads
+ * as one smooth curve and nothing here changes while it spins.
+ */
+const Face = memo(function Face({ week, step, cells, month, now, active, tabbable }: FaceProps) {
+  const pop = useOvioTransition(motionTokens.toy.key);
 
   return (
     <div
       role="row"
-      className="absolute top-0 left-0 flex h-[184px] w-6 flex-col gap-[3px] bg-[#f8f5ef] px-[3px] py-1 shadow-[inset_1px_0_0_rgba(60,45,20,.12)] backface-hidden"
+      className="absolute top-0 left-0 flex h-[184px] w-6 flex-col items-center gap-[3px] bg-[#2c55e0] py-1 backface-hidden shadow-[inset_1px_0_0_rgba(255,255,255,.14),inset_-1px_0_0_rgba(10,20,70,.25)]"
       style={{ transform: `rotateY(${week * step}deg) translateZ(${RADIUS}px)` }}
     >
       <span
         aria-hidden
-        className="h-3 text-center font-(family-name:--ovio-mono) text-[8px] leading-3 font-semibold whitespace-nowrap text-(--ovio-muted)"
+        className={cn(
+          "h-3 text-center font-(family-name:--ovio-mono) text-[8px] leading-3 font-bold whitespace-nowrap",
+          now ? "text-[#ffe08a]" : "text-white/80",
+        )}
       >
-        {month}
+        {now ? "NOW" : month}
       </span>
       {Array.from({ length: 7 }, (_, wd) => {
         const cell = cells[wd];
-        if (!cell) return <span key={wd} aria-hidden className="min-h-0 flex-1" />;
+        // Days still to come keep their slot, so the current week reads as a whole column.
+        if (!cell)
+          return (
+            <span
+              key={wd}
+              aria-hidden
+              className="flex min-h-0 w-full flex-1 items-center justify-center"
+            >
+              <span className="size-3 rounded-full border border-dashed border-white/35" />
+            </span>
+          );
         const p = dayCellProps(cell, cell.index === tabbable);
-        const c = PLASTIC[cell.level];
-        // Pieces stand taller for busier days; the active one pops up, an empty socket included.
-        const rest = cell.level ? cell.level + 1 : 0;
         const on = cell.index === active;
-        const up = on ? 5 : rest;
+        const c = cell.level ? STUD[cell.level - 1] : null;
+        // The lip is how tall the stud stands; it sits on its hole, and the picked one lifts clear.
+        const lip = 1.5 + cell.level * 0.75;
+        const rise = lip + (on ? 4 : 0);
         return (
           <div
             key={wd}
             {...p}
             // Faces stack their days in a column, so the grid placement in p.style does not apply.
             style={undefined}
-            className="relative min-h-0 flex-1 cursor-pointer rounded-[3px] bg-[#ddd4bf] shadow-[inset_0_1px_2px_rgba(70,50,20,.38)]"
+            className="relative flex min-h-0 w-full flex-1 cursor-pointer items-center justify-center"
           >
-            <motion.span
+            <span
               aria-hidden
-              className="absolute inset-0 rounded-[3px]"
-              initial={false}
-              animate={{ y: -up, opacity: cell.level || on ? 1 : 0 }}
-              transition={lift}
-              style={{
-                background: `linear-gradient(180deg, ${c.hi}, ${c.top} 65%)`,
-                boxShadow: `0 ${Math.max(rest, 2)}px 0 ${c.lip}, inset 0 1px 0 rgba(255,255,255,.5)`,
-              }}
+              className="size-3 rounded-full bg-[#1b3a9e] shadow-[inset_0_2px_2px_rgba(0,0,10,.5),0_1px_0_rgba(255,255,255,.2)]"
             />
+            {c && (
+              <motion.span
+                aria-hidden
+                className="absolute top-1/2 left-1/2 -mt-2 -ml-2 size-4 rounded-full"
+                initial={false}
+                animate={{
+                  transform: `translateY(${-rise}px)`,
+                }}
+                transition={pop}
+                style={{
+                  background: `radial-gradient(circle at 36% 30%, ${c.hi}, ${c.top} 58%)`,
+                  boxShadow: `0 ${lip}px 0 ${c.lip}, 0 ${lip + 2}px 3px rgba(5,12,45,.5), inset 0 -1px 1px rgba(0,0,0,.12)`,
+                }}
+              />
+            )}
           </div>
         );
       })}
-      <motion.span
-        aria-hidden
-        className="pointer-events-none absolute inset-0 bg-[#2a2925]"
-        style={{ opacity: shade }}
-      />
     </div>
   );
 });
@@ -304,13 +321,15 @@ export function ToyContributionGraph({
   const months = new Map(year.months.map((m) => [m.week, m.label.toUpperCase()]));
   const shown = weeks[front];
   const weekTotal = shown.reduce((s, c) => s + c.count, 0);
-  const short = (c?: ContributionCell) => c?.label.slice(5) ?? "";
+  // The drum wraps the oldest week round beside the newest, so the same date can sit side by side
+  // a year apart. Days outside the latest day's year carry their year.
+  const thisYear = year.days[year.days.length - 1].date.slice(0, 4);
+  const withYear = (c: ContributionCell, label: string) =>
+    c.date.startsWith(thisYear) ? label : `${label}, ${c.date.slice(0, 4)}`;
+  const short = (c?: ContributionCell) => (c ? withYear(c, c.label.slice(5)) : "");
   // At rest on the latest week the drum points at the current day; turn away and it reads the week.
   const active = hovered ?? (front === n - 1 ? year.days[year.days.length - 1] : null);
   const count = active ? active.count : weekTotal;
-
-  const arrow =
-    " size-[38px] rounded-[10px] text-base font-extrabold transition-[translate,box-shadow] duration-150 active:translate-y-[3px]";
 
   return (
     <section
@@ -363,7 +382,7 @@ export function ToyContributionGraph({
           style={{ height: STAGE_HEIGHT * fit }}
         >
           <div
-            className="absolute top-0 left-1/2 flex origin-top items-center justify-center perspective-[900px]"
+            className="absolute top-0 left-1/2 origin-top"
             style={{
               width: FIT_WIDTH,
               height: STAGE_HEIGHT,
@@ -371,39 +390,56 @@ export function ToyContributionGraph({
               scale: fit,
             }}
           >
-            <motion.div
-              {...grid}
-              onFocus={(e) => {
-                grid.onFocus(e);
-                const i = dayIndexOf(e.target);
-                if (i !== null && !drag.current) spinTo(year.days[i].week);
-              }}
-              className="relative h-[184px] w-6 transform-3d"
-              style={{ transform: drum }}
-            >
-              <span
-                aria-hidden
-                className="absolute top-1/2 left-1/2 -m-[210px] size-[420px] rounded-full bg-[radial-gradient(circle,#e3dbc8_0_55%,#d2c9b3_56%_62%,#efe8d8_63%)] shadow-[0_0_0_6px_#c7bea8]"
-                style={{ transform: "rotateX(90deg) translateZ(92px)" }}
-              />
-              <span
-                aria-hidden
-                className="absolute top-1/2 left-1/2 -m-[210px] size-[420px] rounded-full bg-[#c7bea8]"
-                style={{ transform: "rotateX(90deg) translateZ(-92px)" }}
-              />
-              {Array.from({ length: n }, (_, w) => (
-                <Face
-                  key={w}
-                  week={w}
-                  step={step}
-                  cells={weeks[w]}
-                  month={months.get(w)}
-                  angle={angle}
-                  active={active?.week === w ? active.index : null}
-                  tabbable={Math.floor(focusIndex / 7) === w ? focusIndex : null}
+            {/* The housing: moulded plastic, screwed together, with a window onto the drum. */}
+            <div className="absolute inset-x-2.5 top-3.5 bottom-1.5 rounded-[28px] bg-[#f8f5ef] shadow-[inset_0_2px_0_#fff,inset_0_-3px_0_rgba(60,45,20,.08),0_8px_0_#d2ccbf,0_22px_26px_-14px_rgba(40,28,10,.5)]">
+              {["top-3 left-3", "top-3 right-3", "bottom-3 left-3", "bottom-3 right-3"].map(
+                (at) => (
+                  <span
+                    key={at}
+                    aria-hidden
+                    className={cn(
+                      "absolute size-2.5 rounded-full bg-[#e6dfd0] shadow-[inset_0_1px_1.5px_rgba(40,28,10,.4),0_1px_0_#fff] after:absolute after:inset-x-0.5 after:top-1/2 after:h-px after:-rotate-45 after:bg-[rgba(40,28,10,.35)]",
+                      at,
+                    )}
+                  />
+                ),
+              )}
+              <div className="absolute inset-x-4.5 top-5.5 bottom-4 flex items-center justify-center overflow-hidden rounded-[18px] bg-[#101a36] perspective-[900px]">
+                <motion.div
+                  {...grid}
+                  onFocus={(e) => {
+                    grid.onFocus(e);
+                    const i = dayIndexOf(e.target);
+                    if (i !== null && !drag.current) spinTo(year.days[i].week);
+                  }}
+                  className="relative h-[184px] w-6 transform-3d"
+                  style={{ transform: drum }}
+                >
+                  {Array.from({ length: n }, (_, w) => (
+                    <Face
+                      key={w}
+                      week={w}
+                      step={step}
+                      cells={weeks[w]}
+                      month={months.get(w)}
+                      now={w === n - 1}
+                      active={active?.week === w ? active.index : null}
+                      tabbable={Math.floor(focusIndex / 7) === w ? focusIndex : null}
+                    />
+                  ))}
+                </motion.div>
+                {/* Light from the front: the curve falls into shadow at both ends, with a soft sheen
+                    left of centre. Fixed to the window, so it never moves with the drum. */}
+                <span
+                  aria-hidden
+                  className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,#101a36_0_3%,rgba(16,26,54,.82)_9%,rgba(6,10,30,.18)_24%,rgba(255,255,255,.16)_39%,rgba(255,255,255,0)_54%,rgba(6,10,30,.2)_76%,rgba(16,26,54,.84)_91%,#101a36_97%)]"
                 />
-              ))}
-            </motion.div>
+                <span
+                  aria-hidden
+                  className="pointer-events-none absolute inset-0 rounded-[18px] shadow-[inset_0_5px_10px_rgba(0,0,0,.55),inset_0_-3px_6px_rgba(0,0,0,.4),inset_0_0_0_2px_rgba(0,0,0,.3)]"
+                />
+              </div>
+            </div>
             <motion.div
               aria-hidden
               className="pointer-events-none absolute top-0 left-1/2 z-[5] -ml-[13px] h-10 w-[26px] origin-[50%_9px] drop-shadow-[0_3px_2px_rgba(40,28,10,.35)]"
@@ -429,7 +465,9 @@ export function ToyContributionGraph({
                 {active ? "Day" : `Week ${front + 1} of ${n}`}
               </span>
               <span>
-                {active ? active.label : `${short(shown[0])} – ${short(shown[shown.length - 1])}`}
+                {active
+                  ? withYear(active, active.label)
+                  : `${short(shown[0])} – ${short(shown[shown.length - 1])}`}
               </span>
             </div>
           </div>
@@ -439,30 +477,82 @@ export function ToyContributionGraph({
       <div className="mt-3.5 flex flex-wrap items-center justify-between gap-3 font-(family-name:--ovio-mono) text-[11px] text-(--ovio-muted)">
         <span>Drag or flick to spin · arrows step a day or week</span>
         <span className="flex gap-2">
-          <button
-            type="button"
-            aria-label="Previous week"
+          <DrumKey
+            label="Previous week"
+            tone="white"
             onClick={() => nudge(-1)}
-            className={cn(
-              arrow,
-              "bg-white text-(--ovio-ink) shadow-[0_4px_0_#cfc8b8] active:shadow-[0_1px_0_#cfc8b8]",
-            )}
-          >
-            ‹
-          </button>
-          <button
-            type="button"
-            aria-label="Next week"
-            onClick={() => nudge(1)}
-            className={cn(
-              arrow,
-              "bg-[#ef4f2b] text-white shadow-[0_4px_0_#b5311a] active:shadow-[0_1px_0_#b5311a]",
-            )}
-          >
-            ›
-          </button>
+            point="M15 6l-6 6 6 6"
+          />
+          <DrumKey label="Next week" tone="red" onClick={() => nudge(1)} point="M9 6l6 6-6 6" />
         </span>
       </div>
     </section>
+  );
+}
+
+const KEY = {
+  white: {
+    side: "bg-[linear-gradient(180deg,#d8d1c1,#b5ad9b)]",
+    cap: "bg-[linear-gradient(180deg,#ffffff,#efe9dd)] text-(--ovio-ink) shadow-[inset_0_2px_0_#fff,inset_0_-2px_0_rgba(60,45,20,.08),0_1px_0_rgba(60,45,20,.12)]",
+    glyph: "drop-shadow-[0_1px_0_#fff]",
+  },
+  red: {
+    side: "bg-[linear-gradient(180deg,#c23a1f,#8f240f)]",
+    cap: "bg-[linear-gradient(180deg,#ff7652,#e8401c)] text-white shadow-[inset_0_2px_0_rgba(255,255,255,.35),inset_0_-2px_0_rgba(0,0,0,.1),0_1px_0_rgba(0,0,0,.15)]",
+    glyph: "drop-shadow-[0_-1px_0_rgba(120,25,5,.55)]",
+  },
+};
+
+/**
+ * A chunky plastic key: the cap rides on a visible side wall and sinks into it when pressed.
+ * The press is quick and the release a touch slower, so it feels like a spring underneath.
+ */
+function DrumKey({
+  label,
+  tone,
+  onClick,
+  point,
+}: {
+  label: string;
+  tone: keyof typeof KEY;
+  onClick: () => void;
+  /** The chevron's path, in a 24px box. */
+  point: string;
+}) {
+  const k = KEY[tone];
+  return (
+    <button
+      type="button"
+      aria-label={label}
+      onClick={onClick}
+      className="group relative h-[51px] w-11 cursor-pointer border-0 bg-transparent p-0"
+    >
+      {/* The side wall shows only below the cap, so a pressed cap hides it. */}
+      <span
+        aria-hidden
+        className={cn(
+          "absolute inset-x-0 top-[7px] bottom-0 rounded-[13px] shadow-[0_0_0_1px_rgba(40,28,10,.12),0_12px_14px_-8px_rgba(40,28,10,.5)]",
+          k.side,
+        )}
+      />
+      <span
+        aria-hidden
+        className={cn(
+          "absolute inset-x-0 top-0 flex h-11 items-center justify-center rounded-[13px] transition-transform duration-150 ease-[cubic-bezier(.2,.9,.3,1.3)] group-hover:-translate-y-px group-active:translate-y-1.5 group-active:duration-[60ms] group-active:ease-out motion-reduce:transition-none",
+          k.cap,
+        )}
+      >
+        <svg viewBox="0 0 24 24" className={cn("size-[22px]", k.glyph)}>
+          <path
+            d={point}
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={3.25}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      </span>
+    </button>
   );
 }

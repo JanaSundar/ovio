@@ -58,7 +58,7 @@ export function ToyGooeyTabs(p: GooeyTabsWorldProps) {
     heading.current = p.index;
     if (reduced) x.set(p.index);
     else animate(x, p.index, { ...motionTokens.toy.slide, velocity: kick });
-  }, [p.index, reduced, x]);
+  }, [p.index, reduced, x, drag, heading]);
 
   const position = (clientX: number) => {
     const r = track.current!.getBoundingClientRect();

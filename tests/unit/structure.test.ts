@@ -25,12 +25,14 @@ const read = (file: string) => readFileSync(file, "utf8");
 function walk(dir: string, base = dir): string[] {
   return readdirSync(dir).flatMap((name) => {
     const full = path.join(dir, name);
-    return statSync(full).isDirectory() ? walk(full, base) : [path.relative(base, full)];
+    return statSync(full).isDirectory()
+      ? walk(full, base)
+      : [path.relative(base, full).split(path.sep).join("/")];
   });
 }
 
 describe.each(slugs)("components/ovio/%s", (slug) => {
-  const dir = path.join(ROOT, slug);
+  const dir = path.posix.join(ROOT, slug);
   const files = walk(dir);
   const top = files.filter((f) => !f.includes("/"));
   const folders = new Set(files.filter((f) => f.includes("/")).map((f) => f.split("/")[0]));

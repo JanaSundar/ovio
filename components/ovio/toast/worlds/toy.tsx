@@ -14,7 +14,7 @@ export function ToyToast({ kind, title, description, action, dismiss }: ToastWor
   return (
     <div
       data-ovio-world="toy"
-      className="flex w-full items-center gap-3 rounded-(--ovio-radius) bg-(--ovio-surface) p-3 font-(family-name:--ovio-font) text-(--ovio-ink) shadow-[inset_0_1px_0_#fff,0_6px_0_#d2ccbf,0_18px_24px_-12px_rgba(40,28,10,.45)]"
+      className="flex w-full flex-wrap items-center gap-3 rounded-(--ovio-radius) bg-(--ovio-surface) p-3 font-(family-name:--ovio-font) text-(--ovio-ink) shadow-[inset_0_1px_0_#fff,0_6px_0_#d2ccbf,0_18px_24px_-12px_rgba(40,28,10,.45)]"
     >
       <span
         aria-hidden
@@ -23,7 +23,7 @@ export function ToyToast({ kind, title, description, action, dismiss }: ToastWor
       >
         {ICON[kind]}
       </span>
-      <div className="min-w-0 flex-1">
+      <div className="min-w-40 flex-1 wrap-anywhere">
         <p className="m-0 text-sm leading-snug font-extrabold">{title}</p>
         {description && (
           <p className="m-0 mt-0.5 font-(family-name:--ovio-mono) text-[11.5px] text-(--ovio-muted)">

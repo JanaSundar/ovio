@@ -133,6 +133,10 @@ export function Artwork({ src, fallback }: { src?: string; fallback: ReactNode }
       loading="lazy"
       decoding="async"
       draggable={false}
+      // A server-rendered image can fail before hydration attaches onError: catch that on mount.
+      ref={(img) => {
+        if (img?.complete && !img.naturalWidth) setFailed(src);
+      }}
       onError={() => setFailed(src)}
       className="absolute inset-0 size-full object-cover"
     />

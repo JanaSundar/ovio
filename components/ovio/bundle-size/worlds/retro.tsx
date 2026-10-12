@@ -43,6 +43,10 @@ export function RetroBundleSize({
     const n = Math.round(c);
     return "█".repeat(n) + "░".repeat(CELLS - n);
   });
+  const half = useTransform(() => {
+    const n = Math.round(cells.get() / 2);
+    return "█".repeat(n) + "░".repeat(CELLS / 2 - n);
+  });
   useEffect(() => {
     const frames = Math.abs(target - Math.round(cells.get()));
     if (reduced || frames === 0) return cells.set(target);
@@ -102,7 +106,8 @@ export function RetroBundleSize({
           )}
         >
           <span aria-hidden>
-            [<motion.span>{bar}</motion.span>] {r.percent}%
+            [<motion.span className="sm:hidden">{half}</motion.span>
+            <motion.span className="hidden sm:inline">{bar}</motion.span>] {r.percent}%
           </span>
         </div>
         <div style={{ color: TREND_COLOR[r.trend] }}>

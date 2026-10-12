@@ -259,7 +259,7 @@ export function Graph({
           {graph.lanes.map((lane) => (
             <motion.div
               key={lane.name}
-              className="flex h-6 items-center"
+              className="flex h-6 max-w-full min-w-0 items-center"
               initial={reduced ? false : { opacity: 0, scale: 0.9 }}
               animate={{ opacity: dim(lane.index), scale: 1 }}
               transition={enter}

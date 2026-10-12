@@ -106,7 +106,9 @@ export function MinimalTopContributors({
                 className="size-7.5 rounded-full bg-[#ebe9e4] text-[11px] font-medium"
               />
               <span className="flex min-w-0 flex-col">
-                <span className="truncate text-sm font-medium">{p.name}</span>
+                <span className="truncate text-sm font-medium" title={p.name}>
+                  {p.name}
+                </span>
                 {/* Live data has no names, only logins: don't print the login twice. */}
                 {p.name !== p.login && (
                   <span className="truncate text-xs text-(--ovio-muted)">@{p.login}</span>

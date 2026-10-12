@@ -36,7 +36,7 @@ export function ToyChangelog({ releases, open, toggle, className }: ChangelogWor
       data-ovio-world="toy"
       aria-label="Changelog"
       className={cn(
-        "flex w-full max-w-125 flex-col gap-3 font-(family-name:--ovio-font) text-(--ovio-ink)",
+        "flex w-full max-w-125 flex-col gap-3 wrap-anywhere font-(family-name:--ovio-font) text-(--ovio-ink)",
         className,
       )}
     >
@@ -121,7 +121,8 @@ function Header({ release: r, index }: RowProps) {
   return (
     <span className="flex items-center gap-3 px-3.5 py-3">
       <span
-        className="rounded-[9px] px-2.5 py-1.5 text-sm font-extrabold shadow-[inset_0_-3px_0_rgba(0,0,0,.2)]"
+        title={r.version}
+        className="max-w-[45%] shrink-0 truncate rounded-[9px] px-2.5 py-1.5 text-sm font-extrabold shadow-[inset_0_-3px_0_rgba(0,0,0,.2)]"
         style={{ background: chip, color: chipInk, fontStretch: "110%" }}
       >
         {r.version}
@@ -129,7 +130,7 @@ function Header({ release: r, index }: RowProps) {
       <span className="min-w-0 flex-1 text-base font-bold">{r.title}</span>
       <time
         dateTime={r.dateTime}
-        className="font-(family-name:--ovio-mono) text-[11px] text-(--ovio-muted)"
+        className="shrink-0 font-(family-name:--ovio-mono) text-[11px] whitespace-nowrap text-(--ovio-muted)"
       >
         {r.date}
       </time>

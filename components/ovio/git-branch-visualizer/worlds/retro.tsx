@@ -80,6 +80,7 @@ function RetroLabel({ lane, ...s }: LabelProps) {
       type="button"
       aria-pressed={s.active}
       onClick={s.onToggle}
+      title={lane.name}
       className={cn(
         "flex h-full max-w-full cursor-pointer items-center truncate border-0 px-1.5 font-(family-name:--ovio-font) text-[21px] leading-none",
         s.active ? "bg-[#0f2a14]" : "bg-transparent",
@@ -87,14 +88,17 @@ function RetroLabel({ lane, ...s }: LabelProps) {
       style={{ color: s.color }}
     >
       {s.active ? ">" : ""}
-      {lane.name}
+      <span className="truncate">{lane.name}</span>
     </button>
   );
 }
 
 function RetroTag({ text }: TagProps) {
   return (
-    <span className="block bg-[#ffd34d] px-1 text-base leading-[1.1] whitespace-nowrap text-(--ovio-on-accent) text-shadow-none">
+    <span
+      title={text}
+      className="block max-w-28 truncate bg-[#ffd34d] px-1 text-base leading-[1.1] text-(--ovio-on-accent) text-shadow-none"
+    >
       {text}
     </span>
   );

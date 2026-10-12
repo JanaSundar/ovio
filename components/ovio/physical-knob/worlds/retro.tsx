@@ -50,9 +50,11 @@ export function RetroKnob({
         className,
       )}
     >
-      <div className="flex w-full justify-between text-xl text-[#c9c9c0]">
-        <span>{label.toUpperCase()}</span>
-        <span className="flex items-center gap-1.5">
+      <div className="flex w-full justify-between gap-3 text-xl text-[#c9c9c0]">
+        <span title={label} className="min-w-0 truncate">
+          {label.toUpperCase()}
+        </span>
+        <span className="flex shrink-0 items-center gap-1.5">
           <span aria-hidden className="size-2.25 bg-(--ovio-accent) shadow-[0_0_6px_#4fdc68]" />
           PWR
         </span>

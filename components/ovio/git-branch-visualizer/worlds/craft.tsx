@@ -95,6 +95,7 @@ function CraftLabel({ lane, ...s }: LabelProps) {
       type="button"
       aria-pressed={s.active}
       onClick={s.onToggle}
+      title={lane.name}
       className="relative flex h-full max-w-full cursor-pointer items-center border-0 bg-transparent px-1.5 text-sm font-extrabold tracking-[-0.01em]"
       style={{ color: s.color }}
     >
@@ -112,7 +113,10 @@ function CraftLabel({ lane, ...s }: LabelProps) {
 
 function CraftTag({ text }: TagProps) {
   return (
-    <span className="block -rotate-4 rounded-xs bg-[#ffe27a] px-1.5 text-[11px] leading-[1.4] font-semibold whitespace-nowrap shadow-[0_2px_3px_-1px_rgba(70,45,20,.35)]">
+    <span
+      title={text}
+      className="block max-w-28 truncate -rotate-4 rounded-xs bg-[#ffe27a] px-1.5 text-[11px] leading-[1.4] font-semibold shadow-[0_2px_3px_-1px_rgba(70,45,20,.35)]"
+    >
       {text}
     </span>
   );

@@ -75,10 +75,15 @@ export function MinimalNowPlaying({
               exit={{ opacity: 0, y: -6 }}
               transition={fast}
             >
-              <h3 className="m-0 mt-2 truncate text-lg font-medium tracking-[-0.02em]">
+              <h3
+                title={track.title}
+                className="m-0 mt-2 truncate text-lg font-medium tracking-[-0.02em]"
+              >
                 {track.title}
               </h3>
-              <p className="m-0 truncate text-[13px] text-(--ovio-muted)">{track.artist}</p>
+              <p className="m-0 truncate text-[13px] text-(--ovio-muted)" title={track.artist}>
+                {track.artist}
+              </p>
             </motion.div>
           </AnimatePresence>
           <div className="mt-3 flex items-center gap-2.5 font-(family-name:--ovio-mono) text-[11px] text-(--ovio-muted)">

@@ -9,7 +9,7 @@ export function RetroToast({ kind, title, description, action, dismiss }: ToastW
   return (
     <div
       data-ovio-world="retro"
-      className="w-full border-2 border-(--ovio-line) bg-(--ovio-stage) px-3 py-2 font-(family-name:--ovio-font) text-[19px] leading-[1.15] text-(--ovio-ink) text-shadow-(--ovio-glow)"
+      className="w-full wrap-anywhere border-2 border-(--ovio-line) bg-(--ovio-stage) px-3 py-2 font-(family-name:--ovio-font) text-[19px] leading-[1.15] text-(--ovio-ink) text-shadow-(--ovio-glow)"
     >
       <p className="m-0">
         <span

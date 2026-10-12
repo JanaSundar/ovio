@@ -1,6 +1,7 @@
 import { motion } from "motion/react";
 import { useRef } from "react";
 import { RollingNumber } from "@/components/shared/rolling-number";
+import { formatNumber } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import { detents, KnobTicks, type KnobWorldProps } from "../physical-knob";
 import { useKnob, type KnobFeel } from "../use-knob";
@@ -67,7 +68,7 @@ export function CraftKnob({
                 transform: `translate(-50%,-50%) rotate(${a}deg) translateY(-122px) rotate(${-a}deg)`,
               }}
             >
-              {Math.round(min + ((max - min) * n) / 100)}
+              {formatNumber(Math.round(min + ((max - min) * n) / 100))}
             </span>
           );
         })}

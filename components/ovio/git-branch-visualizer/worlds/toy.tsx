@@ -79,20 +79,24 @@ function ToyLabel({ lane, ...s }: LabelProps) {
       side={s.active ? "rgba(0,0,0,.35)" : "#cfc8b8"}
       aria-pressed={s.active}
       onClick={s.onToggle}
+      title={lane.name}
       className="flex h-full max-w-full cursor-pointer items-center truncate rounded-lg border-0 px-2.5 font-(family-name:--ovio-font) text-xs font-extrabold touch-manipulation"
       animate={{
         backgroundColor: s.active ? s.color : "#ffffff",
         color: s.active ? "#ffffff" : s.color,
       }}
     >
-      {lane.name}
+      <span className="truncate">{lane.name}</span>
     </ToyKey>
   );
 }
 
 function ToyTag({ text }: TagProps) {
   return (
-    <span className="block rounded-md bg-(--ovio-red) px-1.5 py-px text-[11px] font-extrabold whitespace-nowrap text-white shadow-[0_3px_0_var(--ovio-red-deep)]">
+    <span
+      title={text}
+      className="block max-w-28 truncate rounded-md bg-(--ovio-red) px-1.5 py-px text-[11px] font-extrabold text-white shadow-[0_3px_0_var(--ovio-red-deep)]"
+    >
       {text}
     </span>
   );

@@ -53,7 +53,7 @@ export function CraftChangelog({ releases, top, next, className }: ChangelogWorl
     <div
       data-ovio-world="craft"
       className={cn(
-        "flex w-full justify-center px-4 pt-6 pb-14 font-(family-name:--ovio-font) text-(--ovio-ink)",
+        "flex w-full justify-center wrap-anywhere px-4 pt-6 pb-14 font-(family-name:--ovio-font) text-(--ovio-ink)",
         className,
       )}
     >
@@ -97,13 +97,16 @@ export function CraftChangelog({ releases, top, next, className }: ChangelogWorl
                     : "shadow-[0_1px_2px_rgba(70,45,20,.18),0_6px_12px_-8px_rgba(70,45,20,.3)]",
                 )}
               >
-                <div className="flex h-8 items-baseline justify-between">
-                  <span className="text-2xl leading-8 font-extrabold tracking-[-0.03em]">
+                <div className="flex h-8 items-baseline justify-between gap-3">
+                  <span
+                    title={r.version}
+                    className="min-w-0 truncate text-2xl leading-8 font-extrabold tracking-[-0.03em]"
+                  >
                     {r.version}
                   </span>
                   <time
                     dateTime={r.dateTime}
-                    className="font-(family-name:--ovio-hand) text-[22px] leading-8 text-[#7d6650]"
+                    className="shrink-0 font-(family-name:--ovio-hand) text-[22px] leading-8 text-[#7d6650]"
                   >
                     {r.date}
                   </time>

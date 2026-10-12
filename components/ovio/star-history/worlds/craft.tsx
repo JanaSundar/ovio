@@ -79,7 +79,7 @@ export function CraftStarHistory({
                 style={{ left: x, top: y }}
               >
                 <motion.div
-                  className="bg-[#ffe27a] px-3 py-2 font-(family-name:--ovio-hand) text-[21px] leading-none whitespace-nowrap shadow-[0_5px_10px_-3px_rgba(90,60,0,.35)]"
+                  className="bg-[#ffe27a] px-3 py-2 font-(family-name:--ovio-hand) w-max max-w-56 text-center text-[21px] leading-tight shadow-[0_5px_10px_-3px_rgba(90,60,0,.35)]"
                   initial={
                     animation === "none"
                       ? false

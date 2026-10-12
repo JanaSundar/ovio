@@ -13,7 +13,7 @@ import { STATUS_INDEX, type LiquidTabsWorldProps } from "../liquid-tabs";
 
 const PAD = 8;
 const DOTS = ["#a69e90", "#f4b52a", "#33b07a"];
-const LABEL = "py-3.5 font-[inherit] text-[15px] font-extrabold";
+const LABEL = "py-3.5 font-[inherit] text-[11px] font-extrabold sm:text-[15px]";
 
 /**
  * Toy: the indicator is a plastic piece in a track. Click a tab, or drag and flick the piece;

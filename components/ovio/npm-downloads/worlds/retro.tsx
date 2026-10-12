@@ -7,6 +7,11 @@ import { formatDelta, type NpmDownloadsWorldProps } from "../npm-downloads";
 /** Cells in the text progress bar. */
 const CELLS = 20;
 
+const cells = (progress: number, count: number) => {
+  const filled = Math.round(Math.min(1, progress) * count);
+  return "█".repeat(filled) + "░".repeat(count - filled);
+};
+
 const bar = (color: string) => `repeating-linear-gradient(0deg,${color} 0 5px,transparent 5px 7px)`;
 
 export function RetroNpmDownloads({
@@ -25,7 +30,6 @@ export function RetroNpmDownloads({
   className,
 }: NpmDownloadsWorldProps) {
   const reduced = useReducedMotionSafe();
-  const filled = Math.round(goalProgress * CELLS);
 
   // Bars switch on one after another in single hard frames.
   const frame = (i: number) =>
@@ -104,8 +108,8 @@ export function RetroNpmDownloads({
           <div>
             &gt; GOAL {formatNumber(goal)}{" "}
             <span aria-hidden>
-              [{"█".repeat(filled)}
-              {"░".repeat(CELLS - filled)}]
+              [<span className="sm:hidden">{cells(goalProgress, CELLS / 2)}</span>
+              <span className="hidden sm:inline">{cells(goalProgress, CELLS)}</span>]
             </span>{" "}
             {formatNumber(goalProgress, { style: "percent" })}
           </div>

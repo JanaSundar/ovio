@@ -582,7 +582,8 @@
         "JanaSundar/ovio/theme",
         "JanaSundar/ovio/world",
         "JanaSundar/ovio/motion",
-        "JanaSundar/ovio/rolling-number"
+        "JanaSundar/ovio/rolling-number",
+        "JanaSundar/ovio/format"
       ],
       "files": [
         {

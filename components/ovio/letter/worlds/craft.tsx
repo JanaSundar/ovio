@@ -161,7 +161,7 @@ export function CraftLetter(p: LetterWorldProps) {
 
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 flex items-end justify-center pb-6"
+        className="pointer-events-none absolute inset-0 flex items-center justify-center"
       >
         <div className="relative aspect-50/31 w-[min(340px,calc(100%-24px))]">
           <div data-back className="absolute inset-0 z-0 rounded-[4px] bg-[#e3d3b6] opacity-0" />

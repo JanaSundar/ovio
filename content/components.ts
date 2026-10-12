@@ -626,6 +626,36 @@ export const COMPONENTS: ComponentDoc[] = [
       },
     ],
   },
+  {
+    slug: "letter",
+    name: "Letter",
+    tech: "Motion for React: useAnimate sequences, arc() paths (Retro: Morse keying)",
+    description:
+      "A newsletter issue written as a letter, with the signup as its P.S. Send it and it flies off as a paper plane, gets sealed in an envelope, keyed out in Morse or dropped in a mailbox.",
+    exportName: "Letter",
+    usage: "  letter={issue}\n  subscribers={2481}\n  onSubscribe={subscribe}",
+    props: [
+      {
+        name: "letter",
+        type: "{ name; issue; date; greeting?; body; signOff?; signature }",
+        description:
+          "The issue. body is one string per paragraph; an ISO date is formatted, greeting defaults to “Dear reader,”.",
+      },
+      V,
+      {
+        name: "subscribers",
+        type: "number",
+        description: "Readers so far, printed under the P.S. One is added when the letter is sent.",
+      },
+      {
+        name: "onSubscribe",
+        type: "(email: string) => Promise<void>",
+        description:
+          "Called with the email from the P.S. The letter goes out once it resolves; a rejection shows its message.",
+      },
+      CL,
+    ],
+  },
 ];
 
 export const getComponent = (slug: string) => COMPONENTS.find((c) => c.slug === slug);

@@ -501,6 +501,75 @@ function Toasts() {
   );
 }
 
+/** A typed letter with its P.S. filled in, sealed with a lime wax seal. */
+function LetterSheet() {
+  const lines = [100, 92, 97, 64, 0, 95, 88, 40];
+  return (
+    <div style={{ ...row, position: "relative", width: 360, height: 280 }}>
+      <div
+        style={{
+          ...col,
+          width: 300,
+          height: 280,
+          padding: "26px 28px",
+          gap: 9,
+          background: "#fff",
+          border: `1.5px solid ${line}`,
+          borderRadius: 4,
+        }}
+      >
+        <div
+          style={{
+            ...row,
+            justifyContent: "space-between",
+            paddingBottom: 12,
+            borderBottom: `2px solid ${ink}`,
+          }}
+        >
+          <span style={{ fontFamily: sans, fontSize: 18, fontWeight: 500, color: ink }}>
+            The Weekly Diff
+          </span>
+          <Label color={muted}>NO. 042</Label>
+        </div>
+        <span style={{ fontFamily: sans, fontSize: 15, color: ink, marginTop: 6 }}>
+          Dear reader,
+        </span>
+        {lines.map((w, i) =>
+          w ? (
+            <div
+              key={i}
+              style={{ width: `${w}%`, height: 7, borderRadius: 4, background: RAMP[0] }}
+            />
+          ) : (
+            <div key={i} style={{ height: 4 }} />
+          ),
+        )}
+        <div style={{ ...row, gap: 10, marginTop: "auto" }}>
+          <span style={{ fontFamily: sans, fontSize: 15, color: ink }}>P.S.</span>
+          <div style={{ flex: 1, height: 2, background: line }} />
+          <span style={{ fontFamily: sans, fontSize: 15, color: ink }}>Send it</span>
+        </div>
+      </div>
+      <div
+        style={{
+          ...row,
+          position: "absolute",
+          right: 18,
+          bottom: 38,
+          width: 74,
+          height: 70,
+          justifyContent: "center",
+          borderRadius: "46% 54% 50% 48% / 52% 46% 54% 48%",
+          background: lime,
+          transform: "rotate(-8deg)",
+        }}
+      >
+        <span style={{ fontFamily: mono, fontSize: 26, fontWeight: 500, color: ink }}>T</span>
+      </div>
+    </div>
+  );
+}
+
 type Art = { label: string; metric?: string; footer?: string[]; draw: () => ReactNode };
 
 const ARTS: Record<string, Art> = {
@@ -593,6 +662,12 @@ const ARTS: Record<string, Art> = {
     metric: "3 QUEUED",
     footer: ["SUCCESS", "ERROR", "INFO"],
     draw: Toasts,
+  },
+  letter: {
+    label: "Letter",
+    metric: "NO. 042",
+    footer: ["PLANE", "SEAL", "MORSE", "MAILBOX"],
+    draw: LetterSheet,
   },
 };
 

@@ -86,7 +86,7 @@ const Face = memo(function Face({ week, step, cells, month, now, active, tabbabl
       <span
         aria-hidden
         className={cn(
-          "h-3 text-center font-(family-name:--ovio-mono) text-[8px] leading-3 font-bold whitespace-nowrap",
+          "h-3 text-center font-(family-name:--ovio-mono) text-[9px] leading-3 font-bold whitespace-nowrap",
           now ? "text-[#ffe08a]" : "text-white/80",
         )}
       >

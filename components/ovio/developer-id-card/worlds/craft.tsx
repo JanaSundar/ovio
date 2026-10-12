@@ -145,7 +145,7 @@ export function CraftDeveloperIdCard({
           >
             {location && (
               <div>
-                <div className="text-[9.5px] text-(--ovio-muted) uppercase">Based in</div>
+                <div className="text-[10.5px] text-(--ovio-muted) uppercase">Based in</div>
                 <div className="uppercase">{location}</div>
               </div>
             )}

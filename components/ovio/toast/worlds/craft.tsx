@@ -22,7 +22,9 @@ export function CraftToast({ kind, title, description, action, dismiss }: ToastW
         >
           {stamp.text}
         </span>
-        <p className="m-0 min-w-0 flex-1 text-[15px] leading-snug font-bold">{title}</p>
+        <p className="m-0 min-w-0 flex-1 wrap-anywhere text-[15px] leading-snug font-bold">
+          {title}
+        </p>
         <button
           type="button"
           aria-label="Dismiss"

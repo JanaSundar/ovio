@@ -1,6 +1,7 @@
 import { motion } from "motion/react";
 import { useRef } from "react";
 import { RollingNumber } from "@/components/shared/rolling-number";
+import { formatNumber } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import { detents, KnobTicks, type KnobWorldProps } from "../physical-knob";
 import { useKnob, type KnobFeel } from "../use-knob";
@@ -79,8 +80,8 @@ export function MinimalKnob({
         <span className="text-base text-(--ovio-muted)">%</span>
       </div>
       <div className="flex w-50 justify-between font-(family-name:--ovio-mono) text-[11px] text-(--ovio-faint)">
-        <span>{min}</span>
-        <span>{max}</span>
+        <span>{formatNumber(min)}</span>
+        <span>{formatNumber(max)}</span>
       </div>
     </div>
   );

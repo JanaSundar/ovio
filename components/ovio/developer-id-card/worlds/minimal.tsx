@@ -55,13 +55,13 @@ export function MinimalDeveloperIdCard({
         </AnimatePresence>
       </div>
 
-      <div className="flex items-center gap-4">
+      <div className="flex flex-wrap items-center gap-4">
         <Avatar
           initials={initials}
           src={avatarUrl}
           className="size-16 rounded-full bg-(--ovio-track) text-xl font-medium"
         />
-        <div className="min-w-0">
+        <div className="min-w-0 flex-[1_1_8rem]">
           <h3 className="m-0 text-2xl leading-tight font-medium tracking-[-0.03em] wrap-break-word">
             {name}
           </h3>

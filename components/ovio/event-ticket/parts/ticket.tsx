@@ -314,7 +314,9 @@ export function Ticket({ look, rootRef, ...p }: EventTicketWorldProps & { look: 
       <div className="flex flex-col gap-5 px-6 pt-5 pb-6">
         <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1.5">
           <h2 className={cn("m-0 min-w-0 wrap-break-word", look.headline)}>{p.event.name}</h2>
-          {p.event.venue && <span className={look.label}>{p.event.venue}</span>}
+          {p.event.venue && (
+            <span className={cn("min-w-0 wrap-anywhere", look.label)}>{p.event.venue}</span>
+          )}
         </div>
         {facts.length > 0 && (
           <dl className="m-0 grid auto-cols-fr grid-flow-col gap-3">

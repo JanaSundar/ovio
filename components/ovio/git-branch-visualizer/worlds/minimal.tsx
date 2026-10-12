@@ -72,20 +72,24 @@ function MinimalLabel({ lane, ...s }: LabelProps) {
       type="button"
       aria-pressed={s.active}
       onClick={s.onToggle}
+      title={lane.name}
       className={cn(
         "flex h-full max-w-full cursor-pointer items-center truncate rounded-md border-0 px-2 text-[13px] font-medium transition-colors",
         s.active ? "bg-(--ovio-track)" : "bg-transparent",
       )}
       style={{ color: s.color }}
     >
-      {lane.name}
+      <span className="truncate">{lane.name}</span>
     </button>
   );
 }
 
 function MinimalTag({ text }: TagProps) {
   return (
-    <span className="rounded px-1.5 py-px font-(family-name:--ovio-mono) text-[11px] whitespace-nowrap text-white bg-(--ovio-ink)">
+    <span
+      title={text}
+      className="block max-w-28 truncate rounded px-1.5 py-px font-(family-name:--ovio-mono) text-[11px] text-white bg-(--ovio-ink)"
+    >
       {text}
     </span>
   );

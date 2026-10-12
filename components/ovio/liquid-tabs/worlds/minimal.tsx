@@ -8,7 +8,7 @@ const look: LiquidLook = {
   blobRadius: "999px",
   on: "#f5f4f0",
   off: "#4a4944",
-  tab: "py-3 text-sm font-medium tracking-[-0.01em]",
+  tab: "py-3 text-[11px] font-medium sm:text-sm tracking-[-0.01em]",
   label: "text-xs",
   statusText: "text-lg font-medium",
   // A clean glide: both edges critically damped, so it stretches and gathers without overshoot.

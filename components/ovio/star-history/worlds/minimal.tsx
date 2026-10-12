@@ -65,7 +65,7 @@ export function MinimalStarHistory({
               <motion.div
                 key={`${a.date}-${a.label}`}
                 aria-hidden
-                className="pointer-events-none absolute flex -translate-x-1/2 -translate-y-full flex-col items-center pb-1.5 text-[11px] whitespace-nowrap text-(--ovio-ink-2)"
+                className="pointer-events-none absolute flex -translate-x-1/2 -translate-y-full flex-col items-center w-max max-w-48 pb-1.5 text-center text-[11px] text-(--ovio-ink-2)"
                 style={{ left: x, top: y }}
                 initial={animation === "none" ? false : { opacity: 0, y: 4 }}
                 animate={{ opacity: 1, y: 0 }}

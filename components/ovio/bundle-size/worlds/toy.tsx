@@ -138,7 +138,8 @@ export function ToyBundleSize({
               depth={6}
               side={side}
               style={{ background: cap, color: text }}
-              className="cursor-pointer touch-manipulation rounded-xl border-0 py-3 font-(family-name:--ovio-mono) text-[13px] font-semibold"
+              title={v}
+              className="min-w-0 cursor-pointer touch-manipulation truncate rounded-xl border-0 px-2 py-3 font-(family-name:--ovio-mono) text-[13px] font-semibold"
             >
               {v}
             </ToyKey>

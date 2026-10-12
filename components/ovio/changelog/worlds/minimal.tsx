@@ -13,7 +13,7 @@ export function MinimalChangelog({ releases, className }: ChangelogWorldProps) {
       data-ovio-world="minimal"
       aria-label="Changelog"
       className={cn(
-        "w-full max-w-170 rounded-(--ovio-radius) border border-(--ovio-line) bg-(--ovio-surface) px-6 py-8 font-(family-name:--ovio-font) text-(--ovio-ink) sm:px-10",
+        "w-full max-w-170 wrap-anywhere rounded-(--ovio-radius) border border-(--ovio-line) bg-(--ovio-surface) px-6 py-8 font-(family-name:--ovio-font) text-(--ovio-ink) sm:px-10",
         className,
       )}
     >

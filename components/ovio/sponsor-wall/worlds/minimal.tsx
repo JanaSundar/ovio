@@ -98,8 +98,10 @@ export function MinimalSponsorWall({
                     >
                       <SponsorLink
                         sponsor={s}
+                        title={s.name}
+                        nameClassName="min-w-0 truncate"
                         className={cn(
-                          "flex items-center justify-center truncate px-3 no-underline transition-colors duration-200 hover:bg-(--ovio-stage) hover:text-(--ovio-ink)",
+                          "flex items-center justify-center px-3 no-underline transition-colors duration-200 hover:bg-(--ovio-stage) hover:text-(--ovio-ink)",
                           TILE[g.tier as keyof typeof TILE],
                         )}
                         style={{ fontWeight: weight, letterSpacing: tracking }}

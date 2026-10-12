@@ -130,7 +130,9 @@ export function ToyTopContributors({
                     <span className="sr-only"> commits</span>
                   </span>
                 </motion.div>
-                <span className="max-w-full truncate text-xs font-semibold">{p.first}</span>
+                <span className="max-w-full truncate text-xs font-semibold" title={p.name}>
+                  {p.first}
+                </span>
               </motion.li>
             );
           })}

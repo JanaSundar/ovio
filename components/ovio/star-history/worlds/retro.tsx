@@ -71,7 +71,7 @@ export function RetroStarHistory({
       </div>
       <div aria-hidden className="flex justify-between gap-3 text-lg text-(--ovio-ink-2)">
         <span>{first && formatMonthDot(first)}</span>
-        <span className="truncate">
+        <span className="min-w-0 text-right">
           {active
             ? `${formatMonthDot(active)} :: +${formatNumber(active.gain)}`
             : shape.annotations

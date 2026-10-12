@@ -141,7 +141,10 @@ export function CraftNowPlaying({
           animate={{ transform: `rotate(${playing ? 4 : 1.5}deg)` }}
           transition={settle}
         >
-          <h3 className="m-0 truncate font-(family-name:--ovio-hand) text-[26px] leading-none font-bold">
+          <h3
+            title={track.title}
+            className="m-0 truncate font-(family-name:--ovio-hand) text-[26px] leading-none font-bold"
+          >
             {track.title}
           </h3>
           <div className="flex items-baseline gap-1.5 font-(family-name:--ovio-hand) text-xl leading-tight text-(--ovio-ink-2)">

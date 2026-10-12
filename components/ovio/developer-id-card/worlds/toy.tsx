@@ -43,13 +43,13 @@ export function ToyDeveloperIdCard({
         className="mx-auto h-3.5 w-14.5 rounded-full bg-(--ovio-stage) shadow-[inset_0_3px_5px_rgba(40,28,10,.3)]"
       />
 
-      <div className="flex items-center gap-3.5 rounded-2xl bg-(--ovio-accent) p-4 text-(--ovio-on-accent) shadow-[inset_0_-5px_0_rgba(0,0,0,.2),inset_0_2px_0_rgba(255,255,255,.2)] @max-[280px]:gap-3 @max-[280px]:p-3">
+      <div className="flex flex-wrap items-center gap-3.5 rounded-2xl bg-(--ovio-accent) p-4 text-(--ovio-on-accent) shadow-[inset_0_-5px_0_rgba(0,0,0,.2),inset_0_2px_0_rgba(255,255,255,.2)] @max-[280px]:gap-3 @max-[280px]:p-3">
         <Avatar
           initials={initials}
           src={avatarUrl}
           className="size-17 rounded-full bg-(--ovio-yellow) text-2xl font-extrabold text-(--ovio-ink) shadow-[0_5px_0_var(--ovio-yellow-deep),0_10px_12px_-5px_rgba(0,0,0,.4)] @max-[280px]:size-14 @max-[280px]:text-xl"
         />
-        <div className="min-w-0">
+        <div className="min-w-0 flex-[1_1_10rem]">
           <h3
             className="m-0 text-[28px] leading-none font-extrabold tracking-[-0.03em] wrap-break-word @max-[280px]:text-2xl"
             style={{ fontStretch: "118%" }}

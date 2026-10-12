@@ -127,12 +127,15 @@ export function ToyNowPlaying({
               </span>
             </div>
             <h3
+              title={track.title}
               className="m-0 mt-1 truncate text-[22px] font-extrabold tracking-[-0.01em]"
               style={{ fontStretch: "115%" }}
             >
               {track.title}
             </h3>
-            <p className="m-0 truncate text-xs text-[#bdb6a8]">{track.artist}</p>
+            <p className="m-0 truncate text-xs text-[#bdb6a8]" title={track.artist}>
+              {track.artist}
+            </p>
             <div {...seekProps} className="mt-2 flex h-3.5 cursor-pointer touch-none items-center">
               <span className="relative h-1.5 w-full overflow-hidden rounded-[3px] bg-[#45433d]">
                 <motion.span

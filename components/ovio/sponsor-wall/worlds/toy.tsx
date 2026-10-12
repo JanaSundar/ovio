@@ -83,6 +83,7 @@ export function ToySponsorWall({ groups, ctaHref, ctaLabel, className }: Sponsor
                         draggable={false}
                         depth={DEPTH[s.tier]}
                         side={side}
+                        title={s.name}
                         className={cn(block, BLOCK[s.tier], s.tier !== "backer" && "px-2")}
                         style={{ background: face, color: ink }}
                       >
@@ -90,6 +91,7 @@ export function ToySponsorWall({ groups, ctaHref, ctaLabel, className }: Sponsor
                       </ToyKeyLink>
                     ) : (
                       <span
+                        title={s.name}
                         className={cn(block, BLOCK[s.tier], s.tier !== "backer" && "px-2")}
                         style={{
                           background: face,

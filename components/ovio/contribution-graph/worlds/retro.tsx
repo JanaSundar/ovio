@@ -69,7 +69,7 @@ export function RetroContributionGraph({
       )}
     >
       <motion.div
-        className="relative overflow-hidden rounded-[22px] border-[6px] border-[#1c2a1d] bg-[radial-gradient(ellipse_at_50%_45%,#0c2412_0%,#061108_70%,#030803_100%)] px-4 pt-[34px] pb-[30px] text-(--ovio-ink) outline-2 outline-[#0f1a10] [text-shadow:var(--ovio-glow)] sm:px-[38px]"
+        className="relative overflow-hidden rounded-[22px] border-[6px] border-[#1c2a1d] bg-[radial-gradient(ellipse_at_50%_45%,#0c2412_0%,#061108_70%,#030803_100%)] px-4 pt-8.5 pb-7.5 text-(--ovio-ink) outline-2 outline-[#0f1a10] text-shadow-(--ovio-glow) sm:px-9.5"
         animate={always ? { opacity: [1, 0.94] } : { opacity: 1 }}
         transition={
           always
@@ -92,9 +92,9 @@ export function RetroContributionGraph({
         </div>
         <div
           aria-hidden
-          className="mt-[18px] mb-[22px] h-0.5 bg-[repeating-linear-gradient(90deg,#3fae55_0_8px,transparent_8px_12px)] shadow-[0_0_6px_rgba(80,255,120,.5)]"
+          className="mt-4.5 mb-5.5 h-0.5 bg-[repeating-linear-gradient(90deg,#3fae55_0_8px,transparent_8px_12px)] shadow-[0_0_6px_rgba(80,255,120,.5)]"
         />
-        <div className="mb-[26px] flex flex-wrap items-baseline gap-x-10 gap-y-1 text-base leading-[1.1] sm:text-[22px]">
+        <div className="mb-6.5 flex flex-wrap items-baseline gap-x-10 gap-y-1 text-base leading-[1.1] sm:text-[22px]">
           <div>
             TOTAL.......
             <span className="text-[#c9ffd2]">{formatNumber(year.total)}</span>

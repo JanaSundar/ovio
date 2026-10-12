@@ -114,7 +114,7 @@ function CraftLabel({ lane, ...s }: LabelProps) {
 
 function CraftTag({ text }: TagProps) {
   return (
-    <span className="block -rotate-4 rounded-[2px] bg-[#ffe27a] px-1.5 text-[11px] leading-[1.4] font-semibold whitespace-nowrap shadow-[0_2px_3px_-1px_rgba(70,45,20,.35)]">
+    <span className="block -rotate-4 rounded-xs bg-[#ffe27a] px-1.5 text-[11px] leading-[1.4] font-semibold whitespace-nowrap shadow-[0_2px_3px_-1px_rgba(70,45,20,.35)]">
       {text}
     </span>
   );
@@ -138,15 +138,15 @@ export function CraftGitBranchVisualizer({
       data-ovio-world="craft"
       aria-label={repo ? `Commit graph of ${repo}` : "Commit graph"}
       className={cn(
-        "relative w-full max-w-[880px] min-w-0 rounded-[6px] bg-(--ovio-surface) font-(family-name:--ovio-font) text-(--ovio-ink) shadow-(--ovio-shadow)",
+        "relative w-full max-w-220 min-w-0 rounded-md bg-(--ovio-surface) font-(family-name:--ovio-font) text-(--ovio-ink) shadow-(--ovio-shadow)",
         className,
       )}
     >
       <span
         aria-hidden
-        className="absolute -top-3 left-1/2 h-6 w-[92px] -translate-x-1/2 rotate-2 bg-(--ovio-tape)"
+        className="absolute -top-3 left-1/2 h-6 w-23 -translate-x-1/2 rotate-2 bg-(--ovio-tape)"
       />
-      <div className="flex flex-wrap items-baseline justify-between gap-x-4 px-[18px] pt-5">
+      <div className="flex flex-wrap items-baseline justify-between gap-x-4 px-4.5 pt-5">
         <h3 className="m-0 text-lg font-extrabold tracking-[-0.03em]">Repository log</h3>
         {repo && (
           <span className="font-(family-name:--ovio-hand) text-xl leading-none font-bold text-(--ovio-accent-deep)">
@@ -156,7 +156,7 @@ export function CraftGitBranchVisualizer({
       </div>
 
       {actions && (
-        <div className="flex flex-wrap items-center gap-2.5 px-[18px] pt-3">
+        <div className="flex flex-wrap items-center gap-2.5 px-4.5 pt-3">
           <button
             type="button"
             disabled={!actions.mergeTarget}
@@ -199,7 +199,7 @@ export function CraftGitBranchVisualizer({
         Tag={CraftTag}
       />
 
-      <AutoHeight className="mx-[18px] border-t border-dashed border-(--ovio-faint) pt-2.5 pb-1 text-sm leading-[1.4]">
+      <AutoHeight className="mx-4.5 border-t border-dashed border-(--ovio-faint) pt-2.5 pb-1 text-sm leading-[1.4]">
         {current && (
           <Swap
             id={current.commit.id}
@@ -207,7 +207,7 @@ export function CraftGitBranchVisualizer({
             to={{ opacity: 1, transform: "translateY(0px) rotate(0deg)" }}
             transition={motionTokens.craft.base}
           >
-            <div className="break-words">
+            <div className="wrap-break-word">
               <span className="font-(family-name:--ovio-mono) text-[13px] text-[#2b4a9b]">
                 {current.short}
               </span>{" "}
@@ -227,7 +227,7 @@ export function CraftGitBranchVisualizer({
         </div>
       </AutoHeight>
 
-      <div className="flex flex-wrap justify-between gap-x-4 gap-y-1 px-[18px] pt-1 pb-4 text-[13px] text-(--ovio-muted)">
+      <div className="flex flex-wrap justify-between gap-x-4 gap-y-1 px-4.5 pt-1 pb-4 text-[13px] text-(--ovio-muted)">
         <span>
           HEAD → <span className="font-bold text-(--ovio-ink)">{head}</span>
         </span>

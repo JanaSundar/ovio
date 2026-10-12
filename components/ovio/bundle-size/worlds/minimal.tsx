@@ -37,12 +37,12 @@ export function MinimalBundleSize({
     <article
       data-ovio-world="minimal"
       className={cn(
-        "flex w-full max-w-[400px] flex-col gap-[22px] rounded-[10px] border border-(--ovio-line) bg-(--ovio-surface) px-7 py-[26px] font-(family-name:--ovio-font) text-(--ovio-ink)",
+        "flex w-full max-w-100 flex-col gap-5.5 rounded-[10px] border border-(--ovio-line) bg-(--ovio-surface) px-7 py-6.5 font-(family-name:--ovio-font) text-(--ovio-ink)",
         className,
       )}
     >
       <div className="flex items-center justify-between gap-3">
-        <h3 className="m-0 min-w-0 font-(family-name:--ovio-mono) text-[13px] font-normal [overflow-wrap:anywhere]">
+        <h3 className="m-0 min-w-0 font-(family-name:--ovio-mono) text-[13px] font-normal wrap-anywhere">
           {packageName}
         </h3>
         <div
@@ -62,7 +62,7 @@ export function MinimalBundleSize({
               aria-controls={panelId}
               tabIndex={i === index ? 0 : -1}
               onClick={() => select(i)}
-              className="relative cursor-pointer rounded-[5px] border-0 bg-transparent px-[9px] py-1 font-(family-name:--ovio-mono) text-[11px]"
+              className="relative cursor-pointer rounded-[5px] border-0 bg-transparent px-2.25 py-1 font-(family-name:--ovio-mono) text-[11px]"
             >
               {i === index && (
                 <motion.span
@@ -89,7 +89,7 @@ export function MinimalBundleSize({
         id={panelId}
         role="tabpanel"
         aria-labelledby={tabId(index)}
-        className="flex flex-col gap-[22px]"
+        className="flex flex-col gap-5.5"
       >
         <div className="flex items-baseline gap-1.5">
           <RollingNumber
@@ -106,7 +106,7 @@ export function MinimalBundleSize({
             role="img"
             aria-label={barLabel(r)}
             // A size container, so the previous-size marker can travel in cqw of the bar.
-            className="relative h-1.5 rounded-[3px] bg-(--ovio-line-2) [container-type:inline-size]"
+            className="relative h-1.5 rounded-[3px] bg-(--ovio-line-2) @container"
           >
             <motion.div
               className="absolute inset-0 rounded-[3px]"
@@ -147,7 +147,7 @@ export function MinimalBundleSize({
 
         {/* The rolling number's box is 21px; the same line height keeps "first release" as tall. */}
         <motion.div
-          className="text-[13px] leading-[21px]"
+          className="text-[13px] leading-5.25"
           initial={false}
           animate={{ color: TREND_COLOR[r.trend] }}
           transition={fast}

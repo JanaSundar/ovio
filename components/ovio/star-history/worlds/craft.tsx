@@ -41,7 +41,7 @@ export function CraftStarHistory({
       data-ovio-world="craft"
       style={{ rotate: "-0.8deg" }}
       className={cn(
-        "m-0 flex w-full max-w-[680px] flex-col gap-3 rounded-[4px] bg-[#fdfbf5] bg-[linear-gradient(rgba(49,120,198,.12)_1px,transparent_1px),linear-gradient(90deg,rgba(49,120,198,.12)_1px,transparent_1px)] bg-size-[16px_16px] px-6 py-[22px] font-(family-name:--ovio-font) text-(--ovio-ink) shadow-(--ovio-shadow)",
+        "m-0 flex w-full max-w-170 flex-col gap-3 rounded-sm bg-[#fdfbf5] bg-[linear-gradient(rgba(49,120,198,.12)_1px,transparent_1px),linear-gradient(90deg,rgba(49,120,198,.12)_1px,transparent_1px)] bg-size-[16px_16px] px-6 py-5.5 font-(family-name:--ovio-font) text-(--ovio-ink) shadow-(--ovio-shadow)",
         className,
       )}
     >
@@ -67,7 +67,7 @@ export function CraftStarHistory({
         look={look}
         animation={animation}
         dataKey={dataKey}
-        className="min-h-[220px] flex-1"
+        className="min-h-55 flex-1"
       >
         {(at) =>
           shape.annotations.map((a) => {
@@ -77,7 +77,7 @@ export function CraftStarHistory({
               <div
                 key={`${a.date}-${a.label}`}
                 aria-hidden
-                className="pointer-events-none absolute -translate-x-[30%] -translate-y-[125%]"
+                className="pointer-events-none absolute translate-x-[-30%] translate-y-[-125%]"
                 style={{ left: x, top: y }}
               >
                 <motion.div

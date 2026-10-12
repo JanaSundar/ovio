@@ -19,7 +19,7 @@ export function CraftToast({ kind, title, description, action, dismiss }: ToastW
       <div className="flex items-start gap-2.5">
         <span
           aria-hidden
-          className="mt-0.5 shrink-0 rotate-[-6deg] rounded border-2 px-1.5 text-[11px] leading-[1.4] font-extrabold tracking-[0.04em] uppercase"
+          className="mt-0.5 shrink-0 -rotate-6 rounded border-2 px-1.5 text-[11px] leading-[1.4] font-extrabold tracking-[0.04em] uppercase"
           style={{ color: stamp.color, borderColor: stamp.color }}
         >
           {stamp.text}

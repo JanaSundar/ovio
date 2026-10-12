@@ -37,7 +37,7 @@ export function RetroStarHistory({
     <figure
       data-ovio-world="retro"
       className={cn(
-        "relative m-0 flex w-full max-w-[680px] flex-col gap-3.5 bg-(--ovio-stage) px-8 py-7 font-(family-name:--ovio-font) text-(--ovio-ink) [text-shadow:var(--ovio-glow)]",
+        "relative m-0 flex w-full max-w-170 flex-col gap-3.5 bg-(--ovio-stage) px-8 py-7 font-(family-name:--ovio-font) text-(--ovio-ink) text-shadow-(--ovio-glow)",
         className,
       )}
     >

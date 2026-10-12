@@ -79,10 +79,7 @@ export function GooBookButton({ sending, look }: { sending: boolean; look: GooBo
           DROPS.map((d, i) => (
             <motion.div
               key={i}
-              className={cn(
-                "absolute top-1/2 left-1/2 -m-[15px] size-[30px] rounded-full",
-                look.pill,
-              )}
+              className={cn("absolute top-1/2 left-1/2 -m-3.75 size-7.5 rounded-full", look.pill)}
               initial={{ x: 0, y: 0, scale: 0.5 }}
               animate={{ x: [0, d.x, 0], y: [0, d.y, 0], scale: [0.5, 1, 0.5] }}
               transition={{
@@ -96,7 +93,7 @@ export function GooBookButton({ sending, look }: { sending: boolean; look: GooBo
       </div>
       <motion.span
         aria-hidden
-        className={cn("absolute top-1/2 left-[18px] -translate-y-1/2", look.label)}
+        className={cn("absolute top-1/2 left-4.5 -translate-y-1/2", look.label)}
         initial={false}
         animate={{ opacity: sending ? 0 : 1 }}
       >
@@ -143,13 +140,13 @@ export function ToyBookButton({ sending }: { sending: boolean }) {
       aria-busy={sending}
       onHoverStart={() => setHover(true)}
       onHoverEnd={() => setHover(false)}
-      className="relative flex h-[88px] w-full cursor-pointer items-center justify-between gap-3 rounded-2xl border-0 bg-(--ovio-red) py-0 pr-4 pl-5 text-left font-(family-name:--ovio-font) text-[22px] leading-[1.05] font-extrabold tracking-[-0.035em] text-white touch-manipulation"
+      className="relative flex h-22 w-full cursor-pointer items-center justify-between gap-3 rounded-2xl border-0 bg-(--ovio-red) py-0 pr-4 pl-5 text-left font-(family-name:--ovio-font) text-[22px] leading-[1.05] font-extrabold tracking-[-0.035em] text-white touch-manipulation"
     >
       <GooFilter id={id} crisp />
       <div aria-hidden className="absolute inset-0" style={{ filter: `url(#${id})` }}>
         <div className="absolute inset-0 rounded-2xl bg-(--ovio-red)" />
         <motion.div
-          className="absolute top-[14px] right-[10px] size-[60px] rounded-full bg-(--ovio-red)"
+          className="absolute top-3.5 right-2.5 size-15 rounded-full bg-(--ovio-red)"
           initial={false}
           animate={knob}
           transition={spring}

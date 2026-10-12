@@ -77,7 +77,7 @@ function StatusDots({
     <div
       ref={scope}
       aria-hidden
-      className="relative h-11 w-[120px]"
+      className="relative h-11 w-30"
       style={{ filter: `url(#${filterId})` }}
     >
       {STATUS_DOTS.map((d, j) => (
@@ -125,7 +125,7 @@ export function LiquidBar({ look, ...p }: LiquidTabsWorldProps & { look: LiquidL
       )}
     >
       {p.status && <GooFilter id={p.filterId} blur={p.goo} />}
-      <div className="relative w-full max-w-[540px] p-1.5" style={look.track}>
+      <div className="relative w-full max-w-135 p-1.5" style={look.track}>
         <div ref={box} aria-hidden className="absolute inset-1.5">
           <div
             ref={rest}
@@ -191,9 +191,9 @@ export function LiquidBar({ look, ...p }: LiquidTabsWorldProps & { look: LiquidL
       </div>
 
       {p.status && (
-        <div className="flex flex-wrap items-center justify-center gap-[22px]">
+        <div className="flex flex-wrap items-center justify-center gap-5.5">
           <StatusDots status={st} colors={look.dots} filterId={p.filterId} />
-          <div className="flex min-w-[150px] flex-col gap-0.5" role="status">
+          <div className="flex min-w-37.5 flex-col gap-0.5" role="status">
             <span className={cn("opacity-65", look.label)}>Deploy status</span>
             <span className={look.statusText}>{p.statusLabel}</span>
           </div>

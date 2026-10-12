@@ -264,16 +264,13 @@ export function Ticket({ look, rootRef, ...p }: EventTicketWorldProps & { look: 
 
   const main = horizontal ? (
     <div
-      className={cn(
-        "@container relative flex min-h-[340px] min-w-0 flex-1 overflow-hidden",
-        look.card,
-      )}
+      className={cn("@container relative flex min-h-85 min-w-0 flex-1 overflow-hidden", look.card)}
     >
       <div
         className={cn("relative w-[clamp(72px,22cqi,156px)] flex-none overflow-hidden", look.art)}
       >
         <TicketArt world={look.world} seed={p.seed} shape="tall" />
-        <span className="absolute bottom-3 left-3 rotate-180 rounded-sm bg-(--ovio-surface) px-[3px] py-1.5 font-(family-name:--ovio-mono) text-[11px] leading-none tracking-[0.14em] text-(--ovio-muted) [writing-mode:vertical-rl]">
+        <span className="absolute bottom-3 left-3 rotate-180 rounded-sm bg-(--ovio-surface) px-0.75 py-1.5 font-(family-name:--ovio-mono) text-[11px] leading-none tracking-[0.14em] text-(--ovio-muted) [writing-mode:vertical-rl]">
           {p.ticketId}
         </span>
       </div>
@@ -318,7 +315,7 @@ export function Ticket({ look, rootRef, ...p }: EventTicketWorldProps & { look: 
       </div>
       <div className="flex flex-col gap-5 px-6 pt-5 pb-6">
         <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1.5">
-          <h2 className={cn("m-0 min-w-0 break-words", look.headline)}>{p.event.name}</h2>
+          <h2 className={cn("m-0 min-w-0 wrap-break-word", look.headline)}>{p.event.name}</h2>
           {p.event.venue && <span className={look.label}>{p.event.venue}</span>}
         </div>
         {facts.length > 0 && (
@@ -355,7 +352,7 @@ export function Ticket({ look, rootRef, ...p }: EventTicketWorldProps & { look: 
               <br />
               {first}.
             </div>
-            <div className={cn("break-words", look.small)}>
+            <div className={cn("wrap-break-word", look.small)}>
               Confirmation sent to {p.attendee?.email}
             </div>
             <Barcode value={p.ticketId} laser={look.laser} sweep={look.motion.sweep} />
@@ -497,10 +494,7 @@ export function Ticket({ look, rootRef, ...p }: EventTicketWorldProps & { look: 
       <div
         onPointerMove={tilt}
         onPointerLeave={untilt}
-        className={cn(
-          "w-full perspective-[1600px]",
-          horizontal ? "max-w-[880px]" : "max-w-[360px]",
-        )}
+        className={cn("w-full perspective-[1600px]", horizontal ? "max-w-220" : "max-w-90")}
         style={{ rotate: look.rotate ? `${look.rotate}deg` : undefined }}
       >
         <motion.div className="transform-3d" style={{ rotateX: rx, rotateY: ry }}>

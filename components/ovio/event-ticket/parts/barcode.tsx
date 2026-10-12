@@ -53,7 +53,7 @@ export function Barcode({
             transition={{ ...sweep, repeat: Infinity }}
           >
             <span
-              className="absolute inset-y-0 left-0 -ml-px w-[3px]"
+              className="absolute inset-y-0 left-0 -ml-px w-0.75"
               style={{ background: laser, boxShadow: `0 0 12px 2px ${laser}` }}
             />
           </motion.span>

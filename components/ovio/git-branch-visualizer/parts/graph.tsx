@@ -318,7 +318,7 @@ export function Graph({
           className={cn(
             "min-w-0 flex-1",
             scrolls &&
-              "overflow-x-auto overflow-y-hidden [scrollbar-width:none] select-none [&::-webkit-scrollbar]:hidden",
+              "overflow-x-auto overflow-y-hidden scrollbar-none select-none [&::-webkit-scrollbar]:hidden",
             scrolls && (panning ? "cursor-grabbing" : "cursor-grab"),
           )}
           style={

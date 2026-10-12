@@ -10,9 +10,9 @@ const look: LiquidLook = {
   blobRadius: "0px",
   on: "#061108",
   off: "#6dff8a",
-  tab: "py-2 text-2xl tracking-[0.04em] uppercase [text-shadow:var(--ovio-glow)]",
+  tab: "py-2 text-2xl tracking-[0.04em] uppercase text-shadow-(--ovio-glow)",
   label: "text-lg tracking-[0.04em] uppercase",
-  statusText: "text-[26px] uppercase [text-shadow:var(--ovio-glow)]",
+  statusText: "text-[26px] uppercase text-shadow-(--ovio-glow)",
   // Old hardware: square ends, 12 frames a second, every edge on a 4px grid.
   liquid: {
     lead: { stiffness: 700, damping: 53 },

@@ -35,8 +35,7 @@ const MIN_WEEK = 16;
  * keeps lifted and glowing cells from being clipped; the negative margins cancel it out.
  */
 export const weekScroller = {
-  className:
-    "-mx-1 -mt-3 -mb-2 overflow-x-auto overflow-y-hidden px-1 pt-3 pb-2 [scrollbar-width:thin]",
+  className: "-mx-1 -mt-3 -mb-2 overflow-x-auto overflow-y-hidden px-1 pt-3 pb-2 scrollbar-thin",
   ref: (el: HTMLDivElement | null) => {
     if (el) el.scrollLeft = el.scrollWidth;
   },

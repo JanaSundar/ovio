@@ -23,25 +23,21 @@ export function MinimalRepositoryCard({
       whileHover={{ y: -2, borderColor: "#c9c6bf" }}
       transition={transition}
       className={cn(
-        "w-full max-w-105 rounded-(--ovio-radius) border border-(--ovio-line) bg-(--ovio-surface) px-7 py-[26px] font-(family-name:--ovio-font) text-(--ovio-ink)",
+        "w-full max-w-105 rounded-(--ovio-radius) border border-(--ovio-line) bg-(--ovio-surface) px-7 py-6.5 font-(family-name:--ovio-font) text-(--ovio-ink)",
         className,
       )}
     >
-      <div className="mb-1.5 text-xs text-(--ovio-muted) [overflow-wrap:anywhere]">
-        {repo.owner} /
-      </div>
-      <h3 className="m-0 text-[22px] font-medium tracking-[-0.02em] [overflow-wrap:anywhere]">
-        {repo.name}
-      </h3>
+      <div className="mb-1.5 text-xs text-(--ovio-muted) wrap-anywhere">{repo.owner} /</div>
+      <h3 className="m-0 text-[22px] font-medium tracking-[-0.02em] wrap-anywhere">{repo.name}</h3>
       {repo.description && (
         <p
           title={repo.description}
-          className="mt-3 mb-6 line-clamp-3 text-sm leading-normal text-(--ovio-ink-2) [overflow-wrap:anywhere]"
+          className="mt-3 mb-6 line-clamp-3 text-sm leading-normal text-(--ovio-ink-2) wrap-anywhere"
         >
           {repo.description}
         </p>
       )}
-      <div className="flex flex-wrap items-center gap-[22px] border-t border-(--ovio-line-2) pt-4 text-[13px] text-(--ovio-ink-2)">
+      <div className="flex flex-wrap items-center gap-5.5 border-t border-(--ovio-line-2) pt-4 text-[13px] text-(--ovio-ink-2)">
         {language && (
           <span className="flex items-center gap-1.5">
             <span className="size-2 rounded-full" style={{ background: language.color }} />

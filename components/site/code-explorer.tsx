@@ -138,7 +138,7 @@ function SidebarIcon() {
 }
 
 const toolButton =
-  "flex h-7 cursor-pointer items-center gap-1.5 rounded-md border-0 bg-transparent px-2 font-mono text-[11px] text-code-muted transition-transform duration-[160ms] ease-(--ease-out) hover:bg-[#2c2b28] hover:text-paper active:scale-[0.97]";
+  "flex h-7 cursor-pointer items-center gap-1.5 rounded-md border-0 bg-transparent px-2 font-mono text-[11px] text-code-muted transition-transform duration-160 ease-out hover:bg-[#2c2b28] hover:text-paper active:scale-[0.97]";
 
 /**
  * The Code tab: a VS Code-style explorer over a component's source files, with a collapsible

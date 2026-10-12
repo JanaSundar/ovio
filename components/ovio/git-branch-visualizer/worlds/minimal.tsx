@@ -108,7 +108,7 @@ export function MinimalGitBranchVisualizer({
       data-ovio-world="minimal"
       aria-label={repo ? `Commit graph of ${repo}` : "Commit graph"}
       className={cn(
-        "w-full max-w-[880px] min-w-0 rounded-[10px] border border-(--ovio-line) bg-(--ovio-surface) font-(family-name:--ovio-font) text-(--ovio-ink)",
+        "w-full max-w-220 min-w-0 rounded-[10px] border border-(--ovio-line) bg-(--ovio-surface) font-(family-name:--ovio-font) text-(--ovio-ink)",
         className,
       )}
     >
@@ -160,7 +160,7 @@ export function MinimalGitBranchVisualizer({
       <AutoHeight className="mx-4 border-t border-(--ovio-line-2) pt-2.5 pb-1 text-[13px] leading-[1.45]">
         {current && (
           <Swap id={current.commit.id} transition={motionTokens.minimal.base}>
-            <div className="break-words">
+            <div className="wrap-break-word">
               <span className="font-(family-name:--ovio-mono) text-(--ovio-muted)">
                 {current.short}
               </span>{" "}

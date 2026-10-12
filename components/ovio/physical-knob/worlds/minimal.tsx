@@ -66,9 +66,9 @@ export function MinimalKnob({
           className="absolute inset-0 cursor-grab touch-none rounded-full active:cursor-grabbing"
         >
           <KnobTicks s={TICKS} percent={percent} />
-          <div className="absolute inset-[26px] rounded-full border border-(--ovio-line) bg-(--ovio-surface) shadow-[0_1px_2px_rgba(0,0,0,.04),0_10px_24px_-14px_rgba(0,0,0,.22)]" />
-          <motion.div className="absolute inset-[26px] rounded-full" style={{ rotate: angle }}>
-            <span className="absolute top-3 left-1/2 -ml-px h-[26px] w-0.5 rounded-[1px] bg-(--ovio-ink)" />
+          <div className="absolute inset-6.5 rounded-full border border-(--ovio-line) bg-(--ovio-surface) shadow-[0_1px_2px_rgba(0,0,0,.04),0_10px_24px_-14px_rgba(0,0,0,.22)]" />
+          <motion.div className="absolute inset-6.5 rounded-full" style={{ rotate: angle }}>
+            <span className="absolute top-3 left-1/2 -ml-px h-6.5 w-0.5 rounded-[1px] bg-(--ovio-ink)" />
           </motion.div>
         </div>
       </div>
@@ -80,7 +80,7 @@ export function MinimalKnob({
         />
         <span className="text-base text-(--ovio-muted)">%</span>
       </div>
-      <div className="flex w-[200px] justify-between font-(family-name:--ovio-mono) text-[11px] text-(--ovio-faint)">
+      <div className="flex w-50 justify-between font-(family-name:--ovio-mono) text-[11px] text-(--ovio-faint)">
         <span>{min}</span>
         <span>{max}</span>
       </div>

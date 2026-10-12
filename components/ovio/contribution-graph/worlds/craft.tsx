@@ -30,8 +30,8 @@ const LEVEL = [
  */
 const TILE = cn(
   "relative aspect-square rounded-[3px] data-active:z-10",
-  "before:absolute before:inset-0 before:rounded-[3px] before:[transform:translateY(var(--lift))_scale(1)_rotate(var(--tilt))] before:transition-transform before:duration-300 before:ease-[cubic-bezier(.34,1.5,.5,1)] data-active:before:[transform:translateY(-6px)_scale(1.35)_rotate(0deg)]",
-  "after:absolute after:inset-0 after:rounded-[3px] after:opacity-0 after:shadow-[0_8px_10px_-2px_rgba(90,50,20,.45)] after:transition-opacity after:duration-300 after:[transform:translateY(-6px)_scale(1.35)] data-active:after:opacity-100",
+  "before:absolute before:inset-0 before:rounded-[3px] before:transform-[translateY(var(--lift))_scale(1)_rotate(var(--tilt))] before:transition-transform before:duration-300 before:ease-[cubic-bezier(.34,1.5,.5,1)] data-active:before:transform-[translateY(-6px)_scale(1.35)_rotate(0deg)]",
+  "after:absolute after:inset-0 after:rounded-[3px] after:opacity-0 after:shadow-[0_8px_10px_-2px_rgba(90,50,20,.45)] after:transition-opacity after:duration-300 after:transform-[translateY(-6px)_scale(1.35)] data-active:after:opacity-100",
   "motion-reduce:before:transition-none motion-reduce:after:transition-none",
 );
 
@@ -119,15 +119,15 @@ export function CraftContributionGraph({
     <section
       data-ovio-world="craft"
       className={cn(
-        "relative mx-auto w-full min-w-0 rounded-md lg:-rotate-[0.6deg] bg-(--ovio-surface) px-6 pt-10 pb-9 font-(family-name:--ovio-font) text-(--ovio-ink) shadow-[inset_0_1px_0_rgba(255,255,255,.8),0_2px_4px_rgba(70,45,20,.12),0_18px_40px_-12px_rgba(70,45,20,.35)] sm:px-11",
+        "relative mx-auto w-full min-w-0 rounded-md lg:rotate-[-0.6deg] bg-(--ovio-surface) px-6 pt-10 pb-9 font-(family-name:--ovio-font) text-(--ovio-ink) shadow-[inset_0_1px_0_rgba(255,255,255,.8),0_2px_4px_rgba(70,45,20,.12),0_18px_40px_-12px_rgba(70,45,20,.35)] sm:px-11",
         className,
       )}
     >
       <span
         aria-hidden
-        className="absolute -top-3.5 left-1/2 -ml-[60px] h-7 w-[120px] rotate-2 bg-(--ovio-tape) shadow-[0_1px_2px_rgba(0,0,0,.08)]"
+        className="absolute -top-3.5 left-1/2 -ml-15 h-7 w-30 rotate-2 bg-(--ovio-tape) shadow-[0_1px_2px_rgba(0,0,0,.08)]"
       />
-      <div className="absolute -top-[26px] -right-1 sm:-right-[18px] flex size-[104px] rotate-12 flex-col items-center justify-center rounded-full bg-(--ovio-accent) text-(--ovio-on-accent) shadow-[0_6px_14px_-4px_rgba(120,50,10,.5),inset_0_-3px_0_rgba(0,0,0,.12)]">
+      <div className="absolute -top-6.5 -right-1 sm:-right-4.5 flex size-26 rotate-12 flex-col items-center justify-center rounded-full bg-(--ovio-accent) text-(--ovio-on-accent) shadow-[0_6px_14px_-4px_rgba(120,50,10,.5),inset_0_-3px_0_rgba(0,0,0,.12)]">
         <span className="text-[30px] leading-none font-extrabold tracking-[-0.03em]">
           {year.longest}
         </span>
@@ -175,11 +175,11 @@ export function CraftContributionGraph({
         </div>
       </div>
 
-      <div className="mt-[18px] flex flex-wrap items-end justify-between gap-4 px-1">
-        <div className="relative -rotate-[1.5deg] rounded bg-white py-2.5 pr-4 pl-[26px] text-sm shadow-[0_4px_10px_-3px_rgba(70,45,20,.3)]">
+      <div className="mt-4.5 flex flex-wrap items-end justify-between gap-4 px-1">
+        <div className="relative rotate-[-1.5deg] rounded bg-white py-2.5 pr-4 pl-6.5 text-sm shadow-[0_4px_10px_-3px_rgba(70,45,20,.3)]">
           <span
             aria-hidden
-            className="absolute top-1/2 left-[9px] -mt-[3.5px] size-[7px] rounded-full bg-(--ovio-stage) shadow-[inset_0_1px_2px_rgba(0,0,0,.25)]"
+            className="absolute top-1/2 left-2.25 mt-[-3.5px] size-1.75 rounded-full bg-(--ovio-stage) shadow-[inset_0_1px_2px_rgba(0,0,0,.25)]"
           />
           <strong className="font-bold">
             <span className="tabular-nums">{formatNumber(day.count)}</span> {unit(day.count)}
@@ -188,11 +188,11 @@ export function CraftContributionGraph({
         </div>
         <div
           aria-hidden
-          className="flex flex-wrap items-center gap-[5px] font-(family-name:--ovio-hand) text-xl text-(--ovio-ink-2)"
+          className="flex flex-wrap items-center gap-1.25 font-(family-name:--ovio-hand) text-xl text-(--ovio-ink-2)"
         >
           quiet
           {SCALE.map((c) => (
-            <span key={c} className="size-[13px] rounded-[3px]" style={{ background: c }} />
+            <span key={c} className="size-3.25 rounded-[3px]" style={{ background: c }} />
           ))}
           busy
         </div>

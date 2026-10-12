@@ -70,7 +70,7 @@ function VolumeKnob({ volume, setVolume }: Pick<NowPlayingWorldProps, "volume" |
           <span
             key={i}
             aria-hidden
-            className="absolute top-0 left-[47px] h-[7px] w-0.5 origin-[1px_48px] rounded-[1px] transition-colors duration-150 motion-reduce:transition-none"
+            className="absolute top-0 left-11.75 h-1.75 w-0.5 origin-[1px_48px] rounded-[1px] transition-colors duration-150 motion-reduce:transition-none"
             style={{
               rotate: `${ANGLE_MIN + i * DETENT}deg`,
               background: i <= volume ? "var(--ovio-red)" : "var(--ovio-faint)",
@@ -85,7 +85,7 @@ function VolumeKnob({ volume, setVolume }: Pick<NowPlayingWorldProps, "volume" |
           animate={{ rotate: ANGLE_MIN + volume * DETENT }}
           transition={turn}
         >
-          <span className="absolute top-1.5 left-1/2 -ml-[3px] h-[18px] w-1.5 rounded-[3px] bg-(--ovio-surface)" />
+          <span className="absolute top-1.5 left-1/2 -ml-0.75 h-4.5 w-1.5 rounded-[3px] bg-(--ovio-surface)" />
         </motion.div>
       </div>
       <span className="font-(family-name:--ovio-mono) text-[11px] tracking-widest text-(--ovio-muted)">
@@ -115,11 +115,11 @@ export function ToyNowPlaying({
     <article
       data-ovio-world="toy"
       className={cn(
-        "@container w-full max-w-[500px] rounded-[24px] bg-(--ovio-surface) p-3.5 font-(family-name:--ovio-font) text-(--ovio-ink) shadow-[inset_0_1px_0_#fff,0_8px_0_var(--ovio-line),0_24px_30px_-16px_rgba(40,28,10,.45)] @[400px]:p-[18px]",
+        "@container w-full max-w-125 rounded-3xl bg-(--ovio-surface) p-3.5 font-(family-name:--ovio-font) text-(--ovio-ink) shadow-[inset_0_1px_0_#fff,0_8px_0_var(--ovio-line),0_24px_30px_-16px_rgba(40,28,10,.45)] @[400px]:p-4.5",
         className,
       )}
     >
-      <div className="grid items-center gap-4 @[440px]:grid-cols-[minmax(0,1fr)_116px] @[440px]:gap-[18px]">
+      <div className="grid items-center gap-4 @[440px]:grid-cols-[minmax(0,1fr)_116px] @[440px]:gap-4.5">
         <div className="flex min-w-0 flex-col gap-3.5">
           <div className="rounded-xl bg-[#2a2925] px-3.5 py-3 text-(--ovio-surface) shadow-[inset_0_3px_6px_rgba(0,0,0,.6)]">
             <div className="flex justify-between gap-2 font-(family-name:--ovio-mono) text-[10px] tracking-[0.08em] text-[#bdb6a8]">

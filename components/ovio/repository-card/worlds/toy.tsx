@@ -27,17 +27,17 @@ export function ToyRepositoryCard({
     <article
       data-ovio-world="toy"
       className={cn(
-        "flex w-full max-w-[400px] flex-col gap-3.5 rounded-[22px] bg-(--ovio-surface) p-3.5 font-(family-name:--ovio-font) text-(--ovio-ink) shadow-[inset_0_1px_0_#fff,0_7px_0_#d2ccbf,0_22px_30px_-16px_rgba(40,28,10,.45)]",
+        "flex w-full max-w-100 flex-col gap-3.5 rounded-[22px] bg-(--ovio-surface) p-3.5 font-(family-name:--ovio-font) text-(--ovio-ink) shadow-[inset_0_1px_0_#fff,0_7px_0_#d2ccbf,0_22px_30px_-16px_rgba(40,28,10,.45)]",
         className,
       )}
     >
-      <div className="relative rounded-(--ovio-radius) bg-(--ovio-accent) px-5 pt-[18px] pb-5 text-white shadow-[inset_0_-4px_0_rgba(0,0,0,.2),inset_0_2px_0_rgba(255,255,255,.2)]">
+      <div className="relative rounded-(--ovio-radius) bg-(--ovio-accent) px-5 pt-4.5 pb-5 text-white shadow-[inset_0_-4px_0_rgba(0,0,0,.2),inset_0_2px_0_rgba(255,255,255,.2)]">
         {/* Clear of the two dots in the corner. */}
-        <div className="pr-10 font-(family-name:--ovio-mono) text-[11px] tracking-[0.08em] uppercase [overflow-wrap:anywhere]">
+        <div className="pr-10 font-(family-name:--ovio-mono) text-[11px] tracking-[0.08em] uppercase wrap-anywhere">
           {repo.owner} /
         </div>
         <h3
-          className="m-0 mt-1 leading-none font-extrabold tracking-[-0.03em] [overflow-wrap:anywhere]"
+          className="m-0 mt-1 leading-none font-extrabold tracking-[-0.03em] wrap-anywhere"
           // 46px fits about eleven letters on the plate; longer names step down to 28px, then wrap.
           style={{
             fontStretch: "118%",
@@ -47,14 +47,14 @@ export function ToyRepositoryCard({
           {repo.name}
         </h3>
         <div aria-hidden className="absolute top-3.5 right-3.5 flex gap-1.5">
-          <span className="size-[11px] rounded-full bg-(--ovio-accent-deep) shadow-[inset_0_2px_2px_rgba(0,0,0,.4)]" />
-          <span className="size-[11px] rounded-full bg-(--ovio-accent-deep) shadow-[inset_0_2px_2px_rgba(0,0,0,.4)]" />
+          <span className="size-2.75 rounded-full bg-(--ovio-accent-deep) shadow-[inset_0_2px_2px_rgba(0,0,0,.4)]" />
+          <span className="size-2.75 rounded-full bg-(--ovio-accent-deep) shadow-[inset_0_2px_2px_rgba(0,0,0,.4)]" />
         </div>
       </div>
       {repo.description && (
         <p
           title={repo.description}
-          className="mx-1.5 my-0 line-clamp-3 text-sm leading-[1.45] text-(--ovio-ink-2) [overflow-wrap:anywhere]"
+          className="mx-1.5 my-0 line-clamp-3 text-sm leading-[1.45] text-(--ovio-ink-2) wrap-anywhere"
         >
           {repo.description}
         </p>
@@ -94,7 +94,7 @@ export function ToyRepositoryCard({
               title={language.name}
               aria-label={language.name}
               role="img"
-              className="flex size-[38px] items-center justify-center rounded-full bg-(--ovio-accent) text-[13px] font-extrabold text-white shadow-[0_4px_0_var(--ovio-accent-deep),0_8px_10px_-4px_rgba(40,28,10,.4)]"
+              className="flex size-9.5 items-center justify-center rounded-full bg-(--ovio-accent) text-[13px] font-extrabold text-white shadow-[0_4px_0_var(--ovio-accent-deep),0_8px_10px_-4px_rgba(40,28,10,.4)]"
             >
               {language.short}
             </span>

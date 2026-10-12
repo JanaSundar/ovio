@@ -17,8 +17,8 @@ const MARKS = [
 ] as const;
 
 const TILE = {
-  platinum: "h-[88px] text-[22px] text-(--ovio-ink) @md:h-[110px] @md:text-[26px]",
-  gold: "h-16 text-[15px] text-(--ovio-ink-2) @md:h-[72px] @md:text-base",
+  platinum: "h-22 text-[22px] text-(--ovio-ink) @md:h-27.5 @md:text-[26px]",
+  gold: "h-16 text-[15px] text-(--ovio-ink-2) @md:h-18 @md:text-base",
 } as const;
 
 const COLUMNS = {
@@ -51,7 +51,7 @@ export function MinimalSponsorWall({
       data-ovio-world="minimal"
       aria-label="Sponsors"
       className={cn(
-        "@container flex w-full max-w-[640px] flex-col gap-[22px] rounded-(--ovio-radius) border border-(--ovio-line) bg-(--ovio-surface) px-5 py-7 font-(family-name:--ovio-font) text-(--ovio-ink) @md:px-10 @md:py-9",
+        "@container flex w-full max-w-160 flex-col gap-5.5 rounded-(--ovio-radius) border border-(--ovio-line) bg-(--ovio-surface) px-5 py-7 font-(family-name:--ovio-font) text-(--ovio-ink) @md:px-10 @md:py-9",
         className,
       )}
     >

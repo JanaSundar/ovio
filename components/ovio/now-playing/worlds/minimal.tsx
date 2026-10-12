@@ -23,7 +23,7 @@ export function MinimalNowPlaying({
     <article
       data-ovio-world="minimal"
       className={cn(
-        "@container w-full max-w-[440px] rounded-(--ovio-radius) border border-(--ovio-line) bg-(--ovio-surface) p-4 font-(family-name:--ovio-font) text-(--ovio-ink) @[360px]:p-5",
+        "@container w-full max-w-110 rounded-(--ovio-radius) border border-(--ovio-line) bg-(--ovio-surface) p-4 font-(family-name:--ovio-font) text-(--ovio-ink) @[360px]:p-5",
         className,
       )}
     >
@@ -34,7 +34,7 @@ export function MinimalNowPlaying({
           aria-label={playing ? "Pause" : "Play"}
           initial={false}
           whileHover="hover"
-          className="group relative flex aspect-square w-full cursor-pointer items-end overflow-hidden rounded-[6px] border-0 bg-(--ovio-track) bg-[repeating-linear-gradient(135deg,rgba(0,0,0,.05)_0_6px,transparent_6px_12px)] p-1.5 text-left font-(family-name:--ovio-mono) text-[9px] text-(--ovio-faint)"
+          className="group relative flex aspect-square w-full cursor-pointer items-end overflow-hidden rounded-md border-0 bg-(--ovio-track) bg-[repeating-linear-gradient(135deg,rgba(0,0,0,.05)_0_6px,transparent_6px_12px)] p-1.5 text-left font-(family-name:--ovio-mono) text-[9px] text-(--ovio-faint)"
         >
           <Artwork src={track.artwork} fallback="cover" />
           <motion.span

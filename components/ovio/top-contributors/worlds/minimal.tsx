@@ -29,14 +29,14 @@ export function MinimalTopContributors({
       data-ovio-world="minimal"
       aria-label={repo ? `Top contributors to ${repo}` : "Top contributors"}
       className={cn(
-        "@container flex w-full max-w-[640px] flex-col gap-[18px] rounded-(--ovio-radius) border border-(--ovio-line) bg-(--ovio-surface) px-6 py-7 font-(family-name:--ovio-font) text-(--ovio-ink) @md:px-10",
+        "@container flex w-full max-w-160 flex-col gap-4.5 rounded-(--ovio-radius) border border-(--ovio-line) bg-(--ovio-surface) px-6 py-7 font-(family-name:--ovio-font) text-(--ovio-ink) @md:px-10",
         className,
       )}
     >
       {(repo || periods.length > 1) && (
         <div className="flex flex-wrap items-center justify-between gap-3">
           {repo && (
-            <span className="min-w-0 font-(family-name:--ovio-mono) text-xs text-(--ovio-muted) [overflow-wrap:anywhere]">
+            <span className="min-w-0 font-(family-name:--ovio-mono) text-xs text-(--ovio-muted) wrap-anywhere">
               {repo}
             </span>
           )}
@@ -96,7 +96,7 @@ export function MinimalTopContributors({
               initial={reduced ? false : { opacity: 0, y: 6 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ ...transition, delay: reduced ? 0 : i * 0.04 }}
-              className="grid grid-cols-[22px_30px_minmax(0,1fr)_minmax(52px,auto)] items-center gap-3 border-b border-(--ovio-line-2) py-[11px] @md:grid-cols-[28px_34px_minmax(0,1fr)_minmax(0,1.2fr)_minmax(60px,auto)] @md:gap-3.5"
+              className="grid grid-cols-[22px_30px_minmax(0,1fr)_minmax(52px,auto)] items-center gap-3 border-b border-(--ovio-line-2) py-2.75 @md:grid-cols-[28px_34px_minmax(0,1fr)_minmax(0,1.2fr)_minmax(60px,auto)] @md:gap-3.5"
             >
               <span className="font-(family-name:--ovio-mono) text-[11px] text-(--ovio-faint)">
                 <span className="sr-only">Rank </span>
@@ -105,7 +105,7 @@ export function MinimalTopContributors({
               <Avatar
                 initials={p.initials}
                 src={p.avatarUrl}
-                className="size-[30px] rounded-full bg-[#ebe9e4] text-[11px] font-medium"
+                className="size-7.5 rounded-full bg-[#ebe9e4] text-[11px] font-medium"
               />
               <span className="flex min-w-0 flex-col">
                 <span className="truncate text-sm font-medium">{p.name}</span>

@@ -1,5 +1,3 @@
-"use client";
-
 import { motion } from "motion/react";
 import { Avatar } from "@/components/shared/avatar";
 import { QrCode } from "@/components/shared/qr-code";

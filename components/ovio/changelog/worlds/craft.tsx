@@ -1,5 +1,3 @@
-"use client";
-
 import { motion, type Transition } from "motion/react";
 import { useState } from "react";
 import { ease, motionTokens, useOvioTransition } from "@/lib/motion";

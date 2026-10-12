@@ -1,5 +1,3 @@
-"use client";
-
 import { motion } from "motion/react";
 import { ease, motionTokens, useOvioTransition, useReducedMotionSafe } from "@/lib/motion";
 import { cn } from "@/lib/utils";

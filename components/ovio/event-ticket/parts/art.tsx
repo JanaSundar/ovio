@@ -1,5 +1,3 @@
-"use client";
-
 import { memo, useId, type ReactNode } from "react";
 import type { World } from "@/components/shared/world-provider";
 import { random } from "../seed";

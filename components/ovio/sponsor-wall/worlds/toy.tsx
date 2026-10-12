@@ -1,5 +1,3 @@
-"use client";
-
 import { AnimatePresence, motion } from "motion/react";
 import { TOY_PLASTIC, ToyKeyLink } from "@/components/shared/toy";
 import { motionTokens, useOvioTransition, useReducedMotionSafe } from "@/lib/motion";

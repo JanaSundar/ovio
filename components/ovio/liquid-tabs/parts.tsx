@@ -1,5 +1,3 @@
-"use client";
-
 import { useAnimate, type Transition } from "motion/react";
 import { useEffect, type CSSProperties } from "react";
 import { GooFilter } from "@/components/shared/goo-filter";

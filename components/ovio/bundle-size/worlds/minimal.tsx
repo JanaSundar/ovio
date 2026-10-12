@@ -1,5 +1,3 @@
-"use client";
-
 import { motion } from "motion/react";
 import { RollingNumber } from "@/components/shared/rolling-number";
 import { motionTokens, useOvioTransition } from "@/lib/motion";

@@ -1,5 +1,3 @@
-"use client";
-
 import { motion } from "motion/react";
 import { steps, useReducedMotionSafe } from "@/lib/motion";
 import { cn } from "@/lib/utils";

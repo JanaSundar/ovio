@@ -14,7 +14,7 @@ export type { Repository } from "./types";
 
 export type RepositoryStat = "stars" | "forks" | "issues";
 
-export type RepositoryCardProps = {
+export interface RepositoryCardProps {
   repository: Repository;
   variant?: World;
   /** Which counts to show, in order. Defaults to stars and forks (and issues in Craft). */
@@ -24,7 +24,7 @@ export type RepositoryCardProps = {
   defaultStarred?: boolean;
   onStarredChange?: (starred: boolean) => void;
   className?: string;
-};
+}
 
 /** Everything a world needs to draw the card. Worlds only render; state lives here. */
 export type RepositoryCardWorldProps = {

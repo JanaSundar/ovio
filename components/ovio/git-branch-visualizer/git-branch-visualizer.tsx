@@ -12,7 +12,7 @@ import type { GitCommit } from "./types";
 
 export type { GitCommit } from "./types";
 
-export type GitBranchVisualizerProps = {
+export interface GitBranchVisualizerProps {
   /** History, oldest first: every parent comes before its children. */
   commits: GitCommit[];
   variant?: World;
@@ -32,7 +32,7 @@ export type GitBranchVisualizerProps = {
   /** Fires with the new branch's name and the commit it starts from. */
   onBranch?: (branch: string, from: GitCommit) => void;
   className?: string;
-};
+}
 
 export type GraphNode = {
   commit: GitCommit;

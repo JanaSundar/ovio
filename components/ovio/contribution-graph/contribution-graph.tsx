@@ -26,7 +26,7 @@ export type { ContributionCell, ContributionDay, ContributionYear };
 
 export type ContributionAnimation = OvioAnimation;
 
-export type ContributionGraphProps = {
+export interface ContributionGraphProps {
   /** Daily counts; gaps become zero. Dates are "YYYY-MM-DD". */
   data: ContributionDay[];
   variant?: World;
@@ -42,7 +42,7 @@ export type ContributionGraphProps = {
   /** Fires with the day under the pointer or keyboard focus, and null when it leaves. */
   onDayHover?: (day: ContributionCell | null) => void;
   className?: string;
-};
+}
 
 /** Event handlers and attributes for the element with role="grid". */
 type ContributionGridProps = {

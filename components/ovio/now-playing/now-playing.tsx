@@ -19,7 +19,7 @@ import type { Track } from "./types";
 
 export type { Track } from "./types";
 
-export type NowPlayingProps = {
+export interface NowPlayingProps {
   track: Track;
   variant?: World;
   playing?: boolean;
@@ -37,7 +37,7 @@ export type NowPlayingProps = {
   /** Fires on the next key and when the track ends. */
   onNext?: () => void;
   className?: string;
-};
+}
 
 /** Everything a world needs to draw the player. Worlds only render; state lives here. */
 export type NowPlayingWorldProps = {

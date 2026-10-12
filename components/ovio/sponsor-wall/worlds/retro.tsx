@@ -1,5 +1,3 @@
-"use client";
-
 import { motion, useAnimationFrame, useMotionValue } from "motion/react";
 import { useLayoutEffect, useRef, type FocusEvent } from "react";
 import { motionTokens, useReducedMotionSafe } from "@/lib/motion";

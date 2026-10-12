@@ -1,5 +1,3 @@
-"use client";
-
 import { useAnimate, type Transition } from "motion/react";
 import { type ReactNode, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { motionTokens, steps, useOvioTransition, useReducedMotionSafe } from "@/lib/motion";

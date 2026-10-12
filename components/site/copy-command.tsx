@@ -54,6 +54,13 @@ export function CopyLabel({ state }: { state: { copied: boolean; failed: boolean
   );
 }
 
+interface CopyCommandProps {
+  command: string;
+  variant?: "command" | "install-box";
+  /** Reports the copy; an install command by default. */
+  onCopy?: () => void;
+}
+
 /**
  * A command with a Copy button: dark with a lime button on the homepage (`command`), a light
  * box with an ink button in the docs (`install-box`).
@@ -62,12 +69,7 @@ export function CopyCommand({
   command,
   variant = "command",
   onCopy = () => track("install_command_copied", { command_variant: variant }),
-}: {
-  command: string;
-  variant?: "command" | "install-box";
-  /** Reports the copy; an install command by default. */
-  onCopy?: () => void;
-}) {
+}: CopyCommandProps) {
   const state = useCopy();
   return (
     <div className={variant}>

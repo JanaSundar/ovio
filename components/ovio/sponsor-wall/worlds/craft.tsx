@@ -1,5 +1,3 @@
-"use client";
-
 import type { CSSProperties } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { useOvioTransition, useReducedMotionSafe } from "@/lib/motion";

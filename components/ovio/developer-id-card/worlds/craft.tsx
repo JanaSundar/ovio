@@ -1,5 +1,3 @@
-"use client";
-
 import { Avatar } from "@/components/shared/avatar";
 import { QrCode } from "@/components/shared/qr-code";
 import { cn } from "@/lib/utils";

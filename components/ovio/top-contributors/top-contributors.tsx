@@ -11,7 +11,7 @@ import type { ContributorPeriod, Contributor } from "./types";
 
 export type { ContributorPeriod, Contributor } from "./types";
 
-export type TopContributorsProps = {
+export interface TopContributorsProps {
   contributors: Contributor[];
   variant?: World;
   /** Project label shown in the header, e.g. "ada-dev/lumen". */
@@ -24,7 +24,7 @@ export type TopContributorsProps = {
   /** Which windows the switcher offers, in order. An empty list hides the switcher. */
   periods?: ContributorPeriod[];
   className?: string;
-};
+}
 
 export type RankedContributor = {
   login: string;

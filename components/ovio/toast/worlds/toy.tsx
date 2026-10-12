@@ -1,5 +1,3 @@
-"use client";
-
 import { TOY_PLASTIC, ToyKey } from "@/components/shared/toy";
 import type { ToastKind, ToastWorldProps } from "../toast";
 

@@ -1,5 +1,3 @@
-"use client";
-
 import { motion, type Transition } from "motion/react";
 import { useMemo } from "react";
 import { useReducedMotionSafe } from "@/lib/motion";

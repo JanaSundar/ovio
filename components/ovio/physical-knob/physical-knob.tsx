@@ -7,7 +7,7 @@ import { CraftKnob } from "./worlds/craft";
 import { RetroKnob } from "./worlds/retro";
 import { ToyKnob } from "./worlds/toy";
 
-export type PhysicalKnobProps = {
+export interface PhysicalKnobProps {
   variant?: World;
   value?: number;
   defaultValue?: number;
@@ -20,7 +20,7 @@ export type PhysicalKnobProps = {
   label?: string;
   disabled?: boolean;
   className?: string;
-};
+}
 
 export type KnobWorldProps = {
   value: number;

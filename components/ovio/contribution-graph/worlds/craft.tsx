@@ -1,5 +1,3 @@
-"use client";
-
 import { memo, useMemo, useRef, type CSSProperties } from "react";
 import { motionTokens } from "@/lib/motion";
 import { cn } from "@/lib/utils";

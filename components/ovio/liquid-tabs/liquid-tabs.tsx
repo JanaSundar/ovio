@@ -18,7 +18,7 @@ import { ToyLiquidTabs } from "./worlds/toy";
 
 export type DeployStatus = "offline" | "building" | "online";
 
-export type LiquidTabsProps = {
+export interface LiquidTabsProps {
   tabs: string[];
   variant?: World;
   value?: number;
@@ -33,7 +33,7 @@ export type LiquidTabsProps = {
   /** Accessible name for the tab list. */
   label?: string;
   className?: string;
-};
+}
 
 export type LiquidTabsWorldProps = {
   tabs: string[];

@@ -1,5 +1,3 @@
-"use client";
-
 import { cn } from "@/lib/utils";
 import type { RepositoryCardWorldProps } from "../repository-card";
 import { COMPACT, formatCount, formatNumber } from "@/lib/format";

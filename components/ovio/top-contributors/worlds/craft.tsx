@@ -1,5 +1,3 @@
-"use client";
-
 import { motion } from "motion/react";
 import type { CSSProperties } from "react";
 import { Avatar } from "@/components/shared/avatar";

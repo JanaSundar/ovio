@@ -1,5 +1,3 @@
-"use client";
-
 import { motion, type Transition } from "motion/react";
 import { useLayoutEffect, useRef, useState, type ReactNode } from "react";
 import { useOvioTransition } from "@/lib/motion";

@@ -1,5 +1,3 @@
-"use client";
-
 import { motion } from "motion/react";
 import { useRef, type PointerEvent } from "react";
 import { ToyKey } from "@/components/shared/toy";

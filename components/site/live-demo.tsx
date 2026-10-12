@@ -6,6 +6,15 @@ import { track } from "@/lib/analytics";
 import type { DemoData } from "@/lib/demo-data";
 import { useLiveData } from "@/lib/use-live-data";
 
+interface LiveDemoProps<S extends LiveSlug> {
+  slug: S;
+  fallback: DemoData[S];
+  refreshMs?: number;
+  /** What the live label names; the demo's target by default. */
+  source?: (data: DemoData[S]) => string;
+  children: (data: DemoData[S], live: boolean) => ReactNode;
+}
+
 /**
  * A demo on real data from /api/demo: a skeleton while it loads, the local sample if it fails,
  * and a label in the stage saying which one is showing.
@@ -16,14 +25,7 @@ export function LiveDemo<S extends LiveSlug>({
   refreshMs,
   source = () => DEMO_TARGETS[slug],
   children,
-}: {
-  slug: S;
-  fallback: DemoData[S];
-  refreshMs?: number;
-  /** What the live label names; the demo's target by default. */
-  source?: (data: DemoData[S]) => string;
-  children: (data: DemoData[S], live: boolean) => ReactNode;
-}) {
+}: LiveDemoProps<S>) {
   const { status, data } = useLiveData(demoUrl(slug), fallback, {
     refreshMs,
     onError: () => track("demo_data_failed", { component_slug: slug }),

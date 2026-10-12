@@ -14,7 +14,7 @@ export type { TicketEvent, Attendee } from "./types";
 
 export type TicketLayout = "horizontal" | "vertical";
 
-export type EventTicketProps = {
+export interface EventTicketProps {
   event: TicketEvent;
   variant?: World;
   /** Side stub or tear-off bottom. Horizontal turns vertical when there is no room for it. */
@@ -32,7 +32,7 @@ export type EventTicketProps = {
   defaultFlipped?: boolean;
   onFlippedChange?: (flipped: boolean) => void;
   className?: string;
-};
+}
 
 export type TicketStatus = "form" | "sending" | "booked";
 

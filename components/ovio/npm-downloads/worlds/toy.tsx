@@ -1,5 +1,3 @@
-"use client";
-
 import { motion, useMotionValue, useSpring } from "motion/react";
 import { useEffect, useRef, type PointerEvent } from "react";
 import { motionTokens, useOvioTransition, useReducedMotionSafe } from "@/lib/motion";

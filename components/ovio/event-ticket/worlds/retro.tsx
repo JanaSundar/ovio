@@ -1,5 +1,3 @@
-"use client";
-
 import { motionTokens, steps } from "@/lib/motion";
 import { GooBookButton, type GooBookLook } from "../parts/book-button";
 import type { EventTicketWorldProps } from "../event-ticket";

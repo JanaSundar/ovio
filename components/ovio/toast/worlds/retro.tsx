@@ -1,5 +1,3 @@
-"use client";
-
 import type { ToastKind, ToastWorldProps } from "../toast";
 
 const TAG: Record<ToastKind, string> = { success: "OK", error: "ERR!", info: "INFO" };

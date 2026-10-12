@@ -1,5 +1,3 @@
-"use client";
-
 import { LiquidBar, type LiquidLook } from "../parts";
 import type { LiquidTabsWorldProps } from "../liquid-tabs";
 

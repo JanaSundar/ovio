@@ -1,5 +1,3 @@
-"use client";
-
 import type { ToastKind, ToastWorldProps } from "../toast";
 
 const DOT: Record<ToastKind, string> = {

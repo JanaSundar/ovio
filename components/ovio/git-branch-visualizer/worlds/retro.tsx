@@ -1,5 +1,3 @@
-"use client";
-
 import { motion } from "motion/react";
 import { AutoHeight } from "@/components/shared/auto-height";
 import { motionTokens, useOvioTransition } from "@/lib/motion";

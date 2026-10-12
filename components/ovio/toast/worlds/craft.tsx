@@ -1,5 +1,3 @@
-"use client";
-
 import type { ToastKind, ToastWorldProps } from "../toast";
 
 const STAMP: Record<ToastKind, { text: string; color: string }> = {

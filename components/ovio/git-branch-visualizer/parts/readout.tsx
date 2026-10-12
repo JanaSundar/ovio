@@ -1,5 +1,3 @@
-"use client";
-
 import { AnimatePresence, motion, type TargetAndTransition, type Transition } from "motion/react";
 import type { ReactNode } from "react";
 import { formatCount } from "@/lib/format";

@@ -1,5 +1,3 @@
-"use client";
-
 import { AnimatePresence, motion, type Transition } from "motion/react";
 import { useId, useState } from "react";
 import { GooFilter } from "@/components/shared/goo-filter";

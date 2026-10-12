@@ -1,5 +1,3 @@
-"use client";
-
 import { motion } from "motion/react";
 import { useMemo, type ReactNode } from "react";
 import { QrCode } from "@/components/shared/qr-code";

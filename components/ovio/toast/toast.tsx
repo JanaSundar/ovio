@@ -1,6 +1,7 @@
 "use client";
 
-import type { ComponentType } from "react";
+import { useSyncExternalStore, type ComponentType } from "react";
+import { createPortal } from "react-dom";
 import { toast, Toaster, type ExternalToast, type ToasterProps } from "sonner";
 import { OvioProvider, useWorld, type World } from "@/components/shared/world-provider";
 import { MinimalToast } from "./worlds/minimal";
@@ -77,9 +78,22 @@ export type OvioToasterProps = Omit<
 
 /** Where toasts appear. Mount it once; toasts take its world (variant, then the provider). */
 export function OvioToaster({ variant, position = "bottom-right", ...props }: OvioToasterProps) {
-  return (
-    <OvioProvider world={useWorld(variant)}>
-      <Toaster position={position} {...props} />
-    </OvioProvider>
+  const world = useWorld(variant);
+  const body = useSyncExternalStore(
+    noop,
+    () => document.body,
+    () => null,
   );
+  // On body, so a transformed ancestor (a page transition, an animating card) can't become the
+  // containing block of Sonner's fixed layer and pull the toasts inside it.
+  return body
+    ? createPortal(
+        <OvioProvider world={world}>
+          <Toaster position={position} {...props} />
+        </OvioProvider>,
+        body,
+      )
+    : null;
 }
+
+const noop = () => () => {};

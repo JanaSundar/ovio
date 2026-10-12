@@ -1102,6 +1102,78 @@
       ]
     },
     {
+      "name": "letter",
+      "type": "registry:ui",
+      "title": "Letter",
+      "description": "A newsletter issue written as a letter, with the signup as its P.S. Send it and it flies off as a paper plane, gets sealed in an envelope, keyed out in Morse or dropped in a mailbox.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion",
+        "JanaSundar/ovio/format",
+        "JanaSundar/ovio/toy"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/letter/letter.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/letter/letter.tsx"
+        },
+        {
+          "path": "components/ovio/letter/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/letter/types.ts"
+        },
+        {
+          "path": "components/ovio/letter/morse.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/letter/morse.ts"
+        },
+        {
+          "path": "components/ovio/letter/send.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/letter/send.ts"
+        },
+        {
+          "path": "components/ovio/letter/plane.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/letter/plane.ts"
+        },
+        {
+          "path": "components/ovio/letter/use-send.ts",
+          "type": "registry:hook",
+          "target": "components/ovio/letter/use-send.ts"
+        },
+        {
+          "path": "components/ovio/letter/parts.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/letter/parts.tsx"
+        },
+        {
+          "path": "components/ovio/letter/worlds/minimal.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/letter/worlds/minimal.tsx"
+        },
+        {
+          "path": "components/ovio/letter/worlds/craft.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/letter/worlds/craft.tsx"
+        },
+        {
+          "path": "components/ovio/letter/worlds/retro.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/letter/worlds/retro.tsx"
+        },
+        {
+          "path": "components/ovio/letter/worlds/toy.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/letter/worlds/toy.tsx"
+        }
+      ]
+    },
+    {
       "name": "all",
       "type": "registry:item",
       "title": "All Ovio components",
@@ -1121,7 +1193,8 @@
         "JanaSundar/ovio/developer-id-card",
         "JanaSundar/ovio/git-branch-visualizer",
         "JanaSundar/ovio/now-playing",
-        "JanaSundar/ovio/toast"
+        "JanaSundar/ovio/toast",
+        "JanaSundar/ovio/letter"
       ],
       "files": []
     }

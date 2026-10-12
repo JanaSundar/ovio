@@ -19,8 +19,8 @@ const ROW: Record<SponsorTier, string> = {
 
 const BLOCK: Record<SponsorTier, string> = {
   platinum:
-    "h-[72px] rounded-xl text-xl font-extrabold tracking-[-0.02em] [font-stretch:118%] @md:h-[84px] @md:text-2xl",
-  gold: "h-[54px] rounded-[10px] text-[15px] font-extrabold",
+    "h-18 rounded-xl text-xl font-extrabold tracking-[-0.02em] font-stretch-118% @md:h-21 @md:text-2xl",
+  gold: "h-13.5 rounded-[10px] text-[15px] font-extrabold",
   backer: "rounded-full px-3 py-2 font-(family-name:--ovio-mono) text-xs font-medium",
 };
 
@@ -38,12 +38,12 @@ export function ToySponsorWall({ groups, ctaHref, ctaLabel, className }: Sponsor
       data-ovio-world="toy"
       aria-label="Sponsors"
       className={cn(
-        "@container flex w-full max-w-[620px] flex-col gap-3.5 rounded-[22px] bg-(--ovio-surface) p-3.5 font-(family-name:--ovio-font) text-(--ovio-ink) shadow-[inset_0_1px_0_#fff,0_7px_0_#d2ccbf,0_22px_30px_-16px_rgba(40,28,10,.45)] @md:p-5",
+        "@container flex w-full max-w-155 flex-col gap-3.5 rounded-[22px] bg-(--ovio-surface) p-3.5 font-(family-name:--ovio-font) text-(--ovio-ink) shadow-[inset_0_1px_0_#fff,0_7px_0_#d2ccbf,0_22px_30px_-16px_rgba(40,28,10,.45)] @md:p-5",
         className,
       )}
     >
       <div className="flex flex-wrap items-center justify-between gap-3 pb-1.5">
-        <h3 className="m-0 text-2xl leading-none font-extrabold tracking-[-0.02em] [font-stretch:118%]">
+        <h3 className="m-0 text-2xl leading-none font-extrabold tracking-[-0.02em] font-stretch-118%">
           Sponsors
         </h3>
         {ctaHref && (
@@ -60,7 +60,7 @@ export function ToySponsorWall({ groups, ctaHref, ctaLabel, className }: Sponsor
         )}
       </div>
 
-      <div className="flex flex-col gap-3 rounded-[14px] bg-[#ebe6db] bg-[radial-gradient(circle,rgba(60,45,20,.16)_3px,transparent_3.5px)] bg-size-[20px_20px] bg-position-[4px_4px] p-3 pb-4 shadow-[inset_0_3px_6px_rgba(40,28,10,.22)] @md:p-3.5 @md:pb-[18px]">
+      <div className="flex flex-col gap-3 rounded-[14px] bg-[#ebe6db] bg-[radial-gradient(circle,rgba(60,45,20,.16)_3px,transparent_3.5px)] bg-size-[20px_20px] bg-position-[4px_4px] p-3 pb-4 shadow-[inset_0_3px_6px_rgba(40,28,10,.22)] @md:p-3.5 @md:pb-4.5">
         {groups.map((g) => (
           <ul key={g.tier} aria-label={g.label} className={cn("m-0 list-none p-0", ROW[g.tier])}>
             <AnimatePresence>

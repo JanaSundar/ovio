@@ -51,15 +51,15 @@ export function RetroDeveloperIdCard({
       data-ovio-world="retro"
       aria-label={`Developer ID card for ${name}`}
       className={cn(
-        "@container w-full max-w-105 border-4 border-double border-(--ovio-accent) bg-(--ovio-stage) font-(family-name:--ovio-font) text-(--ovio-ink) [text-shadow:var(--ovio-glow)]",
+        "@container w-full max-w-105 border-4 border-double border-(--ovio-accent) bg-(--ovio-stage) font-(family-name:--ovio-font) text-(--ovio-ink) text-shadow-(--ovio-glow)",
         className,
       )}
     >
-      <div className="flex justify-between bg-(--ovio-accent) px-2.5 py-[3px] text-xl text-(--ovio-on-accent) [text-shadow:none]">
+      <div className="flex justify-between bg-(--ovio-accent) px-2.5 py-0.75 text-xl text-(--ovio-on-accent) text-shadow-none">
         <span>IDCARD.EXE</span>
         <span aria-hidden>[X]</span>
       </div>
-      <div className="flex flex-col gap-3.5 px-[18px] py-4 text-[22px] leading-[1.1] @max-[300px]:px-3">
+      <div className="flex flex-col gap-3.5 px-4.5 py-4 text-[22px] leading-[1.1] @max-[300px]:px-3">
         <div className="flex items-center gap-4 @max-[300px]:gap-3">
           <svg
             viewBox="0 0 8 8"
@@ -70,7 +70,7 @@ export function RetroDeveloperIdCard({
             <path d={face} fill="currentColor" />
           </svg>
           <div className="min-w-0">
-            <h3 className="m-0 text-[34px] leading-none font-normal break-words text-[#c9ffd2] @max-[300px]:text-[28px]">
+            <h3 className="m-0 text-[34px] leading-none font-normal wrap-break-word text-[#c9ffd2] @max-[300px]:text-[28px]">
               {name.toUpperCase()}
             </h3>
             {shortTitle && (
@@ -84,7 +84,7 @@ export function RetroDeveloperIdCard({
             {lines.map(([label, value], i) => (
               <motion.div key={label} className="flex" {...line(i)}>
                 <dt className="shrink-0">{dots(label)}</dt>
-                <dd className="m-0 min-w-0 break-words">{value}</dd>
+                <dd className="m-0 min-w-0 wrap-break-word">{value}</dd>
               </motion.div>
             ))}
           </dl>

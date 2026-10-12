@@ -96,7 +96,7 @@ function RetroLabel({ lane, ...s }: LabelProps) {
 
 function RetroTag({ text }: TagProps) {
   return (
-    <span className="block bg-[#ffd34d] px-1 text-base leading-[1.1] whitespace-nowrap text-(--ovio-on-accent) [text-shadow:none]">
+    <span className="block bg-[#ffd34d] px-1 text-base leading-[1.1] whitespace-nowrap text-(--ovio-on-accent) text-shadow-none">
       {text}
     </span>
   );
@@ -119,11 +119,11 @@ export function RetroGitBranchVisualizer({
       data-ovio-world="retro"
       aria-label={repo ? `Commit graph of ${repo}` : "Commit graph"}
       className={cn(
-        "relative w-full max-w-[880px] min-w-0 overflow-hidden border-4 border-double border-(--ovio-accent) bg-[radial-gradient(ellipse_at_50%_40%,#0c2412_0%,#061108_75%)] font-(family-name:--ovio-font) text-(--ovio-ink) [text-shadow:var(--ovio-glow)]",
+        "relative w-full max-w-220 min-w-0 overflow-hidden border-4 border-double border-(--ovio-accent) bg-[radial-gradient(ellipse_at_50%_40%,#0c2412_0%,#061108_75%)] font-(family-name:--ovio-font) text-(--ovio-ink) text-shadow-(--ovio-glow)",
         className,
       )}
     >
-      <div className="flex justify-between gap-3 bg-(--ovio-accent) px-2.5 py-0.5 text-xl text-(--ovio-on-accent) [text-shadow:none]">
+      <div className="flex justify-between gap-3 bg-(--ovio-accent) px-2.5 py-0.5 text-xl text-(--ovio-on-accent) text-shadow-none">
         <span className="min-w-0">
           C:\{folder}&gt; <span className="whitespace-nowrap">git log --graph</span>
         </span>
@@ -136,7 +136,7 @@ export function RetroGitBranchVisualizer({
             type="button"
             disabled={!actions.mergeTarget}
             onClick={actions.merge}
-            className={cn(block, "bg-(--ovio-accent) text-(--ovio-on-accent) [text-shadow:none]")}
+            className={cn(block, "bg-(--ovio-accent) text-(--ovio-on-accent) text-shadow-none")}
           >
             [ {actions.mergeTarget ? `merge ${actions.mergeTarget}` : "all merged"} ]
           </button>
@@ -144,7 +144,7 @@ export function RetroGitBranchVisualizer({
             type="button"
             disabled={!actions.branchFrom}
             onClick={actions.branch}
-            className={cn(block, "bg-[#ffd34d] text-(--ovio-on-accent) [text-shadow:none]")}
+            className={cn(block, "bg-[#ffd34d] text-(--ovio-on-accent) text-shadow-none")}
           >
             [ branch from {actions.branchFrom ?? "HEAD"} ]
           </button>
@@ -177,10 +177,10 @@ export function RetroGitBranchVisualizer({
             to={{ opacity: 1 }}
             transition={motionTokens.retro.frames(1, 0.01)}
           >
-            <div className="break-words">
+            <div className="wrap-break-word">
               <span className="text-[#ffd34d]">[{current.short}]</span> {current.commit.message}
             </div>
-            <div className="break-words text-(--ovio-muted)">
+            <div className="wrap-break-word text-(--ovio-muted)">
               {current.meta}
               {current.merge && " · MERGE"}
             </div>

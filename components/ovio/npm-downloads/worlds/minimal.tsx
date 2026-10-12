@@ -32,13 +32,13 @@ export function MinimalNpmDownloads({
       data-ovio-world="minimal"
       aria-label={`${packageName} weekly downloads`}
       className={cn(
-        "flex w-full max-w-[640px] flex-col gap-6 rounded-(--ovio-radius) border border-(--ovio-line) bg-(--ovio-surface) px-10 py-9 font-(family-name:--ovio-font) text-(--ovio-ink)",
+        "flex w-full max-w-160 flex-col gap-6 rounded-(--ovio-radius) border border-(--ovio-line) bg-(--ovio-surface) px-10 py-9 font-(family-name:--ovio-font) text-(--ovio-ink)",
         className,
       )}
     >
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div className="min-w-0">
-          <div className="mb-2.5 text-[11px] tracking-[0.12em] text-(--ovio-muted) uppercase [overflow-wrap:anywhere]">
+          <div className="mb-2.5 text-[11px] tracking-[0.12em] text-(--ovio-muted) uppercase wrap-anywhere">
             {current.ago === 0 ? "Weekly downloads" : `Week of ${current.label}`} · {packageName}
           </div>
           <span className="text-[clamp(34px,11vw,52px)] leading-none tracking-[-0.045em] tabular-nums">
@@ -64,7 +64,7 @@ export function MinimalNpmDownloads({
         onKeyDown={onKeyDown}
         onPointerLeave={reset}
         onBlur={reset}
-        className="relative flex h-[150px] items-end gap-1 border-b border-(--ovio-line)"
+        className="relative flex h-37.5 items-end gap-1 border-b border-(--ovio-line)"
       >
         {points.map((p, i) => (
           <div
@@ -98,7 +98,7 @@ export function MinimalNpmDownloads({
             animate={{ opacity: 1 }}
             transition={reduced ? { duration: 0 } : { ...motionTokens.minimal.slow, delay: 0.2 }}
           >
-            <span className="absolute -top-[18px] right-0 bg-(--ovio-surface) pl-1.5 text-[11px] text-(--ovio-muted)">
+            <span className="absolute -top-4.5 right-0 bg-(--ovio-surface) pl-1.5 text-[11px] text-(--ovio-muted)">
               Goal {formatNumber(goal)}
             </span>
           </motion.div>

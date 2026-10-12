@@ -14,7 +14,7 @@ const LOOK: TicketLook = {
   label:
     "font-(family-name:--ovio-mono) text-[10.5px] leading-tight font-semibold tracking-[0.08em] text-(--ovio-muted) uppercase",
   headline:
-    "text-[clamp(28px,10cqi,54px)] leading-[0.95] font-extrabold tracking-[-0.035em] [font-stretch:118%]",
+    "text-[clamp(28px,10cqi,54px)] leading-[0.95] font-extrabold tracking-[-0.035em] font-stretch-118%",
   display: "text-[22px] leading-[1.05] font-extrabold tracking-[-0.035em]",
   value: "text-sm font-bold",
   small: "text-xs leading-normal text-(--ovio-muted)",
@@ -30,7 +30,7 @@ const LOOK: TicketLook = {
   sheen: "rgba(255,255,255,.5)",
   sheenBlend: "soft-light",
   flipButton:
-    "rounded-xl bg-(--ovio-yellow) px-4 font-(family-name:--ovio-font) text-[13px] font-extrabold tracking-normal text-(--ovio-ink) normal-case shadow-[0_4px_0_var(--ovio-yellow-deep)] transition-[translate,box-shadow] duration-100 active:translate-y-[4px] active:shadow-none",
+    "rounded-xl bg-(--ovio-yellow) px-4 font-(family-name:--ovio-font) text-[13px] font-extrabold tracking-normal text-(--ovio-ink) normal-case shadow-[0_4px_0_var(--ovio-yellow-deep)] transition-[translate,box-shadow] duration-100 active:translate-y-1 active:shadow-none",
   qrDots: true,
   book: (sending) => <ToyBookButton sending={sending} />,
   motion: {

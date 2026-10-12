@@ -61,7 +61,7 @@ export function RetroSponsorWall({ groups, ctaHref, ctaLabel, className }: Spons
       data-ovio-world="retro"
       aria-label="Sponsors"
       className={cn(
-        "@container relative flex w-full max-w-[640px] flex-col items-center overflow-hidden bg-[#050a06] font-(family-name:--ovio-font) text-(--ovio-ink) [text-shadow:var(--ovio-glow)]",
+        "@container relative flex w-full max-w-160 flex-col items-center overflow-hidden bg-[#050a06] font-(family-name:--ovio-font) text-(--ovio-ink) text-shadow-(--ovio-glow)",
         className,
       )}
     >
@@ -71,7 +71,7 @@ export function RetroSponsorWall({ groups, ctaHref, ctaLabel, className }: Spons
         onFocus={onFocus}
         onBlur={() => (held.current.focus = false)}
         // Sized in CSS, so the server renders the same still credits a reduced-motion viewer gets.
-        className="h-[340px] w-full overflow-clip mask-[linear-gradient(transparent,#000_16%,#000_84%,transparent)] motion-reduce:h-auto motion-reduce:mask-none"
+        className="h-85 w-full overflow-clip mask-[linear-gradient(transparent,#000_16%,#000_84%,transparent)] motion-reduce:h-auto motion-reduce:mask-none"
       >
         <motion.div
           ref={roll}
@@ -96,7 +96,7 @@ export function RetroSponsorWall({ groups, ctaHref, ctaLabel, className }: Spons
                     <SponsorLink
                       sponsor={s}
                       className={cn(
-                        "block leading-[1.05] break-words text-(--ovio-ink) uppercase no-underline hover:bg-(--ovio-accent) hover:text-(--ovio-on-accent) hover:[text-shadow:none]",
+                        "block leading-[1.05] wrap-break-word text-(--ovio-ink) uppercase no-underline hover:bg-(--ovio-accent) hover:text-(--ovio-on-accent) hover:text-shadow-none",
                         NAME[s.tier],
                       )}
                     />
@@ -113,7 +113,7 @@ export function RetroSponsorWall({ groups, ctaHref, ctaLabel, className }: Spons
           href={ctaHref}
           target="_blank"
           rel="noreferrer"
-          className="mb-5 flex items-baseline px-2 text-[22px] text-(--ovio-ink) uppercase no-underline hover:bg-(--ovio-accent) hover:text-(--ovio-on-accent) hover:[text-shadow:none]"
+          className="mb-5 flex items-baseline px-2 text-[22px] text-(--ovio-ink) uppercase no-underline hover:bg-(--ovio-accent) hover:text-(--ovio-on-accent) hover:text-shadow-none"
         >
           &gt; {ctaLabel}
           <motion.span

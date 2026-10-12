@@ -47,21 +47,18 @@ export function CraftBundleSize({
     <div
       data-ovio-world="craft"
       className={cn(
-        "relative w-full max-w-[380px] -rotate-1 rounded-md bg-(--ovio-surface) px-7 pt-[26px] pb-[22px] font-(family-name:--ovio-font) text-(--ovio-ink) shadow-[0_2px_4px_rgba(70,45,20,.12),0_20px_34px_-14px_rgba(70,45,20,.4)]",
+        "relative w-full max-w-95 -rotate-1 rounded-md bg-(--ovio-surface) px-7 pt-6.5 pb-5.5 font-(family-name:--ovio-font) text-(--ovio-ink) shadow-[0_2px_4px_rgba(70,45,20,.12),0_20px_34px_-14px_rgba(70,45,20,.4)]",
         className,
       )}
     >
-      <span
-        aria-hidden
-        className="absolute -top-3 left-[34px] h-6 w-[84px] -rotate-3 bg-(--ovio-tape)"
-      />
+      <span aria-hidden className="absolute -top-3 left-8.5 h-6 w-21 -rotate-3 bg-(--ovio-tape)" />
 
       {/* A fresh stamp lands each time the version changes. */}
       <AnimatePresence initial={false} mode="popLayout">
         <motion.div
           key={r.version}
           aria-hidden
-          className="absolute top-[18px] right-5 rounded border-[3px] border-(--ovio-accent-deep) px-2.5 py-1.5 text-lg font-extrabold tracking-[0.02em] text-(--ovio-accent-deep)"
+          className="absolute top-4.5 right-5 rounded border-[3px] border-(--ovio-accent-deep) px-2.5 py-1.5 text-lg font-extrabold tracking-[0.02em] text-(--ovio-accent-deep)"
           initial={reduced ? false : { opacity: 0, transform: "scale(1.5) rotate(18deg)" }}
           animate={{ opacity: 1, transform: "scale(1) rotate(9deg)" }}
           exit={{ opacity: 0, transition: { duration: reduced ? 0 : 0.12 } }}
@@ -71,14 +68,14 @@ export function CraftBundleSize({
         </motion.div>
       </AnimatePresence>
 
-      <h3 className="m-0 font-(family-name:--ovio-mono) text-[12px] font-normal tracking-[0.14em] text-[#7d6650] uppercase [overflow-wrap:anywhere]">
+      <h3 className="m-0 font-(family-name:--ovio-mono) text-[12px] font-normal tracking-[0.14em] text-[#7d6650] uppercase wrap-anywhere">
         Package label · {packageName}
       </h3>
 
       <div id={panelId} role="tabpanel" aria-labelledby={tabId(index)}>
         <div className="mt-3.5 mb-1.5 flex items-baseline gap-1.5">
           <RollingNumber
-            className="text-[60px] leading-[.95] font-extrabold tracking-[-0.05em]"
+            className="text-[60px] leading-[.95] font-extrabold tracking-tighter"
             value={hero.value}
             format={hero.format}
           />
@@ -89,7 +86,7 @@ export function CraftBundleSize({
         <div
           role="img"
           aria-label={barLabel(r)}
-          className="relative mt-2.5 mb-1 h-[18px] border-b-2 border-(--ovio-ink)"
+          className="relative mt-2.5 mb-1 h-4.5 border-b-2 border-(--ovio-ink)"
           style={{
             background:
               "repeating-linear-gradient(90deg,#2a1f14 0 1px,transparent 1px 10%) 0 100%/100% 8px no-repeat",
@@ -156,7 +153,7 @@ export function CraftBundleSize({
               onClick={() => select(i)}
               style={{ "--tilt": `${TILT[i % TILT.length]}deg` } as CSSProperties}
               className={cn(
-                "cursor-pointer rotate-(--tilt) border-0 px-[9px] py-1 font-(family-name:--ovio-mono) text-[11px] text-(--ovio-ink) shadow-[0_3px_6px_-2px_rgba(70,45,20,.4)] transition-[rotate,translate,background-color] duration-300 ease-[cubic-bezier(.34,1.5,.5,1)] motion-reduce:transition-none hover:-translate-y-[3px] hover:rotate-0 focus-visible:-translate-y-[3px] focus-visible:rotate-0",
+                "cursor-pointer rotate-(--tilt) border-0 px-2.25 py-1 font-(family-name:--ovio-mono) text-[11px] text-(--ovio-ink) shadow-[0_3px_6px_-2px_rgba(70,45,20,.4)] transition-[rotate,translate,background-color] duration-300 ease-[cubic-bezier(.34,1.5,.5,1)] motion-reduce:transition-none hover:-translate-y-0.75 hover:rotate-0 focus-visible:-translate-y-0.75 focus-visible:rotate-0",
                 i === index ? "bg-[#ffe27a]" : "bg-[#efe3c8]",
               )}
             >

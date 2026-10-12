@@ -36,24 +36,24 @@ export function ToyDeveloperIdCard({
       role="group"
       aria-label={`Developer ID card for ${name}`}
       className={cn(
-        "@container flex w-full max-w-[340px] flex-col gap-3 rounded-[24px] bg-(--ovio-surface) p-3.5 font-(family-name:--ovio-font) text-(--ovio-ink) shadow-[inset_0_1px_0_#fff,0_8px_0_#d2ccbf,0_28px_34px_-16px_rgba(40,28,10,.5)] select-none",
+        "@container flex w-full max-w-85 flex-col gap-3 rounded-3xl bg-(--ovio-surface) p-3.5 font-(family-name:--ovio-font) text-(--ovio-ink) shadow-[inset_0_1px_0_#fff,0_8px_0_#d2ccbf,0_28px_34px_-16px_rgba(40,28,10,.5)] select-none",
         className,
       )}
     >
       <span
         aria-hidden
-        className="mx-auto h-3.5 w-[58px] rounded-full bg-(--ovio-stage) shadow-[inset_0_3px_5px_rgba(40,28,10,.3)]"
+        className="mx-auto h-3.5 w-14.5 rounded-full bg-(--ovio-stage) shadow-[inset_0_3px_5px_rgba(40,28,10,.3)]"
       />
 
       <div className="flex items-center gap-3.5 rounded-2xl bg-(--ovio-accent) p-4 text-(--ovio-on-accent) shadow-[inset_0_-5px_0_rgba(0,0,0,.2),inset_0_2px_0_rgba(255,255,255,.2)] @max-[280px]:gap-3 @max-[280px]:p-3">
         <Avatar
           initials={initials}
           src={avatarUrl}
-          className="size-[68px] rounded-full bg-(--ovio-yellow) text-2xl font-extrabold text-(--ovio-ink) shadow-[0_5px_0_var(--ovio-yellow-deep),0_10px_12px_-5px_rgba(0,0,0,.4)] @max-[280px]:size-14 @max-[280px]:text-xl"
+          className="size-17 rounded-full bg-(--ovio-yellow) text-2xl font-extrabold text-(--ovio-ink) shadow-[0_5px_0_var(--ovio-yellow-deep),0_10px_12px_-5px_rgba(0,0,0,.4)] @max-[280px]:size-14 @max-[280px]:text-xl"
         />
         <div className="min-w-0">
           <h3
-            className="m-0 text-[28px] leading-none font-extrabold tracking-[-0.03em] break-words @max-[280px]:text-2xl"
+            className="m-0 text-[28px] leading-none font-extrabold tracking-[-0.03em] wrap-break-word @max-[280px]:text-2xl"
             style={{ fontStretch: "118%" }}
           >
             {name}
@@ -74,7 +74,7 @@ export function ToyDeveloperIdCard({
               <span
                 key={`${i}:${tech}`}
                 role="listitem"
-                className="grow basis-[60px] rounded-[11px] px-2 py-2.5 text-center text-xs font-extrabold"
+                className="grow basis-15 rounded-[11px] px-2 py-2.5 text-center text-xs font-extrabold"
                 style={{ background: face, color: ink, boxShadow: `0 5px 0 ${side}` }}
               >
                 {tech}
@@ -86,14 +86,14 @@ export function ToyDeveloperIdCard({
 
       {(place || profile || available !== undefined || qrUrl) && (
         <div className="flex items-center justify-between gap-3 rounded-[14px] bg-[#ebe6db] px-3.5 py-3 shadow-[inset_0_3px_6px_rgba(40,28,10,.2)]">
-          <div className="flex min-w-0 flex-col gap-[3px] font-(family-name:--ovio-mono) text-[11px]">
+          <div className="flex min-w-0 flex-col gap-0.75 font-(family-name:--ovio-mono) text-[11px]">
             {(place || profile) && (
-              <span className="break-words text-(--ovio-muted)">
+              <span className="wrap-break-word text-(--ovio-muted)">
                 {[place, profile].filter(Boolean).join(" · ")}
               </span>
             )}
             {available !== undefined && (
-              <span className="flex items-center gap-[7px]">
+              <span className="flex items-center gap-1.75">
                 <motion.span
                   className="size-2.5 shrink-0 rounded-full"
                   initial={false}
@@ -107,7 +107,7 @@ export function ToyDeveloperIdCard({
               </span>
             )}
           </div>
-          {qrUrl && <QrCode value={qrUrl} border={0} className="size-[52px]" />}
+          {qrUrl && <QrCode value={qrUrl} border={0} className="size-13" />}
         </div>
       )}
     </div>

@@ -56,11 +56,11 @@ export function ToyKnob({
         className,
       )}
     >
-      <div className="flex items-center gap-2.5 rounded-xl bg-[#2a2925] px-[18px] py-2 font-(family-name:--ovio-mono) text-4xl leading-none font-semibold text-(--ovio-surface) shadow-[inset_0_3px_6px_rgba(0,0,0,.6)]">
+      <div className="flex items-center gap-2.5 rounded-xl bg-[#2a2925] px-4.5 py-2 font-(family-name:--ovio-mono) text-4xl leading-none font-semibold text-(--ovio-surface) shadow-[inset_0_3px_6px_rgba(0,0,0,.6)]">
         <RollingNumber timing="quick" value={Math.round(percent)} />
         <span className="text-lg text-[#bdb6a8]">%</span>
       </div>
-      <div className="relative mt-2.5 size-[260px]">
+      <div className="relative mt-2.5 size-65">
         <div
           ref={ref}
           role="slider"
@@ -75,11 +75,11 @@ export function ToyKnob({
           className="absolute inset-2.5 cursor-grab touch-none rounded-full active:cursor-grabbing"
         >
           <KnobTicks s={TICKS} percent={percent} />
-          <div className="absolute inset-[30px] rounded-full bg-(--ovio-surface) shadow-[inset_0_1px_0_#fff,0_10px_0_#d2ccbf,0_26px_30px_-12px_rgba(40,28,10,.5)]" />
-          <div className="absolute inset-[52px] rounded-full bg-(--ovio-red) shadow-[inset_0_3px_0_rgba(255,255,255,.28),inset_0_-5px_0_rgba(0,0,0,.14),0_6px_0_var(--ovio-red-deep)]" />
-          <motion.div className="absolute inset-[30px] rounded-full" style={{ rotate: angle }}>
-            <span className="absolute top-[9px] left-1/2 -ml-[5px] size-2.5 rounded-full bg-(--ovio-red) shadow-[inset_0_1px_1px_rgba(0,0,0,.25)]" />
-            <span className="absolute top-[54px] left-1/2 -ml-1 h-[30px] w-2 rounded-[4px] bg-(--ovio-surface) shadow-[inset_0_2px_2px_rgba(0,0,0,.2)]" />
+          <div className="absolute inset-7.5 rounded-full bg-(--ovio-surface) shadow-[inset_0_1px_0_#fff,0_10px_0_#d2ccbf,0_26px_30px_-12px_rgba(40,28,10,.5)]" />
+          <div className="absolute inset-13 rounded-full bg-(--ovio-red) shadow-[inset_0_3px_0_rgba(255,255,255,.28),inset_0_-5px_0_rgba(0,0,0,.14),0_6px_0_var(--ovio-red-deep)]" />
+          <motion.div className="absolute inset-7.5 rounded-full" style={{ rotate: angle }}>
+            <span className="absolute top-2.25 left-1/2 -ml-1.25 size-2.5 rounded-full bg-(--ovio-red) shadow-[inset_0_1px_1px_rgba(0,0,0,.25)]" />
+            <span className="absolute top-13.5 left-1/2 -ml-1 h-7.5 w-2 rounded-sm bg-(--ovio-surface) shadow-[inset_0_2px_2px_rgba(0,0,0,.2)]" />
           </motion.div>
         </div>
         <span className="absolute bottom-3.5 left-3.5 font-(family-name:--ovio-mono) text-[11px] text-(--ovio-muted)">
@@ -89,7 +89,7 @@ export function ToyKnob({
           {max}
         </span>
       </div>
-      <span className="font-(family-name:--ovio-mono) text-[11px] tracking-[0.1em] text-(--ovio-muted)">
+      <span className="font-(family-name:--ovio-mono) text-[11px] tracking-widest text-(--ovio-muted)">
         DRAG · FLICK · SCROLL · ← →
       </span>
     </div>

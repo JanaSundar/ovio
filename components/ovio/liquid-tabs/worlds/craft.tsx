@@ -14,7 +14,7 @@ const look: LiquidLook = {
   blobRadius: "999px",
   on: "#fff6ea",
   off: "#6e5a45",
-  tab: "py-[13px] text-[15px] font-bold tracking-[-0.01em]",
+  tab: "py-3.25 text-[15px] font-bold tracking-[-0.01em]",
   label: "text-[13px]",
   statusText: "text-xl font-bold",
   // Paper settling: the edges overshoot a touch and wobble into place.

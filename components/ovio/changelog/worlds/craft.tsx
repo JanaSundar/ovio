@@ -59,7 +59,7 @@ export function CraftChangelog({ releases, top, next, className }: ChangelogWorl
         className,
       )}
     >
-      <section aria-label="Changelog" className="relative w-[420px] max-w-full pb-4">
+      <section aria-label="Changelog" className="relative w-105 max-w-full pb-4">
         {/* Every card shares one grid cell, so the pile is as tall as its fullest card. */}
         <div aria-live="polite" className="grid">
           {releases.map((r, i) => {
@@ -93,7 +93,7 @@ export function CraftChangelog({ releases, top, next, className }: ChangelogWorl
                 }
                 style={{ zIndex: z, transitionProperty: "z-index", transitionDelay: restack }}
                 className={cn(
-                  "overflow-hidden rounded-[5px] bg-(--ovio-surface) px-[26px] pt-4 pb-5 [grid-area:1/1]",
+                  "overflow-hidden rounded-[5px] bg-(--ovio-surface) px-6.5 pt-4 pb-5 [grid-area:1/1]",
                   d === 0
                     ? "shadow-[0_1px_2px_rgba(70,45,20,.14),0_14px_26px_-14px_rgba(70,45,20,.45)]"
                     : "shadow-[0_1px_2px_rgba(70,45,20,.18),0_6px_12px_-8px_rgba(70,45,20,.3)]",
@@ -140,11 +140,11 @@ export function CraftChangelog({ releases, top, next, className }: ChangelogWorl
             type="button"
             onClick={flip}
             aria-label={`Next release (${((top + 1) % n) + 1} of ${n})`}
-            className="group absolute inset-0 z-50 cursor-pointer rounded-[6px] border-0 bg-transparent p-0"
+            className="group absolute inset-0 z-50 cursor-pointer rounded-md border-0 bg-transparent p-0"
           >
             <span
               aria-hidden
-              className="absolute -right-1.5 -bottom-[34px] -rotate-3 font-(family-name:--ovio-hand) text-[22px] text-(--ovio-accent-deep)"
+              className="absolute -right-1.5 -bottom-8.5 -rotate-3 font-(family-name:--ovio-hand) text-[22px] text-(--ovio-accent-deep)"
             >
               tap to flip through →
             </span>

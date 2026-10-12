@@ -19,7 +19,7 @@ const STICKERS = [
 ] as const;
 
 const SIZE = {
-  platinum: "px-4 py-2.5 text-lg @md:px-[22px] @md:py-3.5 @md:text-2xl",
+  platinum: "px-4 py-2.5 text-lg @md:px-5.5 @md:py-3.5 @md:text-2xl",
   gold: "px-3 py-2 text-sm @md:px-4 @md:py-2.5 @md:text-base",
   backer: "px-2.5 py-1.5 text-xs",
 } as const;
@@ -53,14 +53,14 @@ export function CraftSponsorWall({ groups, ctaHref, ctaLabel, className }: Spons
       data-ovio-world="craft"
       aria-label="Sponsors"
       className={cn(
-        "@container flex w-full max-w-[640px] flex-col items-center gap-4 font-(family-name:--ovio-font) text-(--ovio-ink)",
+        "@container flex w-full max-w-160 flex-col items-center gap-4 font-(family-name:--ovio-font) text-(--ovio-ink)",
         className,
       )}
     >
       <h3 className="m-0 -rotate-2 bg-(--ovio-tape) px-4 py-0.5 font-(family-name:--ovio-hand) text-[26px] leading-tight font-bold">
         Thank you, sponsors!
       </h3>
-      <div className="relative flex min-h-[220px] w-full items-center justify-center overflow-hidden rounded-[18px] bg-[linear-gradient(160deg,#d9dcdf,#b9bdc2)] px-3 py-6 shadow-[inset_0_2px_0_rgba(255,255,255,.7),0_22px_40px_-16px_rgba(40,30,20,.5)] @md:aspect-[16/9] @md:px-8 @md:py-8">
+      <div className="relative flex min-h-55 w-full items-center justify-center overflow-hidden rounded-[18px] bg-[linear-gradient(160deg,#d9dcdf,#b9bdc2)] px-3 py-6 shadow-[inset_0_2px_0_rgba(255,255,255,.7),0_22px_40px_-16px_rgba(40,30,20,.5)] @md:aspect-video @md:px-8 @md:py-8">
         <ul className="relative m-0 flex list-none flex-wrap items-center justify-center gap-x-1 gap-y-2 p-0 @md:gap-x-2 @md:gap-y-3">
           <AnimatePresence>
             {stickers.map((s, i) => {
@@ -108,7 +108,7 @@ export function CraftSponsorWall({ groups, ctaHref, ctaLabel, className }: Spons
                 href={ctaHref}
                 target="_blank"
                 rel="noreferrer"
-                className="block rotate-4 rounded-[10px] border-2 border-dashed border-white/80 px-3 py-1 font-(family-name:--ovio-hand) text-xl leading-tight font-bold text-[#4d5156] no-underline transition-[rotate,translate] duration-300 ease-[cubic-bezier(.34,1.5,.5,1)] motion-reduce:transition-none hover:-translate-y-[3px] hover:rotate-0 focus-visible:-translate-y-[3px] focus-visible:rotate-0"
+                className="block rotate-4 rounded-[10px] border-2 border-dashed border-white/80 px-3 py-1 font-(family-name:--ovio-hand) text-xl leading-tight font-bold text-[#4d5156] no-underline transition-[rotate,translate] duration-300 ease-[cubic-bezier(.34,1.5,.5,1)] motion-reduce:transition-none hover:-translate-y-0.75 hover:rotate-0 focus-visible:-translate-y-0.75 focus-visible:rotate-0"
               >
                 + {ctaLabel}
               </a>

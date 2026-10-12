@@ -20,7 +20,7 @@ const Cell = memo(function Cell({ cell, tabbable, active }: CellProps) {
   return (
     <div
       {...p}
-      className="aspect-square rounded-[2px] transition-shadow duration-200 ease-[cubic-bezier(.2,0,0,1)] motion-reduce:transition-none"
+      className="aspect-square rounded-xs transition-shadow duration-200 ease-[cubic-bezier(.2,0,0,1)] motion-reduce:transition-none"
       style={{
         ...p.style,
         background: SCALE[cell.level],
@@ -60,7 +60,7 @@ export function MinimalContributionGraph({
     <section
       data-ovio-world="minimal"
       className={cn(
-        "flex w-full min-w-0 flex-col gap-10 rounded-(--ovio-radius) border border-(--ovio-line) bg-(--ovio-surface) px-5 py-8 sm:px-8 sm:pt-[52px] lg:px-10 sm:pb-11 font-(family-name:--ovio-font) text-(--ovio-ink)",
+        "flex w-full min-w-0 flex-col gap-10 rounded-(--ovio-radius) border border-(--ovio-line) bg-(--ovio-surface) px-5 py-8 sm:px-8 sm:pt-13 lg:px-10 sm:pb-11 font-(family-name:--ovio-font) text-(--ovio-ink)",
         className,
       )}
     >
@@ -120,7 +120,7 @@ export function MinimalContributionGraph({
           </div>
           <div
             aria-hidden
-            className="grid grid-rows-[repeat(7,minmax(0,1fr))] gap-y-[0.45cqw] text-[clamp(6px,2.2cqw,10px)]"
+            className="grid grid-rows-7 gap-y-[0.45cqw] text-[clamp(6px,2.2cqw,10px)]"
           >
             {WEEKDAY_LABELS.map((l, i) => (
               <span key={i} className="flex items-center">
@@ -150,7 +150,7 @@ export function MinimalContributionGraph({
         </div>
       </div>
 
-      <div className="flex flex-wrap items-center justify-between gap-4 border-t border-(--ovio-line-2) pt-[18px] text-[13px]">
+      <div className="flex flex-wrap items-center justify-between gap-4 border-t border-(--ovio-line-2) pt-4.5 text-[13px]">
         <div className="flex flex-wrap items-baseline gap-x-2.5 gap-y-1">
           {!active && <span className="text-(--ovio-muted)">Best day</span>}
           <span className="font-medium">
@@ -163,7 +163,7 @@ export function MinimalContributionGraph({
           {SCALE.map((c, i) => (
             <span
               key={c}
-              className={cn("size-3 rounded-[2px]", i === 0 && "ml-1", i === 4 && "mr-1")}
+              className={cn("size-3 rounded-xs", i === 0 && "ml-1", i === 4 && "mr-1")}
               style={{ background: c }}
             />
           ))}

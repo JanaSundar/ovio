@@ -95,7 +95,7 @@ function WeekKnob({
           <span
             key={i}
             aria-hidden
-            className="absolute top-0 left-[63px] h-[9px] w-0.5 origin-[1px_64px] rounded-[1px] bg-(--ovio-faint)"
+            className="absolute top-0 left-15.75 h-2.25 w-0.5 origin-[1px_64px] rounded-[1px] bg-(--ovio-faint)"
             style={{ transform: `rotate(${(MIN + (i * SPAN) / (TICKS - 1)).toFixed(1)}deg)` }}
           />
         ))}
@@ -105,10 +105,10 @@ function WeekKnob({
           className="absolute inset-4 rounded-full"
           style={{ rotate: reduced ? target : sprung }}
         >
-          <span className="absolute top-2 left-1/2 -ml-[3.5px] h-6 w-[7px] rounded-[4px] bg-(--ovio-surface) shadow-[inset_0_2px_2px_rgba(0,0,0,.2)]" />
+          <span className="absolute top-2 left-1/2 ml-[-3.5px] h-6 w-1.75 rounded-sm bg-(--ovio-surface) shadow-[inset_0_2px_2px_rgba(0,0,0,.2)]" />
         </motion.div>
       </div>
-      <span className="font-(family-name:--ovio-mono) text-[11px] tracking-[0.1em] text-(--ovio-muted)">
+      <span className="font-(family-name:--ovio-mono) text-[11px] tracking-widest text-(--ovio-muted)">
         TURN · WEEK
       </span>
     </div>
@@ -137,18 +137,18 @@ export function ToyNpmDownloads({
       data-ovio-world="toy"
       aria-label={`${packageName} weekly downloads`}
       className={cn(
-        "flex w-full max-w-[580px] flex-wrap items-center gap-6 rounded-[22px] bg-(--ovio-surface) p-[22px] font-(family-name:--ovio-font) text-(--ovio-ink) shadow-[inset_0_1px_0_#fff,0_7px_0_#d2ccbf,0_22px_30px_-16px_rgba(40,28,10,.45)]",
+        "flex w-full max-w-145 flex-wrap items-center gap-6 rounded-[22px] bg-(--ovio-surface) p-5.5 font-(family-name:--ovio-font) text-(--ovio-ink) shadow-[inset_0_1px_0_#fff,0_7px_0_#d2ccbf,0_22px_30px_-16px_rgba(40,28,10,.45)]",
         className,
       )}
     >
       <div className="flex min-w-0 flex-[1_1_280px] flex-col gap-3.5">
-        <div className="font-(family-name:--ovio-mono) text-[11px] tracking-[0.08em] text-(--ovio-muted) uppercase [overflow-wrap:anywhere]">
+        <div className="font-(family-name:--ovio-mono) text-[11px] tracking-[0.08em] text-(--ovio-muted) uppercase wrap-anywhere">
           npm · {packageName} · downloads / week
         </div>
-        <div className="flex max-w-full self-start rounded-xl bg-[#2a2925] px-[18px] py-2.5 font-(family-name:--ovio-mono) text-[clamp(26px,9vw,40px)] leading-none font-semibold text-(--ovio-surface) shadow-[inset_0_3px_6px_rgba(0,0,0,.6)]">
+        <div className="flex max-w-full self-start rounded-xl bg-[#2a2925] px-4.5 py-2.5 font-(family-name:--ovio-mono) text-[clamp(26px,9vw,40px)] leading-none font-semibold text-(--ovio-surface) shadow-[inset_0_3px_6px_rgba(0,0,0,.6)]">
           <span className="tabular-nums">{formatNumber(current.downloads)}</span>
         </div>
-        <div role="img" aria-label={summary} className="flex h-[54px] items-end gap-[3px]">
+        <div role="img" aria-label={summary} className="flex h-13.5 items-end gap-0.75">
           {points.map((p, i) => (
             <motion.div
               key={p.week}

@@ -31,7 +31,7 @@ export function MinimalDeveloperIdCard({
       transition={transition}
       style={{ boxShadow: "0 0 0 rgba(0,0,0,0)" }}
       className={cn(
-        "@container flex w-full max-w-[380px] flex-col gap-[22px] rounded-[10px] border border-(--ovio-line) bg-(--ovio-surface) p-7 font-(family-name:--ovio-font) text-(--ovio-ink)",
+        "@container flex w-full max-w-95 flex-col gap-5.5 rounded-[10px] border border-(--ovio-line) bg-(--ovio-surface) p-7 font-(family-name:--ovio-font) text-(--ovio-ink)",
         className,
       )}
     >
@@ -48,7 +48,7 @@ export function MinimalDeveloperIdCard({
               className="flex items-center gap-1.5"
             >
               <span
-                className="size-[7px] rounded-full"
+                className="size-1.75 rounded-full"
                 style={{ background: available ? "#2f9a45" : "var(--ovio-faint)" }}
               />
               {available ? "available" : "busy"}
@@ -64,7 +64,7 @@ export function MinimalDeveloperIdCard({
           className="size-16 rounded-full bg-(--ovio-track) text-xl font-medium"
         />
         <div className="min-w-0">
-          <h3 className="m-0 text-2xl leading-tight font-medium tracking-[-0.03em] break-words">
+          <h3 className="m-0 text-2xl leading-tight font-medium tracking-[-0.03em] wrap-break-word">
             {name}
           </h3>
           {title && <div className="text-sm text-(--ovio-muted)">{title}</div>}
@@ -86,10 +86,12 @@ export function MinimalDeveloperIdCard({
 
       {(location || profile || qrUrl) && (
         <div className="flex items-end justify-between gap-3 border-t border-(--ovio-line-2) pt-4 text-[13px]">
-          <div className="flex min-w-0 flex-col gap-[3px]">
+          <div className="flex min-w-0 flex-col gap-0.75">
             {location && <span className="text-(--ovio-muted)">{location}</span>}
             {profile && (
-              <span className="font-(family-name:--ovio-mono) text-xs break-words">{profile}</span>
+              <span className="font-(family-name:--ovio-mono) text-xs wrap-break-word">
+                {profile}
+              </span>
             )}
           </div>
           {qrUrl && <QrCode value={qrUrl} border={0} className="size-14 @max-[220px]:size-12" />}

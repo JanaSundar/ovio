@@ -61,14 +61,14 @@ export function CraftDeveloperIdCard({
         aria-hidden
         className={cn(
           sheet,
-          "bg-[#e4d6bd] [translate:-3px_8px] [rotate:-1.2deg] group-hover:[translate:-8px_17px] group-hover:[rotate:-3deg] group-focus:[translate:-8px_17px] group-focus:[rotate:-3deg]",
+          "bg-[#e4d6bd] [translate:-3px_8px] rotate-[-1.2deg] group-hover:[translate:-8px_17px] group-hover:-rotate-3 group-focus:[translate:-8px_17px] group-focus:-rotate-3",
         )}
       />
       <div
         aria-hidden
         className={cn(
           sheet,
-          "bg-[#f2e8d4] [translate:3px_4px] [rotate:1deg] group-hover:[translate:9px_10px] group-hover:[rotate:2.4deg] group-focus:[translate:9px_10px] group-focus:[rotate:2.4deg]",
+          "bg-[#f2e8d4] [translate:3px_4px] rotate-1 group-hover:[translate:9px_10px] group-hover:rotate-[2.4deg] group-focus:[translate:9px_10px] group-focus:rotate-[2.4deg]",
         )}
       />
       <article
@@ -80,7 +80,7 @@ export function CraftDeveloperIdCard({
       >
         <span
           aria-hidden
-          className="absolute -top-[13px] left-1/2 -ml-12 h-6.5 w-24 -rotate-[2.5deg] bg-(--ovio-tape) shadow-[0_1px_2px_rgba(0,0,0,.1)]"
+          className="absolute -top-3.25 left-1/2 -ml-12 h-6.5 w-24 rotate-[-2.5deg] bg-(--ovio-tape) shadow-[0_1px_2px_rgba(0,0,0,.1)]"
         />
         <div
           className={cn(
@@ -96,14 +96,14 @@ export function CraftDeveloperIdCard({
         <div className="flex items-end gap-4.5 @max-[320px]:gap-3.5">
           <Avatar
             src={avatarUrl}
-            className="h-31 w-26 -rotate-[1.5deg] rounded bg-(--ovio-accent) bg-[repeating-linear-gradient(135deg,rgba(255,255,255,.16)_0_7px,transparent_7px_14px)] shadow-[0_2px_4px_rgba(70,45,20,.25)] @max-[320px]:h-24 @max-[320px]:w-20"
+            className="h-31 w-26 rotate-[-1.5deg] rounded bg-(--ovio-accent) bg-[repeating-linear-gradient(135deg,rgba(255,255,255,.16)_0_7px,transparent_7px_14px)] shadow-[0_2px_4px_rgba(70,45,20,.25)] @max-[320px]:h-24 @max-[320px]:w-20"
           >
             <span className="absolute -top-2 -right-2 flex size-8.5 rotate-12 items-center justify-center rounded-full bg-[#ffe27a] font-(family-name:--ovio-font) text-xs font-extrabold text-(--ovio-ink) shadow-[0_3px_6px_-2px_rgba(90,60,0,.5)]">
               {initials}
             </span>
           </Avatar>
           <div className="min-w-0">
-            <h3 className="m-0 text-[38px] leading-[0.92] font-extrabold tracking-[-0.045em] break-words @max-[320px]:text-[30px]">
+            <h3 className="m-0 text-[38px] leading-[0.92] font-extrabold tracking-[-0.045em] wrap-break-word @max-[320px]:text-[30px]">
               {first}
               {rest.length > 0 && <br />}
               {rest.join(" ")}
@@ -112,7 +112,7 @@ export function CraftDeveloperIdCard({
               <div
                 className={cn(
                   label,
-                  "mt-2.5 text-[10.5px] leading-normal tracking-[0.1em] text-(--ovio-ink-2)",
+                  "mt-2.5 text-[10.5px] leading-normal tracking-widest text-(--ovio-ink-2)",
                 )}
               >
                 {title}
@@ -128,7 +128,7 @@ export function CraftDeveloperIdCard({
               return (
                 <li
                   key={`${i}:${tech}`}
-                  className="rounded-full px-2.5 py-[5px] text-[12.5px] font-bold"
+                  className="rounded-full px-2.5 py-1.25 text-[12.5px] font-bold"
                   style={{ background: bg, color: fg }}
                 >
                   {tech}
@@ -152,10 +152,10 @@ export function CraftDeveloperIdCard({
               </div>
             )}
             {available !== undefined && (
-              <div className="flex items-center gap-[7px] uppercase">
+              <div className="flex items-center gap-1.75 uppercase">
                 <span
                   className={cn(
-                    "size-[9px] rounded-full transition-[background-color,box-shadow] duration-300",
+                    "size-2.25 rounded-full transition-[background-color,box-shadow] duration-300",
                     available
                       ? "bg-[#2f9a45] shadow-[0_0_0_3px_rgba(47,154,69,.22)]"
                       : "bg-[#c9b9a0] shadow-[0_0_0_3px_rgba(42,31,20,.08)]",
@@ -165,7 +165,7 @@ export function CraftDeveloperIdCard({
               </div>
             )}
             {(profile || website) && (
-              <div className="text-[11.5px] leading-normal break-words text-[#2b4a9b]">
+              <div className="text-[11.5px] leading-normal wrap-break-word text-[#2b4a9b]">
                 {profile}
                 {profile && website && <br />}
                 {website}

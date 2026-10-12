@@ -82,7 +82,7 @@ const Face = memo(function Face({ week, step, cells, month, now, active, tabbabl
   return (
     <div
       role="row"
-      className="absolute top-0 left-0 flex h-[184px] w-6 flex-col items-center gap-[3px] bg-[#2c55e0] py-1 backface-hidden shadow-[inset_1px_0_0_rgba(255,255,255,.14),inset_-1px_0_0_rgba(10,20,70,.25)]"
+      className="absolute top-0 left-0 flex h-46 w-6 flex-col items-center gap-0.75 bg-[#2c55e0] py-1 backface-hidden shadow-[inset_1px_0_0_rgba(255,255,255,.14),inset_-1px_0_0_rgba(10,20,70,.25)]"
       style={{ transform: `rotateY(${week * step}deg) translateZ(${RADIUS}px)` }}
     >
       <span
@@ -371,7 +371,7 @@ export function ToyContributionGraph({
         </div>
       </div>
 
-      <div className="relative mt-[22px] overflow-clip rounded-[24px] bg-[#efe8d8] pt-[18px] pb-[22px] shadow-[inset_0_0_0_2px_#e2d9c3,inset_0_1px_0_rgba(255,255,255,.85),0_10px_0_#c7bea8,0_28px_34px_-16px_rgba(40,28,10,.5)]">
+      <div className="relative mt-5.5 overflow-clip rounded-3xl bg-[#efe8d8] pt-4.5 pb-5.5 shadow-[inset_0_0_0_2px_#e2d9c3,inset_0_1px_0_rgba(255,255,255,.85),0_10px_0_#c7bea8,0_28px_34px_-16px_rgba(40,28,10,.5)]">
         <div
           ref={stage}
           onPointerDown={down}
@@ -412,7 +412,7 @@ export function ToyContributionGraph({
                     const i = dayIndexOf(e.target);
                     if (i !== null && !drag.current) spinTo(year.days[i].week);
                   }}
-                  className="relative h-[184px] w-6 transform-3d"
+                  className="relative h-46 w-6 transform-3d"
                   style={{ transform: drum }}
                 >
                   {Array.from({ length: n }, (_, w) => (
@@ -442,10 +442,10 @@ export function ToyContributionGraph({
             </div>
             <motion.div
               aria-hidden
-              className="pointer-events-none absolute top-0 left-1/2 z-[5] -ml-[13px] h-10 w-[26px] origin-[50%_9px] drop-shadow-[0_3px_2px_rgba(40,28,10,.35)]"
+              className="pointer-events-none absolute top-0 left-1/2 z-5 -ml-3.25 h-10 w-6.5 origin-[50%_9px] drop-shadow-[0_3px_2px_rgba(40,28,10,.35)]"
               style={{ rotate: pin }}
             >
-              <span className="absolute top-[22px] left-1/2 -ml-2 border-x-8 border-t-16 border-x-transparent border-t-[#e0432a]" />
+              <span className="absolute top-5.5 left-1/2 -ml-2 border-x-8 border-t-16 border-x-transparent border-t-[#e0432a]" />
               <span className="absolute top-0 left-1/2 -ml-3 size-6 rounded-full bg-[radial-gradient(circle_at_38%_32%,#ff8a6a,#e0432a_60%)] shadow-[inset_0_-2px_0_rgba(0,0,0,.2)]" />
               <span className="absolute top-2 left-1/2 -ml-1 size-2 rounded-full bg-[#f8f5ef] shadow-[inset_0_1px_1px_rgba(0,0,0,.3)]" />
             </motion.div>
@@ -454,13 +454,13 @@ export function ToyContributionGraph({
 
         <div className="mt-2.5 flex justify-center px-4">
           <div className="flex items-center gap-4 rounded-xl bg-[#2a2925] px-4 py-2.5 text-(--ovio-surface) shadow-[inset_0_3px_6px_rgba(0,0,0,.6)]">
-            <div className="flex items-baseline gap-[7px]">
+            <div className="flex items-baseline gap-1.75">
               <span className="text-[26px] leading-none font-extrabold tracking-[-0.02em] tabular-nums">
                 {formatNumber(count)}
               </span>
               <span className="text-xs text-[#bdb6a8]">{active ? unit(count) : "this week"}</span>
             </div>
-            <div className="flex flex-col gap-0.5 font-(family-name:--ovio-mono) text-[12px] leading-[1.25] text-[#bdb6a8]">
+            <div className="flex flex-col gap-0.5 font-(family-name:--ovio-mono) text-[12px] leading-tight text-[#bdb6a8]">
               <span className="tracking-[0.08em] uppercase">
                 {active ? "Day" : `Week ${front + 1} of ${n}`}
               </span>
@@ -525,24 +525,24 @@ function DrumKey({
       type="button"
       aria-label={label}
       onClick={onClick}
-      className="group relative h-[51px] w-11 cursor-pointer border-0 bg-transparent p-0"
+      className="group relative h-12.75 w-11 cursor-pointer border-0 bg-transparent p-0"
     >
       {/* The side wall shows only below the cap, so a pressed cap hides it. */}
       <span
         aria-hidden
         className={cn(
-          "absolute inset-x-0 top-[7px] bottom-0 rounded-[13px] shadow-[0_0_0_1px_rgba(40,28,10,.12),0_12px_14px_-8px_rgba(40,28,10,.5)]",
+          "absolute inset-x-0 top-1.75 bottom-0 rounded-[13px] shadow-[0_0_0_1px_rgba(40,28,10,.12),0_12px_14px_-8px_rgba(40,28,10,.5)]",
           k.side,
         )}
       />
       <span
         aria-hidden
         className={cn(
-          "absolute inset-x-0 top-0 flex h-11 items-center justify-center rounded-[13px] transition-transform duration-150 ease-[cubic-bezier(.2,.9,.3,1.3)] group-hover:-translate-y-px group-active:translate-y-1.5 group-active:duration-[60ms] group-active:ease-out motion-reduce:transition-none",
+          "absolute inset-x-0 top-0 flex h-11 items-center justify-center rounded-[13px] transition-transform duration-150 ease-[cubic-bezier(.2,.9,.3,1.3)] group-hover:-translate-y-px group-active:translate-y-1.5 group-active:duration-60 group-active:ease-out motion-reduce:transition-none",
           k.cap,
         )}
       >
-        <svg viewBox="0 0 24 24" className={cn("size-[22px]", k.glyph)}>
+        <svg viewBox="0 0 24 24" className={cn("size-5.5", k.glyph)}>
           <path
             d={point}
             fill="none"

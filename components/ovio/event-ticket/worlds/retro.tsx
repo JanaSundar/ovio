@@ -10,8 +10,8 @@ const frames = motionTokens.retro.frames;
 const BOOK: GooBookLook = {
   pill: "bg-(--ovio-accent)",
   knob: "bg-[#c9ffd2]",
-  label: "text-[28px] leading-[1.05] text-(--ovio-on-accent) uppercase [text-shadow:none]",
-  arrow: "text-(--ovio-on-accent) [text-shadow:none]",
+  label: "text-[28px] leading-[1.05] text-(--ovio-on-accent) uppercase text-shadow-none",
+  arrow: "text-(--ovio-on-accent) text-shadow-none",
   radius: 0,
   transition: frames(6, 0.45),
 };
@@ -20,7 +20,7 @@ const LOOK: TicketLook = {
   world: "retro",
   // Letters and digits in any script: "東京デザインウィーク" and "Ölçek/26" keep their letters.
   kicker: (name) => `> TICKET.SYS / ${name.replace(/[^\p{L}\p{N}]/gu, "")}`,
-  card: "border-[3px] border-double border-(--ovio-accent) bg-(--ovio-surface) uppercase shadow-[0_0_0_4px_#1c2a1d,0_0_40px_rgba(80,255,120,.15)] [text-shadow:var(--ovio-glow)]",
+  card: "border-[3px] border-double border-(--ovio-accent) bg-(--ovio-surface) uppercase shadow-[0_0_0_4px_#1c2a1d,0_0_40px_rgba(80,255,120,.15)] text-shadow-(--ovio-glow)",
   stub: "bg-[#0c2411]",
   art: "",
   label: "text-[17px] leading-none tracking-[0.04em] text-(--ovio-muted)",

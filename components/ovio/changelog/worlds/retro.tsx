@@ -76,7 +76,7 @@ export function RetroChangelog({ releases, className }: ChangelogWorldProps) {
       data-ovio-world="retro"
       aria-label="Changelog"
       className={cn(
-        "relative w-full max-w-[680px] overflow-hidden bg-(--ovio-stage) px-8 py-7 font-(family-name:--ovio-font) text-[21px] leading-[1.25] text-(--ovio-ink) [text-shadow:var(--ovio-glow)]",
+        "relative w-full max-w-170 overflow-hidden bg-(--ovio-stage) px-8 py-7 font-(family-name:--ovio-font) text-[21px] leading-tight text-(--ovio-ink) text-shadow-(--ovio-glow)",
         className,
       )}
     >

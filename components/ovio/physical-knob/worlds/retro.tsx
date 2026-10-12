@@ -48,14 +48,14 @@ export function RetroKnob({
     <div
       data-ovio-world="retro"
       className={cn(
-        "relative flex w-[340px] max-w-full flex-col items-center gap-3 border-2 border-[#4a4e48] bg-[#2b2e2a] p-[18px] font-(family-name:--ovio-font) shadow-[inset_0_2px_0_#5c6159,inset_0_-2px_0_#1a1c19]",
+        "relative flex w-85 max-w-full flex-col items-center gap-3 border-2 border-[#4a4e48] bg-[#2b2e2a] p-4.5 font-(family-name:--ovio-font) shadow-[inset_0_2px_0_#5c6159,inset_0_-2px_0_#1a1c19]",
         className,
       )}
     >
       <div className="flex w-full justify-between text-xl text-[#c9c9c0]">
         <span>{label.toUpperCase()}</span>
         <span className="flex items-center gap-1.5">
-          <span aria-hidden className="size-[9px] bg-(--ovio-accent) shadow-[0_0_6px_#4fdc68]" />
+          <span aria-hidden className="size-2.25 bg-(--ovio-accent) shadow-[0_0_6px_#4fdc68]" />
           PWR
         </span>
       </div>
@@ -86,7 +86,7 @@ export function RetroKnob({
           aria-valuetext={`${index} of 10`}
           aria-disabled={disabled || undefined}
           {...handlers}
-          className="absolute inset-[34px] cursor-grab touch-none rounded-full active:cursor-grabbing"
+          className="absolute inset-8.5 cursor-grab touch-none rounded-full active:cursor-grabbing"
         >
           <KnobTicks s={TICKS} percent={percent} />
           <div className="absolute inset-3.5 rounded-full bg-[#15171a] shadow-[0_0_0_3px_#3b3f3a,0_8px_10px_rgba(0,0,0,.6),inset_0_2px_0_#3a3d41]" />
@@ -98,7 +98,7 @@ export function RetroKnob({
           </motion.div>
         </div>
       </div>
-      <div className="border-2 border-[#1c2a1d] [border-style:inset] bg-(--ovio-stage) px-3.5 py-1 text-[30px] tracking-[0.06em] text-(--ovio-ink) [text-shadow:var(--ovio-glow)]">
+      <div className="border-2 border-[#1c2a1d] [border-style:inset] bg-(--ovio-stage) px-3.5 py-1 text-[30px] tracking-[0.06em] text-(--ovio-ink) text-shadow-(--ovio-glow)">
         VOL <RollingNumber timing="none" value={index} /> / 10
       </div>
     </div>

@@ -109,7 +109,7 @@ export function ToyLiquidTabs(p: LiquidTabsWorldProps) {
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}
         onPointerCancel={onPointerUp}
-        className="relative w-full max-w-[540px] touch-none rounded-[18px] bg-(--ovio-track) p-2 select-none shadow-[inset_0_3px_7px_rgba(40,28,10,.32),0_1px_0_#fff]"
+        className="relative w-full max-w-135 touch-none rounded-[18px] bg-(--ovio-track) p-2 select-none shadow-[inset_0_3px_7px_rgba(40,28,10,.32),0_1px_0_#fff]"
       >
         <motion.div
           aria-hidden
@@ -160,13 +160,13 @@ export function ToyLiquidTabs(p: LiquidTabsWorldProps) {
       </div>
 
       {p.status && (
-        <div className="flex flex-wrap items-center justify-center gap-[18px]">
+        <div className="flex flex-wrap items-center justify-center gap-4.5">
           <div
             aria-hidden
-            className="relative h-10 w-[150px] rounded-full bg-(--ovio-track) p-[5px] shadow-[inset_0_3px_6px_rgba(40,28,10,.3)]"
+            className="relative h-10 w-37.5 rounded-full bg-(--ovio-track) p-1.25 shadow-[inset_0_3px_6px_rgba(40,28,10,.3)]"
           >
             <motion.div
-              className="absolute top-[5px] left-[5px] flex h-[30px] w-[46px] items-center justify-center rounded-full bg-(--ovio-surface) shadow-[0_4px_0_#cfc8b8,0_7px_8px_-4px_rgba(40,28,10,.4)]"
+              className="absolute top-1.25 left-1.25 flex h-7.5 w-11.5 items-center justify-center rounded-full bg-(--ovio-surface) shadow-[0_4px_0_#cfc8b8,0_7px_8px_-4px_rgba(40,28,10,.4)]"
               initial={false}
               animate={{ x: [0, 47, 94][status] }}
               transition={reduced ? { duration: 0 } : motionTokens.toy.piece}
@@ -179,7 +179,7 @@ export function ToyLiquidTabs(p: LiquidTabsWorldProps) {
               />
             </motion.div>
           </div>
-          <div className="flex min-w-[120px] flex-col gap-0.5" role="status">
+          <div className="flex min-w-30 flex-col gap-0.5" role="status">
             <span className="font-(family-name:--ovio-mono) text-[11px] tracking-[0.08em] text-(--ovio-muted) uppercase">
               Deploy status
             </span>

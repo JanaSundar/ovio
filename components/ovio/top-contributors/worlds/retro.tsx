@@ -49,7 +49,7 @@ export function RetroTopContributors({
       data-ovio-world="retro"
       aria-label={repo ? `Top contributors to ${repo}` : "Top contributors"}
       className={cn(
-        "relative flex w-full max-w-[640px] flex-col items-center gap-3.5 overflow-hidden bg-[#050a06] px-5 py-8 font-(family-name:--ovio-font) text-(--ovio-ink) [text-shadow:var(--ovio-glow)]",
+        "relative flex w-full max-w-160 flex-col items-center gap-3.5 overflow-hidden bg-[#050a06] px-5 py-8 font-(family-name:--ovio-font) text-(--ovio-ink) text-shadow-(--ovio-glow)",
         className,
       )}
     >
@@ -57,7 +57,7 @@ export function RetroTopContributors({
         HIGH SCORES
       </h3>
       <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-xl text-(--ovio-ink-2)">
-        {repo && <span className="max-w-full [overflow-wrap:anywhere]">{repo.toUpperCase()}</span>}
+        {repo && <span className="max-w-full wrap-anywhere">{repo.toUpperCase()}</span>}
         {periods.length > 1 && (
           <div role="group" aria-label="Time window" className="flex gap-1">
             {periods.map((p) => (
@@ -70,7 +70,7 @@ export function RetroTopContributors({
                 className={cn(
                   "cursor-pointer border-0 px-1.5 font-(family-name:--ovio-font) text-xl leading-tight uppercase",
                   p === period
-                    ? "bg-(--ovio-accent) text-(--ovio-on-accent) [text-shadow:none]"
+                    ? "bg-(--ovio-accent) text-(--ovio-on-accent) text-shadow-none"
                     : "bg-transparent text-(--ovio-ink-2)",
                 )}
               >

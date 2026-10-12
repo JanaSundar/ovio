@@ -5,7 +5,7 @@ export function CodeBlock({ html, className }: { html: string; className?: strin
   return (
     <pre
       className={cn(
-        "m-0 overflow-auto bg-ink px-5 py-[18px] font-mono text-[13px] leading-[1.7] text-[#e6e4dd]",
+        "m-0 overflow-auto bg-ink px-5 py-4.5 font-mono text-[13px] leading-[1.7] text-[#e6e4dd]",
         className,
       )}
     >

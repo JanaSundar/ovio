@@ -37,7 +37,7 @@ export function MinimalStarHistory({
     <figure
       data-ovio-world="minimal"
       className={cn(
-        "m-0 flex w-full max-w-[680px] flex-col gap-[18px] rounded-(--ovio-radius) border border-(--ovio-line) bg-(--ovio-surface) px-9 py-8 font-(family-name:--ovio-font) text-(--ovio-ink)",
+        "m-0 flex w-full max-w-170 flex-col gap-4.5 rounded-(--ovio-radius) border border-(--ovio-line) bg-(--ovio-surface) px-9 py-8 font-(family-name:--ovio-font) text-(--ovio-ink)",
         className,
       )}
     >

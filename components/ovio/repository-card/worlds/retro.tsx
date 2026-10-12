@@ -37,16 +37,16 @@ export function RetroRepositoryCard({
     <article
       data-ovio-world="retro"
       className={cn(
-        "w-full max-w-105 border-4 border-double border-(--ovio-accent) font-(family-name:--ovio-font) text-(--ovio-ink) [text-shadow:var(--ovio-glow)]",
+        "w-full max-w-105 border-4 border-double border-(--ovio-accent) font-(family-name:--ovio-font) text-(--ovio-ink) text-shadow-(--ovio-glow)",
         className,
       )}
     >
-      <div className="flex justify-between bg-(--ovio-accent) px-2.5 py-1 text-xl text-(--ovio-on-accent) [text-shadow:none]">
+      <div className="flex justify-between bg-(--ovio-accent) px-2.5 py-1 text-xl text-(--ovio-on-accent) text-shadow-none">
         <span>REPO.EXE</span>
         <span aria-hidden>[X]</span>
       </div>
-      <div className="px-[18px] py-4 text-[22px] leading-[1.2]">
-        <h3 className="m-0 font-normal [overflow-wrap:anywhere]">
+      <div className="px-4.5 py-4 text-[22px] leading-[1.2]">
+        <h3 className="m-0 font-normal wrap-anywhere">
           &gt; {repo.owner.toUpperCase()}/{repo.name.toUpperCase()}
           <motion.span
             aria-hidden
@@ -59,7 +59,7 @@ export function RetroRepositoryCard({
         {repo.description && (
           <motion.p
             title={repo.description}
-            className="mt-2 mb-3.5 line-clamp-4 text-(--ovio-ink-2) uppercase [overflow-wrap:anywhere]"
+            className="mt-2 mb-3.5 line-clamp-4 text-(--ovio-ink-2) uppercase wrap-anywhere"
             {...line(0)}
           >
             {repo.description.replace(/\.$/, "")}

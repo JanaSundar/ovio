@@ -44,12 +44,12 @@ export function RetroNpmDownloads({
       data-ovio-world="retro"
       aria-label={`${packageName} weekly downloads`}
       className={cn(
-        "relative flex w-full max-w-[640px] flex-col gap-5 bg-(--ovio-stage) p-8 font-(family-name:--ovio-font) text-(--ovio-ink) [text-shadow:var(--ovio-glow)]",
+        "relative flex w-full max-w-160 flex-col gap-5 bg-(--ovio-stage) p-8 font-(family-name:--ovio-font) text-(--ovio-ink) text-shadow-(--ovio-glow)",
         className,
       )}
     >
       <div className="flex justify-between gap-4 text-[22px]">
-        <span className="min-w-0 [overflow-wrap:anywhere]">NPM://{packageName.toUpperCase()}</span>
+        <span className="min-w-0 wrap-anywhere">NPM://{packageName.toUpperCase()}</span>
         <span className="shrink-0 text-(--ovio-ink-2)">
           {current.ago === 0 ? "DL/WK" : `${current.label.toUpperCase()} · -${current.ago}WK`}
         </span>
@@ -71,7 +71,7 @@ export function RetroNpmDownloads({
         onKeyDown={onKeyDown}
         onPointerLeave={reset}
         onBlur={reset}
-        className="flex h-[120px] items-end gap-[3px]"
+        className="flex h-30 items-end gap-0.75"
       >
         {points.map((p, i) => (
           <div

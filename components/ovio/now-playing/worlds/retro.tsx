@@ -40,11 +40,11 @@ export function RetroNowPlaying({
     <article
       data-ovio-world="retro"
       className={cn(
-        "@container w-full max-w-[460px] border-2 border-[#4a4e48] bg-[#2b2e2a] p-2.5 font-(family-name:--ovio-font) shadow-[inset_0_2px_0_#5c6159,inset_0_-2px_0_#1a1c19] @[360px]:p-3.5",
+        "@container w-full max-w-115 border-2 border-[#4a4e48] bg-[#2b2e2a] p-2.5 font-(family-name:--ovio-font) shadow-[inset_0_2px_0_#5c6159,inset_0_-2px_0_#1a1c19] @[360px]:p-3.5",
         className,
       )}
     >
-      <div className="relative overflow-hidden border-2 border-[#1c2a1d] bg-(--ovio-stage) px-3 py-2.5 text-(--ovio-ink) [border-style:inset] [text-shadow:var(--ovio-glow)] @[360px]:px-3.5 @[360px]:py-3">
+      <div className="relative overflow-hidden border-2 border-[#1c2a1d] bg-(--ovio-stage) px-3 py-2.5 text-(--ovio-ink) [border-style:inset] text-shadow-(--ovio-glow) @[360px]:px-3.5 @[360px]:py-3">
         <div className="flex justify-between gap-3 text-lg leading-none @[360px]:text-xl">
           <span>{playing ? "▶ PLAY" : stopped ? "■ STOP" : "❚❚ PAUSE"}</span>
           <span className="truncate">STEREO 44KHZ</span>
@@ -58,8 +58,8 @@ export function RetroNowPlaying({
             count={12}
             playing={playing}
             stepped
-            className="h-[38px] min-w-0 gap-[3px] overflow-hidden @[360px]:h-[46px]"
-            barClassName="w-[7px] shrink-0 bg-[repeating-linear-gradient(0deg,var(--ovio-accent)_0_4px,transparent_4px_6px)] [&:nth-child(n+7)]:hidden @[340px]:[&:nth-child(n+7)]:block"
+            className="h-9.5 min-w-0 gap-0.75 overflow-hidden @[360px]:h-11.5"
+            barClassName="w-1.75 shrink-0 bg-[repeating-linear-gradient(0deg,var(--ovio-accent)_0_4px,transparent_4px_6px)] [&:nth-child(n+7)]:hidden @[340px]:[&:nth-child(n+7)]:block"
           />
         </div>
         <div {...seekProps} className="flex h-3 cursor-pointer touch-none gap-px">
@@ -103,7 +103,7 @@ export function RetroNowPlaying({
             className={cn(
               "flex-1 cursor-pointer border border-[#1a1c19] py-1.5 text-center font-(family-name:--ovio-font) text-lg leading-none shadow-[inset_0_1px_0_#5c6159]",
               k.on
-                ? "bg-[#2f332e] text-(--ovio-ink) [text-shadow:var(--ovio-glow)]"
+                ? "bg-[#2f332e] text-(--ovio-ink) text-shadow-(--ovio-glow)"
                 : "bg-[#3b3f3a] text-[#c9c9c0]",
             )}
           >

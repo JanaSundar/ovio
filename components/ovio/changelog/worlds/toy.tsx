@@ -38,7 +38,7 @@ export function ToyChangelog({ releases, open, toggle, className }: ChangelogWor
       data-ovio-world="toy"
       aria-label="Changelog"
       className={cn(
-        "flex w-full max-w-[500px] flex-col gap-3 font-(family-name:--ovio-font) text-(--ovio-ink)",
+        "flex w-full max-w-125 flex-col gap-3 font-(family-name:--ovio-font) text-(--ovio-ink)",
         className,
       )}
     >

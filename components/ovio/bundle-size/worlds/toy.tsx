@@ -46,12 +46,12 @@ export function ToyBundleSize({
     <div
       data-ovio-world="toy"
       className={cn(
-        "flex w-full max-w-105 flex-col gap-4 rounded-[24px] bg-(--ovio-surface) p-5 font-(family-name:--ovio-font) text-(--ovio-ink) shadow-[inset_0_1px_0_#fff,0_8px_0_#d2ccbf,0_26px_32px_-16px_rgba(40,28,10,.45)]",
+        "flex w-full max-w-105 flex-col gap-4 rounded-3xl bg-(--ovio-surface) p-5 font-(family-name:--ovio-font) text-(--ovio-ink) shadow-[inset_0_1px_0_#fff,0_8px_0_#d2ccbf,0_26px_32px_-16px_rgba(40,28,10,.45)]",
         className,
       )}
     >
       <div className="flex items-center justify-between gap-3 font-(family-name:--ovio-mono) text-[11px] text-(--ovio-muted)">
-        <h3 className="m-0 font-normal tracking-[0.08em] uppercase [overflow-wrap:anywhere]">
+        <h3 className="m-0 font-normal tracking-[0.08em] uppercase wrap-anywhere">
           Bundle size · {packageName}
         </h3>
         <span>{deltaLabel(r)}</span>
@@ -64,7 +64,7 @@ export function ToyBundleSize({
         className="flex flex-col gap-4"
       >
         {/* A little LCD set into the plastic. */}
-        <div className="flex items-baseline gap-2 rounded-[14px] bg-[#2a2925] px-[18px] py-2.5 font-(family-name:--ovio-mono) font-semibold text-(--ovio-surface) shadow-[inset_0_3px_6px_rgba(0,0,0,.6)]">
+        <div className="flex items-baseline gap-2 rounded-[14px] bg-[#2a2925] px-4.5 py-2.5 font-(family-name:--ovio-mono) font-semibold text-(--ovio-surface) shadow-[inset_0_3px_6px_rgba(0,0,0,.6)]">
           <RollingNumber
             className="text-[44px] leading-none"
             value={hero.value}
@@ -77,7 +77,7 @@ export function ToyBundleSize({
         <div
           role="img"
           aria-label={barLabel(r)}
-          className="grid gap-[3px] rounded-xl bg-[#ebe6db] p-2 shadow-[inset_0_3px_6px_rgba(40,28,10,.2)]"
+          className="grid gap-0.75 rounded-xl bg-[#ebe6db] p-2 shadow-[inset_0_3px_6px_rgba(40,28,10,.2)]"
           style={{ gridTemplateColumns: `repeat(${BLOCKS}, minmax(0, 1fr))` }}
         >
           {Array.from({ length: BLOCKS }, (_, k) => {
@@ -86,7 +86,7 @@ export function ToyBundleSize({
               <motion.span
                 key={k}
                 aria-hidden
-                className="h-[26px] rounded"
+                className="h-6.5 rounded"
                 initial={false}
                 animate={{
                   y: on ? -3 : 2,

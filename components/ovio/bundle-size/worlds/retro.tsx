@@ -56,11 +56,11 @@ export function RetroBundleSize({
     <div
       data-ovio-world="retro"
       className={cn(
-        "w-full max-w-[440px] font-(family-name:--ovio-font) text-[23px] leading-[1.2] text-(--ovio-ink) [text-shadow:0_0_5px_rgba(80,255,120,.45)]",
+        "w-full max-w-110 font-(family-name:--ovio-font) text-[23px] leading-[1.2] text-(--ovio-ink) [text-shadow:0_0_5px_rgba(80,255,120,.45)]",
         className,
       )}
     >
-      <h3 className="m-0 font-normal text-[#c9ffd2] [overflow-wrap:anywhere]">
+      <h3 className="m-0 font-normal text-[#c9ffd2] wrap-anywhere">
         C:\&gt; bundle-size {packageName}@{r.version}
       </h3>
       <div aria-hidden className="my-2.5 text-(--ovio-muted)">
@@ -130,7 +130,7 @@ export function RetroBundleSize({
             tabIndex={i === index ? 0 : -1}
             onClick={() => select(i)}
             className={cn(
-              "cursor-pointer border border-(--ovio-muted) px-2 font-[inherit] text-[22px] [text-shadow:none]",
+              "cursor-pointer border border-(--ovio-muted) px-2 font-[inherit] text-[22px] text-shadow-none",
               i === index
                 ? "bg-(--ovio-accent) text-(--ovio-on-accent)"
                 : "bg-transparent text-(--ovio-ink)",

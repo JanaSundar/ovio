@@ -19,30 +19,25 @@ export function CraftRepositoryCard({
         className,
       )}
     >
-      <span
-        aria-hidden
-        className="absolute -top-3 left-7 h-6 w-[84px] -rotate-4 bg-(--ovio-tape)"
-      />
+      <span aria-hidden className="absolute -top-3 left-7 h-6 w-21 -rotate-4 bg-(--ovio-tape)" />
       {language && (
         <span
           title={language.name}
-          className="absolute -top-[18px] -right-3.5 flex size-[58px] -rotate-10 items-center justify-center rounded-full text-xl font-extrabold shadow-[0_4px_10px_-3px_rgba(20,40,90,.5)]"
+          className="absolute -top-4.5 -right-3.5 flex size-14.5 -rotate-10 items-center justify-center rounded-full text-xl font-extrabold shadow-[0_4px_10px_-3px_rgba(20,40,90,.5)]"
           style={{ background: language.color, color: language.ink }}
         >
           {language.short}
         </span>
       )}
       {/* Clear of the language badge in the corner. */}
-      <div className="pr-12 text-[13px] text-(--ovio-muted) [overflow-wrap:anywhere]">
-        {repo.owner} /
-      </div>
-      <h3 className="m-0 pr-8 text-[32px] leading-tight font-extrabold tracking-[-0.035em] [overflow-wrap:anywhere]">
+      <div className="pr-12 text-[13px] text-(--ovio-muted) wrap-anywhere">{repo.owner} /</div>
+      <h3 className="m-0 pr-8 text-[32px] leading-tight font-extrabold tracking-[-0.035em] wrap-anywhere">
         {repo.name}
       </h3>
       {repo.description && (
         <p
           title={repo.description}
-          className="mt-2 mb-[18px] line-clamp-3 text-[15px] leading-[1.45] text-(--ovio-ink-2) [overflow-wrap:anywhere]"
+          className="mt-2 mb-4.5 line-clamp-3 text-[15px] leading-[1.45] text-(--ovio-ink-2) wrap-anywhere"
         >
           {repo.description}
         </p>
@@ -59,7 +54,7 @@ export function CraftRepositoryCard({
           ) : (
             <span
               key={stat}
-              className="rounded-full bg-(--ovio-surface-2) px-2.5 py-[5px] text-[13px]"
+              className="rounded-full bg-(--ovio-surface-2) px-2.5 py-1.25 text-[13px]"
             >
               {formatCount(stat === "forks" ? repo.forks : (repo.issues ?? 0), stat.slice(0, -1))}
             </span>

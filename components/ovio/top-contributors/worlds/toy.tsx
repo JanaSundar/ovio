@@ -32,7 +32,7 @@ export function ToyTopContributors({
       data-ovio-world="toy"
       aria-label={repo ? `Top contributors to ${repo}` : "Top contributors"}
       className={cn(
-        "@container flex w-full max-w-[620px] flex-col gap-5 font-(family-name:--ovio-font) text-(--ovio-ink)",
+        "@container flex w-full max-w-155 flex-col gap-5 font-(family-name:--ovio-font) text-(--ovio-ink)",
         className,
       )}
     >
@@ -44,7 +44,7 @@ export function ToyTopContributors({
           >
             Top contributors
           </h3>
-          <span className="font-(family-name:--ovio-mono) text-[11px] tracking-[0.08em] text-(--ovio-muted) uppercase [overflow-wrap:anywhere]">
+          <span className="font-(family-name:--ovio-mono) text-[11px] tracking-[0.08em] text-(--ovio-muted) uppercase wrap-anywhere">
             {repo && `${repo} · `}
             <RollingNumber value={total} /> {plural(total, "commit")}
           </span>
@@ -109,7 +109,7 @@ export function ToyTopContributors({
                   <Avatar
                     initials={p.initials}
                     src={p.avatarUrl}
-                    className="size-10 rounded-full text-sm font-extrabold shadow-[inset_0_2px_0_rgba(255,255,255,.3)] @md:size-[52px] @md:text-base"
+                    className="size-10 rounded-full text-sm font-extrabold shadow-[inset_0_2px_0_rgba(255,255,255,.3)] @md:size-13 @md:text-base"
                     style={{ background: face, color: ink }}
                   />
                 </div>

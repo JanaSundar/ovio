@@ -16,7 +16,7 @@ export function MinimalToast({ kind, title, description, action, dismiss }: Toas
     >
       <span
         aria-hidden
-        className="mt-[5px] size-2 shrink-0 rounded-full"
+        className="mt-1.25 size-2 shrink-0 rounded-full"
         style={{ background: DOT[kind] }}
       />
       <div className="min-w-0 flex-1">
@@ -27,7 +27,7 @@ export function MinimalToast({ kind, title, description, action, dismiss }: Toas
         <button
           type="button"
           onClick={action.onClick}
-          className="shrink-0 cursor-pointer rounded-[6px] border-0 bg-(--ovio-accent) px-2.5 py-1 transition-transform duration-[80ms] ease-[cubic-bezier(0.2,0,0,1)] active:scale-[0.97] font-(family-name:--ovio-font) text-[12px] text-(--ovio-on-accent)"
+          className="shrink-0 cursor-pointer rounded-md border-0 bg-(--ovio-accent) px-2.5 py-1 transition-transform duration-80 ease-[cubic-bezier(0.2,0,0,1)] active:scale-[0.97] font-(family-name:--ovio-font) text-[12px] text-(--ovio-on-accent)"
         >
           {action.label}
         </button>
@@ -36,7 +36,7 @@ export function MinimalToast({ kind, title, description, action, dismiss }: Toas
         type="button"
         aria-label="Dismiss"
         onClick={dismiss}
-        className="-my-0.5 size-6 shrink-0 cursor-pointer rounded-[6px] border-0 bg-transparent text-base leading-none text-(--ovio-muted) hover:bg-(--ovio-line-2)"
+        className="-my-0.5 size-6 shrink-0 cursor-pointer rounded-md border-0 bg-transparent text-base leading-none text-(--ovio-muted) hover:bg-(--ovio-line-2)"
       >
         ×
       </button>

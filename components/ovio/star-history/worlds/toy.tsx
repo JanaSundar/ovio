@@ -30,7 +30,7 @@ export function ToyStarHistory({
     <figure
       data-ovio-world="toy"
       className={cn(
-        "m-0 flex w-full max-w-[680px] flex-col gap-3.5 rounded-[22px] bg-(--ovio-surface) px-[22px] pt-5 pb-[18px] font-(family-name:--ovio-font) text-(--ovio-ink) shadow-[inset_0_1px_0_#fff,0_7px_0_#d2ccbf,0_22px_30px_-16px_rgba(40,28,10,.45)]",
+        "m-0 flex w-full max-w-170 flex-col gap-3.5 rounded-[22px] bg-(--ovio-surface) px-5.5 pt-5 pb-4.5 font-(family-name:--ovio-font) text-(--ovio-ink) shadow-[inset_0_1px_0_#fff,0_7px_0_#d2ccbf,0_22px_30px_-16px_rgba(40,28,10,.45)]",
         className,
       )}
     >
@@ -55,12 +55,12 @@ export function ToyStarHistory({
               transition={{ duration: 0.9, repeat: Infinity, repeatType: "reverse" }}
             />
           )}
-          <span className="rounded-[4px] bg-(--ovio-surface) px-3 py-0.5 font-(family-name:--ovio-mono) text-[22px] leading-8 font-semibold shadow-[inset_0_-7px_6px_-5px_rgba(0,0,0,.25),inset_0_7px_6px_-5px_rgba(0,0,0,.25)] tabular-nums">
+          <span className="rounded-sm bg-(--ovio-surface) px-3 py-0.5 font-(family-name:--ovio-mono) text-[22px] leading-8 font-semibold shadow-[inset_0_-7px_6px_-5px_rgba(0,0,0,.25),inset_0_7px_6px_-5px_rgba(0,0,0,.25)] tabular-nums">
             {formatNumber(active?.stars ?? shape.total)}
           </span>
         </div>
       </div>
-      <div className="relative flex min-h-[220px] flex-1 items-end gap-1 rounded-xl bg-[#ebe6db] p-2 shadow-[inset_0_3px_6px_rgba(40,28,10,.2)]">
+      <div className="relative flex min-h-55 flex-1 items-end gap-1 rounded-xl bg-[#ebe6db] p-2 shadow-[inset_0_3px_6px_rgba(40,28,10,.2)]">
         {shape.months.map((m, i) => {
           const color = m.notes.length ? "var(--ovio-red)" : "var(--ovio-accent)";
           return (
@@ -75,7 +75,7 @@ export function ToyStarHistory({
               {Array.from({ length: Math.max(1, Math.round(m.h * STACK)) }, (_, j) => (
                 <motion.div
                   key={j}
-                  className="h-[13px] rounded-[3px] shadow-[inset_0_-3px_0_rgba(0,0,0,.2),inset_0_1px_0_rgba(255,255,255,.35)]"
+                  className="h-3.25 rounded-[3px] shadow-[inset_0_-3px_0_rgba(0,0,0,.2),inset_0_1px_0_rgba(255,255,255,.35)]"
                   style={{ background: color }}
                   initial={animation === "none" ? false : { y: -48, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}

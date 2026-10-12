@@ -39,13 +39,13 @@ export function CraftNpmDownloads({
       animate={{ transform: "translateY(0px)", clipPath: "inset(0% 0% 0% 0%)" }}
       transition={reduced ? { duration: 0 } : { duration: FEED, ease: ease.minimal }}
       className={cn(
-        "m-0 w-[280px] font-(family-name:--ovio-font-geist-mono) text-xs leading-[1.7] text-(--ovio-ink) drop-shadow-[0_14px_18px_rgba(70,45,20,.3)]",
+        "m-0 w-70 font-(family-name:--ovio-font-geist-mono) text-xs leading-[1.7] text-(--ovio-ink) drop-shadow-[0_14px_18px_rgba(70,45,20,.3)]",
         className,
       )}
     >
-      <div className="-rotate-[1.5deg] transition-[rotate,translate] duration-300 ease-[cubic-bezier(.34,1.5,.5,1)] motion-reduce:transition-none hover:-translate-y-1.5 hover:rotate-0">
-        <div className="px-[22px] pt-[22px] pb-3.5" style={{ background: PAPER }}>
-          <div className="text-center font-(family-name:--ovio-font) text-xl font-extrabold tracking-[-0.02em] [overflow-wrap:anywhere]">
+      <div className="rotate-[-1.5deg] transition-[rotate,translate] duration-300 ease-[cubic-bezier(.34,1.5,.5,1)] motion-reduce:transition-none hover:-translate-y-1.5 hover:rotate-0">
+        <div className="px-5.5 pt-5.5 pb-3.5" style={{ background: PAPER }}>
+          <div className="text-center font-(family-name:--ovio-font) text-xl font-extrabold tracking-[-0.02em] wrap-anywhere">
             npm · {packageName}
           </div>
           <div className="mb-3 text-center text-[#7d6650]">weekly downloads receipt</div>
@@ -94,7 +94,7 @@ export function CraftNpmDownloads({
           </motion.div>
           <div
             aria-hidden
-            className="mt-2 h-[30px]"
+            className="mt-2 h-7.5"
             style={{
               background:
                 "repeating-linear-gradient(90deg,#2a1f14 0 2px,transparent 2px 4px,#2a1f14 4px 5px,transparent 5px 8px)",

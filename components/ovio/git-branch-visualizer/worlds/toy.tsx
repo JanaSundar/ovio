@@ -115,17 +115,17 @@ export function ToyGitBranchVisualizer({
       data-ovio-world="toy"
       aria-label={repo ? `Commit graph of ${repo}` : "Commit graph"}
       className={cn(
-        "w-full max-w-[880px] min-w-0 rounded-[24px] bg-(--ovio-surface) pb-1 font-(family-name:--ovio-font) text-(--ovio-ink) shadow-[inset_0_1px_0_#fff,0_8px_0_#d2ccbf,0_28px_34px_-16px_rgba(40,28,10,.45)]",
+        "w-full max-w-220 min-w-0 rounded-3xl bg-(--ovio-surface) pb-1 font-(family-name:--ovio-font) text-(--ovio-ink) shadow-[inset_0_1px_0_#fff,0_8px_0_#d2ccbf,0_28px_34px_-16px_rgba(40,28,10,.45)]",
         className,
       )}
     >
-      <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 px-[18px] pt-4 text-xs text-(--ovio-muted)">
+      <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 px-4.5 pt-4 text-xs text-(--ovio-muted)">
         <span className="font-(family-name:--ovio-mono) font-semibold">git log --graph</span>
         {repo && <span className="font-bold">{repo}</span>}
       </div>
 
       {actions && (
-        <div className="flex flex-wrap gap-2.5 px-[18px] pt-3 pb-1.5">
+        <div className="flex flex-wrap gap-2.5 px-4.5 pt-3 pb-1.5">
           <ToyKey
             depth={5}
             side="var(--ovio-accent-deep)"
@@ -178,7 +178,7 @@ export function ToyGitBranchVisualizer({
               to={{ opacity: 1, y: 0, scale: 1 }}
               transition={motionTokens.toy.slide}
             >
-              <div className="break-words">
+              <div className="wrap-break-word">
                 <span className="font-(family-name:--ovio-mono) font-semibold text-(--ovio-red)">
                   {current.short}
                 </span>{" "}
@@ -197,7 +197,7 @@ export function ToyGitBranchVisualizer({
         </AutoHeight>
       </div>
 
-      <div className="flex flex-wrap justify-between gap-x-4 gap-y-1 px-[18px] pb-3 text-xs font-bold text-(--ovio-muted)">
+      <div className="flex flex-wrap justify-between gap-x-4 gap-y-1 px-4.5 pb-3 text-xs font-bold text-(--ovio-muted)">
         <span>
           HEAD → <span className="text-(--ovio-ink)">{head}</span>
         </span>

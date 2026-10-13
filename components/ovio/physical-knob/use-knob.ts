@@ -9,6 +9,8 @@ import {
 } from "motion/react";
 import { useEffect, useRef, type KeyboardEvent, type PointerEvent, type RefObject } from "react";
 import { useReducedMotionSafe } from "@/lib/motion";
+import { detents } from "./knob";
+import type { KnobWorldProps } from "./physical-knob";
 
 const ANGLE_MIN = -135;
 const ANGLE_MAX = 135;
@@ -207,6 +209,43 @@ export function useKnob({ ref, steps, follow, wheel, index, onIndex, disabled }:
       onPointerUp: release,
       onPointerCancel: release,
       onKeyDown,
+    },
+  };
+}
+
+/**
+ * A world's knob: the detents for its feel, the drag, and the props for its slider element.
+ * Spread `slider` onto the element that turns; a world can override `aria-valuetext` after it.
+ */
+export function useKnobWorld(
+  { value, min, max, percent, setValue, label, disabled }: KnobWorldProps,
+  feel: KnobFeel,
+) {
+  const d = detents(min, max, feel.steps);
+  const index = d.toIndex(value);
+  const ref = useRef<HTMLDivElement>(null);
+  const { angle, handlers } = useKnob({
+    ...feel,
+    ref,
+    index,
+    onIndex: (i) => setValue(d.toValue(i)),
+    disabled,
+  });
+
+  return {
+    index,
+    angle,
+    slider: {
+      ref,
+      role: "slider",
+      tabIndex: disabled ? -1 : 0,
+      "aria-label": label,
+      "aria-valuemin": min,
+      "aria-valuemax": max,
+      "aria-valuenow": value,
+      "aria-valuetext": `${Math.round(percent)}%`,
+      "aria-disabled": disabled || undefined,
+      ...handlers,
     },
   };
 }

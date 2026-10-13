@@ -1498,9 +1498,19 @@
           "target": "components/ovio/physical-knob/physical-knob.tsx"
         },
         {
+          "path": "components/ovio/physical-knob/knob.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/physical-knob/knob.ts"
+        },
+        {
           "path": "components/ovio/physical-knob/use-knob.ts",
           "type": "registry:hook",
           "target": "components/ovio/physical-knob/use-knob.ts"
+        },
+        {
+          "path": "components/ovio/physical-knob/parts.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/physical-knob/parts.tsx"
         },
         {
           "path": "components/ovio/physical-knob/worlds/index.ts",
@@ -1550,9 +1560,19 @@
           "target": "components/ovio/physical-knob/physical-knob.tsx"
         },
         {
+          "path": "components/ovio/physical-knob/knob.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/physical-knob/knob.ts"
+        },
+        {
           "path": "components/ovio/physical-knob/use-knob.ts",
           "type": "registry:hook",
           "target": "components/ovio/physical-knob/use-knob.ts"
+        },
+        {
+          "path": "components/ovio/physical-knob/parts.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/physical-knob/parts.tsx"
         },
         {
           "path": "registry/worlds/minimal.ts",
@@ -1587,9 +1607,19 @@
           "target": "components/ovio/physical-knob/physical-knob.tsx"
         },
         {
+          "path": "components/ovio/physical-knob/knob.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/physical-knob/knob.ts"
+        },
+        {
           "path": "components/ovio/physical-knob/use-knob.ts",
           "type": "registry:hook",
           "target": "components/ovio/physical-knob/use-knob.ts"
+        },
+        {
+          "path": "components/ovio/physical-knob/parts.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/physical-knob/parts.tsx"
         },
         {
           "path": "registry/worlds/craft.ts",
@@ -1623,9 +1653,19 @@
           "target": "components/ovio/physical-knob/physical-knob.tsx"
         },
         {
+          "path": "components/ovio/physical-knob/knob.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/physical-knob/knob.ts"
+        },
+        {
           "path": "components/ovio/physical-knob/use-knob.ts",
           "type": "registry:hook",
           "target": "components/ovio/physical-knob/use-knob.ts"
+        },
+        {
+          "path": "components/ovio/physical-knob/parts.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/physical-knob/parts.tsx"
         },
         {
           "path": "registry/worlds/retro.ts",
@@ -1659,9 +1699,19 @@
           "target": "components/ovio/physical-knob/physical-knob.tsx"
         },
         {
+          "path": "components/ovio/physical-knob/knob.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/physical-knob/knob.ts"
+        },
+        {
           "path": "components/ovio/physical-knob/use-knob.ts",
           "type": "registry:hook",
           "target": "components/ovio/physical-knob/use-knob.ts"
+        },
+        {
+          "path": "components/ovio/physical-knob/parts.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/physical-knob/parts.tsx"
         },
         {
           "path": "registry/worlds/toy.ts",

@@ -1,10 +1,10 @@
 import { motion } from "motion/react";
-import { useRef } from "react";
 import { RollingNumber } from "@/components/shared/rolling-number";
 import { motionTokens } from "@/lib/motion";
 import { cn } from "@/lib/utils";
-import { detents, KnobTicks, type KnobWorldProps } from "../physical-knob";
-import { useKnob, type KnobFeel } from "../use-knob";
+import { KnobTicks } from "../parts";
+import type { KnobWorldProps } from "../physical-knob";
+import { useKnobWorld, type KnobFeel } from "../use-knob";
 
 /** Toy: a chunky plastic knob with rotational weight (knob spring, k95 c22). */
 const feel: KnobFeel = {
@@ -26,25 +26,9 @@ const TICKS = {
   rounded: true,
 };
 
-export default function ToyKnob({
-  value,
-  min,
-  max,
-  percent,
-  setValue,
-  label,
-  disabled,
-  className,
-}: KnobWorldProps) {
-  const d = detents(min, max, feel.steps);
-  const ref = useRef<HTMLDivElement>(null);
-  const { angle, handlers } = useKnob({
-    ...feel,
-    ref,
-    index: d.toIndex(value),
-    onIndex: (i) => setValue(d.toValue(i)),
-    disabled,
-  });
+export default function ToyKnob(props: KnobWorldProps) {
+  const { min, max, percent, className } = props;
+  const { angle, slider } = useKnobWorld(props, feel);
 
   return (
     <div
@@ -60,16 +44,7 @@ export default function ToyKnob({
       </div>
       <div className="relative mt-2.5 size-65">
         <div
-          ref={ref}
-          role="slider"
-          tabIndex={disabled ? -1 : 0}
-          aria-label={label}
-          aria-valuemin={min}
-          aria-valuemax={max}
-          aria-valuenow={value}
-          aria-valuetext={`${Math.round(percent)}%`}
-          aria-disabled={disabled || undefined}
-          {...handlers}
+          {...slider}
           className="absolute inset-2.5 cursor-grab touch-none rounded-full active:cursor-grabbing"
         >
           <KnobTicks s={TICKS} percent={percent} />

@@ -27,7 +27,7 @@ export default function RetroTopContributors({
   repo,
   period,
   periods,
-  setPeriod,
+  periodButton,
   className,
 }: TopContributorsWorldProps) {
   const reduced = useReducedMotionSafe();
@@ -62,9 +62,7 @@ export default function RetroTopContributors({
               <button
                 key={p}
                 type="button"
-                aria-pressed={p === period}
-                aria-label={PERIOD_LABEL[p]}
-                onClick={() => setPeriod(p)}
+                {...periodButton(p)}
                 className={cn(
                   "cursor-pointer border-0 px-1.5 font-(family-name:--ovio-font) text-xl leading-tight uppercase",
                   p === period

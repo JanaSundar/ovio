@@ -18,7 +18,7 @@ export default function CraftTopContributors({
   repo,
   period,
   periods,
-  setPeriod,
+  periodButton,
   className,
 }: TopContributorsWorldProps) {
   const reduced = useReducedMotionSafe();
@@ -55,8 +55,7 @@ export default function CraftTopContributors({
                 <button
                   key={p}
                   type="button"
-                  aria-pressed={p === period}
-                  onClick={() => setPeriod(p)}
+                  {...periodButton(p)}
                   style={
                     { "--tilt": p === period ? "0deg" : i % 2 ? "2deg" : "-2deg" } as CSSProperties
                   }

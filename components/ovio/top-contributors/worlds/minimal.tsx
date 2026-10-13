@@ -13,7 +13,7 @@ export default function MinimalTopContributors({
   repo,
   period,
   periods,
-  setPeriod,
+  periodButton,
   className,
 }: TopContributorsWorldProps) {
   const reduced = useReducedMotionSafe();
@@ -48,9 +48,7 @@ export default function MinimalTopContributors({
                 <button
                   key={p}
                   type="button"
-                  aria-pressed={p === period}
-                  aria-label={PERIOD_LABEL[p]}
-                  onClick={() => setPeriod(p)}
+                  {...periodButton(p)}
                   className={cn(
                     "relative cursor-pointer rounded-full px-3 py-1 text-xs font-medium",
                     p === period ? "text-(--ovio-ink)" : "text-(--ovio-muted)",

@@ -4,7 +4,7 @@ import { RollingNumber } from "@/components/shared/rolling-number";
 import { TOY_PLASTIC, ToyKey } from "@/components/shared/toy";
 import { motionTokens, useOvioTransition, useReducedMotionSafe } from "@/lib/motion";
 import { cn } from "@/lib/utils";
-import { PERIOD_LABEL, PERIOD_SHORT, type TopContributorsWorldProps } from "../top-contributors";
+import { PERIOD_SHORT, type TopContributorsWorldProps } from "../top-contributors";
 import { formatNumber, plural } from "@/lib/format";
 
 /** Plastic piece colours by rank: face, side, ink. */
@@ -17,7 +17,7 @@ export default function ToyTopContributors({
   repo,
   period,
   periods,
-  setPeriod,
+  periodButton,
   className,
 }: TopContributorsWorldProps) {
   const reduced = useReducedMotionSafe();
@@ -54,9 +54,7 @@ export default function ToyTopContributors({
                 key={p}
                 depth={4}
                 side="#cfc8b8"
-                aria-pressed={p === period}
-                aria-label={PERIOD_LABEL[p]}
-                onClick={() => setPeriod(p)}
+                {...periodButton(p)}
                 className="flex cursor-pointer touch-manipulation items-center gap-1.5 rounded-[10px] border-0 bg-white px-3 py-2 font-(family-name:--ovio-font) text-[13px] font-extrabold text-(--ovio-ink)"
               >
                 <motion.span

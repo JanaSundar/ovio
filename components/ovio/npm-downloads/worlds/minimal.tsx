@@ -10,15 +10,13 @@ export default function MinimalNpmDownloads({
   latest,
   selected,
   current,
-  currentText,
   select,
   reset,
-  onKeyDown,
+  slider,
   total,
   goal,
   goalProgress,
   goalHeight,
-  summary,
   className,
 }: NpmDownloadsWorldProps) {
   const reduced = useReducedMotionSafe();
@@ -52,14 +50,7 @@ export default function MinimalNpmDownloads({
       </div>
 
       <div
-        role="slider"
-        tabIndex={0}
-        aria-label={summary}
-        aria-valuemin={0}
-        aria-valuemax={points.length - 1}
-        aria-valuenow={selected}
-        aria-valuetext={currentText}
-        onKeyDown={onKeyDown}
+        {...slider}
         onPointerLeave={reset}
         onBlur={reset}
         className="relative flex h-37.5 items-end gap-1 border-b border-(--ovio-line)"

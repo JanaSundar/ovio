@@ -34,13 +34,21 @@ export type NpmDownloadsWorldProps = {
   /** The week being inspected (hover, focus, keys or the Toy knob). Defaults to the latest. */
   selected: number;
   current: WeekPoint;
-  /** "Week of Sep 28: 48,210 downloads", for screen readers. */
-  currentText: string;
   select: (index: number) => void;
   /** Back to the latest week. */
   reset: () => void;
-  /** Arrow keys, Home and End move the selection. */
-  onKeyDown: (event: KeyboardEvent<HTMLElement>) => void;
+  /** Spread on the element that picks a week: arrow keys, Home and End move the selection. */
+  slider: {
+    role: "slider";
+    tabIndex: number;
+    "aria-label": string;
+    "aria-valuemin": number;
+    "aria-valuemax": number;
+    "aria-valuenow": number;
+    /** "Week of Sep 28: 48,210 downloads". */
+    "aria-valuetext": string;
+    onKeyDown: (event: KeyboardEvent<HTMLElement>) => void;
+  };
   /** Sum of the shown weeks. */
   total: number;
   peak: number;
@@ -96,10 +104,18 @@ export function NpmDownloads({
     latest,
     selected,
     current,
-    currentText: `Week of ${current.label}: ${formatNumber(current.downloads)} downloads`,
     select,
     reset,
-    onKeyDown,
+    slider: {
+      role: "slider",
+      tabIndex: 0,
+      "aria-label": summary,
+      "aria-valuemin": 0,
+      "aria-valuemax": points.length - 1,
+      "aria-valuenow": selected,
+      "aria-valuetext": `Week of ${current.label}: ${formatNumber(current.downloads)} downloads`,
+      onKeyDown,
+    },
     total,
     peak,
     goal,

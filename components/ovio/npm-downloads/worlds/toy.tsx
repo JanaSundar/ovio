@@ -21,12 +21,8 @@ function WeekKnob({
   count,
   selected,
   select,
-  onKeyDown,
-  currentText,
-}: { count: number } & Pick<
-  NpmDownloadsWorldProps,
-  "selected" | "select" | "onKeyDown" | "currentText"
->) {
+  slider,
+}: { count: number } & Pick<NpmDownloadsWorldProps, "selected" | "select" | "slider">) {
   const reduced = useReducedMotionSafe();
   const target = useMotionValue(angleOf(selected, count));
   const sprung = useSpring(target, motionTokens.toy.knob);
@@ -75,14 +71,8 @@ function WeekKnob({
   return (
     <div className="mx-auto flex flex-col items-center gap-2.5">
       <div
-        role="slider"
-        tabIndex={0}
+        {...slider}
         aria-label="Week"
-        aria-valuemin={0}
-        aria-valuemax={count - 1}
-        aria-valuenow={selected}
-        aria-valuetext={currentText}
-        onKeyDown={onKeyDown}
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={release}
@@ -118,9 +108,8 @@ export default function ToyNpmDownloads({
   points,
   selected,
   current,
-  currentText,
   select,
-  onKeyDown,
+  slider,
   goal,
   goalProgress,
   summary,
@@ -190,13 +179,7 @@ export default function ToyNpmDownloads({
           </div>
         )}
       </div>
-      <WeekKnob
-        count={points.length}
-        selected={selected}
-        select={select}
-        onKeyDown={onKeyDown}
-        currentText={currentText}
-      />
+      <WeekKnob count={points.length} selected={selected} select={select} slider={slider} />
     </section>
   );
 }

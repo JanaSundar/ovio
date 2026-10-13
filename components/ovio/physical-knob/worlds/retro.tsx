@@ -1,9 +1,9 @@
 import { motion } from "motion/react";
-import { useRef } from "react";
 import { RollingNumber } from "@/components/shared/rolling-number";
 import { cn } from "@/lib/utils";
-import { detents, KnobTicks, type KnobWorldProps } from "../physical-knob";
-import { useKnob, type KnobFeel } from "../use-knob";
+import { KnobTicks } from "../parts";
+import type { KnobWorldProps } from "../physical-knob";
+import { useKnobWorld, type KnobFeel } from "../use-knob";
 
 /** Retro: an old amp's volume pot. Eleven hard detents; the cap jumps between them. */
 const feel: KnobFeel = { steps: 11, follow: "step", wheel: 1 };
@@ -21,26 +21,9 @@ const TICKS = {
   top: -6,
 };
 
-export default function RetroKnob({
-  value,
-  min,
-  max,
-  percent,
-  setValue,
-  label,
-  disabled,
-  className,
-}: KnobWorldProps) {
-  const d = detents(min, max, feel.steps);
-  const index = d.toIndex(value);
-  const ref = useRef<HTMLDivElement>(null);
-  const { angle, handlers } = useKnob({
-    ...feel,
-    ref,
-    index,
-    onIndex: (i) => setValue(d.toValue(i)),
-    disabled,
-  });
+export default function RetroKnob(props: KnobWorldProps) {
+  const { percent, label, className } = props;
+  const { index, angle, slider } = useKnobWorld(props, feel);
 
   return (
     <div
@@ -76,16 +59,8 @@ export default function RetroKnob({
           );
         })}
         <div
-          ref={ref}
-          role="slider"
-          tabIndex={disabled ? -1 : 0}
-          aria-label={label}
-          aria-valuemin={min}
-          aria-valuemax={max}
-          aria-valuenow={value}
+          {...slider}
           aria-valuetext={`${index} of 10`}
-          aria-disabled={disabled || undefined}
-          {...handlers}
           className="absolute inset-8.5 cursor-grab touch-none rounded-full active:cursor-grabbing"
         >
           <KnobTicks s={TICKS} percent={percent} />

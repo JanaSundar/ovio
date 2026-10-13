@@ -12,7 +12,7 @@ import { initialsOf } from "@/components/shared/initials";
 import { hashString, random } from "@/components/ovio/event-ticket/seed";
 import { formatDelta } from "@/components/ovio/npm-downloads/chart";
 import { formatTime } from "@/components/ovio/now-playing/parts";
-import { detents } from "@/components/ovio/physical-knob/physical-knob";
+import { detents } from "@/components/ovio/physical-knob/knob";
 import { nearestIndex, shapeStarHistory, smoothPath } from "@/components/ovio/star-history/shape";
 import { seeded } from "@/components/site/seeded";
 import { COMPONENTS } from "@/content/components";

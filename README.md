@@ -41,14 +41,30 @@ The catalogue lives in [`content/components.ts`](content/components.ts).
 ## Installation
 
 Ovio needs a project set up for shadcn (React 19, Tailwind CSS v4). This GitHub repository is the
-registry, so there is nothing to configure. Add a component by name:
+registry, so there is nothing to configure. Add a component in the world you want, as
+`<component>-<world>`:
+
+```bash
+npx shadcn add JanaSundar/ovio/star-history-craft
+```
+
+That installs Star History with the Craft world alone: the component, `worlds/craft.tsx` and only
+the shared files and dependencies Craft uses. Every component has `-minimal`, `-craft`, `-retro`
+and `-toy` items. A single-world install only accepts its own world as `variant`, so asking for
+another is a type error; a world set by `OvioProvider` that isn't installed falls back to it.
+
+To get all four worlds and switch between them with `variant`, add the component by its name
+alone:
 
 ```bash
 npx shadcn add JanaSundar/ovio/star-history
 ```
 
+Adding a second single world later replaces `worlds/index.ts`, which lists the installed worlds;
+add the component by name instead to have them all.
+
 Append `#<tag>` or a commit SHA to pin a version, for example
-`npx shadcn add JanaSundar/ovio/star-history#v0.1.0`.
+`npx shadcn add JanaSundar/ovio/star-history-craft#v0.1.0`.
 
 The CLI installs the component under `components/ovio/<name>/`, its npm dependencies (`motion`,
 `@number-flow/react`, `uqr` for QR codes) and the shared Ovio items it needs, including the theme at `styles/ovio.css`.
@@ -63,7 +79,7 @@ The worlds use Geist, Geist Mono, Bricolage Grotesque, IBM Plex Mono, Caveat, VT
 The theme reads them from `next/font` variables (`--font-geist`, `--font-vt323` and so on) and
 falls back to the family names, so load them with `next/font/google` or Google Fonts.
 
-`npx shadcn add JanaSundar/ovio/all` adds every available component at once.
+`npx shadcn add JanaSundar/ovio/all` adds every available component, in all four worlds, at once.
 
 ## Usage
 

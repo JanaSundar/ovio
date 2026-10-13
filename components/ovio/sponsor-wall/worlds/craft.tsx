@@ -41,7 +41,12 @@ const tilt = (i: number) => ((i * 37) % 24) - 12;
 const nudge = (i: number) => ({ translate: `${((i * 29) % 9) - 4}px ${((i * 53) % 17) - 8}px` });
 
 /** Craft: the sponsors as stickers slapped on a laptop lid. Hover one to press it flat. */
-export function CraftSponsorWall({ groups, ctaHref, ctaLabel, className }: SponsorWallWorldProps) {
+export default function CraftSponsorWall({
+  groups,
+  ctaHref,
+  ctaLabel,
+  className,
+}: SponsorWallWorldProps) {
   const reduced = useReducedMotionSafe();
   const stick = useOvioTransition({ duration: 0.3, ease: [0.34, 1.6, 0.64, 1] });
   const stickers = scatter(groups.map((g) => g.sponsors));

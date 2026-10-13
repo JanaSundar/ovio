@@ -32,6 +32,13 @@ parts.tsx        pieces two or more worlds share, or parts/<name>.tsx when there
 use-<name>.ts    hooks the worlds share
 <name>.ts        plain logic with no React, safe for server code (README embeds, OG images)
 worlds/          minimal.tsx, craft.tsx, retro.tsx, toy.tsx — they render, they don't derive data
+                 each default-exports its view; index.ts re-exports all four, and <slug>.tsx imports them from it
 ```
 
 The registry item lists every file in the folder except `demo.tsx`, and the component appears in `COMPONENTS` and `DEMOS`. Run `node scripts/check-registry.mjs` after moving code between files.
+
+# Every component installs one world at a time too
+
+Next to `<slug>` in `registry.json` sit `<slug>-minimal`, `-craft`, `-retro` and `-toy`. Each installs the component with that world alone: `registry/worlds/<world>.ts` takes the place of `worlds/index.ts`, and the files and dependencies are only those the world's imports reach. They are generated: `pnpm registry:worlds` rewrites them from the component's item, and `node scripts/check-registry.mjs` fails when they are stale. Never edit them by hand.
+
+So a world installs alone, keep code one world needs out of files the others import, and keep shared pieces in `parts.tsx`, `use-<name>.ts` or `<name>.ts`, never in another world's file.

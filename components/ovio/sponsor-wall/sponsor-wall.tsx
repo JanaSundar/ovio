@@ -1,18 +1,16 @@
 "use client";
 
 import type { ComponentType } from "react";
-import { useWorld, type World } from "@/components/shared/world-provider";
-import { MinimalSponsorWall } from "./worlds/minimal";
-import { CraftSponsorWall } from "./worlds/craft";
-import { RetroSponsorWall } from "./worlds/retro";
-import { ToySponsorWall } from "./worlds/toy";
+import { useWorld } from "@/components/shared/world-provider";
+import { everyWorld, type InstalledWorld } from "@/lib/world";
 import type { SponsorTier, Sponsor } from "./types";
+import * as worlds from "./worlds";
 
 export type { SponsorTier, Sponsor } from "./types";
 
 export type SponsorWallProps = {
   sponsors: Sponsor[];
-  variant?: World;
+  variant?: InstalledWorld<typeof worlds>;
   /** Where "Become a sponsor" points, e.g. a GitHub Sponsors page. Leave out to hide it. */
   ctaHref?: string;
   ctaLabel?: string;
@@ -63,12 +61,8 @@ function groupSponsors(sponsors: Sponsor[]): SponsorGroup[] {
   }).filter((g) => g.sponsors.length > 0);
 }
 
-const VIEWS = {
-  minimal: MinimalSponsorWall,
-  craft: CraftSponsorWall,
-  retro: RetroSponsorWall,
-  toy: ToySponsorWall,
-} satisfies Record<World, ComponentType<SponsorWallWorldProps>>;
+/** The installed worlds; a single-world install draws its one world for any provider world. */
+const VIEWS = everyWorld<ComponentType<SponsorWallWorldProps>>(worlds);
 
 export function SponsorWall({
   sponsors,

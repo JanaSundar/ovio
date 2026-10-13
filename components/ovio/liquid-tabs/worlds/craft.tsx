@@ -25,6 +25,6 @@ const look: LiquidLook = {
   dots: ["#c9b9a0", "#ee9f63", "#2f9a45"],
 };
 
-export function CraftLiquidTabs(props: LiquidTabsWorldProps) {
+export default function CraftLiquidTabs(props: LiquidTabsWorldProps) {
   return <LiquidBar look={look} {...props} />;
 }

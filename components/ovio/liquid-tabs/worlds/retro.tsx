@@ -23,6 +23,6 @@ const look: LiquidLook = {
   dots: ["#1d5a2b", "#ffd34d", "#4fdc68"],
 };
 
-export function RetroLiquidTabs(props: LiquidTabsWorldProps) {
+export default function RetroLiquidTabs(props: LiquidTabsWorldProps) {
   return <LiquidBar look={look} {...props} />;
 }

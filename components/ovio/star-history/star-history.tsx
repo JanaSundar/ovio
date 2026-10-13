@@ -1,14 +1,12 @@
 "use client";
 
 import { type ComponentType, useMemo } from "react";
-import { useWorld, type World } from "@/components/shared/world-provider";
+import { useWorld } from "@/components/shared/world-provider";
+import { everyWorld, type InstalledWorld } from "@/lib/world";
 import { useReducedMotionSafe, type OvioAnimation } from "@/lib/motion";
 import { shapeStarHistory, type StarHistoryShape } from "./shape";
-import { MinimalStarHistory } from "./worlds/minimal";
-import { CraftStarHistory } from "./worlds/craft";
-import { RetroStarHistory } from "./worlds/retro";
-import { ToyStarHistory } from "./worlds/toy";
 import type { StarHistoryPoint, StarHistoryAnnotation } from "./types";
+import * as worlds from "./worlds";
 
 export type { StarHistoryPoint, StarHistoryAnnotation } from "./types";
 
@@ -20,7 +18,7 @@ export type StarHistoryProps = {
   /** "owner/name". Used for the title and the chart's accessible name only. */
   repo?: string;
   annotations?: StarHistoryAnnotation[];
-  variant?: World;
+  variant?: InstalledWorld<typeof worlds>;
   /** "always" adds a live marker on the latest point. Forced to "none" under reduced motion. */
   animation?: StarHistoryAnimation;
   className?: string;
@@ -41,12 +39,8 @@ export type StarHistoryWorldProps = {
 
 const NO_ANNOTATIONS: StarHistoryAnnotation[] = [];
 
-const VIEWS = {
-  minimal: MinimalStarHistory,
-  craft: CraftStarHistory,
-  retro: RetroStarHistory,
-  toy: ToyStarHistory,
-} satisfies Record<World, ComponentType<StarHistoryWorldProps>>;
+/** The installed worlds; a single-world install draws its one world for any provider world. */
+const VIEWS = everyWorld<ComponentType<StarHistoryWorldProps>>(worlds);
 
 export function StarHistory({
   data,

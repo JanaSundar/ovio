@@ -6,7 +6,13 @@ const DOT: Record<ToastKind, string> = {
   info: "#77756e",
 };
 
-export function MinimalToast({ kind, title, description, action, dismiss }: ToastWorldProps) {
+export default function MinimalToast({
+  kind,
+  title,
+  description,
+  action,
+  dismiss,
+}: ToastWorldProps) {
   return (
     <div
       data-ovio-world="minimal"

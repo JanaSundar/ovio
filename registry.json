@@ -332,6 +332,11 @@
           "target": "components/ovio/contribution-graph/use-cell-entrance.ts"
         },
         {
+          "path": "components/ovio/contribution-graph/worlds/index.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/contribution-graph/worlds/index.ts"
+        },
+        {
           "path": "components/ovio/contribution-graph/worlds/minimal.tsx",
           "type": "registry:ui",
           "target": "components/ovio/contribution-graph/worlds/minimal.tsx"
@@ -345,6 +350,205 @@
           "path": "components/ovio/contribution-graph/worlds/retro.tsx",
           "type": "registry:ui",
           "target": "components/ovio/contribution-graph/worlds/retro.tsx"
+        },
+        {
+          "path": "components/ovio/contribution-graph/worlds/toy.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/contribution-graph/worlds/toy.tsx"
+        }
+      ]
+    },
+    {
+      "name": "contribution-graph-minimal",
+      "type": "registry:ui",
+      "title": "Contribution Graph — Minimal",
+      "description": "Contribution Graph in the Minimal world alone, without the other three. Add contribution-graph for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion",
+        "JanaSundar/ovio/format"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/contribution-graph/contribution-graph.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/contribution-graph/contribution-graph.tsx"
+        },
+        {
+          "path": "components/ovio/contribution-graph/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/contribution-graph/types.ts"
+        },
+        {
+          "path": "components/ovio/contribution-graph/grid.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/contribution-graph/grid.ts"
+        },
+        {
+          "path": "components/ovio/contribution-graph/year.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/contribution-graph/year.ts"
+        },
+        {
+          "path": "components/ovio/contribution-graph/use-cell-entrance.ts",
+          "type": "registry:hook",
+          "target": "components/ovio/contribution-graph/use-cell-entrance.ts"
+        },
+        {
+          "path": "registry/worlds/minimal.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/contribution-graph/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/contribution-graph/worlds/minimal.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/contribution-graph/worlds/minimal.tsx"
+        }
+      ]
+    },
+    {
+      "name": "contribution-graph-craft",
+      "type": "registry:ui",
+      "title": "Contribution Graph — Craft",
+      "description": "Contribution Graph in the Craft world alone, without the other three. Add contribution-graph for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion",
+        "JanaSundar/ovio/format"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/contribution-graph/contribution-graph.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/contribution-graph/contribution-graph.tsx"
+        },
+        {
+          "path": "components/ovio/contribution-graph/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/contribution-graph/types.ts"
+        },
+        {
+          "path": "components/ovio/contribution-graph/grid.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/contribution-graph/grid.ts"
+        },
+        {
+          "path": "components/ovio/contribution-graph/year.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/contribution-graph/year.ts"
+        },
+        {
+          "path": "components/ovio/contribution-graph/use-cell-entrance.ts",
+          "type": "registry:hook",
+          "target": "components/ovio/contribution-graph/use-cell-entrance.ts"
+        },
+        {
+          "path": "registry/worlds/craft.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/contribution-graph/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/contribution-graph/worlds/craft.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/contribution-graph/worlds/craft.tsx"
+        }
+      ]
+    },
+    {
+      "name": "contribution-graph-retro",
+      "type": "registry:ui",
+      "title": "Contribution Graph — Retro",
+      "description": "Contribution Graph in the Retro world alone, without the other three. Add contribution-graph for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion",
+        "JanaSundar/ovio/format"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/contribution-graph/contribution-graph.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/contribution-graph/contribution-graph.tsx"
+        },
+        {
+          "path": "components/ovio/contribution-graph/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/contribution-graph/types.ts"
+        },
+        {
+          "path": "components/ovio/contribution-graph/grid.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/contribution-graph/grid.ts"
+        },
+        {
+          "path": "components/ovio/contribution-graph/year.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/contribution-graph/year.ts"
+        },
+        {
+          "path": "components/ovio/contribution-graph/use-cell-entrance.ts",
+          "type": "registry:hook",
+          "target": "components/ovio/contribution-graph/use-cell-entrance.ts"
+        },
+        {
+          "path": "registry/worlds/retro.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/contribution-graph/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/contribution-graph/worlds/retro.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/contribution-graph/worlds/retro.tsx"
+        }
+      ]
+    },
+    {
+      "name": "contribution-graph-toy",
+      "type": "registry:ui",
+      "title": "Contribution Graph — Toy",
+      "description": "Contribution Graph in the Toy world alone, without the other three. Add contribution-graph for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion",
+        "JanaSundar/ovio/format"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/contribution-graph/contribution-graph.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/contribution-graph/contribution-graph.tsx"
+        },
+        {
+          "path": "components/ovio/contribution-graph/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/contribution-graph/types.ts"
+        },
+        {
+          "path": "components/ovio/contribution-graph/grid.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/contribution-graph/grid.ts"
+        },
+        {
+          "path": "components/ovio/contribution-graph/year.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/contribution-graph/year.ts"
+        },
+        {
+          "path": "registry/worlds/toy.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/contribution-graph/worlds/index.ts"
         },
         {
           "path": "components/ovio/contribution-graph/worlds/toy.tsx",
@@ -395,6 +599,11 @@
           "target": "components/ovio/star-history/use-scrubber.ts"
         },
         {
+          "path": "components/ovio/star-history/worlds/index.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/star-history/worlds/index.ts"
+        },
+        {
           "path": "components/ovio/star-history/worlds/minimal.tsx",
           "type": "registry:ui",
           "target": "components/ovio/star-history/worlds/minimal.tsx"
@@ -408,6 +617,204 @@
           "path": "components/ovio/star-history/worlds/retro.tsx",
           "type": "registry:ui",
           "target": "components/ovio/star-history/worlds/retro.tsx"
+        },
+        {
+          "path": "components/ovio/star-history/worlds/toy.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/star-history/worlds/toy.tsx"
+        }
+      ]
+    },
+    {
+      "name": "star-history-minimal",
+      "type": "registry:ui",
+      "title": "Star History — Minimal",
+      "description": "Star History in the Minimal world alone, without the other three. Add star-history for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion",
+        "JanaSundar/ovio/keys",
+        "JanaSundar/ovio/format"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/star-history/star-history.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/star-history/star-history.tsx"
+        },
+        {
+          "path": "components/ovio/star-history/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/star-history/types.ts"
+        },
+        {
+          "path": "components/ovio/star-history/parts.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/star-history/parts.tsx"
+        },
+        {
+          "path": "components/ovio/star-history/shape.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/star-history/shape.ts"
+        },
+        {
+          "path": "components/ovio/star-history/use-scrubber.ts",
+          "type": "registry:hook",
+          "target": "components/ovio/star-history/use-scrubber.ts"
+        },
+        {
+          "path": "registry/worlds/minimal.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/star-history/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/star-history/worlds/minimal.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/star-history/worlds/minimal.tsx"
+        }
+      ]
+    },
+    {
+      "name": "star-history-craft",
+      "type": "registry:ui",
+      "title": "Star History — Craft",
+      "description": "Star History in the Craft world alone, without the other three. Add star-history for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion",
+        "JanaSundar/ovio/keys",
+        "JanaSundar/ovio/format"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/star-history/star-history.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/star-history/star-history.tsx"
+        },
+        {
+          "path": "components/ovio/star-history/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/star-history/types.ts"
+        },
+        {
+          "path": "components/ovio/star-history/parts.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/star-history/parts.tsx"
+        },
+        {
+          "path": "components/ovio/star-history/shape.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/star-history/shape.ts"
+        },
+        {
+          "path": "components/ovio/star-history/use-scrubber.ts",
+          "type": "registry:hook",
+          "target": "components/ovio/star-history/use-scrubber.ts"
+        },
+        {
+          "path": "registry/worlds/craft.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/star-history/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/star-history/worlds/craft.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/star-history/worlds/craft.tsx"
+        }
+      ]
+    },
+    {
+      "name": "star-history-retro",
+      "type": "registry:ui",
+      "title": "Star History — Retro",
+      "description": "Star History in the Retro world alone, without the other three. Add star-history for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion",
+        "JanaSundar/ovio/keys",
+        "JanaSundar/ovio/format"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/star-history/star-history.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/star-history/star-history.tsx"
+        },
+        {
+          "path": "components/ovio/star-history/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/star-history/types.ts"
+        },
+        {
+          "path": "components/ovio/star-history/shape.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/star-history/shape.ts"
+        },
+        {
+          "path": "components/ovio/star-history/use-scrubber.ts",
+          "type": "registry:hook",
+          "target": "components/ovio/star-history/use-scrubber.ts"
+        },
+        {
+          "path": "registry/worlds/retro.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/star-history/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/star-history/worlds/retro.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/star-history/worlds/retro.tsx"
+        }
+      ]
+    },
+    {
+      "name": "star-history-toy",
+      "type": "registry:ui",
+      "title": "Star History — Toy",
+      "description": "Star History in the Toy world alone, without the other three. Add star-history for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion",
+        "JanaSundar/ovio/keys",
+        "JanaSundar/ovio/format"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/star-history/star-history.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/star-history/star-history.tsx"
+        },
+        {
+          "path": "components/ovio/star-history/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/star-history/types.ts"
+        },
+        {
+          "path": "components/ovio/star-history/shape.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/star-history/shape.ts"
+        },
+        {
+          "path": "components/ovio/star-history/use-scrubber.ts",
+          "type": "registry:hook",
+          "target": "components/ovio/star-history/use-scrubber.ts"
+        },
+        {
+          "path": "registry/worlds/toy.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/star-history/worlds/index.ts"
         },
         {
           "path": "components/ovio/star-history/worlds/toy.tsx",
@@ -448,6 +855,11 @@
           "target": "components/ovio/repository-card/language.ts"
         },
         {
+          "path": "components/ovio/repository-card/worlds/index.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/repository-card/worlds/index.ts"
+        },
+        {
           "path": "components/ovio/repository-card/worlds/minimal.tsx",
           "type": "registry:ui",
           "target": "components/ovio/repository-card/worlds/minimal.tsx"
@@ -461,6 +873,170 @@
           "path": "components/ovio/repository-card/worlds/retro.tsx",
           "type": "registry:ui",
           "target": "components/ovio/repository-card/worlds/retro.tsx"
+        },
+        {
+          "path": "components/ovio/repository-card/worlds/toy.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/repository-card/worlds/toy.tsx"
+        }
+      ]
+    },
+    {
+      "name": "repository-card-minimal",
+      "type": "registry:ui",
+      "title": "Repository Card — Minimal",
+      "description": "Repository Card in the Minimal world alone, without the other three. Add repository-card for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion",
+        "JanaSundar/ovio/format"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/repository-card/repository-card.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/repository-card/repository-card.tsx"
+        },
+        {
+          "path": "components/ovio/repository-card/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/repository-card/types.ts"
+        },
+        {
+          "path": "components/ovio/repository-card/language.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/repository-card/language.ts"
+        },
+        {
+          "path": "registry/worlds/minimal.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/repository-card/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/repository-card/worlds/minimal.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/repository-card/worlds/minimal.tsx"
+        }
+      ]
+    },
+    {
+      "name": "repository-card-craft",
+      "type": "registry:ui",
+      "title": "Repository Card — Craft",
+      "description": "Repository Card in the Craft world alone, without the other three. Add repository-card for all four.",
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/format"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/repository-card/repository-card.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/repository-card/repository-card.tsx"
+        },
+        {
+          "path": "components/ovio/repository-card/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/repository-card/types.ts"
+        },
+        {
+          "path": "components/ovio/repository-card/language.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/repository-card/language.ts"
+        },
+        {
+          "path": "registry/worlds/craft.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/repository-card/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/repository-card/worlds/craft.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/repository-card/worlds/craft.tsx"
+        }
+      ]
+    },
+    {
+      "name": "repository-card-retro",
+      "type": "registry:ui",
+      "title": "Repository Card — Retro",
+      "description": "Repository Card in the Retro world alone, without the other three. Add repository-card for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion",
+        "JanaSundar/ovio/format"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/repository-card/repository-card.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/repository-card/repository-card.tsx"
+        },
+        {
+          "path": "components/ovio/repository-card/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/repository-card/types.ts"
+        },
+        {
+          "path": "components/ovio/repository-card/language.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/repository-card/language.ts"
+        },
+        {
+          "path": "registry/worlds/retro.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/repository-card/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/repository-card/worlds/retro.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/repository-card/worlds/retro.tsx"
+        }
+      ]
+    },
+    {
+      "name": "repository-card-toy",
+      "type": "registry:ui",
+      "title": "Repository Card — Toy",
+      "description": "Repository Card in the Toy world alone, without the other three. Add repository-card for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion",
+        "JanaSundar/ovio/rolling-number",
+        "JanaSundar/ovio/toy",
+        "JanaSundar/ovio/format"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/repository-card/repository-card.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/repository-card/repository-card.tsx"
+        },
+        {
+          "path": "components/ovio/repository-card/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/repository-card/types.ts"
+        },
+        {
+          "path": "components/ovio/repository-card/language.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/repository-card/language.ts"
+        },
+        {
+          "path": "registry/worlds/toy.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/repository-card/worlds/index.ts"
         },
         {
           "path": "components/ovio/repository-card/worlds/toy.tsx",
@@ -497,6 +1073,11 @@
           "target": "components/ovio/top-contributors/types.ts"
         },
         {
+          "path": "components/ovio/top-contributors/worlds/index.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/top-contributors/worlds/index.ts"
+        },
+        {
           "path": "components/ovio/top-contributors/worlds/minimal.tsx",
           "type": "registry:ui",
           "target": "components/ovio/top-contributors/worlds/minimal.tsx"
@@ -510,6 +1091,158 @@
           "path": "components/ovio/top-contributors/worlds/retro.tsx",
           "type": "registry:ui",
           "target": "components/ovio/top-contributors/worlds/retro.tsx"
+        },
+        {
+          "path": "components/ovio/top-contributors/worlds/toy.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/top-contributors/worlds/toy.tsx"
+        }
+      ]
+    },
+    {
+      "name": "top-contributors-minimal",
+      "type": "registry:ui",
+      "title": "Top Contributors — Minimal",
+      "description": "Top Contributors in the Minimal world alone, without the other three. Add top-contributors for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion",
+        "JanaSundar/ovio/rolling-number",
+        "JanaSundar/ovio/avatar",
+        "JanaSundar/ovio/format"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/top-contributors/top-contributors.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/top-contributors/top-contributors.tsx"
+        },
+        {
+          "path": "components/ovio/top-contributors/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/top-contributors/types.ts"
+        },
+        {
+          "path": "registry/worlds/minimal.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/top-contributors/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/top-contributors/worlds/minimal.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/top-contributors/worlds/minimal.tsx"
+        }
+      ]
+    },
+    {
+      "name": "top-contributors-craft",
+      "type": "registry:ui",
+      "title": "Top Contributors — Craft",
+      "description": "Top Contributors in the Craft world alone, without the other three. Add top-contributors for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion",
+        "JanaSundar/ovio/rolling-number",
+        "JanaSundar/ovio/avatar",
+        "JanaSundar/ovio/format"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/top-contributors/top-contributors.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/top-contributors/top-contributors.tsx"
+        },
+        {
+          "path": "components/ovio/top-contributors/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/top-contributors/types.ts"
+        },
+        {
+          "path": "registry/worlds/craft.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/top-contributors/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/top-contributors/worlds/craft.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/top-contributors/worlds/craft.tsx"
+        }
+      ]
+    },
+    {
+      "name": "top-contributors-retro",
+      "type": "registry:ui",
+      "title": "Top Contributors — Retro",
+      "description": "Top Contributors in the Retro world alone, without the other three. Add top-contributors for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion",
+        "JanaSundar/ovio/avatar",
+        "JanaSundar/ovio/format"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/top-contributors/top-contributors.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/top-contributors/top-contributors.tsx"
+        },
+        {
+          "path": "components/ovio/top-contributors/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/top-contributors/types.ts"
+        },
+        {
+          "path": "registry/worlds/retro.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/top-contributors/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/top-contributors/worlds/retro.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/top-contributors/worlds/retro.tsx"
+        }
+      ]
+    },
+    {
+      "name": "top-contributors-toy",
+      "type": "registry:ui",
+      "title": "Top Contributors — Toy",
+      "description": "Top Contributors in the Toy world alone, without the other three. Add top-contributors for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion",
+        "JanaSundar/ovio/rolling-number",
+        "JanaSundar/ovio/toy",
+        "JanaSundar/ovio/avatar",
+        "JanaSundar/ovio/format"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/top-contributors/top-contributors.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/top-contributors/top-contributors.tsx"
+        },
+        {
+          "path": "components/ovio/top-contributors/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/top-contributors/types.ts"
+        },
+        {
+          "path": "registry/worlds/toy.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/top-contributors/worlds/index.ts"
         },
         {
           "path": "components/ovio/top-contributors/worlds/toy.tsx",
@@ -550,6 +1283,11 @@
           "target": "components/ovio/npm-downloads/chart.ts"
         },
         {
+          "path": "components/ovio/npm-downloads/worlds/index.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/npm-downloads/worlds/index.ts"
+        },
+        {
           "path": "components/ovio/npm-downloads/worlds/minimal.tsx",
           "type": "registry:ui",
           "target": "components/ovio/npm-downloads/worlds/minimal.tsx"
@@ -563,6 +1301,174 @@
           "path": "components/ovio/npm-downloads/worlds/retro.tsx",
           "type": "registry:ui",
           "target": "components/ovio/npm-downloads/worlds/retro.tsx"
+        },
+        {
+          "path": "components/ovio/npm-downloads/worlds/toy.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/npm-downloads/worlds/toy.tsx"
+        }
+      ]
+    },
+    {
+      "name": "npm-downloads-minimal",
+      "type": "registry:ui",
+      "title": "npm Downloads — Minimal",
+      "description": "npm Downloads in the Minimal world alone, without the other three. Add npm-downloads for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion",
+        "JanaSundar/ovio/keys",
+        "JanaSundar/ovio/format"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/npm-downloads/npm-downloads.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/npm-downloads/npm-downloads.tsx"
+        },
+        {
+          "path": "components/ovio/npm-downloads/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/npm-downloads/types.ts"
+        },
+        {
+          "path": "components/ovio/npm-downloads/chart.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/npm-downloads/chart.ts"
+        },
+        {
+          "path": "registry/worlds/minimal.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/npm-downloads/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/npm-downloads/worlds/minimal.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/npm-downloads/worlds/minimal.tsx"
+        }
+      ]
+    },
+    {
+      "name": "npm-downloads-craft",
+      "type": "registry:ui",
+      "title": "npm Downloads — Craft",
+      "description": "npm Downloads in the Craft world alone, without the other three. Add npm-downloads for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion",
+        "JanaSundar/ovio/keys",
+        "JanaSundar/ovio/format"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/npm-downloads/npm-downloads.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/npm-downloads/npm-downloads.tsx"
+        },
+        {
+          "path": "components/ovio/npm-downloads/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/npm-downloads/types.ts"
+        },
+        {
+          "path": "components/ovio/npm-downloads/chart.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/npm-downloads/chart.ts"
+        },
+        {
+          "path": "registry/worlds/craft.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/npm-downloads/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/npm-downloads/worlds/craft.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/npm-downloads/worlds/craft.tsx"
+        }
+      ]
+    },
+    {
+      "name": "npm-downloads-retro",
+      "type": "registry:ui",
+      "title": "npm Downloads — Retro",
+      "description": "npm Downloads in the Retro world alone, without the other three. Add npm-downloads for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion",
+        "JanaSundar/ovio/keys",
+        "JanaSundar/ovio/format"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/npm-downloads/npm-downloads.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/npm-downloads/npm-downloads.tsx"
+        },
+        {
+          "path": "components/ovio/npm-downloads/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/npm-downloads/types.ts"
+        },
+        {
+          "path": "components/ovio/npm-downloads/chart.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/npm-downloads/chart.ts"
+        },
+        {
+          "path": "registry/worlds/retro.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/npm-downloads/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/npm-downloads/worlds/retro.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/npm-downloads/worlds/retro.tsx"
+        }
+      ]
+    },
+    {
+      "name": "npm-downloads-toy",
+      "type": "registry:ui",
+      "title": "npm Downloads — Toy",
+      "description": "npm Downloads in the Toy world alone, without the other three. Add npm-downloads for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion",
+        "JanaSundar/ovio/keys",
+        "JanaSundar/ovio/format"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/npm-downloads/npm-downloads.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/npm-downloads/npm-downloads.tsx"
+        },
+        {
+          "path": "components/ovio/npm-downloads/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/npm-downloads/types.ts"
+        },
+        {
+          "path": "components/ovio/npm-downloads/chart.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/npm-downloads/chart.ts"
+        },
+        {
+          "path": "registry/worlds/toy.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/npm-downloads/worlds/index.ts"
         },
         {
           "path": "components/ovio/npm-downloads/worlds/toy.tsx",
@@ -597,6 +1503,11 @@
           "target": "components/ovio/physical-knob/use-knob.ts"
         },
         {
+          "path": "components/ovio/physical-knob/worlds/index.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/physical-knob/worlds/index.ts"
+        },
+        {
           "path": "components/ovio/physical-knob/worlds/minimal.tsx",
           "type": "registry:ui",
           "target": "components/ovio/physical-knob/worlds/minimal.tsx"
@@ -610,6 +1521,152 @@
           "path": "components/ovio/physical-knob/worlds/retro.tsx",
           "type": "registry:ui",
           "target": "components/ovio/physical-knob/worlds/retro.tsx"
+        },
+        {
+          "path": "components/ovio/physical-knob/worlds/toy.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/physical-knob/worlds/toy.tsx"
+        }
+      ]
+    },
+    {
+      "name": "physical-knob-minimal",
+      "type": "registry:ui",
+      "title": "Physical Knob — Minimal",
+      "description": "Physical Knob in the Minimal world alone, without the other three. Add physical-knob for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion",
+        "JanaSundar/ovio/rolling-number",
+        "JanaSundar/ovio/format"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/physical-knob/physical-knob.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/physical-knob/physical-knob.tsx"
+        },
+        {
+          "path": "components/ovio/physical-knob/use-knob.ts",
+          "type": "registry:hook",
+          "target": "components/ovio/physical-knob/use-knob.ts"
+        },
+        {
+          "path": "registry/worlds/minimal.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/physical-knob/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/physical-knob/worlds/minimal.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/physical-knob/worlds/minimal.tsx"
+        }
+      ]
+    },
+    {
+      "name": "physical-knob-craft",
+      "type": "registry:ui",
+      "title": "Physical Knob — Craft",
+      "description": "Physical Knob in the Craft world alone, without the other three. Add physical-knob for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion",
+        "JanaSundar/ovio/rolling-number",
+        "JanaSundar/ovio/format"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/physical-knob/physical-knob.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/physical-knob/physical-knob.tsx"
+        },
+        {
+          "path": "components/ovio/physical-knob/use-knob.ts",
+          "type": "registry:hook",
+          "target": "components/ovio/physical-knob/use-knob.ts"
+        },
+        {
+          "path": "registry/worlds/craft.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/physical-knob/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/physical-knob/worlds/craft.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/physical-knob/worlds/craft.tsx"
+        }
+      ]
+    },
+    {
+      "name": "physical-knob-retro",
+      "type": "registry:ui",
+      "title": "Physical Knob — Retro",
+      "description": "Physical Knob in the Retro world alone, without the other three. Add physical-knob for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion",
+        "JanaSundar/ovio/rolling-number"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/physical-knob/physical-knob.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/physical-knob/physical-knob.tsx"
+        },
+        {
+          "path": "components/ovio/physical-knob/use-knob.ts",
+          "type": "registry:hook",
+          "target": "components/ovio/physical-knob/use-knob.ts"
+        },
+        {
+          "path": "registry/worlds/retro.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/physical-knob/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/physical-knob/worlds/retro.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/physical-knob/worlds/retro.tsx"
+        }
+      ]
+    },
+    {
+      "name": "physical-knob-toy",
+      "type": "registry:ui",
+      "title": "Physical Knob — Toy",
+      "description": "Physical Knob in the Toy world alone, without the other three. Add physical-knob for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion",
+        "JanaSundar/ovio/rolling-number"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/physical-knob/physical-knob.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/physical-knob/physical-knob.tsx"
+        },
+        {
+          "path": "components/ovio/physical-knob/use-knob.ts",
+          "type": "registry:hook",
+          "target": "components/ovio/physical-knob/use-knob.ts"
+        },
+        {
+          "path": "registry/worlds/toy.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/physical-knob/worlds/index.ts"
         },
         {
           "path": "components/ovio/physical-knob/worlds/toy.tsx",
@@ -646,6 +1703,11 @@
           "target": "components/ovio/bundle-size/types.ts"
         },
         {
+          "path": "components/ovio/bundle-size/worlds/index.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/bundle-size/worlds/index.ts"
+        },
+        {
           "path": "components/ovio/bundle-size/worlds/minimal.tsx",
           "type": "registry:ui",
           "target": "components/ovio/bundle-size/worlds/minimal.tsx"
@@ -659,6 +1721,159 @@
           "path": "components/ovio/bundle-size/worlds/retro.tsx",
           "type": "registry:ui",
           "target": "components/ovio/bundle-size/worlds/retro.tsx"
+        },
+        {
+          "path": "components/ovio/bundle-size/worlds/toy.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/bundle-size/worlds/toy.tsx"
+        }
+      ]
+    },
+    {
+      "name": "bundle-size-minimal",
+      "type": "registry:ui",
+      "title": "Bundle Size — Minimal",
+      "description": "Bundle Size in the Minimal world alone, without the other three. Add bundle-size for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion",
+        "JanaSundar/ovio/rolling-number",
+        "JanaSundar/ovio/keys",
+        "JanaSundar/ovio/format"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/bundle-size/bundle-size.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/bundle-size/bundle-size.tsx"
+        },
+        {
+          "path": "components/ovio/bundle-size/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/bundle-size/types.ts"
+        },
+        {
+          "path": "registry/worlds/minimal.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/bundle-size/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/bundle-size/worlds/minimal.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/bundle-size/worlds/minimal.tsx"
+        }
+      ]
+    },
+    {
+      "name": "bundle-size-craft",
+      "type": "registry:ui",
+      "title": "Bundle Size — Craft",
+      "description": "Bundle Size in the Craft world alone, without the other three. Add bundle-size for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion",
+        "JanaSundar/ovio/rolling-number",
+        "JanaSundar/ovio/keys",
+        "JanaSundar/ovio/format"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/bundle-size/bundle-size.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/bundle-size/bundle-size.tsx"
+        },
+        {
+          "path": "components/ovio/bundle-size/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/bundle-size/types.ts"
+        },
+        {
+          "path": "registry/worlds/craft.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/bundle-size/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/bundle-size/worlds/craft.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/bundle-size/worlds/craft.tsx"
+        }
+      ]
+    },
+    {
+      "name": "bundle-size-retro",
+      "type": "registry:ui",
+      "title": "Bundle Size — Retro",
+      "description": "Bundle Size in the Retro world alone, without the other three. Add bundle-size for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion",
+        "JanaSundar/ovio/rolling-number",
+        "JanaSundar/ovio/keys",
+        "JanaSundar/ovio/format"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/bundle-size/bundle-size.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/bundle-size/bundle-size.tsx"
+        },
+        {
+          "path": "components/ovio/bundle-size/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/bundle-size/types.ts"
+        },
+        {
+          "path": "registry/worlds/retro.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/bundle-size/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/bundle-size/worlds/retro.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/bundle-size/worlds/retro.tsx"
+        }
+      ]
+    },
+    {
+      "name": "bundle-size-toy",
+      "type": "registry:ui",
+      "title": "Bundle Size — Toy",
+      "description": "Bundle Size in the Toy world alone, without the other three. Add bundle-size for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion",
+        "JanaSundar/ovio/rolling-number",
+        "JanaSundar/ovio/toy",
+        "JanaSundar/ovio/keys",
+        "JanaSundar/ovio/format"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/bundle-size/bundle-size.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/bundle-size/bundle-size.tsx"
+        },
+        {
+          "path": "components/ovio/bundle-size/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/bundle-size/types.ts"
+        },
+        {
+          "path": "registry/worlds/toy.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/bundle-size/worlds/index.ts"
         },
         {
           "path": "components/ovio/bundle-size/worlds/toy.tsx",
@@ -698,6 +1913,11 @@
           "target": "components/ovio/liquid-tabs/use-liquid.ts"
         },
         {
+          "path": "components/ovio/liquid-tabs/worlds/index.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/liquid-tabs/worlds/index.ts"
+        },
+        {
           "path": "components/ovio/liquid-tabs/worlds/minimal.tsx",
           "type": "registry:ui",
           "target": "components/ovio/liquid-tabs/worlds/minimal.tsx"
@@ -711,6 +1931,163 @@
           "path": "components/ovio/liquid-tabs/worlds/retro.tsx",
           "type": "registry:ui",
           "target": "components/ovio/liquid-tabs/worlds/retro.tsx"
+        },
+        {
+          "path": "components/ovio/liquid-tabs/worlds/toy.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/liquid-tabs/worlds/toy.tsx"
+        }
+      ]
+    },
+    {
+      "name": "liquid-tabs-minimal",
+      "type": "registry:ui",
+      "title": "Liquid Tabs — Minimal",
+      "description": "Liquid Tabs in the Minimal world alone, without the other three. Add liquid-tabs for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion",
+        "JanaSundar/ovio/keys",
+        "JanaSundar/ovio/goo-filter"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/liquid-tabs/liquid-tabs.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/liquid-tabs/liquid-tabs.tsx"
+        },
+        {
+          "path": "components/ovio/liquid-tabs/parts.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/liquid-tabs/parts.tsx"
+        },
+        {
+          "path": "components/ovio/liquid-tabs/use-liquid.ts",
+          "type": "registry:ui",
+          "target": "components/ovio/liquid-tabs/use-liquid.ts"
+        },
+        {
+          "path": "registry/worlds/minimal.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/liquid-tabs/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/liquid-tabs/worlds/minimal.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/liquid-tabs/worlds/minimal.tsx"
+        }
+      ]
+    },
+    {
+      "name": "liquid-tabs-craft",
+      "type": "registry:ui",
+      "title": "Liquid Tabs — Craft",
+      "description": "Liquid Tabs in the Craft world alone, without the other three. Add liquid-tabs for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion",
+        "JanaSundar/ovio/keys",
+        "JanaSundar/ovio/goo-filter"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/liquid-tabs/liquid-tabs.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/liquid-tabs/liquid-tabs.tsx"
+        },
+        {
+          "path": "components/ovio/liquid-tabs/parts.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/liquid-tabs/parts.tsx"
+        },
+        {
+          "path": "components/ovio/liquid-tabs/use-liquid.ts",
+          "type": "registry:ui",
+          "target": "components/ovio/liquid-tabs/use-liquid.ts"
+        },
+        {
+          "path": "registry/worlds/craft.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/liquid-tabs/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/liquid-tabs/worlds/craft.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/liquid-tabs/worlds/craft.tsx"
+        }
+      ]
+    },
+    {
+      "name": "liquid-tabs-retro",
+      "type": "registry:ui",
+      "title": "Liquid Tabs — Retro",
+      "description": "Liquid Tabs in the Retro world alone, without the other three. Add liquid-tabs for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion",
+        "JanaSundar/ovio/keys",
+        "JanaSundar/ovio/goo-filter"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/liquid-tabs/liquid-tabs.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/liquid-tabs/liquid-tabs.tsx"
+        },
+        {
+          "path": "components/ovio/liquid-tabs/parts.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/liquid-tabs/parts.tsx"
+        },
+        {
+          "path": "components/ovio/liquid-tabs/use-liquid.ts",
+          "type": "registry:ui",
+          "target": "components/ovio/liquid-tabs/use-liquid.ts"
+        },
+        {
+          "path": "registry/worlds/retro.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/liquid-tabs/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/liquid-tabs/worlds/retro.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/liquid-tabs/worlds/retro.tsx"
+        }
+      ]
+    },
+    {
+      "name": "liquid-tabs-toy",
+      "type": "registry:ui",
+      "title": "Liquid Tabs — Toy",
+      "description": "Liquid Tabs in the Toy world alone, without the other three. Add liquid-tabs for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion",
+        "JanaSundar/ovio/keys"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/liquid-tabs/liquid-tabs.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/liquid-tabs/liquid-tabs.tsx"
+        },
+        {
+          "path": "registry/worlds/toy.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/liquid-tabs/worlds/index.ts"
         },
         {
           "path": "components/ovio/liquid-tabs/worlds/toy.tsx",
@@ -745,6 +2122,11 @@
           "target": "components/ovio/changelog/types.ts"
         },
         {
+          "path": "components/ovio/changelog/worlds/index.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/changelog/worlds/index.ts"
+        },
+        {
           "path": "components/ovio/changelog/worlds/minimal.tsx",
           "type": "registry:ui",
           "target": "components/ovio/changelog/worlds/minimal.tsx"
@@ -758,6 +2140,151 @@
           "path": "components/ovio/changelog/worlds/retro.tsx",
           "type": "registry:ui",
           "target": "components/ovio/changelog/worlds/retro.tsx"
+        },
+        {
+          "path": "components/ovio/changelog/worlds/toy.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/changelog/worlds/toy.tsx"
+        }
+      ]
+    },
+    {
+      "name": "changelog-minimal",
+      "type": "registry:ui",
+      "title": "Changelog — Minimal",
+      "description": "Changelog in the Minimal world alone, without the other three. Add changelog for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion",
+        "JanaSundar/ovio/format"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/changelog/changelog.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/changelog/changelog.tsx"
+        },
+        {
+          "path": "components/ovio/changelog/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/changelog/types.ts"
+        },
+        {
+          "path": "registry/worlds/minimal.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/changelog/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/changelog/worlds/minimal.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/changelog/worlds/minimal.tsx"
+        }
+      ]
+    },
+    {
+      "name": "changelog-craft",
+      "type": "registry:ui",
+      "title": "Changelog — Craft",
+      "description": "Changelog in the Craft world alone, without the other three. Add changelog for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion",
+        "JanaSundar/ovio/format"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/changelog/changelog.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/changelog/changelog.tsx"
+        },
+        {
+          "path": "components/ovio/changelog/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/changelog/types.ts"
+        },
+        {
+          "path": "registry/worlds/craft.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/changelog/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/changelog/worlds/craft.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/changelog/worlds/craft.tsx"
+        }
+      ]
+    },
+    {
+      "name": "changelog-retro",
+      "type": "registry:ui",
+      "title": "Changelog — Retro",
+      "description": "Changelog in the Retro world alone, without the other three. Add changelog for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion",
+        "JanaSundar/ovio/format"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/changelog/changelog.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/changelog/changelog.tsx"
+        },
+        {
+          "path": "components/ovio/changelog/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/changelog/types.ts"
+        },
+        {
+          "path": "registry/worlds/retro.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/changelog/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/changelog/worlds/retro.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/changelog/worlds/retro.tsx"
+        }
+      ]
+    },
+    {
+      "name": "changelog-toy",
+      "type": "registry:ui",
+      "title": "Changelog — Toy",
+      "description": "Changelog in the Toy world alone, without the other three. Add changelog for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion",
+        "JanaSundar/ovio/toy",
+        "JanaSundar/ovio/format"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/changelog/changelog.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/changelog/changelog.tsx"
+        },
+        {
+          "path": "components/ovio/changelog/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/changelog/types.ts"
+        },
+        {
+          "path": "registry/worlds/toy.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/changelog/worlds/index.ts"
         },
         {
           "path": "components/ovio/changelog/worlds/toy.tsx",
@@ -820,6 +2347,11 @@
           "target": "components/ovio/event-ticket/parts/ticket.tsx"
         },
         {
+          "path": "components/ovio/event-ticket/worlds/index.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/event-ticket/worlds/index.ts"
+        },
+        {
           "path": "components/ovio/event-ticket/worlds/minimal.tsx",
           "type": "registry:ui",
           "target": "components/ovio/event-ticket/worlds/minimal.tsx"
@@ -833,6 +2365,266 @@
           "path": "components/ovio/event-ticket/worlds/retro.tsx",
           "type": "registry:ui",
           "target": "components/ovio/event-ticket/worlds/retro.tsx"
+        },
+        {
+          "path": "components/ovio/event-ticket/worlds/toy.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/event-ticket/worlds/toy.tsx"
+        }
+      ]
+    },
+    {
+      "name": "event-ticket-minimal",
+      "type": "registry:ui",
+      "title": "Event Ticket — Minimal",
+      "description": "Event Ticket in the Minimal world alone, without the other three. Add event-ticket for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion",
+        "JanaSundar/ovio/format",
+        "JanaSundar/ovio/toy",
+        "JanaSundar/ovio/qr-code",
+        "JanaSundar/ovio/auto-height",
+        "JanaSundar/ovio/goo-filter"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/event-ticket/event-ticket.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/event-ticket/event-ticket.tsx"
+        },
+        {
+          "path": "components/ovio/event-ticket/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/event-ticket/types.ts"
+        },
+        {
+          "path": "components/ovio/event-ticket/seed.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/event-ticket/seed.ts"
+        },
+        {
+          "path": "components/ovio/event-ticket/parts/art.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/event-ticket/parts/art.tsx"
+        },
+        {
+          "path": "components/ovio/event-ticket/parts/barcode.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/event-ticket/parts/barcode.tsx"
+        },
+        {
+          "path": "components/ovio/event-ticket/parts/book-button.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/event-ticket/parts/book-button.tsx"
+        },
+        {
+          "path": "components/ovio/event-ticket/parts/ticket.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/event-ticket/parts/ticket.tsx"
+        },
+        {
+          "path": "registry/worlds/minimal.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/event-ticket/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/event-ticket/worlds/minimal.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/event-ticket/worlds/minimal.tsx"
+        }
+      ]
+    },
+    {
+      "name": "event-ticket-craft",
+      "type": "registry:ui",
+      "title": "Event Ticket — Craft",
+      "description": "Event Ticket in the Craft world alone, without the other three. Add event-ticket for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion",
+        "JanaSundar/ovio/format",
+        "JanaSundar/ovio/toy",
+        "JanaSundar/ovio/qr-code",
+        "JanaSundar/ovio/auto-height",
+        "JanaSundar/ovio/goo-filter"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/event-ticket/event-ticket.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/event-ticket/event-ticket.tsx"
+        },
+        {
+          "path": "components/ovio/event-ticket/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/event-ticket/types.ts"
+        },
+        {
+          "path": "components/ovio/event-ticket/seed.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/event-ticket/seed.ts"
+        },
+        {
+          "path": "components/ovio/event-ticket/parts/art.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/event-ticket/parts/art.tsx"
+        },
+        {
+          "path": "components/ovio/event-ticket/parts/barcode.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/event-ticket/parts/barcode.tsx"
+        },
+        {
+          "path": "components/ovio/event-ticket/parts/book-button.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/event-ticket/parts/book-button.tsx"
+        },
+        {
+          "path": "components/ovio/event-ticket/parts/ticket.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/event-ticket/parts/ticket.tsx"
+        },
+        {
+          "path": "registry/worlds/craft.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/event-ticket/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/event-ticket/worlds/craft.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/event-ticket/worlds/craft.tsx"
+        }
+      ]
+    },
+    {
+      "name": "event-ticket-retro",
+      "type": "registry:ui",
+      "title": "Event Ticket — Retro",
+      "description": "Event Ticket in the Retro world alone, without the other three. Add event-ticket for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion",
+        "JanaSundar/ovio/format",
+        "JanaSundar/ovio/toy",
+        "JanaSundar/ovio/qr-code",
+        "JanaSundar/ovio/auto-height",
+        "JanaSundar/ovio/goo-filter"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/event-ticket/event-ticket.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/event-ticket/event-ticket.tsx"
+        },
+        {
+          "path": "components/ovio/event-ticket/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/event-ticket/types.ts"
+        },
+        {
+          "path": "components/ovio/event-ticket/seed.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/event-ticket/seed.ts"
+        },
+        {
+          "path": "components/ovio/event-ticket/parts/art.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/event-ticket/parts/art.tsx"
+        },
+        {
+          "path": "components/ovio/event-ticket/parts/barcode.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/event-ticket/parts/barcode.tsx"
+        },
+        {
+          "path": "components/ovio/event-ticket/parts/book-button.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/event-ticket/parts/book-button.tsx"
+        },
+        {
+          "path": "components/ovio/event-ticket/parts/ticket.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/event-ticket/parts/ticket.tsx"
+        },
+        {
+          "path": "registry/worlds/retro.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/event-ticket/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/event-ticket/worlds/retro.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/event-ticket/worlds/retro.tsx"
+        }
+      ]
+    },
+    {
+      "name": "event-ticket-toy",
+      "type": "registry:ui",
+      "title": "Event Ticket — Toy",
+      "description": "Event Ticket in the Toy world alone, without the other three. Add event-ticket for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion",
+        "JanaSundar/ovio/format",
+        "JanaSundar/ovio/toy",
+        "JanaSundar/ovio/qr-code",
+        "JanaSundar/ovio/auto-height",
+        "JanaSundar/ovio/goo-filter"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/event-ticket/event-ticket.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/event-ticket/event-ticket.tsx"
+        },
+        {
+          "path": "components/ovio/event-ticket/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/event-ticket/types.ts"
+        },
+        {
+          "path": "components/ovio/event-ticket/seed.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/event-ticket/seed.ts"
+        },
+        {
+          "path": "components/ovio/event-ticket/parts/art.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/event-ticket/parts/art.tsx"
+        },
+        {
+          "path": "components/ovio/event-ticket/parts/barcode.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/event-ticket/parts/barcode.tsx"
+        },
+        {
+          "path": "components/ovio/event-ticket/parts/book-button.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/event-ticket/parts/book-button.tsx"
+        },
+        {
+          "path": "components/ovio/event-ticket/parts/ticket.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/event-ticket/parts/ticket.tsx"
+        },
+        {
+          "path": "registry/worlds/toy.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/event-ticket/worlds/index.ts"
         },
         {
           "path": "components/ovio/event-ticket/worlds/toy.tsx",
@@ -871,6 +2663,11 @@
           "target": "components/ovio/sponsor-wall/parts.tsx"
         },
         {
+          "path": "components/ovio/sponsor-wall/worlds/index.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/sponsor-wall/worlds/index.ts"
+        },
+        {
           "path": "components/ovio/sponsor-wall/worlds/minimal.tsx",
           "type": "registry:ui",
           "target": "components/ovio/sponsor-wall/worlds/minimal.tsx"
@@ -884,6 +2681,167 @@
           "path": "components/ovio/sponsor-wall/worlds/retro.tsx",
           "type": "registry:ui",
           "target": "components/ovio/sponsor-wall/worlds/retro.tsx"
+        },
+        {
+          "path": "components/ovio/sponsor-wall/worlds/toy.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/sponsor-wall/worlds/toy.tsx"
+        }
+      ]
+    },
+    {
+      "name": "sponsor-wall-minimal",
+      "type": "registry:ui",
+      "title": "Sponsor Wall — Minimal",
+      "description": "Sponsor Wall in the Minimal world alone, without the other three. Add sponsor-wall for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/sponsor-wall/sponsor-wall.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/sponsor-wall/sponsor-wall.tsx"
+        },
+        {
+          "path": "components/ovio/sponsor-wall/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/sponsor-wall/types.ts"
+        },
+        {
+          "path": "components/ovio/sponsor-wall/parts.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/sponsor-wall/parts.tsx"
+        },
+        {
+          "path": "registry/worlds/minimal.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/sponsor-wall/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/sponsor-wall/worlds/minimal.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/sponsor-wall/worlds/minimal.tsx"
+        }
+      ]
+    },
+    {
+      "name": "sponsor-wall-craft",
+      "type": "registry:ui",
+      "title": "Sponsor Wall — Craft",
+      "description": "Sponsor Wall in the Craft world alone, without the other three. Add sponsor-wall for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/sponsor-wall/sponsor-wall.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/sponsor-wall/sponsor-wall.tsx"
+        },
+        {
+          "path": "components/ovio/sponsor-wall/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/sponsor-wall/types.ts"
+        },
+        {
+          "path": "components/ovio/sponsor-wall/parts.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/sponsor-wall/parts.tsx"
+        },
+        {
+          "path": "registry/worlds/craft.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/sponsor-wall/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/sponsor-wall/worlds/craft.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/sponsor-wall/worlds/craft.tsx"
+        }
+      ]
+    },
+    {
+      "name": "sponsor-wall-retro",
+      "type": "registry:ui",
+      "title": "Sponsor Wall — Retro",
+      "description": "Sponsor Wall in the Retro world alone, without the other three. Add sponsor-wall for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/sponsor-wall/sponsor-wall.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/sponsor-wall/sponsor-wall.tsx"
+        },
+        {
+          "path": "components/ovio/sponsor-wall/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/sponsor-wall/types.ts"
+        },
+        {
+          "path": "components/ovio/sponsor-wall/parts.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/sponsor-wall/parts.tsx"
+        },
+        {
+          "path": "registry/worlds/retro.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/sponsor-wall/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/sponsor-wall/worlds/retro.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/sponsor-wall/worlds/retro.tsx"
+        }
+      ]
+    },
+    {
+      "name": "sponsor-wall-toy",
+      "type": "registry:ui",
+      "title": "Sponsor Wall — Toy",
+      "description": "Sponsor Wall in the Toy world alone, without the other three. Add sponsor-wall for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion",
+        "JanaSundar/ovio/toy"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/sponsor-wall/sponsor-wall.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/sponsor-wall/sponsor-wall.tsx"
+        },
+        {
+          "path": "components/ovio/sponsor-wall/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/sponsor-wall/types.ts"
+        },
+        {
+          "path": "components/ovio/sponsor-wall/parts.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/sponsor-wall/parts.tsx"
+        },
+        {
+          "path": "registry/worlds/toy.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/sponsor-wall/worlds/index.ts"
         },
         {
           "path": "components/ovio/sponsor-wall/worlds/toy.tsx",
@@ -925,6 +2883,11 @@
           "target": "components/ovio/developer-id-card/card.ts"
         },
         {
+          "path": "components/ovio/developer-id-card/worlds/index.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/developer-id-card/worlds/index.ts"
+        },
+        {
           "path": "components/ovio/developer-id-card/worlds/minimal.tsx",
           "type": "registry:ui",
           "target": "components/ovio/developer-id-card/worlds/minimal.tsx"
@@ -938,6 +2901,173 @@
           "path": "components/ovio/developer-id-card/worlds/retro.tsx",
           "type": "registry:ui",
           "target": "components/ovio/developer-id-card/worlds/retro.tsx"
+        },
+        {
+          "path": "components/ovio/developer-id-card/worlds/toy.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/developer-id-card/worlds/toy.tsx"
+        }
+      ]
+    },
+    {
+      "name": "developer-id-card-minimal",
+      "type": "registry:ui",
+      "title": "Developer ID Card — Minimal",
+      "description": "Developer ID Card in the Minimal world alone, without the other three. Add developer-id-card for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion",
+        "JanaSundar/ovio/qr-code",
+        "JanaSundar/ovio/avatar"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/developer-id-card/developer-id-card.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/developer-id-card/developer-id-card.tsx"
+        },
+        {
+          "path": "components/ovio/developer-id-card/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/developer-id-card/types.ts"
+        },
+        {
+          "path": "components/ovio/developer-id-card/card.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/developer-id-card/card.ts"
+        },
+        {
+          "path": "registry/worlds/minimal.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/developer-id-card/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/developer-id-card/worlds/minimal.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/developer-id-card/worlds/minimal.tsx"
+        }
+      ]
+    },
+    {
+      "name": "developer-id-card-craft",
+      "type": "registry:ui",
+      "title": "Developer ID Card — Craft",
+      "description": "Developer ID Card in the Craft world alone, without the other three. Add developer-id-card for all four.",
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/qr-code",
+        "JanaSundar/ovio/avatar"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/developer-id-card/developer-id-card.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/developer-id-card/developer-id-card.tsx"
+        },
+        {
+          "path": "components/ovio/developer-id-card/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/developer-id-card/types.ts"
+        },
+        {
+          "path": "components/ovio/developer-id-card/card.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/developer-id-card/card.ts"
+        },
+        {
+          "path": "registry/worlds/craft.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/developer-id-card/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/developer-id-card/worlds/craft.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/developer-id-card/worlds/craft.tsx"
+        }
+      ]
+    },
+    {
+      "name": "developer-id-card-retro",
+      "type": "registry:ui",
+      "title": "Developer ID Card — Retro",
+      "description": "Developer ID Card in the Retro world alone, without the other three. Add developer-id-card for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion",
+        "JanaSundar/ovio/qr-code",
+        "JanaSundar/ovio/avatar",
+        "JanaSundar/ovio/format"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/developer-id-card/developer-id-card.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/developer-id-card/developer-id-card.tsx"
+        },
+        {
+          "path": "components/ovio/developer-id-card/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/developer-id-card/types.ts"
+        },
+        {
+          "path": "components/ovio/developer-id-card/card.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/developer-id-card/card.ts"
+        },
+        {
+          "path": "registry/worlds/retro.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/developer-id-card/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/developer-id-card/worlds/retro.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/developer-id-card/worlds/retro.tsx"
+        }
+      ]
+    },
+    {
+      "name": "developer-id-card-toy",
+      "type": "registry:ui",
+      "title": "Developer ID Card — Toy",
+      "description": "Developer ID Card in the Toy world alone, without the other three. Add developer-id-card for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion",
+        "JanaSundar/ovio/qr-code",
+        "JanaSundar/ovio/avatar"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/developer-id-card/developer-id-card.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/developer-id-card/developer-id-card.tsx"
+        },
+        {
+          "path": "components/ovio/developer-id-card/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/developer-id-card/types.ts"
+        },
+        {
+          "path": "components/ovio/developer-id-card/card.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/developer-id-card/card.ts"
+        },
+        {
+          "path": "registry/worlds/toy.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/developer-id-card/worlds/index.ts"
         },
         {
           "path": "components/ovio/developer-id-card/worlds/toy.tsx",
@@ -984,6 +3114,11 @@
           "target": "components/ovio/git-branch-visualizer/parts/readout.tsx"
         },
         {
+          "path": "components/ovio/git-branch-visualizer/worlds/index.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/git-branch-visualizer/worlds/index.ts"
+        },
+        {
           "path": "components/ovio/git-branch-visualizer/worlds/minimal.tsx",
           "type": "registry:ui",
           "target": "components/ovio/git-branch-visualizer/worlds/minimal.tsx"
@@ -997,6 +3132,199 @@
           "path": "components/ovio/git-branch-visualizer/worlds/retro.tsx",
           "type": "registry:ui",
           "target": "components/ovio/git-branch-visualizer/worlds/retro.tsx"
+        },
+        {
+          "path": "components/ovio/git-branch-visualizer/worlds/toy.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/git-branch-visualizer/worlds/toy.tsx"
+        }
+      ]
+    },
+    {
+      "name": "git-branch-visualizer-minimal",
+      "type": "registry:ui",
+      "title": "Git Branch Visualizer — Minimal",
+      "description": "Git Branch Visualizer in the Minimal world alone, without the other three. Add git-branch-visualizer for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion",
+        "JanaSundar/ovio/keys",
+        "JanaSundar/ovio/format",
+        "JanaSundar/ovio/auto-height"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/git-branch-visualizer/git-branch-visualizer.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/git-branch-visualizer/git-branch-visualizer.tsx"
+        },
+        {
+          "path": "components/ovio/git-branch-visualizer/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/git-branch-visualizer/types.ts"
+        },
+        {
+          "path": "components/ovio/git-branch-visualizer/parts/graph.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/git-branch-visualizer/parts/graph.tsx"
+        },
+        {
+          "path": "components/ovio/git-branch-visualizer/parts/readout.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/git-branch-visualizer/parts/readout.tsx"
+        },
+        {
+          "path": "registry/worlds/minimal.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/git-branch-visualizer/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/git-branch-visualizer/worlds/minimal.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/git-branch-visualizer/worlds/minimal.tsx"
+        }
+      ]
+    },
+    {
+      "name": "git-branch-visualizer-craft",
+      "type": "registry:ui",
+      "title": "Git Branch Visualizer — Craft",
+      "description": "Git Branch Visualizer in the Craft world alone, without the other three. Add git-branch-visualizer for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion",
+        "JanaSundar/ovio/keys",
+        "JanaSundar/ovio/format",
+        "JanaSundar/ovio/auto-height"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/git-branch-visualizer/git-branch-visualizer.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/git-branch-visualizer/git-branch-visualizer.tsx"
+        },
+        {
+          "path": "components/ovio/git-branch-visualizer/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/git-branch-visualizer/types.ts"
+        },
+        {
+          "path": "components/ovio/git-branch-visualizer/parts/graph.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/git-branch-visualizer/parts/graph.tsx"
+        },
+        {
+          "path": "components/ovio/git-branch-visualizer/parts/readout.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/git-branch-visualizer/parts/readout.tsx"
+        },
+        {
+          "path": "registry/worlds/craft.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/git-branch-visualizer/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/git-branch-visualizer/worlds/craft.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/git-branch-visualizer/worlds/craft.tsx"
+        }
+      ]
+    },
+    {
+      "name": "git-branch-visualizer-retro",
+      "type": "registry:ui",
+      "title": "Git Branch Visualizer — Retro",
+      "description": "Git Branch Visualizer in the Retro world alone, without the other three. Add git-branch-visualizer for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion",
+        "JanaSundar/ovio/keys",
+        "JanaSundar/ovio/format",
+        "JanaSundar/ovio/auto-height"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/git-branch-visualizer/git-branch-visualizer.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/git-branch-visualizer/git-branch-visualizer.tsx"
+        },
+        {
+          "path": "components/ovio/git-branch-visualizer/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/git-branch-visualizer/types.ts"
+        },
+        {
+          "path": "components/ovio/git-branch-visualizer/parts/graph.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/git-branch-visualizer/parts/graph.tsx"
+        },
+        {
+          "path": "components/ovio/git-branch-visualizer/parts/readout.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/git-branch-visualizer/parts/readout.tsx"
+        },
+        {
+          "path": "registry/worlds/retro.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/git-branch-visualizer/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/git-branch-visualizer/worlds/retro.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/git-branch-visualizer/worlds/retro.tsx"
+        }
+      ]
+    },
+    {
+      "name": "git-branch-visualizer-toy",
+      "type": "registry:ui",
+      "title": "Git Branch Visualizer — Toy",
+      "description": "Git Branch Visualizer in the Toy world alone, without the other three. Add git-branch-visualizer for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion",
+        "JanaSundar/ovio/keys",
+        "JanaSundar/ovio/format",
+        "JanaSundar/ovio/toy",
+        "JanaSundar/ovio/auto-height"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/git-branch-visualizer/git-branch-visualizer.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/git-branch-visualizer/git-branch-visualizer.tsx"
+        },
+        {
+          "path": "components/ovio/git-branch-visualizer/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/git-branch-visualizer/types.ts"
+        },
+        {
+          "path": "components/ovio/git-branch-visualizer/parts/graph.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/git-branch-visualizer/parts/graph.tsx"
+        },
+        {
+          "path": "components/ovio/git-branch-visualizer/parts/readout.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/git-branch-visualizer/parts/readout.tsx"
+        },
+        {
+          "path": "registry/worlds/toy.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/git-branch-visualizer/worlds/index.ts"
         },
         {
           "path": "components/ovio/git-branch-visualizer/worlds/toy.tsx",
@@ -1037,6 +3365,11 @@
           "target": "components/ovio/now-playing/parts.tsx"
         },
         {
+          "path": "components/ovio/now-playing/worlds/index.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/now-playing/worlds/index.ts"
+        },
+        {
           "path": "components/ovio/now-playing/worlds/minimal.tsx",
           "type": "registry:ui",
           "target": "components/ovio/now-playing/worlds/minimal.tsx"
@@ -1050,6 +3383,172 @@
           "path": "components/ovio/now-playing/worlds/retro.tsx",
           "type": "registry:ui",
           "target": "components/ovio/now-playing/worlds/retro.tsx"
+        },
+        {
+          "path": "components/ovio/now-playing/worlds/toy.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/now-playing/worlds/toy.tsx"
+        }
+      ]
+    },
+    {
+      "name": "now-playing-minimal",
+      "type": "registry:ui",
+      "title": "Now Playing — Minimal",
+      "description": "Now Playing in the Minimal world alone, without the other three. Add now-playing for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion",
+        "JanaSundar/ovio/keys"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/now-playing/now-playing.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/now-playing/now-playing.tsx"
+        },
+        {
+          "path": "components/ovio/now-playing/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/now-playing/types.ts"
+        },
+        {
+          "path": "components/ovio/now-playing/parts.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/now-playing/parts.tsx"
+        },
+        {
+          "path": "registry/worlds/minimal.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/now-playing/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/now-playing/worlds/minimal.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/now-playing/worlds/minimal.tsx"
+        }
+      ]
+    },
+    {
+      "name": "now-playing-craft",
+      "type": "registry:ui",
+      "title": "Now Playing — Craft",
+      "description": "Now Playing in the Craft world alone, without the other three. Add now-playing for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion",
+        "JanaSundar/ovio/keys"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/now-playing/now-playing.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/now-playing/now-playing.tsx"
+        },
+        {
+          "path": "components/ovio/now-playing/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/now-playing/types.ts"
+        },
+        {
+          "path": "components/ovio/now-playing/parts.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/now-playing/parts.tsx"
+        },
+        {
+          "path": "registry/worlds/craft.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/now-playing/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/now-playing/worlds/craft.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/now-playing/worlds/craft.tsx"
+        }
+      ]
+    },
+    {
+      "name": "now-playing-retro",
+      "type": "registry:ui",
+      "title": "Now Playing — Retro",
+      "description": "Now Playing in the Retro world alone, without the other three. Add now-playing for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion",
+        "JanaSundar/ovio/keys"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/now-playing/now-playing.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/now-playing/now-playing.tsx"
+        },
+        {
+          "path": "components/ovio/now-playing/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/now-playing/types.ts"
+        },
+        {
+          "path": "components/ovio/now-playing/parts.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/now-playing/parts.tsx"
+        },
+        {
+          "path": "registry/worlds/retro.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/now-playing/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/now-playing/worlds/retro.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/now-playing/worlds/retro.tsx"
+        }
+      ]
+    },
+    {
+      "name": "now-playing-toy",
+      "type": "registry:ui",
+      "title": "Now Playing — Toy",
+      "description": "Now Playing in the Toy world alone, without the other three. Add now-playing for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion",
+        "JanaSundar/ovio/keys",
+        "JanaSundar/ovio/rolling-number",
+        "JanaSundar/ovio/toy"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/now-playing/now-playing.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/now-playing/now-playing.tsx"
+        },
+        {
+          "path": "components/ovio/now-playing/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/now-playing/types.ts"
+        },
+        {
+          "path": "components/ovio/now-playing/parts.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/now-playing/parts.tsx"
+        },
+        {
+          "path": "registry/worlds/toy.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/now-playing/worlds/index.ts"
         },
         {
           "path": "components/ovio/now-playing/worlds/toy.tsx",
@@ -1081,6 +3580,11 @@
           "target": "components/ovio/toast/types.ts"
         },
         {
+          "path": "components/ovio/toast/worlds/index.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/toast/worlds/index.ts"
+        },
+        {
           "path": "components/ovio/toast/worlds/minimal.tsx",
           "type": "registry:ui",
           "target": "components/ovio/toast/worlds/minimal.tsx"
@@ -1094,6 +3598,130 @@
           "path": "components/ovio/toast/worlds/retro.tsx",
           "type": "registry:ui",
           "target": "components/ovio/toast/worlds/retro.tsx"
+        },
+        {
+          "path": "components/ovio/toast/worlds/toy.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/toast/worlds/toy.tsx"
+        }
+      ]
+    },
+    {
+      "name": "toast-minimal",
+      "type": "registry:ui",
+      "title": "Toast — Minimal",
+      "description": "Toast in the Minimal world alone, without the other three. Add toast for all four.",
+      "dependencies": ["sonner"],
+      "registryDependencies": ["JanaSundar/ovio/theme", "JanaSundar/ovio/world"],
+      "files": [
+        {
+          "path": "components/ovio/toast/toast.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/toast/toast.tsx"
+        },
+        {
+          "path": "components/ovio/toast/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/toast/types.ts"
+        },
+        {
+          "path": "registry/worlds/minimal.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/toast/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/toast/worlds/minimal.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/toast/worlds/minimal.tsx"
+        }
+      ]
+    },
+    {
+      "name": "toast-craft",
+      "type": "registry:ui",
+      "title": "Toast — Craft",
+      "description": "Toast in the Craft world alone, without the other three. Add toast for all four.",
+      "dependencies": ["sonner"],
+      "registryDependencies": ["JanaSundar/ovio/theme", "JanaSundar/ovio/world"],
+      "files": [
+        {
+          "path": "components/ovio/toast/toast.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/toast/toast.tsx"
+        },
+        {
+          "path": "components/ovio/toast/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/toast/types.ts"
+        },
+        {
+          "path": "registry/worlds/craft.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/toast/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/toast/worlds/craft.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/toast/worlds/craft.tsx"
+        }
+      ]
+    },
+    {
+      "name": "toast-retro",
+      "type": "registry:ui",
+      "title": "Toast — Retro",
+      "description": "Toast in the Retro world alone, without the other three. Add toast for all four.",
+      "dependencies": ["sonner"],
+      "registryDependencies": ["JanaSundar/ovio/theme", "JanaSundar/ovio/world"],
+      "files": [
+        {
+          "path": "components/ovio/toast/toast.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/toast/toast.tsx"
+        },
+        {
+          "path": "components/ovio/toast/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/toast/types.ts"
+        },
+        {
+          "path": "registry/worlds/retro.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/toast/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/toast/worlds/retro.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/toast/worlds/retro.tsx"
+        }
+      ]
+    },
+    {
+      "name": "toast-toy",
+      "type": "registry:ui",
+      "title": "Toast — Toy",
+      "description": "Toast in the Toy world alone, without the other three. Add toast for all four.",
+      "dependencies": ["sonner"],
+      "registryDependencies": [
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/toy"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/toast/toast.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/toast/toast.tsx"
+        },
+        {
+          "path": "components/ovio/toast/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/toast/types.ts"
+        },
+        {
+          "path": "registry/worlds/toy.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/toast/worlds/index.ts"
         },
         {
           "path": "components/ovio/toast/worlds/toy.tsx",
@@ -1153,6 +3781,11 @@
           "target": "components/ovio/letter/parts.tsx"
         },
         {
+          "path": "components/ovio/letter/worlds/index.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/letter/worlds/index.ts"
+        },
+        {
           "path": "components/ovio/letter/worlds/minimal.tsx",
           "type": "registry:ui",
           "target": "components/ovio/letter/worlds/minimal.tsx"
@@ -1166,6 +3799,221 @@
           "path": "components/ovio/letter/worlds/retro.tsx",
           "type": "registry:ui",
           "target": "components/ovio/letter/worlds/retro.tsx"
+        },
+        {
+          "path": "components/ovio/letter/worlds/toy.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/letter/worlds/toy.tsx"
+        }
+      ]
+    },
+    {
+      "name": "letter-minimal",
+      "type": "registry:ui",
+      "title": "Letter — Minimal",
+      "description": "Letter in the Minimal world alone, without the other three. Add letter for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion",
+        "JanaSundar/ovio/format"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/letter/letter.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/letter/letter.tsx"
+        },
+        {
+          "path": "components/ovio/letter/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/letter/types.ts"
+        },
+        {
+          "path": "components/ovio/letter/send.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/letter/send.ts"
+        },
+        {
+          "path": "components/ovio/letter/plane.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/letter/plane.ts"
+        },
+        {
+          "path": "components/ovio/letter/use-send.ts",
+          "type": "registry:hook",
+          "target": "components/ovio/letter/use-send.ts"
+        },
+        {
+          "path": "components/ovio/letter/parts.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/letter/parts.tsx"
+        },
+        {
+          "path": "registry/worlds/minimal.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/letter/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/letter/worlds/minimal.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/letter/worlds/minimal.tsx"
+        }
+      ]
+    },
+    {
+      "name": "letter-craft",
+      "type": "registry:ui",
+      "title": "Letter — Craft",
+      "description": "Letter in the Craft world alone, without the other three. Add letter for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion",
+        "JanaSundar/ovio/format"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/letter/letter.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/letter/letter.tsx"
+        },
+        {
+          "path": "components/ovio/letter/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/letter/types.ts"
+        },
+        {
+          "path": "components/ovio/letter/send.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/letter/send.ts"
+        },
+        {
+          "path": "components/ovio/letter/use-send.ts",
+          "type": "registry:hook",
+          "target": "components/ovio/letter/use-send.ts"
+        },
+        {
+          "path": "components/ovio/letter/parts.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/letter/parts.tsx"
+        },
+        {
+          "path": "registry/worlds/craft.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/letter/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/letter/worlds/craft.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/letter/worlds/craft.tsx"
+        }
+      ]
+    },
+    {
+      "name": "letter-retro",
+      "type": "registry:ui",
+      "title": "Letter — Retro",
+      "description": "Letter in the Retro world alone, without the other three. Add letter for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion",
+        "JanaSundar/ovio/format"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/letter/letter.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/letter/letter.tsx"
+        },
+        {
+          "path": "components/ovio/letter/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/letter/types.ts"
+        },
+        {
+          "path": "components/ovio/letter/morse.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/letter/morse.ts"
+        },
+        {
+          "path": "components/ovio/letter/send.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/letter/send.ts"
+        },
+        {
+          "path": "components/ovio/letter/use-send.ts",
+          "type": "registry:hook",
+          "target": "components/ovio/letter/use-send.ts"
+        },
+        {
+          "path": "components/ovio/letter/parts.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/letter/parts.tsx"
+        },
+        {
+          "path": "registry/worlds/retro.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/letter/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/letter/worlds/retro.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/letter/worlds/retro.tsx"
+        }
+      ]
+    },
+    {
+      "name": "letter-toy",
+      "type": "registry:ui",
+      "title": "Letter — Toy",
+      "description": "Letter in the Toy world alone, without the other three. Add letter for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion",
+        "JanaSundar/ovio/format",
+        "JanaSundar/ovio/toy"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/letter/letter.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/letter/letter.tsx"
+        },
+        {
+          "path": "components/ovio/letter/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/letter/types.ts"
+        },
+        {
+          "path": "components/ovio/letter/send.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/letter/send.ts"
+        },
+        {
+          "path": "components/ovio/letter/use-send.ts",
+          "type": "registry:hook",
+          "target": "components/ovio/letter/use-send.ts"
+        },
+        {
+          "path": "components/ovio/letter/parts.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/letter/parts.tsx"
+        },
+        {
+          "path": "registry/worlds/toy.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/letter/worlds/index.ts"
         },
         {
           "path": "components/ovio/letter/worlds/toy.tsx",

@@ -1,20 +1,18 @@
 "use client";
 
 import { type ComponentType, type FormEvent, useState } from "react";
-import { useWorld, type World } from "@/components/shared/world-provider";
+import { useWorld } from "@/components/shared/world-provider";
+import { everyWorld, type InstalledWorld } from "@/lib/world";
 import { formatDate, PAD3 } from "@/lib/format";
 import { isEmail } from "./send";
 import type { LetterContent, LetterStatus } from "./types";
-import { MinimalLetter } from "./worlds/minimal";
-import { CraftLetter } from "./worlds/craft";
-import { RetroLetter } from "./worlds/retro";
-import { ToyLetter } from "./worlds/toy";
+import * as worlds from "./worlds";
 
 export type { LetterContent, LetterStatus } from "./types";
 
 export type LetterProps = {
   letter: LetterContent;
-  variant?: World;
+  variant?: InstalledWorld<typeof worlds>;
   /** Readers before this one, printed under the P.S. One is added when the letter is sent. */
   subscribers?: number;
   /** Called with the email from the P.S.; the letter goes out once it resolves, and a rejection shows its message. */
@@ -49,12 +47,8 @@ export type LetterWorldProps = {
   className?: string;
 };
 
-const VIEWS = {
-  minimal: MinimalLetter,
-  craft: CraftLetter,
-  retro: RetroLetter,
-  toy: ToyLetter,
-} satisfies Record<World, ComponentType<LetterWorldProps>>;
+/** The installed worlds; a single-world install draws its one world for any provider world. */
+const VIEWS = everyWorld<ComponentType<LetterWorldProps>>(worlds);
 
 const ISO_DAY = /^\d{4}-\d{2}-\d{2}/;
 

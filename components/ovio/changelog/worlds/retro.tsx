@@ -63,7 +63,7 @@ function schedule(releases: ChangelogEntry[]) {
  * Retro: `git log` in a phosphor terminal. The command types out a character at a time,
  * then each release prints in hard steps, its notes one frame after another, and the cursor blinks.
  */
-export function RetroChangelog({ releases, className }: ChangelogWorldProps) {
+export default function RetroChangelog({ releases, className }: ChangelogWorldProps) {
   const reduced = useReducedMotionSafe();
   const plan = schedule(releases);
   // Under reduced motion every line is simply there.

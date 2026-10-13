@@ -34,7 +34,7 @@ const FLIP: Transition = {
  * Craft: a squared-up pile of ruled index cards, one per release. Tap the pile and the front card
  * lifts off, turns, and slides in at the back; the rest shuffle forward with a paper overshoot.
  */
-export function CraftChangelog({ releases, top, next, className }: ChangelogWorldProps) {
+export default function CraftChangelog({ releases, top, next, className }: ChangelogWorldProps) {
   const settle = useOvioTransition(motionTokens.craft.slow);
   const flipT = useOvioTransition(FLIP);
   // Cards are dealt in one after another on mount; flips after that move together.

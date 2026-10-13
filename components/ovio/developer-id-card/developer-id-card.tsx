@@ -1,18 +1,16 @@
 "use client";
 
 import type { ComponentType } from "react";
-import { useWorld, type World } from "@/components/shared/world-provider";
+import { useWorld } from "@/components/shared/world-provider";
+import { everyWorld, type InstalledWorld } from "@/lib/world";
 import { readIdCard } from "./card";
 import type { Developer } from "./types";
-import { MinimalDeveloperIdCard } from "./worlds/minimal";
-import { CraftDeveloperIdCard } from "./worlds/craft";
-import { RetroDeveloperIdCard } from "./worlds/retro";
-import { ToyDeveloperIdCard } from "./worlds/toy";
+import * as worlds from "./worlds";
 
 export type { Developer } from "./types";
 
 export type DeveloperIdCardProps = Developer & {
-  variant?: World;
+  variant?: InstalledWorld<typeof worlds>;
   /** What the QR code opens. Defaults to the GitHub profile. */
   url?: string;
   className?: string;
@@ -39,12 +37,8 @@ export type DeveloperIdCardWorldProps = {
   className?: string;
 };
 
-const VIEWS = {
-  minimal: MinimalDeveloperIdCard,
-  craft: CraftDeveloperIdCard,
-  retro: RetroDeveloperIdCard,
-  toy: ToyDeveloperIdCard,
-} satisfies Record<World, ComponentType<DeveloperIdCardWorldProps>>;
+/** The installed worlds; a single-world install draws its one world for any provider world. */
+const VIEWS = everyWorld<ComponentType<DeveloperIdCardWorldProps>>(worlds);
 
 export function DeveloperIdCard({
   name,

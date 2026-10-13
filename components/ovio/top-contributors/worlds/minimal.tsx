@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 import { PERIOD_LABEL, PERIOD_SHORT, type TopContributorsWorldProps } from "../top-contributors";
 import { formatNumber, plural } from "@/lib/format";
 
-export function MinimalTopContributors({
+export default function MinimalTopContributors({
   people,
   total,
   repo,

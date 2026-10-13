@@ -19,7 +19,7 @@ const COLUMN = 11;
 
 const TREND_COLOR = { down: "#6dff8a", up: "#ffd34d", same: "#3fae55", first: "#3fae55" };
 
-export function RetroBundleSize({
+export default function RetroBundleSize({
   packageName,
   versions,
   index,

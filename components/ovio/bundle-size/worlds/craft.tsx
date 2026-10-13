@@ -22,7 +22,7 @@ const NOTE = {
   first: "where it began",
 };
 
-export function CraftBundleSize({
+export default function CraftBundleSize({
   packageName,
   versions,
   index,

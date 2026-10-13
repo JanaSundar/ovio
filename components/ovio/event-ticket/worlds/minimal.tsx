@@ -46,6 +46,6 @@ const LOOK: TicketLook = {
   },
 };
 
-export function MinimalEventTicket(props: EventTicketWorldProps) {
+export default function MinimalEventTicket(props: EventTicketWorldProps) {
   return <Ticket look={LOOK} {...props} />;
 }

@@ -14,7 +14,7 @@ import { formatNumber } from "@/lib/format";
 
 const TREND_COLOR = { down: "#2f7a45", up: "#b4432a", same: "#77756e", first: "#77756e" };
 
-export function MinimalBundleSize({
+export default function MinimalBundleSize({
   packageName,
   versions,
   index,

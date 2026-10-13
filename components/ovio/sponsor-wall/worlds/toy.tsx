@@ -27,7 +27,12 @@ const DEPTH: Record<SponsorTier, number> = { platinum: 6, gold: 5, backer: 4 };
 const block = "flex items-center justify-center truncate no-underline select-none";
 
 /** Toy: sponsors as plastic blocks hung on a pegboard. A linked block is a key that opens its site. */
-export function ToySponsorWall({ groups, ctaHref, ctaLabel, className }: SponsorWallWorldProps) {
+export default function ToySponsorWall({
+  groups,
+  ctaHref,
+  ctaLabel,
+  className,
+}: SponsorWallWorldProps) {
   const reduced = useReducedMotionSafe();
   const drop = useOvioTransition(motionTokens.toy.piece);
 

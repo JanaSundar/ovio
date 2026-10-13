@@ -1,20 +1,18 @@
 "use client";
 
 import { type ComponentType, useState } from "react";
-import { useWorld, type World } from "@/components/shared/world-provider";
+import { useWorld } from "@/components/shared/world-provider";
+import { everyWorld, type InstalledWorld } from "@/lib/world";
 import { formatDate } from "@/lib/format";
-import { MinimalChangelog } from "./worlds/minimal";
-import { CraftChangelog } from "./worlds/craft";
-import { RetroChangelog } from "./worlds/retro";
-import { ToyChangelog } from "./worlds/toy";
 import type { ChangeType, Release } from "./types";
+import * as worlds from "./worlds";
 
 export type { ChangeType, ChangelogItem, Release } from "./types";
 
 export type ChangelogProps = {
   /** Newest first. */
   releases: Release[];
-  variant?: World;
+  variant?: InstalledWorld<typeof worlds>;
   /** How many releases to show, from the newest. Shows all when left out. */
   limit?: number;
   className?: string;
@@ -83,12 +81,8 @@ function toEntry(release: Release): ChangelogEntry {
   };
 }
 
-const VIEWS = {
-  minimal: MinimalChangelog,
-  craft: CraftChangelog,
-  retro: RetroChangelog,
-  toy: ToyChangelog,
-} satisfies Record<World, ComponentType<ChangelogWorldProps>>;
+/** The installed worlds; a single-world install draws its one world for any provider world. */
+const VIEWS = everyWorld<ComponentType<ChangelogWorldProps>>(worlds);
 
 export function Changelog({ releases, variant, limit, className }: ChangelogProps) {
   const world = useWorld(variant);

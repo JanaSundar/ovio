@@ -21,7 +21,7 @@ const TICKS = {
   off: "rgba(42,31,20,.35)",
 };
 
-export function CraftKnob({
+export default function CraftKnob({
   value,
   min,
   max,

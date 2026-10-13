@@ -24,7 +24,7 @@ const PS: PostscriptLook = {
  * Retro: a telegram on a phosphor screen. Sending encodes every line to Morse, then keys the
  * reader's address out on a lamp and tape, dimming each line as the wire carries it.
  */
-export function RetroLetter(p: LetterWorldProps) {
+export default function RetroLetter(p: LetterWorldProps) {
   const unit = useMotionValue(0);
   const sent = p.status === "sent";
   const wire = useMemo(() => keying(`${p.issue} ${p.sentTo} K`), [p.issue, p.sentTo]);

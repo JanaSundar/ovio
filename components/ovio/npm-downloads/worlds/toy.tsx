@@ -113,7 +113,7 @@ function WeekKnob({
   );
 }
 
-export function ToyNpmDownloads({
+export default function ToyNpmDownloads({
   packageName,
   points,
   selected,

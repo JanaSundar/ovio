@@ -104,7 +104,7 @@ function RetroTag({ text }: TagProps) {
   );
 }
 
-export function RetroGitBranchVisualizer({
+export default function RetroGitBranchVisualizer({
   graph,
   current,
   status,

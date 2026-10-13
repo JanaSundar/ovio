@@ -6,7 +6,7 @@ const STAMP: Record<ToastKind, { text: string; color: string }> = {
   info: { text: "Note", color: "#2b4a9b" },
 };
 
-export function CraftToast({ kind, title, description, action, dismiss }: ToastWorldProps) {
+export default function CraftToast({ kind, title, description, action, dismiss }: ToastWorldProps) {
   const stamp = STAMP[kind];
   return (
     <div

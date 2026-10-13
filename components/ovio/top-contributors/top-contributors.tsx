@@ -2,18 +2,16 @@
 
 import { type ComponentType, useState } from "react";
 import { initialsOf } from "@/components/shared/avatar";
-import { useWorld, type World } from "@/components/shared/world-provider";
-import { MinimalTopContributors } from "./worlds/minimal";
-import { CraftTopContributors } from "./worlds/craft";
-import { RetroTopContributors } from "./worlds/retro";
-import { ToyTopContributors } from "./worlds/toy";
+import { useWorld } from "@/components/shared/world-provider";
+import { everyWorld, type InstalledWorld } from "@/lib/world";
 import type { ContributorPeriod, Contributor } from "./types";
+import * as worlds from "./worlds";
 
 export type { ContributorPeriod, Contributor } from "./types";
 
 export interface TopContributorsProps {
   contributors: Contributor[];
-  variant?: World;
+  variant?: InstalledWorld<typeof worlds>;
   /** Project label shown in the header, e.g. "ada-dev/lumen". */
   repo?: string;
   /** Max people shown. */
@@ -94,12 +92,8 @@ function rankContributors(
   return { people, total };
 }
 
-const VIEWS = {
-  minimal: MinimalTopContributors,
-  craft: CraftTopContributors,
-  retro: RetroTopContributors,
-  toy: ToyTopContributors,
-} satisfies Record<World, ComponentType<TopContributorsWorldProps>>;
+/** The installed worlds; a single-world install draws its one world for any provider world. */
+const VIEWS = everyWorld<ComponentType<TopContributorsWorldProps>>(worlds);
 
 export function TopContributors({
   contributors,

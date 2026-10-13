@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 import { sprite } from "../card";
 import type { DeveloperIdCardWorldProps } from "../developer-id-card";
 
-export function RetroDeveloperIdCard({
+export default function RetroDeveloperIdCard({
   name,
   shortTitle,
   stack,

@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import type { RepositoryCardWorldProps } from "../repository-card";
 import { COMPACT, formatNumber } from "@/lib/format";
 
-export function MinimalRepositoryCard({
+export default function MinimalRepositoryCard({
   repo,
   stats,
   starCount,

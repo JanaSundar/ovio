@@ -93,7 +93,7 @@ function VolumeKnob({ volume, setVolume }: Pick<NowPlayingWorldProps, "volume" |
   );
 }
 
-export function ToyNowPlaying({
+export default function ToyNowPlaying({
   track,
   playing,
   progress,

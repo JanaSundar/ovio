@@ -7,6 +7,7 @@ import { notFound } from "next/navigation";
 import type { SourceFile } from "@/components/site/code-explorer";
 import { ComponentPreview, MotionInfo, UsageSnippet } from "@/components/site/component-doc";
 import { CopyCommand } from "@/components/site/copy-command";
+import { InstallCommand, type InstallOption } from "@/components/site/install-command";
 import { EmbedSection } from "@/components/site/embed-section";
 import { highlight } from "@/components/site/highlight";
 import { PropTable } from "@/components/site/prop-table";
@@ -14,6 +15,7 @@ import {
   COMPONENTS,
   getComponent,
   installCommand,
+  worldItemName,
   type ComponentDoc,
   type DocSectionId,
 } from "@/content/components";
@@ -77,6 +79,16 @@ const usageSnippets = (c: ComponentDoc) =>
     ]),
   ) as Record<World, string>;
 
+/** The install command for each world alone, and for all four: each names a registry item. */
+function installOptions(slug: string): Record<World | "all", InstallOption> {
+  const option = (name: string): InstallOption => {
+    const { dependencies, registryDependencies } = registryItem(name);
+    return { command: installCommand(name), dependencies, registryDependencies };
+  };
+  const worlds = Object.fromEntries(WORLDS.map((w) => [w, option(worldItemName(slug, w))]));
+  return { ...(worlds as Record<World, InstallOption>), all: option(slug) };
+}
+
 const CACHING = `Cached for an hour by default (revalidate: ${DEFAULT_REVALIDATE}), so traffic adds no API calls. A failed refresh keeps serving the last good data, and a spent limit throws RateLimitError with the time it resets.`;
 
 /** The Data table: the component's facts, how caching works, and what this page's demo shows. */
@@ -123,18 +135,7 @@ export default async function ComponentPage({ params }: PageProps<"/docs/[slug]"
 
         <DocSection id="installation">
           <h2>Installation</h2>
-          <p>
-            Use the shadcn CLI to copy the component source and its dependencies into your own
-            project. Installs{" "}
-            {item.dependencies.map((d, k) => (
-              <span key={d}>
-                {k > 0 && (k === item.dependencies.length - 1 ? " and " : ", ")}
-                <code>{d}</code>
-              </span>
-            ))}
-            , plus the Ovio {item.registryDependencies.join(", ")} items.
-          </p>
-          <CopyCommand command={installCommand(c.slug)} variant="install-box" />
+          <InstallCommand options={installOptions(c.slug)} />
           <div className="callout">
             <i>↳</i>
             <span>

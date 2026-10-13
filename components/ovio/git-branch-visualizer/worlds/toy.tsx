@@ -102,7 +102,7 @@ function ToyTag({ text }: TagProps) {
   );
 }
 
-export function ToyGitBranchVisualizer({
+export default function ToyGitBranchVisualizer({
   graph,
   current,
   status,

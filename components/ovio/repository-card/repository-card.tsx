@@ -1,14 +1,12 @@
 "use client";
 
 import { type ComponentType, useState, useSyncExternalStore } from "react";
-import { useWorld, type World } from "@/components/shared/world-provider";
+import { useWorld } from "@/components/shared/world-provider";
+import { everyWorld, type InstalledWorld } from "@/lib/world";
 import { formatShortDate } from "@/lib/format";
 import { repoLanguage, type RepoLanguage } from "./language";
-import { MinimalRepositoryCard } from "./worlds/minimal";
-import { CraftRepositoryCard } from "./worlds/craft";
-import { RetroRepositoryCard } from "./worlds/retro";
-import { ToyRepositoryCard } from "./worlds/toy";
 import type { Repository } from "./types";
+import * as worlds from "./worlds";
 
 export type { Repository } from "./types";
 
@@ -16,7 +14,7 @@ export type RepositoryStat = "stars" | "forks" | "issues";
 
 export interface RepositoryCardProps {
   repository: Repository;
-  variant?: World;
+  variant?: InstalledWorld<typeof worlds>;
   /** Which counts to show, in order. Defaults to stars and forks (and issues in Craft). */
   stats?: RepositoryStat[];
   /** Controlled star state (the Toy star key toggles it). */
@@ -63,12 +61,8 @@ const noop = () => () => {};
 const yes = () => true;
 const no = () => false;
 
-const VIEWS = {
-  minimal: MinimalRepositoryCard,
-  craft: CraftRepositoryCard,
-  retro: RetroRepositoryCard,
-  toy: ToyRepositoryCard,
-} satisfies Record<World, ComponentType<RepositoryCardWorldProps>>;
+/** The installed worlds; a single-world install draws its one world for any provider world. */
+const VIEWS = everyWorld<ComponentType<RepositoryCardWorldProps>>(worlds);
 
 export function RepositoryCard({
   repository: repo,

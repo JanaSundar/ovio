@@ -24,7 +24,7 @@ const COLUMNS = {
   gold: "grid-cols-2 @lg:grid-cols-4",
 } as const;
 
-export function MinimalSponsorWall({
+export default function MinimalSponsorWall({
   groups,
   ctaHref,
   ctaLabel,

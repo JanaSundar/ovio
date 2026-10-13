@@ -9,7 +9,7 @@ import { formatNumber } from "@/lib/format";
 const keyClass =
   "flex items-center justify-center gap-2 rounded-xl border-0 px-2.5 py-3.5 font-(family-name:--ovio-font) text-base font-extrabold text-(--ovio-ink)";
 
-export function ToyRepositoryCard({
+export default function ToyRepositoryCard({
   repo,
   stats,
   starred,

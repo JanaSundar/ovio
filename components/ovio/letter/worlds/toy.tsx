@@ -44,7 +44,7 @@ function Counter({ value }: { value: number }) {
  * Toy: a chunky card of a letter. Sending folds it into a card that hops up and drops through the
  * slot of a plastic mailbox; the box squashes, the flag springs up and the counter ticks over.
  */
-export function ToyLetter(p: LetterWorldProps) {
+export default function ToyLetter(p: LetterWorldProps) {
   const mask = useRef<HTMLDivElement>(null);
 
   const scope = useSend(p.status === "sent", async (animate, root, t) => {

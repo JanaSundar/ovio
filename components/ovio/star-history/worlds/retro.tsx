@@ -8,7 +8,7 @@ import { useMonthScrubber } from "../use-scrubber";
 
 const STRIPES = "repeating-linear-gradient(0deg,#4fdc68 0 6px,transparent 6px 8px)";
 
-export function RetroStarHistory({
+export default function RetroStarHistory({
   shape,
   label,
   animation,

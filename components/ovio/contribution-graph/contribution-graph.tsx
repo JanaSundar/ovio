@@ -10,16 +10,14 @@ import {
   type KeyboardEvent,
   type PointerEvent,
 } from "react";
-import { useWorld, type World } from "@/components/shared/world-provider";
+import { useWorld } from "@/components/shared/world-provider";
+import { everyWorld, type InstalledWorld } from "@/lib/world";
 import { useReducedMotionSafe, type OvioAnimation } from "@/lib/motion";
 import { dayIndexOf } from "./grid";
 import type { ContributionDay } from "./types";
 import { buildContributionYear, type ContributionCell, type ContributionYear } from "./year";
-import { MinimalContributionGraph } from "./worlds/minimal";
-import { CraftContributionGraph } from "./worlds/craft";
-import { RetroContributionGraph } from "./worlds/retro";
-import { ToyContributionGraph } from "./worlds/toy";
 import { formatNumber } from "@/lib/format";
+import * as worlds from "./worlds";
 
 export { buildContributionYear };
 export type { ContributionCell, ContributionDay, ContributionYear };
@@ -29,7 +27,7 @@ export type ContributionAnimation = OvioAnimation;
 export interface ContributionGraphProps {
   /** Daily counts; gaps become zero. Dates are "YYYY-MM-DD". */
   data: ContributionDay[];
-  variant?: World;
+  variant?: InstalledWorld<typeof worlds>;
   /** Entrances, plus ambient loops with "always". Forced to "none" under reduced motion. */
   animation?: ContributionAnimation;
   /** Last day shown, "YYYY-MM-DD". Defaults to the latest date in `data`. */
@@ -83,12 +81,8 @@ function useNarrow() {
   );
 }
 
-const VIEWS = {
-  minimal: MinimalContributionGraph,
-  craft: CraftContributionGraph,
-  retro: RetroContributionGraph,
-  toy: ToyContributionGraph,
-} satisfies Record<World, ComponentType<ContributionGraphWorldProps>>;
+/** The installed worlds; a single-world install draws its one world for any provider world. */
+const VIEWS = everyWorld<ComponentType<ContributionGraphWorldProps>>(worlds);
 
 export function ContributionGraph({
   data,

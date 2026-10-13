@@ -1,9 +1,17 @@
 import Link from "next/link";
-import { CopyCommand } from "@/components/site/copy-command";
 import { HomeShowcase } from "@/components/site/home-showcase";
 import { SiteFooter } from "@/components/site/site-nav";
 import { WorldCompass } from "@/components/site/world-compass";
-import { AUTHOR_URL, COMPONENTS, DOCS_HREF, installCommand, pad2 } from "@/content/components";
+import {
+  AUTHOR_URL,
+  COMPONENTS,
+  DOCS_HREF,
+  installCommand,
+  pad2,
+  worldItemName,
+} from "@/content/components";
+import { WorldCommand } from "@/components/site/install-command";
+import { WORLDS, type World } from "@/lib/world";
 
 /** The six components the catalog leads with, each with a glyph and a one-line pitch. */
 const FEATURED = [
@@ -166,7 +174,13 @@ export default function HomePage() {
             <div className="install-info">
               <b>Own the source.</b> Add a component, open the files, and change whatever you need.
             </div>
-            <CopyCommand command={installCommand("contribution-graph")} />
+            <WorldCommand
+              commands={
+                Object.fromEntries(
+                  WORLDS.map((w) => [w, installCommand(worldItemName("contribution-graph", w))]),
+                ) as Record<World, string>
+              }
+            />
           </div>
         </section>
       </main>

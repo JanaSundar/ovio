@@ -19,7 +19,7 @@ const look: LineLook = {
   rule: "var(--ovio-faint)",
 };
 
-export function MinimalStarHistory({
+export default function MinimalStarHistory({
   shape,
   name,
   label,

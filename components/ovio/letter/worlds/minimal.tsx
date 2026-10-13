@@ -48,7 +48,7 @@ const PS: PostscriptLook = {
  * into a paper plane; the plane is thrown, dips, climbs and banks toward the far corner on a dotted
  * trail, shrinking away inside the card. A receipt is left where the letter was.
  */
-export function MinimalLetter(p: LetterWorldProps) {
+export default function MinimalLetter(p: LetterWorldProps) {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   const rotate = useMotionValue(0);

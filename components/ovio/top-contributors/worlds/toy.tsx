@@ -11,7 +11,7 @@ import { formatNumber, plural } from "@/lib/format";
 const { red, blue, yellow, green, black, white } = TOY_PLASTIC;
 const PIECES = [red, blue, yellow, green, black, white] as const;
 
-export function ToyTopContributors({
+export default function ToyTopContributors({
   people,
   total,
   repo,

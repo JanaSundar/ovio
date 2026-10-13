@@ -21,7 +21,12 @@ const NAME = {
  * Retro: end credits rolling up a CRT. Hovering the screen holds the roll;
  * tabbing to a sponsor stops it with that name centred. Reduced motion shows the credits still.
  */
-export function RetroSponsorWall({ groups, ctaHref, ctaLabel, className }: SponsorWallWorldProps) {
+export default function RetroSponsorWall({
+  groups,
+  ctaHref,
+  ctaLabel,
+  className,
+}: SponsorWallWorldProps) {
   const reduced = useReducedMotionSafe();
   const roll = useRef<HTMLDivElement>(null);
   const y = useMotionValue(0);

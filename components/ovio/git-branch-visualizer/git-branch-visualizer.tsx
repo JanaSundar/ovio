@@ -1,21 +1,19 @@
 "use client";
 
 import { type ComponentType, useMemo, useState, type KeyboardEvent } from "react";
-import { useWorld, type World } from "@/components/shared/world-provider";
+import { useWorld } from "@/components/shared/world-provider";
+import { everyWorld, type InstalledWorld } from "@/lib/world";
 import { formatShortDate } from "@/lib/format";
 import { keyToIndex } from "@/lib/keys";
-import { MinimalGitBranchVisualizer } from "./worlds/minimal";
-import { CraftGitBranchVisualizer } from "./worlds/craft";
-import { RetroGitBranchVisualizer } from "./worlds/retro";
-import { ToyGitBranchVisualizer } from "./worlds/toy";
 import type { GitCommit } from "./types";
+import * as worlds from "./worlds";
 
 export type { GitCommit } from "./types";
 
 export interface GitBranchVisualizerProps {
   /** History, oldest first: every parent comes before its children. */
   commits: GitCommit[];
-  variant?: World;
+  variant?: InstalledWorld<typeof worlds>;
   /** Checked-out branch. Defaults to the first commit's branch. */
   head?: string;
   /** Header label, e.g. "ada-dev/lumen". */
@@ -178,12 +176,8 @@ function ancestors(id: string | undefined, byId: Map<string, GitCommit>): Set<st
   return seen;
 }
 
-const VIEWS = {
-  minimal: MinimalGitBranchVisualizer,
-  craft: CraftGitBranchVisualizer,
-  retro: RetroGitBranchVisualizer,
-  toy: ToyGitBranchVisualizer,
-} satisfies Record<World, ComponentType<GitBranchVisualizerWorldProps>>;
+/** The installed worlds; a single-world install draws its one world for any provider world. */
+const VIEWS = everyWorld<ComponentType<GitBranchVisualizerWorldProps>>(worlds);
 
 export function GitBranchVisualizer({
   commits,

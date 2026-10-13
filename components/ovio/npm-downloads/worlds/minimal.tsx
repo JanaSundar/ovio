@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import { formatNumber } from "@/lib/format";
 import { formatDelta, type NpmDownloadsWorldProps } from "../npm-downloads";
 
-export function MinimalNpmDownloads({
+export default function MinimalNpmDownloads({
   packageName,
   points,
   latest,

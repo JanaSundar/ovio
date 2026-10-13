@@ -1,14 +1,12 @@
 "use client";
 
 import { type ComponentType, useLayoutEffect, useRef, useState, type RefObject } from "react";
-import { useWorld, type World } from "@/components/shared/world-provider";
+import { useWorld } from "@/components/shared/world-provider";
+import { everyWorld, type InstalledWorld } from "@/lib/world";
 import { formatDate, formatShortDate } from "@/lib/format";
 import { hashString } from "./seed";
-import { MinimalEventTicket } from "./worlds/minimal";
-import { CraftEventTicket } from "./worlds/craft";
-import { RetroEventTicket } from "./worlds/retro";
-import { ToyEventTicket } from "./worlds/toy";
 import type { TicketEvent, Attendee } from "./types";
+import * as worlds from "./worlds";
 
 export type { TicketEvent, Attendee } from "./types";
 
@@ -16,7 +14,7 @@ export type TicketLayout = "horizontal" | "vertical";
 
 export interface EventTicketProps {
   event: TicketEvent;
-  variant?: World;
+  variant?: InstalledWorld<typeof worlds>;
   /** Side stub or tear-off bottom. Horizontal turns vertical when there is no room for it. */
   layout?: TicketLayout;
   /** Ticket number, printed on the stub and encoded in the QR code. */
@@ -79,12 +77,8 @@ function useFitLayout(layout: TicketLayout) {
   return [ref, layout === "horizontal" && !narrow ? "horizontal" : "vertical"] as const;
 }
 
-const VIEWS = {
-  minimal: MinimalEventTicket,
-  craft: CraftEventTicket,
-  retro: RetroEventTicket,
-  toy: ToyEventTicket,
-} satisfies Record<World, ComponentType<EventTicketWorldProps>>;
+/** The installed worlds; a single-world install draws its one world for any provider world. */
+const VIEWS = everyWorld<ComponentType<EventTicketWorldProps>>(worlds);
 
 /** An ISO date-time's calendar day as written, so its own time zone decides the day. */
 const wallDate = (date: string) => (/^\d{4}-\d{2}-\d{2}/.test(date) ? date.slice(0, 10) : date);

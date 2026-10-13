@@ -21,7 +21,7 @@ const TICKS = {
   off: "#d6d3cc",
 };
 
-export function MinimalKnob({
+export default function MinimalKnob({
   value,
   min,
   max,

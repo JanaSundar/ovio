@@ -19,11 +19,9 @@ export default function MinimalBundleSize({
   versions,
   index,
   reading: r,
-  select,
-  onKeyDown,
-  tabRef,
-  tabId,
-  panelId,
+  tablist,
+  tab,
+  panel,
   className,
 }: BundleSizeWorldProps) {
   // The big number in the unit that reads best: 412 B, 7.2 kB, 12.5 MB.
@@ -43,29 +41,18 @@ export default function MinimalBundleSize({
         <h3 className="m-0 min-w-0 font-(family-name:--ovio-mono) text-[13px] font-normal wrap-anywhere">
           {packageName}
         </h3>
-        <div
-          role="tablist"
-          aria-label={`${packageName} version`}
-          onKeyDown={onKeyDown}
-          className="flex flex-wrap gap-0.5 rounded-[7px] bg-[#f0eee9] p-0.5"
-        >
+        <div {...tablist} className="flex flex-wrap gap-0.5 rounded-[7px] bg-[#f0eee9] p-0.5">
           {versions.map((v, i) => (
             <button
               key={v}
-              ref={tabRef(i)}
-              id={tabId(i)}
-              role="tab"
+              {...tab(i)}
               type="button"
-              aria-selected={i === index}
-              aria-controls={panelId}
-              tabIndex={i === index ? 0 : -1}
-              onClick={() => select(i)}
               className="relative cursor-pointer rounded-[5px] border-0 bg-transparent px-2.25 py-1 font-(family-name:--ovio-mono) text-[11px]"
             >
               {i === index && (
                 <motion.span
                   aria-hidden
-                  layoutId={`${panelId}-pill`}
+                  layoutId={`${panel.id}-pill`}
                   transition={fast}
                   className="absolute inset-0 rounded-[5px] bg-white shadow-[0_1px_2px_rgba(22,22,20,.08)]"
                 />
@@ -83,12 +70,7 @@ export default function MinimalBundleSize({
         </div>
       </div>
 
-      <div
-        id={panelId}
-        role="tabpanel"
-        aria-labelledby={tabId(index)}
-        className="flex flex-col gap-5.5"
-      >
+      <div {...panel} className="flex flex-col gap-5.5">
         <div className="flex items-baseline gap-1.5">
           <RollingNumber
             timing="quick"

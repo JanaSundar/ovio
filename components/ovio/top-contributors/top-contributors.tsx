@@ -45,7 +45,12 @@ export type TopContributorsWorldProps = {
   repo?: string;
   period: ContributorPeriod;
   periods: ContributorPeriod[];
-  setPeriod: (period: ContributorPeriod) => void;
+  /** Spread on the button that picks period p. */
+  periodButton: (p: ContributorPeriod) => {
+    "aria-pressed": boolean;
+    "aria-label": string;
+    onClick: () => void;
+  };
   className?: string;
 };
 
@@ -129,7 +134,11 @@ export function TopContributors({
     repo,
     period,
     periods,
-    setPeriod,
+    periodButton: (p) => ({
+      "aria-pressed": p === period,
+      "aria-label": PERIOD_LABEL[p],
+      onClick: () => setPeriod(p),
+    }),
     className,
   };
 

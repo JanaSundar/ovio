@@ -24,11 +24,9 @@ export default function RetroBundleSize({
   versions,
   index,
   reading: r,
-  select,
-  onKeyDown,
-  tabRef,
-  tabId,
-  panelId,
+  tablist,
+  tab,
+  panel,
   className,
 }: BundleSizeWorldProps) {
   // The big number in the unit that reads best: 412 B, 7.2 kB, 12.5 MB.
@@ -69,7 +67,7 @@ export default function RetroBundleSize({
         ----------------------------
       </div>
 
-      <div id={panelId} role="tabpanel" aria-labelledby={tabId(index)}>
+      <div {...panel}>
         <div>
           {dots("RAW", COLUMN)}
           <span className="text-[#c9ffd2]">
@@ -115,23 +113,12 @@ export default function RetroBundleSize({
         </div>
       </div>
 
-      <div
-        role="tablist"
-        aria-label={`${packageName} version`}
-        onKeyDown={onKeyDown}
-        className="mt-3.5 flex flex-wrap gap-2.5"
-      >
+      <div {...tablist} className="mt-3.5 flex flex-wrap gap-2.5">
         {versions.map((v, i) => (
           <button
             key={v}
-            ref={tabRef(i)}
-            id={tabId(i)}
-            role="tab"
+            {...tab(i)}
             type="button"
-            aria-selected={i === index}
-            aria-controls={panelId}
-            tabIndex={i === index ? 0 : -1}
-            onClick={() => select(i)}
             className={cn(
               "cursor-pointer border border-(--ovio-muted) px-2 font-[inherit] text-[22px] text-shadow-none",
               i === index

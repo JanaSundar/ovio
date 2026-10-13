@@ -27,11 +27,9 @@ export default function ToyBundleSize({
   versions,
   index,
   reading: r,
-  select,
-  onKeyDown,
-  tabRef,
-  tabId,
-  panelId,
+  tablist,
+  tab,
+  panel,
   className,
 }: BundleSizeWorldProps) {
   // The big number in the unit that reads best: 412 B, 7.2 kB, 12.5 MB.
@@ -55,12 +53,7 @@ export default function ToyBundleSize({
         <span>{deltaLabel(r)}</span>
       </div>
 
-      <div
-        id={panelId}
-        role="tabpanel"
-        aria-labelledby={tabId(index)}
-        className="flex flex-col gap-4"
-      >
+      <div {...panel} className="flex flex-col gap-4">
         {/* A little LCD set into the plastic. */}
         <div className="flex items-baseline gap-2 rounded-[14px] bg-[#2a2925] px-4.5 py-2.5 font-(family-name:--ovio-mono) font-semibold text-(--ovio-surface) shadow-[inset_0_3px_6px_rgba(0,0,0,.6)]">
           <RollingNumber
@@ -116,9 +109,7 @@ export default function ToyBundleSize({
       </div>
 
       <div
-        role="tablist"
-        aria-label={`${packageName} version`}
-        onKeyDown={onKeyDown}
+        {...tablist}
         className="grid gap-2.5"
         style={{ gridTemplateColumns: `repeat(${Math.min(versions.length, 4)}, minmax(0, 1fr))` }}
       >
@@ -128,13 +119,7 @@ export default function ToyBundleSize({
           return (
             <ToyKey
               key={v}
-              ref={tabRef(i)}
-              id={tabId(i)}
-              role="tab"
-              aria-selected={i === index}
-              aria-controls={panelId}
-              tabIndex={i === index ? 0 : -1}
-              onClick={() => select(i)}
+              {...tab(i)}
               depth={6}
               side={side}
               style={{ background: cap, color: text }}

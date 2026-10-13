@@ -27,11 +27,9 @@ export default function CraftBundleSize({
   versions,
   index,
   reading: r,
-  select,
-  onKeyDown,
-  tabRef,
-  tabId,
-  panelId,
+  tablist,
+  tab,
+  panel,
   className,
 }: BundleSizeWorldProps) {
   // The big number in the unit that reads best: 412 B, 7.2 kB, 12.5 MB.
@@ -70,7 +68,7 @@ export default function CraftBundleSize({
         Package label · {packageName}
       </h3>
 
-      <div id={panelId} role="tabpanel" aria-labelledby={tabId(index)}>
+      <div {...panel}>
         <div className="mt-3.5 mb-1.5 flex items-baseline gap-1.5">
           <RollingNumber
             className="text-[60px] leading-[.95] font-extrabold tracking-tighter"
@@ -132,23 +130,12 @@ export default function CraftBundleSize({
             </span>
           ))}
         </span>
-        <div
-          role="tablist"
-          aria-label={`${packageName} version`}
-          onKeyDown={onKeyDown}
-          className="flex flex-wrap gap-1.5"
-        >
+        <div {...tablist} className="flex flex-wrap gap-1.5">
           {versions.map((v, i) => (
             <button
               key={v}
-              ref={tabRef(i)}
-              id={tabId(i)}
-              role="tab"
+              {...tab(i)}
               type="button"
-              aria-selected={i === index}
-              aria-controls={panelId}
-              tabIndex={i === index ? 0 : -1}
-              onClick={() => select(i)}
               style={{ "--tilt": `${TILT[i % TILT.length]}deg` } as CSSProperties}
               className={cn(
                 "cursor-pointer rotate-(--tilt) border-0 px-2.25 py-1 font-(family-name:--ovio-mono) text-[11px] text-(--ovio-ink) shadow-[0_3px_6px_-2px_rgba(70,45,20,.4)] transition-[rotate,translate,background-color] duration-300 ease-[cubic-bezier(.34,1.5,.5,1)] motion-reduce:transition-none hover:-translate-y-0.75 hover:rotate-0 focus-visible:-translate-y-0.75 focus-visible:rotate-0",

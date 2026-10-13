@@ -59,11 +59,24 @@ export type BundleSizeWorldProps = {
   versions: string[];
   index: number;
   reading: BundleReading;
-  select: (index: number) => void;
-  onKeyDown: (event: KeyboardEvent<HTMLElement>) => void;
-  tabRef: (index: number) => (el: HTMLButtonElement | null) => void;
-  tabId: (index: number) => string;
-  panelId: string;
+  /** Spread on the element around the version buttons. */
+  tablist: {
+    role: "tablist";
+    "aria-label": string;
+    onKeyDown: (event: KeyboardEvent<HTMLElement>) => void;
+  };
+  /** Spread on version i's button. */
+  tab: (i: number) => {
+    ref: (el: HTMLButtonElement | null) => void;
+    id: string;
+    role: "tab";
+    "aria-selected": boolean;
+    "aria-controls": string;
+    tabIndex: number;
+    onClick: () => void;
+  };
+  /** Spread on the element showing the selected version. */
+  panel: { id: string; role: "tabpanel"; "aria-labelledby": string };
   className?: string;
 };
 
@@ -171,13 +184,19 @@ export function BundleSize({ packageName, versions, budget, variant, className }
     versions: versions.map((v) => v.version),
     index,
     reading: readBundle(versions, index, budget),
-    select,
-    onKeyDown,
-    tabRef: (i) => (el) => {
-      refs.current[i] = el;
-    },
-    tabId: (i) => `${id}-tab-${i}`,
-    panelId: `${id}-panel`,
+    tablist: { role: "tablist", "aria-label": `${packageName} version`, onKeyDown },
+    tab: (i) => ({
+      ref: (el) => {
+        refs.current[i] = el;
+      },
+      id: `${id}-tab-${i}`,
+      role: "tab",
+      "aria-selected": i === index,
+      "aria-controls": `${id}-panel`,
+      tabIndex: i === index ? 0 : -1,
+      onClick: () => select(i),
+    }),
+    panel: { id: `${id}-panel`, role: "tabpanel", "aria-labelledby": `${id}-tab-${index}` },
     className,
   };
 

@@ -1060,7 +1060,8 @@ html.lenis-smooth .stage-frame {
   margin-left: auto;
   text-transform: none;
 }
-.motion-line {
+/* Under .doc-section so it outranks .doc-section > p, which would reset it to body text. */
+.doc-section > .motion-line {
   margin: 11px 0 0;
   color: #83857e;
   font: 13px/1.7 var(--mono);

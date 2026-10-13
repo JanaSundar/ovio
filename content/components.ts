@@ -1,7 +1,7 @@
 /** The component catalogue. */
 
 import { isEmbedSlug } from "../lib/embed/params";
-import { WORLDS } from "../lib/world";
+import { WORLDS, type World } from "../lib/world";
 
 type PropDoc = {
   name: string;
@@ -673,7 +673,11 @@ export const REPO = "JanaSundar/ovio";
 export const GITHUB_URL = `https://github.com/${REPO}`;
 export const AUTHOR_URL = "https://github.com/JanaSundar";
 
-export const installCommand = (slug: string) => `npx shadcn add ${REPO}/${slug}`;
+/** The command that adds a registry item: a component with all four worlds, or a helper. */
+export const installCommand = (name: string) => `npx shadcn add ${REPO}/${name}`;
+
+/** The registry item that installs a component with one world alone, like `letter-craft`. */
+export const worldItemName = (slug: string, world: World) => `${slug}-${world}`;
 
 /** "07": catalogue numbers and counts are printed two digits wide. */
 export const pad2 = (n: number) => String(n).padStart(2, "0");

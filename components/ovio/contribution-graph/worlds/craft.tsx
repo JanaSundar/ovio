@@ -93,7 +93,7 @@ const DROP_TIMING = {
 };
 
 /** Craft: tiles on a taped paper card. Taller tiles, busier days; a sticker counts the streak. */
-export function CraftContributionGraph({
+export default function CraftContributionGraph({
   year,
   active,
   focusIndex,

@@ -149,7 +149,7 @@ const Face = memo(function Face({ week, step, cells, month, now, active, tabbabl
  * Toy: the year printed around a drum, one week per face. Drag, flick or scroll sideways to spin it;
  * it coasts and decays into the nearest week. Arrow keys move the focus and the drum turns to follow.
  */
-export function ToyContributionGraph({
+export default function ToyContributionGraph({
   year,
   active: hovered,
   focusIndex,

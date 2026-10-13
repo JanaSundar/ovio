@@ -6,7 +6,7 @@ import { EqBars, Time, useFillTransition } from "../parts";
 
 const SEGMENTS = 24;
 
-export function RetroNowPlaying({
+export default function RetroNowPlaying({
   track,
   playing,
   stopped,

@@ -122,7 +122,7 @@ function CraftTag({ text }: TagProps) {
   );
 }
 
-export function CraftGitBranchVisualizer({
+export default function CraftGitBranchVisualizer({
   graph,
   current,
   status,

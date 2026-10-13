@@ -32,7 +32,7 @@ const PS: PostscriptLook = {
  * envelope that rises from the desk; the flap closes, wax is pressed on, the address is written
  * and the post office stamps it.
  */
-export function CraftLetter(p: LetterWorldProps) {
+export default function CraftLetter(p: LetterWorldProps) {
   const scope = useSend(p.status === "sent", async (animate, root, t) => {
     const $ = (name: string) => root.querySelector<HTMLElement>(`[data-${name}]`)!;
     const sheet = $("sheet");

@@ -11,7 +11,7 @@ const RULE = "border-t border-dashed border-[#b9a88f]";
 /** Seconds the receipt takes to feed out. */
 const FEED = 0.5;
 
-export function CraftNpmDownloads({
+export default function CraftNpmDownloads({
   packageName,
   points,
   latest,

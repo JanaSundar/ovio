@@ -13,7 +13,7 @@ const KEYS = [
   ["var(--ovio-yellow)", "var(--ovio-yellow-deep)", "var(--ovio-ink)"],
 ] as const;
 
-export function ToyDeveloperIdCard({
+export default function ToyDeveloperIdCard({
   name,
   initials,
   shortTitle,

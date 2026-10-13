@@ -1,15 +1,13 @@
 "use client";
 
 import { type ComponentType, useState, type KeyboardEvent } from "react";
-import { useWorld, type World } from "@/components/shared/world-provider";
+import { useWorld } from "@/components/shared/world-provider";
+import { everyWorld, type InstalledWorld } from "@/lib/world";
 import { formatNumber } from "@/lib/format";
 import { keyToIndex } from "@/lib/keys";
 import { EMPTY_WEEK, readDownloads, type WeekPoint } from "./chart";
-import { MinimalNpmDownloads } from "./worlds/minimal";
-import { CraftNpmDownloads } from "./worlds/craft";
-import { RetroNpmDownloads } from "./worlds/retro";
-import { ToyNpmDownloads } from "./worlds/toy";
 import type { DownloadWeek } from "./types";
+import * as worlds from "./worlds";
 
 export type { DownloadWeek } from "./types";
 
@@ -24,7 +22,7 @@ export type NpmDownloadsProps = {
   weeks?: number;
   /** Weekly target. Leave out to hide the goal. */
   goal?: number;
-  variant?: World;
+  variant?: InstalledWorld<typeof worlds>;
   className?: string;
 };
 
@@ -56,12 +54,8 @@ export type NpmDownloadsWorldProps = {
   className?: string;
 };
 
-const VIEWS = {
-  minimal: MinimalNpmDownloads,
-  craft: CraftNpmDownloads,
-  retro: RetroNpmDownloads,
-  toy: ToyNpmDownloads,
-} satisfies Record<World, ComponentType<NpmDownloadsWorldProps>>;
+/** The installed worlds; a single-world install draws its one world for any provider world. */
+const VIEWS = everyWorld<ComponentType<NpmDownloadsWorldProps>>(worlds);
 
 export function NpmDownloads({
   packageName,

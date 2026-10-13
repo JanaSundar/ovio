@@ -21,7 +21,7 @@ const look: LineLook = {
   rule: "rgba(43,74,155,.35)",
 };
 
-export function CraftStarHistory({
+export default function CraftStarHistory({
   shape,
   label,
   animation,

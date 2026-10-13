@@ -5,7 +5,7 @@ const TAG: Record<ToastKind, string> = { success: "OK", error: "ERR!", info: "IN
 const KEY =
   "cursor-pointer border-0 bg-transparent p-0 font-(family-name:--ovio-font) text-[19px] leading-none text-(--ovio-ink) hover:bg-(--ovio-accent) hover:text-(--ovio-on-accent)";
 
-export function RetroToast({ kind, title, description, action, dismiss }: ToastWorldProps) {
+export default function RetroToast({ kind, title, description, action, dismiss }: ToastWorldProps) {
   return (
     <div
       data-ovio-world="retro"

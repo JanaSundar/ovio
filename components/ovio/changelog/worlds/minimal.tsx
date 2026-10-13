@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import { TYPE_LABEL, type ChangelogWorldProps } from "../changelog";
 
 /** Minimal: a quiet two-column list. Rows rise into place one after another. */
-export function MinimalChangelog({ releases, className }: ChangelogWorldProps) {
+export default function MinimalChangelog({ releases, className }: ChangelogWorldProps) {
   const reduced = useReducedMotionSafe();
   const transition = useOvioTransition(motionTokens.minimal.slow);
 

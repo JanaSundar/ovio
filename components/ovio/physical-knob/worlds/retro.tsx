@@ -21,7 +21,7 @@ const TICKS = {
   top: -6,
 };
 
-export function RetroKnob({
+export default function RetroKnob({
   value,
   min,
   max,

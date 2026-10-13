@@ -26,7 +26,7 @@ const TYPE_CHIP: Record<ChangeType, string> = {
  * Toy: each release is a raised plastic key. Keys drop into the tray on a loose spring;
  * press one and it opens on a slide spring to show its notes (one open at a time).
  */
-export function ToyChangelog({ releases, open, toggle, className }: ChangelogWorldProps) {
+export default function ToyChangelog({ releases, open, toggle, className }: ChangelogWorldProps) {
   const reduced = useReducedMotionSafe();
   const drop = useOvioTransition(motionTokens.toy.piece);
   const slide = useOvioTransition(motionTokens.toy.slide);

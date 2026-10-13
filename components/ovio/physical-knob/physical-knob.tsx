@@ -1,14 +1,12 @@
 "use client";
 
 import { type ComponentType, useState } from "react";
-import { useWorld, type World } from "@/components/shared/world-provider";
-import { MinimalKnob } from "./worlds/minimal";
-import { CraftKnob } from "./worlds/craft";
-import { RetroKnob } from "./worlds/retro";
-import { ToyKnob } from "./worlds/toy";
+import { useWorld } from "@/components/shared/world-provider";
+import { everyWorld, type InstalledWorld } from "@/lib/world";
+import * as worlds from "./worlds";
 
 export interface PhysicalKnobProps {
-  variant?: World;
+  variant?: InstalledWorld<typeof worlds>;
   value?: number;
   defaultValue?: number;
   /** Range, default 0–100. */
@@ -92,12 +90,8 @@ export function KnobTicks({ s, percent }: { s: TickStyle; percent: number }) {
   );
 }
 
-const VIEWS = {
-  minimal: MinimalKnob,
-  craft: CraftKnob,
-  retro: RetroKnob,
-  toy: ToyKnob,
-} satisfies Record<World, ComponentType<KnobWorldProps>>;
+/** The installed worlds; a single-world install draws its one world for any provider world. */
+const VIEWS = everyWorld<ComponentType<KnobWorldProps>>(worlds);
 
 export function PhysicalKnob({
   variant,

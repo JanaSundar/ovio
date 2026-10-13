@@ -9,18 +9,16 @@ import {
   type KeyboardEvent,
   type ReactNode,
 } from "react";
-import { useWorld, type World } from "@/components/shared/world-provider";
+import { useWorld } from "@/components/shared/world-provider";
+import { everyWorld, type InstalledWorld } from "@/lib/world";
 import { keyToIndex } from "@/lib/keys";
-import { MinimalLiquidTabs } from "./worlds/minimal";
-import { CraftLiquidTabs } from "./worlds/craft";
-import { RetroLiquidTabs } from "./worlds/retro";
-import { ToyLiquidTabs } from "./worlds/toy";
+import * as worlds from "./worlds";
 
 export type DeployStatus = "offline" | "building" | "online";
 
 export interface LiquidTabsProps {
   tabs: string[];
-  variant?: World;
+  variant?: InstalledWorld<typeof worlds>;
   value?: number;
   defaultValue?: number;
   onValueChange?: (index: number) => void;
@@ -61,12 +59,8 @@ const STATUS_LABEL: Record<DeployStatus, string> = {
 
 export const STATUS_INDEX: Record<DeployStatus, number> = { offline: 0, building: 1, online: 2 };
 
-const VIEWS = {
-  minimal: MinimalLiquidTabs,
-  craft: CraftLiquidTabs,
-  retro: RetroLiquidTabs,
-  toy: ToyLiquidTabs,
-} satisfies Record<World, ComponentType<LiquidTabsWorldProps>>;
+/** The installed worlds; a single-world install draws its one world for any provider world. */
+const VIEWS = everyWorld<ComponentType<LiquidTabsWorldProps>>(worlds);
 
 export function LiquidTabs({
   tabs,

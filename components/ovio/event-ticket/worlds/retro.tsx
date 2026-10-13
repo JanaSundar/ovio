@@ -50,6 +50,6 @@ const LOOK: TicketLook = {
   },
 };
 
-export function RetroEventTicket(props: EventTicketWorldProps) {
+export default function RetroEventTicket(props: EventTicketWorldProps) {
   return <Ticket look={LOOK} {...props} />;
 }

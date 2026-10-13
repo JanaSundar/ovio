@@ -15,7 +15,7 @@ const ARM_REST = 4;
 const ARM_START = 22;
 const ARM_SPAN = 17;
 
-export function CraftNowPlaying({
+export default function CraftNowPlaying({
   track,
   playing,
   progress,

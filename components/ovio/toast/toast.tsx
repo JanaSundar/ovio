@@ -3,12 +3,10 @@
 import { useSyncExternalStore, type ComponentType } from "react";
 import { createPortal } from "react-dom";
 import { toast, Toaster, type ExternalToast, type ToasterProps } from "sonner";
-import { OvioProvider, useWorld, type World } from "@/components/shared/world-provider";
-import { MinimalToast } from "./worlds/minimal";
-import { CraftToast } from "./worlds/craft";
-import { RetroToast } from "./worlds/retro";
-import { ToyToast } from "./worlds/toy";
+import { OvioProvider, useWorld } from "@/components/shared/world-provider";
+import { everyWorld, type InstalledWorld } from "@/lib/world";
 import type { ToastKind, ToastAction } from "./types";
+import * as worlds from "./worlds";
 
 export type { ToastKind, ToastAction } from "./types";
 
@@ -27,12 +25,8 @@ export type ToastWorldProps = {
   dismiss: () => void;
 };
 
-const VIEWS = {
-  minimal: MinimalToast,
-  craft: CraftToast,
-  retro: RetroToast,
-  toy: ToyToast,
-} satisfies Record<World, ComponentType<ToastWorldProps>>;
+/** The installed worlds; a single-world install draws its one world for any provider world. */
+const VIEWS = everyWorld<ComponentType<ToastWorldProps>>(worlds);
 
 function OvioToast(props: ToastWorldProps) {
   const View = VIEWS[useWorld()] ?? VIEWS.minimal;
@@ -74,7 +68,7 @@ export const ovioToast = {
 export type OvioToasterProps = Omit<
   ToasterProps,
   "theme" | "richColors" | "invert" | "icons" | "toastOptions" | "closeButton"
-> & { variant?: World };
+> & { variant?: InstalledWorld<typeof worlds> };
 
 /** Where toasts appear. Mount it once; toasts take its world (variant, then the provider). */
 export function OvioToaster({ variant, position = "bottom-right", ...props }: OvioToasterProps) {

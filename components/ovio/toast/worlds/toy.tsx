@@ -9,7 +9,7 @@ const PLASTIC: Record<ToastKind, (typeof TOY_PLASTIC)[keyof typeof TOY_PLASTIC]>
 
 const ICON: Record<ToastKind, string> = { success: "✓", error: "!", info: "i" };
 
-export function ToyToast({ kind, title, description, action, dismiss }: ToastWorldProps) {
+export default function ToyToast({ kind, title, description, action, dismiss }: ToastWorldProps) {
   const [face, side, ink] = PLASTIC[kind];
   return (
     <div

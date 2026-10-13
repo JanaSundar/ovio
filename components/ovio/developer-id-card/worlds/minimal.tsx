@@ -5,7 +5,7 @@ import { motionTokens, useOvioTransition } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import type { DeveloperIdCardWorldProps } from "../developer-id-card";
 
-export function MinimalDeveloperIdCard({
+export default function MinimalDeveloperIdCard({
   name,
   initials,
   title,

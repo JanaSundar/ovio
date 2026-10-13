@@ -13,13 +13,26 @@ import { COMPONENTS } from "@/content/components";
  *   parts.tsx        pieces two or more worlds share, or parts/ when there are several
  *   use-<name>.ts    hooks the worlds share
  *   <name>.ts        plain logic, no React, safe for server code (embeds, OG images)
- *   worlds/          minimal.tsx, craft.tsx, retro.tsx, toy.tsx
+ *   worlds/          minimal.tsx, craft.tsx, retro.tsx, toy.tsx, and index.ts re-exporting them
+ *
+ * Next to each component's registry item sit four single-world items, `<slug>-<world>`, that
+ * install it with one world: registry/worlds/<world>.ts stands in for worlds/index.ts.
  */
 
 const ROOT = "components/ovio";
-const WORLDS = ["craft.tsx", "minimal.tsx", "retro.tsx", "toy.tsx"];
+const WORLDS = ["craft.tsx", "index.ts", "minimal.tsx", "retro.tsx", "toy.tsx"];
+const NAMES = ["minimal", "craft", "retro", "toy"];
 const slugs = readdirSync(ROOT).filter((d) => statSync(path.join(ROOT, d)).isDirectory());
+/** Every worlds/index.ts is the same four lines, so a single-world one can stand in for any. */
+const INDEX = readFileSync(path.join(ROOT, slugs[0], "worlds/index.ts"), "utf8");
 const read = (file: string) => readFileSync(file, "utf8");
+type Item = {
+  name: string;
+  dependencies?: string[];
+  registryDependencies?: string[];
+  files: { path: string; target?: string }[];
+};
+const registry = JSON.parse(read("registry.json")) as { items: Item[] };
 
 /** Every file under a folder, relative to it. */
 function walk(dir: string, base = dir): string[] {
@@ -37,12 +50,13 @@ describe.each(slugs)("components/ovio/%s", (slug) => {
   const top = files.filter((f) => !f.includes("/"));
   const folders = new Set(files.filter((f) => f.includes("/")).map((f) => f.split("/")[0]));
 
-  it("has the component, its demo and all four worlds", () => {
+  it("has the component, its demo and all four worlds, behind one index", () => {
     expect(top).toContain(`${slug}.tsx`);
     expect(top).toContain("demo.tsx");
     expect(files.filter((f) => f.startsWith("worlds/")).sort()).toEqual(
       WORLDS.map((w) => `worlds/${w}`),
     );
+    expect(read(path.join(dir, "worlds/index.ts"))).toBe(INDEX);
   });
 
   it("keeps everything else in its place", () => {
@@ -72,9 +86,6 @@ describe.each(slugs)("components/ovio/%s", (slug) => {
   it("is listed everywhere the site and the registry look", () => {
     expect(COMPONENTS.some((c) => c.slug === slug)).toBe(true);
     expect(Object.keys(DEMOS)).toContain(slug);
-    const registry = JSON.parse(read("registry.json")) as {
-      items: { name: string; files: { path: string }[] }[];
-    };
     const item = registry.items.find((i) => i.name === slug);
     expect(item?.files.map((f) => f.path).sort()).toEqual(
       files
@@ -83,6 +94,30 @@ describe.each(slugs)("components/ovio/%s", (slug) => {
         .sort(),
     );
   });
+
+  it.each(NAMES)("installs the %s world alone", (world) => {
+    const base = registry.items.find((i) => i.name === slug)!;
+    const item = registry.items.find((i) => i.name === `${slug}-${world}`);
+    const installed = item?.files.map((f) => f.target ?? f.path) ?? [];
+    expect(installed).toContain(`${dir}/${slug}.tsx`);
+    expect(installed).toContain(`${dir}/worlds/index.ts`);
+    expect(item?.files.find((f) => f.target === `${dir}/worlds/index.ts`)?.path).toBe(
+      `registry/worlds/${world}.ts`,
+    );
+    expect(installed.filter((f) => f.startsWith(`${dir}/worlds/`)).sort()).toEqual(
+      [`${dir}/worlds/index.ts`, `${dir}/worlds/${world}.tsx`].sort(),
+    );
+    // Never more than the component itself would bring.
+    for (const key of ["dependencies", "registryDependencies"] as const)
+      expect(base[key] ?? []).toEqual(expect.arrayContaining(item?.[key] ?? []));
+  });
+});
+
+it("gives every single-world index exactly its own world", () => {
+  for (const world of NAMES)
+    expect(read(`registry/worlds/${world}.ts`)).toMatch(
+      new RegExp(`^export \\{ default as ${world} \\} from "\\./${world}";$`, "m"),
+    );
 });
 
 it("has a folder for every catalogued component", () => {

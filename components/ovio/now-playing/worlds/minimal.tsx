@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import type { NowPlayingWorldProps } from "../now-playing";
 import { Artwork, EqBars, Time, useFillTransition } from "../parts";
 
-export function MinimalNowPlaying({
+export default function MinimalNowPlaying({
   track,
   playing,
   progress,

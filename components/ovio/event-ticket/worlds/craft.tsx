@@ -55,6 +55,6 @@ const LOOK: TicketLook = {
   },
 };
 
-export function CraftEventTicket(props: EventTicketWorldProps) {
+export default function CraftEventTicket(props: EventTicketWorldProps) {
   return <Ticket look={LOOK} {...props} />;
 }

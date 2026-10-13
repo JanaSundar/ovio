@@ -21,7 +21,7 @@ const tag = (login: string) =>
     .slice(0, 3)
     .toUpperCase();
 
-export function RetroTopContributors({
+export default function RetroTopContributors({
   people,
   total,
   repo,

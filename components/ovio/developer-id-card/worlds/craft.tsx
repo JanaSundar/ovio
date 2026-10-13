@@ -25,7 +25,7 @@ const LIFT = cn(
 );
 const label = "font-(family-name:--ovio-mono) uppercase";
 
-export function CraftDeveloperIdCard({
+export default function CraftDeveloperIdCard({
   name,
   initials,
   title,

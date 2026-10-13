@@ -95,7 +95,7 @@ function MinimalTag({ text }: TagProps) {
   );
 }
 
-export function MinimalGitBranchVisualizer({
+export default function MinimalGitBranchVisualizer({
   graph,
   current,
   status,

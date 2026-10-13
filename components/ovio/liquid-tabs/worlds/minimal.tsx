@@ -21,6 +21,6 @@ const look: LiquidLook = {
   dots: ["#c9c6bf", "#97938a", "#161614"],
 };
 
-export function MinimalLiquidTabs(props: LiquidTabsWorldProps) {
+export default function MinimalLiquidTabs(props: LiquidTabsWorldProps) {
   return <LiquidBar look={look} {...props} />;
 }

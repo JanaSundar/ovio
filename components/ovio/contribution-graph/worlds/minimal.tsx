@@ -39,7 +39,7 @@ const FADE_TIMING = {
 };
 
 /** Minimal: an editorial heatmap. Big total, thin rules, a neutral five-step ramp. */
-export function MinimalContributionGraph({
+export default function MinimalContributionGraph({
   year,
   active,
   focusIndex,

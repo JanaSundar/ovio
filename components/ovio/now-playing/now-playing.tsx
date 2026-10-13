@@ -8,20 +8,18 @@ import {
   type KeyboardEvent,
   type PointerEvent,
 } from "react";
-import { useWorld, type World } from "@/components/shared/world-provider";
+import { useWorld } from "@/components/shared/world-provider";
+import { everyWorld, type InstalledWorld } from "@/lib/world";
 import { keyToIndex } from "@/lib/keys";
 import { formatTime, VOLUME_STEPS } from "./parts";
-import { MinimalNowPlaying } from "./worlds/minimal";
-import { CraftNowPlaying } from "./worlds/craft";
-import { RetroNowPlaying } from "./worlds/retro";
-import { ToyNowPlaying } from "./worlds/toy";
 import type { Track } from "./types";
+import * as worlds from "./worlds";
 
 export type { Track } from "./types";
 
 export interface NowPlayingProps {
   track: Track;
-  variant?: World;
+  variant?: InstalledWorld<typeof worlds>;
   playing?: boolean;
   defaultPlaying?: boolean;
   onPlayingChange?: (playing: boolean) => void;
@@ -75,12 +73,8 @@ export type NowPlayingWorldProps = {
 
 const clamp = (v: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, v));
 
-const VIEWS = {
-  minimal: MinimalNowPlaying,
-  craft: CraftNowPlaying,
-  retro: RetroNowPlaying,
-  toy: ToyNowPlaying,
-} satisfies Record<World, ComponentType<NowPlayingWorldProps>>;
+/** The installed worlds; a single-world install draws its one world for any provider world. */
+const VIEWS = everyWorld<ComponentType<NowPlayingWorldProps>>(worlds);
 
 export function NowPlaying({
   track,

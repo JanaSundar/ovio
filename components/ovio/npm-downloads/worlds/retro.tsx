@@ -14,7 +14,7 @@ const cells = (progress: number, count: number) => {
 
 const bar = (color: string) => `repeating-linear-gradient(0deg,${color} 0 5px,transparent 5px 7px)`;
 
-export function RetroNpmDownloads({
+export default function RetroNpmDownloads({
   packageName,
   points,
   selected,

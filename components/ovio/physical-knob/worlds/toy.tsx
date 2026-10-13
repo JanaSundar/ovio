@@ -26,7 +26,7 @@ const TICKS = {
   rounded: true,
 };
 
-export function ToyKnob({
+export default function ToyKnob({
   value,
   min,
   max,

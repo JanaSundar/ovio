@@ -8,14 +8,12 @@ import {
   useState,
   type KeyboardEvent,
 } from "react";
-import { useWorld, type World } from "@/components/shared/world-provider";
+import { useWorld } from "@/components/shared/world-provider";
+import { everyWorld, type InstalledWorld } from "@/lib/world";
 import { formatNumber } from "@/lib/format";
 import { keyToIndex } from "@/lib/keys";
-import { MinimalBundleSize } from "./worlds/minimal";
-import { CraftBundleSize } from "./worlds/craft";
-import { RetroBundleSize } from "./worlds/retro";
-import { ToyBundleSize } from "./worlds/toy";
 import type { BundleVersion } from "./types";
+import * as worlds from "./worlds";
 
 export type { BundleVersion } from "./types";
 
@@ -25,7 +23,7 @@ export type BundleSizeProps = {
   versions: BundleVersion[];
   /** Size budget in kB. Leave out and the bar scales to the largest version. */
   budget?: number;
-  variant?: World;
+  variant?: InstalledWorld<typeof worlds>;
   className?: string;
 };
 
@@ -143,12 +141,8 @@ export function formatSize(kb: number) {
   return `${formatNumber(value, { maximumFractionDigits: unit === "B" ? 0 : 1 })} ${unit}`;
 }
 
-const VIEWS = {
-  minimal: MinimalBundleSize,
-  craft: CraftBundleSize,
-  retro: RetroBundleSize,
-  toy: ToyBundleSize,
-} satisfies Record<World, ComponentType<BundleSizeWorldProps>>;
+/** The installed worlds; a single-world install draws its one world for any provider world. */
+const VIEWS = everyWorld<ComponentType<BundleSizeWorldProps>>(worlds);
 
 export function BundleSize({ packageName, versions, budget, variant, className }: BundleSizeProps) {
   const world = useWorld(variant);

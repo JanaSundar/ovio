@@ -12,7 +12,7 @@ const TILES = ["#e0713a", "#3178c6", "#ffe27a", "#2f9a45", "#f2c9a0", "#b8471f"]
 const LIGHT = new Set([2, 4]);
 const TILT = [-4, 3, -2, 5, -3, 2];
 
-export function CraftTopContributors({
+export default function CraftTopContributors({
   people,
   total,
   repo,

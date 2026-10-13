@@ -22,7 +22,7 @@ const KEYS = [
   ["var(--ovio-yellow)", "var(--ovio-ink)", "var(--ovio-yellow-deep)"],
 ];
 
-export function ToyBundleSize({
+export default function ToyBundleSize({
   packageName,
   versions,
   index,

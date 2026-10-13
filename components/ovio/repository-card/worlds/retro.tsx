@@ -6,7 +6,7 @@ import { dots, formatNumber } from "@/lib/format";
 
 const LABEL: Record<string, string> = { stars: "STARS", forks: "FORKS", issues: "ISSUES" };
 
-export function RetroRepositoryCard({
+export default function RetroRepositoryCard({
   repo,
   stats,
   starCount,

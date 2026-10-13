@@ -19,7 +19,7 @@ const LABEL = "py-3.5 font-[inherit] text-[11px] font-extrabold sm:text-[15px]";
  * Toy: the indicator is a plastic piece in a track. Click a tab, or drag and flick the piece;
  * it slides on a spring (k420 c20), squashes with its speed and snaps to the nearest tab.
  */
-export function ToyLiquidTabs(p: LiquidTabsWorldProps) {
+export default function ToyLiquidTabs(p: LiquidTabsWorldProps) {
   const reduced = useReducedMotionSafe();
   const n = p.tabs.length;
   const track = useRef<HTMLDivElement>(null);

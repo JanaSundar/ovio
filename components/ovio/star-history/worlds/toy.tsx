@@ -9,7 +9,7 @@ import { useMonthScrubber } from "../use-scrubber";
 /** Bricks in the tallest column. */
 const STACK = 14;
 
-export function ToyStarHistory({
+export default function ToyStarHistory({
   shape,
   name,
   label,

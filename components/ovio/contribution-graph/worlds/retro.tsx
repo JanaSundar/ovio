@@ -43,7 +43,7 @@ const SWITCH_ON_TIMING = {
 };
 
 /** Retro: a CRT running ACTIVITY.EXE. Pixels light in scan order; "always" adds flicker and a roll bar. */
-export function RetroContributionGraph({
+export default function RetroContributionGraph({
   year,
   active,
   focusIndex,

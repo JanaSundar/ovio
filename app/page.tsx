@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { HomeShowcase } from "@/components/site/home-showcase";
 import { SiteFooter } from "@/components/site/site-nav";
@@ -15,19 +16,47 @@ import { WorldCommand } from "@/components/site/install-command";
 import { JsonLd, SITE_DESCRIPTION, sourceCode } from "@/lib/seo";
 import { WORLDS, type World } from "@/lib/world";
 
-/** The six components the catalog leads with, each with a glyph and a one-line pitch. */
+/** Each catalogued component's glyph and one-line pitch, for the hero and the catalog. */
+const PITCHES: Record<string, { glyph: string; pitch: string }> = {
+  "contribution-graph": { glyph: "▦", pitch: "A year of activity, one cell per day." },
+  "repository-card": { glyph: "◈", pitch: "The story behind a project at a glance." },
+  "star-history": { glyph: "↗", pitch: "Stargazers over time, with a scrubber." },
+  "liquid-tabs": { glyph: "▤", pitch: "Tabs with a liquid indicator and a deploy status." },
+  "top-contributors": { glyph: "◎", pitch: "Put project people in the foreground." },
+  "physical-knob": { glyph: "◉", pitch: "A tactile control with genuine inertia." },
+  letter: { glyph: "✉", pitch: "A newsletter issue, sent four different ways." },
+  "compare-slider": { glyph: "◧", pitch: "Two versions of anything, one divider." },
+};
+
+/** The components the catalog shows when nothing new leads it. */
 const FEATURED = [
-  { slug: "contribution-graph", glyph: "▦", pitch: "A year of activity, one cell per day." },
-  { slug: "repository-card", glyph: "◈", pitch: "The story behind a project at a glance." },
-  { slug: "star-history", glyph: "↗", pitch: "Stargazers over time, with a scrubber." },
-  { slug: "liquid-tabs", glyph: "▤", pitch: "Tabs with a liquid indicator and a deploy status." },
-  { slug: "top-contributors", glyph: "◎", pitch: "Put project people in the foreground." },
-  { slug: "physical-knob", glyph: "◉", pitch: "A tactile control with genuine inertia." },
+  "contribution-graph",
+  "repository-card",
+  "star-history",
+  "liquid-tabs",
+  "top-contributors",
+  "physical-knob",
 ];
+
+/** How many components the catalog lists under the lead, two columns of three. */
+const LISTED = 6;
+
+const withPitch = (slug: string) => ({
+  ...COMPONENTS.find((c) => c.slug === slug)!,
+  ...PITCHES[slug],
+});
 
 export default function HomePage() {
   const count = COMPONENTS.length;
-  const featured = FEATURED.map((f) => ({ ...f, ...COMPONENTS.find((c) => c.slug === f.slug)! }));
+  // Newest first: the latest leads the hero and the catalog, the rest join the list with a dot.
+  const fresh = COMPONENTS.filter((c) => c.isNew && c.slug in PITCHES)
+    .reverse()
+    .map((c) => withPitch(c.slug));
+  const [latest] = fresh;
+  const listed = [
+    ...fresh.slice(1),
+    ...FEATURED.filter((slug) => !fresh.some((c) => c.slug === slug)).map(withPitch),
+  ].slice(0, LISTED);
 
   return (
     <>
@@ -60,7 +89,22 @@ export default function HomePage() {
           </aside>
           <div className="intro-main">
             <div>
-              <p className="eyebrow">For portfolios, projects, docs and profiles</p>
+              {latest ? (
+                <Link className="news-pill" href={`/docs/${latest.slug}`}>
+                  <span className="news-tag">
+                    <span className="new-dot" /> New
+                  </span>
+                  <span className="news-text">
+                    <b>{latest.name}</b>
+                    <span className="news-pitch"> · {latest.pitch}</span>
+                  </span>
+                  <span aria-hidden className="news-go">
+                    →
+                  </span>
+                </Link>
+              ) : (
+                <p className="eyebrow">For portfolios, projects, docs and profiles</p>
+              )}
               <h1>
                 One component.
                 <br />
@@ -113,13 +157,34 @@ export default function HomePage() {
             <Link href={DOCS_HREF}>Browse all {count} components ↗</Link>
           </div>
           <div className="catalog-list">
-            {featured.map((c) => (
+            {latest && (
+              <Link className="catalog-lead" href={`/docs/${latest.slug}`}>
+                <span aria-hidden className="lead-art">
+                  {/* Already a sized PNG from its own route, so there is nothing to optimise. */}
+                  <Image src={`/og/${latest.slug}`} alt="" width={1200} height={630} unoptimized />
+                </span>
+                <span className="lead-text">
+                  <span className="status new-mark">
+                    <i /> Just added
+                  </span>
+                  <b>{latest.name}</b>
+                  <small>{latest.description}</small>
+                  <span className="lead-link">Open the docs ↗</span>
+                </span>
+              </Link>
+            )}
+            {listed.map((c) => (
               <Link key={c.slug} className="catalog-item" href={`/docs/${c.slug}`}>
                 <span aria-hidden className="glyph">
                   {c.glyph}
                 </span>
                 <span>
                   <b>{c.name}</b>
+                  {c.isNew && (
+                    <span className="new-dot">
+                      <span className="sr-only">New</span>
+                    </span>
+                  )}
                   <small>{c.pitch}</small>
                 </span>
                 <span aria-hidden className="arrow">

@@ -109,7 +109,14 @@ function ComponentLinks({
               aria-current={pathname === href ? "page" : undefined}
               onClick={onNavigate}
             >
-              {c.name}
+              <span className="side-name">
+                {c.name}
+                {c.isNew && (
+                  <span className="new-dot">
+                    <span className="sr-only">New</span>
+                  </span>
+                )}
+              </span>
               <small>{pad2(c.n)}</small>
             </Link>
           );

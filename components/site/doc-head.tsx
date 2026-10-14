@@ -49,7 +49,14 @@ export function DocHead() {
         <AutoHeight transition={RESIZE} bleed={8}>
           {swap(
             <>
-              <p className="eyebrow">Component reference</p>
+              <p className="eyebrow">
+                Component reference
+                {c.isNew && (
+                  <span className="status new-mark">
+                    <i /> New
+                  </span>
+                )}
+              </p>
               <h1>{c.name}</h1>
               <p>{c.description}</p>
             </>,

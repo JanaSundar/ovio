@@ -141,11 +141,40 @@
   letter-spacing: 0.06em;
 }
 .status i {
+  position: relative;
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: var(--lime);
-  box-shadow: 0 0 0 4px #d7fb5840;
+  background: #e0713a;
+  box-shadow: 0 0 0 4px #e0713a2e;
+}
+/* Status dots beat: a copy of the dot, in its own colour, swells out and fades on the compositor. */
+.status i::after,
+.new-dot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: inherit;
+  animation: dot-beat 1.8s var(--ease-out) infinite;
+}
+@keyframes dot-beat {
+  from {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  70%,
+  to {
+    opacity: 0;
+    transform: scale(3);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .status i::after,
+  .new-dot::after {
+    animation: none;
+    opacity: 0;
+  }
 }
 .world-count a {
   display: inline-block;
@@ -206,6 +235,51 @@
 .intro-copy strong {
   color: #30322d;
   font-weight: 600;
+}
+/* Home: the newest component, a pill where the intro eyebrow sits. */
+.news-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 100%;
+  padding: 6px 12px 6px 11px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: #fbfaf6;
+  font-size: 13px;
+  color: #5d5f59;
+  transition: background-color 0.15s var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .news-pill:hover {
+    background: #fff;
+  }
+  .news-pill:hover .news-go {
+    transform: translateX(2px);
+  }
+}
+.news-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding-right: 10px;
+  border-right: 1px solid var(--line-strong);
+  font: 12px var(--mono);
+  color: #b8471f;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.news-text {
+  min-width: 0;
+}
+.news-text b {
+  color: var(--ink);
+  font-weight: 600;
+}
+.news-go {
+  font-family: var(--mono);
+  color: var(--muted);
+  transition: transform 0.2s var(--ease-out);
 }
 .inline-link {
   white-space: nowrap;
@@ -453,8 +527,8 @@ html.lenis-smooth .stage-frame {
   background: #f7f6f2;
   transition: background-color 0.15s var(--ease-out);
 }
-.catalog-item:nth-child(4n + 2),
-.catalog-item:nth-child(4n + 3) {
+.catalog-item:nth-child(4n + 2 of .catalog-item),
+.catalog-item:nth-child(4n + 3 of .catalog-item) {
   background: transparent;
 }
 @media (hover: hover) and (pointer: fine) {
@@ -499,6 +573,71 @@ html.lenis-smooth .stage-frame {
   font-size: 14px;
   color: #90918b;
 }
+/* The newest component leads the catalog across both columns, with its share drawing. */
+.catalog-lead {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 168px 1fr;
+  gap: 22px;
+  align-items: center;
+  padding: 18px 17px;
+  border-bottom: 1px dotted var(--line);
+  background: #fbfaf6;
+  transition: background-color 0.15s var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .catalog-lead:hover {
+    background: #fff;
+  }
+}
+/* The drawing is the right-hand card of the component's OG image (418 by 463 at 731, 83 of 1200 by 630). */
+.lead-art {
+  position: relative;
+  display: block;
+  aspect-ratio: 418 / 463;
+  overflow: hidden;
+  border-radius: 8px;
+}
+.lead-art img {
+  position: absolute;
+  left: -174.9%;
+  top: -17.9%;
+  width: 287.1%;
+  max-width: none;
+  height: auto;
+}
+.lead-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+.lead-text .status.new-mark {
+  margin-left: 0;
+}
+.lead-text b {
+  font: 600 24px var(--display);
+  letter-spacing: -0.04em;
+}
+.lead-text small {
+  max-width: 400px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #85867f;
+}
+.lead-link {
+  margin-top: 4px;
+  font: 13px var(--mono);
+  color: #4e504a;
+  border-bottom: 1px solid var(--ink);
+  padding-bottom: 3px;
+}
+.catalog-item .new-dot {
+  display: inline-block;
+  margin-left: 9px;
+  vertical-align: 3px;
+}
+
 .catalog-footer {
   grid-column: 1 / span 12;
   display: flex;
@@ -806,6 +945,27 @@ html.lenis-smooth .stage-frame {
 .side-links a small {
   color: #aaa;
   font: 12px var(--mono);
+}
+.side-name {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+/* Recently added: the status mark inline after the eyebrow, a lone dot in lists. */
+.status.new-mark {
+  display: inline-flex;
+  margin-left: 12px;
+  vertical-align: 1px;
+}
+.new-dot {
+  position: relative;
+  background: #e0713a;
+  box-shadow: 0 0 0 4px #e0713a2e;
+  flex-shrink: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
 }
 .side-empty {
   padding: 7px;
@@ -1563,6 +1723,17 @@ html.lenis-smooth .stage-frame {
   .catalog-item {
     min-height: 73px;
     padding: 12px;
+  }
+  .news-pitch {
+    display: none;
+  }
+  .catalog-lead {
+    grid-template-columns: 112px 1fr;
+    gap: 14px;
+    padding: 14px 12px;
+  }
+  .lead-text b {
+    font-size: 20px;
   }
   .catalog-footer {
     min-height: 50px;

@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { isAccentBar, SAMPLE_RELEASE } from "@/content/samples";
 import { ArtCard, ink, Label, mono, muted, sans } from "./card";
 
 /** The olive-to-lime ramp from the brand card, quiet to busy. */
@@ -570,6 +571,116 @@ function LetterSheet() {
   );
 }
 
+/** Where the share image splits the sample release card, and how it reads under the card. */
+const SPLIT = 46;
+const SPLIT_READOUT = `${SPLIT} / ${100 - SPLIT}`;
+
+/** The sample release card split at SPLIT: wireframe on the left, finished on the right. */
+function Compare() {
+  const w = 340;
+  const h = 236;
+  const at = (w * SPLIT) / 100;
+  const abs = { display: "flex", position: "absolute", top: 0 } as const;
+  const card = (finished: boolean) => {
+    const outline = { border: `2px dashed ${line}` };
+    const fill = {
+      ink: { background: ink },
+      accent: { background: lime },
+      soft: { background: line },
+    };
+    const tone = (kind: keyof typeof fill) => (finished ? fill[kind] : outline);
+    return (
+      <div
+        style={{
+          ...col,
+          ...abs,
+          left: 0,
+          width: w,
+          height: h,
+          padding: 26,
+          gap: 16,
+          background: finished ? "#fbfbf8" : "#efeee9",
+        }}
+      >
+        <div style={{ ...row, gap: 12 }}>
+          <div style={{ width: 34, height: 34, borderRadius: 9, ...tone("accent") }} />
+          <div style={{ ...col, gap: 7 }}>
+            <div style={{ width: 150, height: 10, borderRadius: 5, ...tone("ink") }} />
+            <div style={{ width: 96, height: 10, borderRadius: 5, ...tone("soft") }} />
+          </div>
+        </div>
+        <div style={{ ...row, alignItems: "flex-end", gap: 8, height: 110 }}>
+          {SAMPLE_RELEASE.bars.map((b, i) => (
+            <div
+              key={i}
+              style={{
+                flex: 1,
+                height: `${b}%`,
+                borderRadius: "5px 5px 0 0",
+                ...tone(isAccentBar(i) ? "accent" : "ink"),
+              }}
+            />
+          ))}
+        </div>
+      </div>
+    );
+  };
+  return (
+    <div style={{ ...col, gap: 18, alignItems: "center" }}>
+      <div
+        style={{
+          display: "flex",
+          position: "relative",
+          width: w,
+          height: h,
+          borderRadius: 18,
+          overflow: "hidden",
+          border: `2px solid ${line}`,
+        }}
+      >
+        {card(true)}
+        <div style={{ ...abs, left: 0, width: at, height: h, overflow: "hidden" }}>
+          {card(false)}
+        </div>
+        <div style={{ ...abs, left: at - 1, width: 2, height: h, background: ink }} />
+        <div
+          style={{
+            ...row,
+            ...abs,
+            justifyContent: "center",
+            left: at - 22,
+            top: h / 2 - 22,
+            width: 44,
+            height: 44,
+            borderRadius: 22,
+            background: "#fbfbf8",
+            border: `2px solid ${ink}`,
+            fontFamily: mono,
+            fontSize: 18,
+            color: ink,
+          }}
+        >
+          ‹ ›
+        </div>
+      </div>
+      <div
+        style={{
+          ...row,
+          justifyContent: "space-between",
+          width: w,
+          fontFamily: mono,
+          fontSize: 18,
+          color: muted,
+        }}
+      >
+        <span>{SAMPLE_RELEASE.beforeLabel}</span>
+        <span style={{ color: ink }}>{SPLIT_READOUT}</span>
+        <span>{SAMPLE_RELEASE.afterLabel}</span>
+      </div>
+    </div>
+  );
+}
+
 type Art = { label: string; metric?: string; footer?: string[]; draw: () => ReactNode };
 
 const ARTS: Record<string, Art> = {
@@ -668,6 +779,12 @@ const ARTS: Record<string, Art> = {
     metric: "NO. 042",
     footer: ["PLANE", "SEAL", "MORSE", "MAILBOX"],
     draw: LetterSheet,
+  },
+  "compare-slider": {
+    label: "Compare slider",
+    metric: SPLIT_READOUT,
+    footer: ["DRAG", "CLICK", "KEYS"],
+    draw: Compare,
   },
 };
 

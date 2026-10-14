@@ -4073,6 +4073,246 @@
       ]
     },
     {
+      "name": "compare-slider",
+      "type": "registry:ui",
+      "title": "Compare Slider",
+      "description": "Two versions of anything, one over the other. Drag the divider, click to jump, or use the arrow keys.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/compare-slider/compare-slider.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/compare-slider/compare-slider.tsx"
+        },
+        {
+          "path": "components/ovio/compare-slider/compare.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/compare-slider/compare.ts"
+        },
+        {
+          "path": "components/ovio/compare-slider/use-compare.ts",
+          "type": "registry:hook",
+          "target": "components/ovio/compare-slider/use-compare.ts"
+        },
+        {
+          "path": "components/ovio/compare-slider/parts.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/compare-slider/parts.tsx"
+        },
+        {
+          "path": "components/ovio/compare-slider/worlds/index.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/compare-slider/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/compare-slider/worlds/minimal.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/compare-slider/worlds/minimal.tsx"
+        },
+        {
+          "path": "components/ovio/compare-slider/worlds/craft.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/compare-slider/worlds/craft.tsx"
+        },
+        {
+          "path": "components/ovio/compare-slider/worlds/retro.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/compare-slider/worlds/retro.tsx"
+        },
+        {
+          "path": "components/ovio/compare-slider/worlds/toy.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/compare-slider/worlds/toy.tsx"
+        }
+      ]
+    },
+    {
+      "name": "compare-slider-minimal",
+      "type": "registry:ui",
+      "title": "Compare Slider — Minimal",
+      "description": "Compare Slider in the Minimal world alone, without the other three. Add compare-slider for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/compare-slider/compare-slider.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/compare-slider/compare-slider.tsx"
+        },
+        {
+          "path": "components/ovio/compare-slider/compare.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/compare-slider/compare.ts"
+        },
+        {
+          "path": "components/ovio/compare-slider/use-compare.ts",
+          "type": "registry:hook",
+          "target": "components/ovio/compare-slider/use-compare.ts"
+        },
+        {
+          "path": "components/ovio/compare-slider/parts.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/compare-slider/parts.tsx"
+        },
+        {
+          "path": "registry/worlds/minimal.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/compare-slider/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/compare-slider/worlds/minimal.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/compare-slider/worlds/minimal.tsx"
+        }
+      ]
+    },
+    {
+      "name": "compare-slider-craft",
+      "type": "registry:ui",
+      "title": "Compare Slider — Craft",
+      "description": "Compare Slider in the Craft world alone, without the other three. Add compare-slider for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/compare-slider/compare-slider.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/compare-slider/compare-slider.tsx"
+        },
+        {
+          "path": "components/ovio/compare-slider/compare.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/compare-slider/compare.ts"
+        },
+        {
+          "path": "components/ovio/compare-slider/use-compare.ts",
+          "type": "registry:hook",
+          "target": "components/ovio/compare-slider/use-compare.ts"
+        },
+        {
+          "path": "components/ovio/compare-slider/parts.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/compare-slider/parts.tsx"
+        },
+        {
+          "path": "registry/worlds/craft.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/compare-slider/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/compare-slider/worlds/craft.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/compare-slider/worlds/craft.tsx"
+        }
+      ]
+    },
+    {
+      "name": "compare-slider-retro",
+      "type": "registry:ui",
+      "title": "Compare Slider — Retro",
+      "description": "Compare Slider in the Retro world alone, without the other three. Add compare-slider for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/compare-slider/compare-slider.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/compare-slider/compare-slider.tsx"
+        },
+        {
+          "path": "components/ovio/compare-slider/compare.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/compare-slider/compare.ts"
+        },
+        {
+          "path": "components/ovio/compare-slider/use-compare.ts",
+          "type": "registry:hook",
+          "target": "components/ovio/compare-slider/use-compare.ts"
+        },
+        {
+          "path": "components/ovio/compare-slider/parts.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/compare-slider/parts.tsx"
+        },
+        {
+          "path": "registry/worlds/retro.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/compare-slider/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/compare-slider/worlds/retro.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/compare-slider/worlds/retro.tsx"
+        }
+      ]
+    },
+    {
+      "name": "compare-slider-toy",
+      "type": "registry:ui",
+      "title": "Compare Slider — Toy",
+      "description": "Compare Slider in the Toy world alone, without the other three. Add compare-slider for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/compare-slider/compare-slider.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/compare-slider/compare-slider.tsx"
+        },
+        {
+          "path": "components/ovio/compare-slider/compare.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/compare-slider/compare.ts"
+        },
+        {
+          "path": "components/ovio/compare-slider/use-compare.ts",
+          "type": "registry:hook",
+          "target": "components/ovio/compare-slider/use-compare.ts"
+        },
+        {
+          "path": "components/ovio/compare-slider/parts.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/compare-slider/parts.tsx"
+        },
+        {
+          "path": "registry/worlds/toy.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/compare-slider/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/compare-slider/worlds/toy.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/compare-slider/worlds/toy.tsx"
+        }
+      ]
+    },
+    {
       "name": "all",
       "type": "registry:item",
       "title": "All Ovio components",
@@ -4093,7 +4333,8 @@
         "JanaSundar/ovio/git-branch-visualizer",
         "JanaSundar/ovio/now-playing",
         "JanaSundar/ovio/toast",
-        "JanaSundar/ovio/letter"
+        "JanaSundar/ovio/letter",
+        "JanaSundar/ovio/compare-slider"
       ],
       "files": []
     }

@@ -34,6 +34,8 @@ export type ComponentDoc = {
   usage: string;
   props: PropDoc[];
   data?: DataDoc;
+  /** Recently added: badged "New" in the docs sidebar and page header. */
+  isNew?: boolean;
 };
 
 const TOKEN_OPTIONAL =
@@ -633,6 +635,7 @@ export const COMPONENTS: ComponentDoc[] = [
     description:
       "A newsletter issue written as a letter, with the signup as its P.S. Send it and it flies off as a paper plane, gets sealed in an envelope, keyed out in Morse or dropped in a mailbox.",
     exportName: "Letter",
+    isNew: true,
     usage: "  letter={issue}\n  subscribers={2481}\n  onSubscribe={subscribe}",
     props: [
       {
@@ -652,6 +655,54 @@ export const COMPONENTS: ComponentDoc[] = [
         type: "(email: string) => Promise<void>",
         description:
           "Called with the email from the P.S. The letter goes out once it resolves; a rejection shows its message.",
+      },
+      CL,
+    ],
+  },
+  {
+    slug: "compare-slider",
+    name: "Compare Slider",
+    tech: "CSS clip-path · Motion for React (spring, drag; Retro: stepped)",
+    description:
+      "Two versions of anything, one over the other. Drag the divider, click to jump, or use the arrow keys.",
+    exportName: "CompareSlider",
+    isNew: true,
+    usage: '  before={<img src="/v1.png" alt="" />}\n  after={<img src="/v2.png" alt="" />}',
+    props: [
+      {
+        name: "before / after",
+        type: "ReactNode",
+        description: "The two versions, left and right of the divider. Images fill the view.",
+      },
+      V,
+      {
+        name: "beforeLabel / afterLabel",
+        type: "string",
+        description: "Printed in the top corners; each fades as the divider covers it.",
+        default: '"Before" / "After"',
+      },
+      {
+        name: "value / defaultValue",
+        type: "number",
+        description: "How much of before shows, 0–100. Controlled, or the starting split.",
+        default: "50",
+      },
+      {
+        name: "onValueChange",
+        type: "(value: number) => void",
+        description: "Fires while dragging.",
+      },
+      {
+        name: "label",
+        type: "string",
+        description: "Accessible name for the divider.",
+        default: '"Compare"',
+      },
+      {
+        name: "aspectRatio",
+        type: "string",
+        description: "CSS aspect ratio of the view.",
+        default: '"4 / 3"',
       },
       CL,
     ],

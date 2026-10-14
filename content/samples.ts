@@ -50,3 +50,15 @@ export const SAMPLE_DEVELOPER: Developer = {
   serial: "024",
   since: 2019,
 };
+
+/** lumen's release card, v1 (a wireframe) against v2 (finished), in the Compare Slider demo and its share image. */
+export const SAMPLE_RELEASE = {
+  label: "Release card",
+  beforeLabel: "v1",
+  afterLabel: "v2",
+  /** Bar heights in percent. */
+  bars: [40, 65, 52, 85, 60, 95, 72],
+};
+
+/** Every third bar of the finished card takes the accent. */
+export const isAccentBar = (i: number) => i % 3 === 2;

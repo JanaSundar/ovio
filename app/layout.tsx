@@ -15,6 +15,7 @@ import { Page, SiteNav } from "@/components/site/site-nav";
 import { SiteWorldProvider } from "@/components/site/site-world";
 import { SmoothScroll } from "@/components/site/smooth-scroll";
 import { SITE_URL } from "@/content/components";
+import { IS_PRODUCTION, SITE_DESCRIPTION as description } from "@/lib/seo";
 import "@/styles/globals.css";
 
 const geist = Geist({ variable: "--font-geist", subsets: ["latin"] });
@@ -48,14 +49,13 @@ const fonts = [
   .map((f) => f.variable)
   .join(" ");
 
-const description =
-  "Expressive motion components for developer websites, each in four design worlds: Minimal, Craft, Retro and Toy. Install it, own the source.";
-
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: { default: "Ovio · The motion layer for developer websites", template: "%s · Ovio" },
   description,
   applicationName: "Ovio",
+  alternates: { canonical: "/" },
+  robots: IS_PRODUCTION ? undefined : { index: false, follow: false },
   openGraph: {
     type: "website",
     siteName: "Ovio",

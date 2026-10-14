@@ -8,9 +8,11 @@ import {
   DOCS_HREF,
   installCommand,
   pad2,
+  SITE_URL,
   worldItemName,
 } from "@/content/components";
 import { WorldCommand } from "@/components/site/install-command";
+import { JsonLd, SITE_DESCRIPTION, sourceCode } from "@/lib/seo";
 import { WORLDS, type World } from "@/lib/world";
 
 /** The six components the catalog leads with, each with a glyph and a one-line pitch. */
@@ -30,6 +32,14 @@ export default function HomePage() {
   return (
     <>
       <main id="top">
+        <JsonLd
+          data={{
+            "@graph": [
+              { "@type": "WebSite", name: "Ovio", url: SITE_URL },
+              sourceCode("Ovio", SITE_DESCRIPTION, SITE_URL),
+            ],
+          }}
+        />
         <section className="intro row-12">
           <aside className="intro-index">
             <span className="status">

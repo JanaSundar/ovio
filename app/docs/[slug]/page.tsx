@@ -15,6 +15,7 @@ import {
   COMPONENTS,
   getComponent,
   installCommand,
+  SITE_URL,
   worldItemName,
   type ComponentDoc,
   type DocSectionId,
@@ -23,6 +24,7 @@ import { DEMO_TARGETS, isLiveSlug, SAMPLE_ONLY } from "@/content/demo-sources";
 import { registryItem } from "@/content/registry";
 import { isEmbedSlug } from "@/lib/embed/params";
 import { DEFAULT_REVALIDATE } from "@/lib/ovio-fetch";
+import { JsonLd, sourceCode } from "@/lib/seo";
 import { WORLDS, type World } from "@/lib/world";
 
 export const dynamicParams = false;
@@ -40,6 +42,7 @@ export async function generateMetadata({ params }: PageProps<"/docs/[slug]">): P
   return {
     title: c.name,
     description: c.description,
+    alternates: { canonical: `/docs/${c.slug}` },
     openGraph: {
       type: "website",
       siteName: "Ovio",
@@ -129,6 +132,25 @@ export default async function ComponentPage({ params }: PageProps<"/docs/[slug]"
   return (
     <>
       <article className="article">
+        <JsonLd
+          data={{
+            "@graph": [
+              sourceCode(c.name, c.description, `${SITE_URL}/docs/${c.slug}`),
+              {
+                "@type": "BreadcrumbList",
+                itemListElement: [
+                  { "@type": "ListItem", position: 1, name: "Ovio", item: SITE_URL },
+                  {
+                    "@type": "ListItem",
+                    position: 2,
+                    name: c.name,
+                    item: `${SITE_URL}/docs/${c.slug}`,
+                  },
+                ],
+              },
+            ],
+          }}
+        />
         <DocSection id="preview">
           <ComponentPreview slug={c.slug} exportName={c.exportName} files={files} />
         </DocSection>

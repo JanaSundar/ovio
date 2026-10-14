@@ -10,12 +10,13 @@ import { cn } from "@/lib/utils";
 const RESIZE = { duration: 0.28, ease: ease.stage };
 
 /**
- * The incoming world fades and settles in. Opacity and transform only, so it stays on the
- * compositor: a blur over the whole stage re-rasterised every frame and dropped frames.
+ * The incoming world fades in over the outgoing one. Opacity only, so it stays on the compositor
+ * (a blur re-rasterised the stage every frame), and no scale or slide: worlds that draw the same
+ * picture in the same place would show it shrink and jump during the crossfade.
  */
 const STAGE_IN = {
-  initial: { opacity: 0, scale: 0.985, y: 8 },
-  animate: { opacity: 1, scale: 1, y: 0 },
+  initial: { opacity: 0 },
+  animate: { opacity: 1 },
   transition: { duration: 0.3, ease: ease.stage },
 } as const;
 

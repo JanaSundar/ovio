@@ -3,6 +3,7 @@
 import type { ComponentType } from "react";
 import { BundleSizeDemo } from "@/components/ovio/bundle-size/demo";
 import { ChangelogDemo } from "@/components/ovio/changelog/demo";
+import { CompareSliderDemo } from "@/components/ovio/compare-slider/demo";
 import { ContributionGraphDemo } from "@/components/ovio/contribution-graph/demo";
 import { DeveloperIdCardDemo } from "@/components/ovio/developer-id-card/demo";
 import { EventTicketDemo } from "@/components/ovio/event-ticket/demo";
@@ -36,6 +37,7 @@ export const DEMOS: Record<string, { Demo: ComponentType; minHeight: number }> =
   "now-playing": { Demo: NowPlayingDemo, minHeight: 440 },
   toast: { Demo: ToastDemo, minHeight: 280 },
   letter: { Demo: LetterDemo, minHeight: 640 },
+  "compare-slider": { Demo: CompareSliderDemo, minHeight: 440 },
 };
 
 /** A component's demo, with fixed sample props. */

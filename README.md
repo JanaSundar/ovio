@@ -35,6 +35,7 @@ All motion respects `prefers-reduced-motion`.
 | [Now Playing](https://ovioui.vercel.app/docs/now-playing)                     | Available | What you're listening to, with play, seek and volume.                                               |
 | [Toast](https://ovioui.vercel.app/docs/toast)                                 | Available | Notifications in every world, from a taped note to a terminal line.                                 |
 | [Letter](https://ovioui.vercel.app/docs/letter)                               | Available | A newsletter issue as a letter, sent as a paper plane, sealed envelope, Morse wire or mailbox drop. |
+| [Compare Slider](https://ovioui.vercel.app/docs/compare-slider)               | Available | Two versions of anything, one over the other, split by a divider you drag.                          |
 
 The catalogue lives in [`content/components.ts`](content/components.ts).
 

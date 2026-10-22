@@ -635,7 +635,6 @@ export const COMPONENTS: ComponentDoc[] = [
     description:
       "A newsletter issue written as a letter, with the signup as its P.S. Send it and it flies off as a paper plane, gets sealed in an envelope, keyed out in Morse or dropped in a mailbox.",
     exportName: "Letter",
-    isNew: true,
     usage: "  letter={issue}\n  subscribers={2481}\n  onSubscribe={subscribe}",
     props: [
       {
@@ -666,7 +665,6 @@ export const COMPONENTS: ComponentDoc[] = [
     description:
       "Two versions of anything, one over the other. Drag the divider, click to jump, or use the arrow keys.",
     exportName: "CompareSlider",
-    isNew: true,
     usage: '  before={<img src="/v1.png" alt="" />}\n  after={<img src="/v2.png" alt="" />}',
     props: [
       {

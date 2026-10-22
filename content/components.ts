@@ -705,6 +705,69 @@ export const COMPONENTS: ComponentDoc[] = [
       CL,
     ],
   },
+  {
+    slug: "liquid-magnifier",
+    name: "Liquid Magnifier",
+    tech: "CSS transforms · Motion for React (spring, velocity squash; Retro: stepped)",
+    description:
+      "A liquid lens that trails the pointer and magnifies whatever it covers. Pinch, or press + and -, to zoom.",
+    exportName: "LiquidMagnifier",
+    isNew: true,
+    usage: '  label="Poster"\n  children={<img src="/poster.png" alt="" />}',
+    props: [
+      {
+        name: "children",
+        type: "ReactNode",
+        description:
+          "What the lens magnifies. It is drawn twice, under the lens and inside it, so keep it free of ids. Images fill the view.",
+      },
+      V,
+      {
+        name: "zoom / defaultZoom",
+        type: "number",
+        description: "How much the lens magnifies. Controlled, or the starting zoom.",
+        default: "2.5",
+      },
+      {
+        name: "onZoomChange",
+        type: "(zoom: number) => void",
+        description:
+          "Fires when a pinch, Ctrl or Cmd with the wheel, or the + and - keys change the zoom.",
+      },
+      {
+        name: "minZoom / maxZoom",
+        type: "number",
+        description: "The zoom range.",
+        default: "1.5 / 4",
+      },
+      {
+        name: "size",
+        type: "number",
+        description: "Lens diameter in px. It never takes more than 40% of the view's width.",
+        default: "128",
+      },
+      {
+        name: "rest",
+        type: "{ x: number; y: number }",
+        description:
+          "Where the lens waits while the pointer is elsewhere, as fractions of the view.",
+        default: "{ x: 0.62, y: 0.4 }",
+      },
+      {
+        name: "label",
+        type: "string",
+        description: "Accessible name for the view, printed by the worlds.",
+        default: '"Magnifier"',
+      },
+      {
+        name: "aspectRatio",
+        type: "string",
+        description: "CSS aspect ratio of the view.",
+        default: '"4 / 3"',
+      },
+      CL,
+    ],
+  },
 ];
 
 export const getComponent = (slug: string) => COMPONENTS.find((c) => c.slug === slug);

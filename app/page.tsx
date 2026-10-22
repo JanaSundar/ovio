@@ -26,6 +26,7 @@ const PITCHES: Record<string, { glyph: string; pitch: string }> = {
   "physical-knob": { glyph: "◉", pitch: "A tactile control with genuine inertia." },
   letter: { glyph: "✉", pitch: "A newsletter issue, sent four different ways." },
   "compare-slider": { glyph: "◧", pitch: "Two versions of anything, one divider." },
+  "liquid-magnifier": { glyph: "◍", pitch: "A liquid lens that magnifies what it covers." },
 };
 
 /** The components the catalog shows when nothing new leads it. */

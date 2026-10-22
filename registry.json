@@ -4313,6 +4313,246 @@
       ]
     },
     {
+      "name": "liquid-magnifier",
+      "type": "registry:ui",
+      "title": "Liquid Magnifier",
+      "description": "A liquid lens that trails the pointer and magnifies whatever it covers. Scroll or press + and - to zoom.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/liquid-magnifier/liquid-magnifier.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/liquid-magnifier/liquid-magnifier.tsx"
+        },
+        {
+          "path": "components/ovio/liquid-magnifier/magnifier.ts",
+          "type": "registry:ui",
+          "target": "components/ovio/liquid-magnifier/magnifier.ts"
+        },
+        {
+          "path": "components/ovio/liquid-magnifier/use-magnifier.ts",
+          "type": "registry:ui",
+          "target": "components/ovio/liquid-magnifier/use-magnifier.ts"
+        },
+        {
+          "path": "components/ovio/liquid-magnifier/parts.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/liquid-magnifier/parts.tsx"
+        },
+        {
+          "path": "components/ovio/liquid-magnifier/worlds/index.ts",
+          "type": "registry:ui",
+          "target": "components/ovio/liquid-magnifier/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/liquid-magnifier/worlds/minimal.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/liquid-magnifier/worlds/minimal.tsx"
+        },
+        {
+          "path": "components/ovio/liquid-magnifier/worlds/craft.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/liquid-magnifier/worlds/craft.tsx"
+        },
+        {
+          "path": "components/ovio/liquid-magnifier/worlds/retro.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/liquid-magnifier/worlds/retro.tsx"
+        },
+        {
+          "path": "components/ovio/liquid-magnifier/worlds/toy.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/liquid-magnifier/worlds/toy.tsx"
+        }
+      ]
+    },
+    {
+      "name": "liquid-magnifier-minimal",
+      "type": "registry:ui",
+      "title": "Liquid Magnifier — Minimal",
+      "description": "Liquid Magnifier in the Minimal world alone, without the other three. Add liquid-magnifier for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/liquid-magnifier/liquid-magnifier.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/liquid-magnifier/liquid-magnifier.tsx"
+        },
+        {
+          "path": "components/ovio/liquid-magnifier/magnifier.ts",
+          "type": "registry:ui",
+          "target": "components/ovio/liquid-magnifier/magnifier.ts"
+        },
+        {
+          "path": "components/ovio/liquid-magnifier/use-magnifier.ts",
+          "type": "registry:ui",
+          "target": "components/ovio/liquid-magnifier/use-magnifier.ts"
+        },
+        {
+          "path": "components/ovio/liquid-magnifier/parts.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/liquid-magnifier/parts.tsx"
+        },
+        {
+          "path": "registry/worlds/minimal.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/liquid-magnifier/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/liquid-magnifier/worlds/minimal.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/liquid-magnifier/worlds/minimal.tsx"
+        }
+      ]
+    },
+    {
+      "name": "liquid-magnifier-craft",
+      "type": "registry:ui",
+      "title": "Liquid Magnifier — Craft",
+      "description": "Liquid Magnifier in the Craft world alone, without the other three. Add liquid-magnifier for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/liquid-magnifier/liquid-magnifier.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/liquid-magnifier/liquid-magnifier.tsx"
+        },
+        {
+          "path": "components/ovio/liquid-magnifier/magnifier.ts",
+          "type": "registry:ui",
+          "target": "components/ovio/liquid-magnifier/magnifier.ts"
+        },
+        {
+          "path": "components/ovio/liquid-magnifier/use-magnifier.ts",
+          "type": "registry:ui",
+          "target": "components/ovio/liquid-magnifier/use-magnifier.ts"
+        },
+        {
+          "path": "components/ovio/liquid-magnifier/parts.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/liquid-magnifier/parts.tsx"
+        },
+        {
+          "path": "registry/worlds/craft.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/liquid-magnifier/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/liquid-magnifier/worlds/craft.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/liquid-magnifier/worlds/craft.tsx"
+        }
+      ]
+    },
+    {
+      "name": "liquid-magnifier-retro",
+      "type": "registry:ui",
+      "title": "Liquid Magnifier — Retro",
+      "description": "Liquid Magnifier in the Retro world alone, without the other three. Add liquid-magnifier for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/liquid-magnifier/liquid-magnifier.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/liquid-magnifier/liquid-magnifier.tsx"
+        },
+        {
+          "path": "components/ovio/liquid-magnifier/magnifier.ts",
+          "type": "registry:ui",
+          "target": "components/ovio/liquid-magnifier/magnifier.ts"
+        },
+        {
+          "path": "components/ovio/liquid-magnifier/use-magnifier.ts",
+          "type": "registry:ui",
+          "target": "components/ovio/liquid-magnifier/use-magnifier.ts"
+        },
+        {
+          "path": "components/ovio/liquid-magnifier/parts.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/liquid-magnifier/parts.tsx"
+        },
+        {
+          "path": "registry/worlds/retro.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/liquid-magnifier/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/liquid-magnifier/worlds/retro.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/liquid-magnifier/worlds/retro.tsx"
+        }
+      ]
+    },
+    {
+      "name": "liquid-magnifier-toy",
+      "type": "registry:ui",
+      "title": "Liquid Magnifier — Toy",
+      "description": "Liquid Magnifier in the Toy world alone, without the other three. Add liquid-magnifier for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/liquid-magnifier/liquid-magnifier.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/liquid-magnifier/liquid-magnifier.tsx"
+        },
+        {
+          "path": "components/ovio/liquid-magnifier/magnifier.ts",
+          "type": "registry:ui",
+          "target": "components/ovio/liquid-magnifier/magnifier.ts"
+        },
+        {
+          "path": "components/ovio/liquid-magnifier/use-magnifier.ts",
+          "type": "registry:ui",
+          "target": "components/ovio/liquid-magnifier/use-magnifier.ts"
+        },
+        {
+          "path": "components/ovio/liquid-magnifier/parts.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/liquid-magnifier/parts.tsx"
+        },
+        {
+          "path": "registry/worlds/toy.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/liquid-magnifier/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/liquid-magnifier/worlds/toy.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/liquid-magnifier/worlds/toy.tsx"
+        }
+      ]
+    },
+    {
       "name": "all",
       "type": "registry:item",
       "title": "All Ovio components",

@@ -681,6 +681,97 @@ function Compare() {
   );
 }
 
+/** How far the share image's lens magnifies. */
+const ZOOM = 2.5;
+
+/** A type specimen with fine print, and a lime-rimmed lens drawing that print 2.5× larger. */
+function Magnifier() {
+  const w = 340;
+  const h = 236;
+  const rnd = seeded(25);
+  // Lines of fine print, in specimen pixels: x, y, width.
+  const lines = Array.from({ length: 12 }, (_, i) => [206, 40 + i * 13, 50 + rnd() * 76] as const);
+  const lens = { x: 266, y: 104, r: 66 };
+  const abs = { display: "flex", position: "absolute" } as const;
+  // The print, scaled by `zoom` about (cx, cy), which lands at (ox, oy).
+  const print = (zoom: number, cx = 0, cy = 0, ox = 0, oy = 0) =>
+    lines.map(([x, y, lw], i) => (
+      <div
+        key={i}
+        style={{
+          ...abs,
+          left: (x - cx) * zoom + ox,
+          top: (y - cy) * zoom + oy,
+          width: lw * zoom,
+          height: 3 * zoom,
+          borderRadius: 2 * zoom,
+          background: i === 0 ? ink : "#9a9a92",
+        }}
+      />
+    ));
+  return (
+    <div style={{ ...col, gap: 18, alignItems: "center" }}>
+      <div
+        style={{
+          display: "flex",
+          position: "relative",
+          width: w,
+          height: h,
+          borderRadius: 18,
+          overflow: "hidden",
+          background: "#fbfbf8",
+          border: `2px solid ${line}`,
+        }}
+      >
+        <span
+          style={{
+            ...abs,
+            left: 18,
+            top: 22,
+            fontFamily: sans,
+            fontSize: 128,
+            lineHeight: 1,
+            letterSpacing: -6,
+            color: ink,
+          }}
+        >
+          Ag
+        </span>
+        {print(1)}
+        <div
+          style={{
+            ...abs,
+            left: lens.x - lens.r,
+            top: lens.y - lens.r,
+            width: lens.r * 2,
+            height: lens.r * 2,
+            borderRadius: lens.r,
+            overflow: "hidden",
+            background: "#ffffff",
+            border: `5px solid ${lime}`,
+            boxShadow: "0 18px 30px -10px rgba(0,0,0,.35)",
+          }}
+        >
+          {print(ZOOM, lens.x, lens.y, lens.r - 5, lens.r - 5)}
+        </div>
+      </div>
+      <div
+        style={{
+          ...row,
+          justifyContent: "space-between",
+          width: w,
+          fontFamily: mono,
+          fontSize: 18,
+          color: muted,
+        }}
+      >
+        <span>Specimen 07</span>
+        <span style={{ color: ink }}>{ZOOM}×</span>
+      </div>
+    </div>
+  );
+}
+
 type Art = { label: string; metric?: string; footer?: string[]; draw: () => ReactNode };
 
 const ARTS: Record<string, Art> = {
@@ -785,6 +876,12 @@ const ARTS: Record<string, Art> = {
     metric: SPLIT_READOUT,
     footer: ["DRAG", "CLICK", "KEYS"],
     draw: Compare,
+  },
+  "liquid-magnifier": {
+    label: "Liquid magnifier",
+    metric: `${ZOOM}× ZOOM`,
+    footer: ["HOVER", "PINCH", "KEYS"],
+    draw: Magnifier,
   },
 };
 

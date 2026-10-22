@@ -68,7 +68,7 @@ export function ToyNotFound() {
         initial={reduced ? false : { opacity: 0, rotate: -200 }}
         animate={{ opacity: 1, rotate: fixed ? 0 : 24 }}
         transition={{ ...DROP, delay: 0.24 }}
-        drag={fixed!}
+        drag={!fixed}
         dragConstraints={board}
         dragElastic={0.15}
         dragMomentum={false}

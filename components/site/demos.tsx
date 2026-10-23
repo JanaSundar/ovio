@@ -17,6 +17,7 @@ import { SponsorWallDemo } from "@/components/ovio/sponsor-wall/demo";
 import { StarHistoryDemo } from "@/components/ovio/star-history/demo";
 import { LetterDemo } from "@/components/ovio/letter/demo";
 import { LiquidMagnifierDemo } from "@/components/ovio/liquid-magnifier/demo";
+import { ScratchToRevealDemo } from "@/components/ovio/scratch-to-reveal/demo";
 import { ToastDemo } from "@/components/ovio/toast/demo";
 import { TopContributorsDemo } from "@/components/ovio/top-contributors/demo";
 
@@ -40,6 +41,7 @@ export const DEMOS: Record<string, { Demo: ComponentType; minHeight: number }> =
   letter: { Demo: LetterDemo, minHeight: 640 },
   "compare-slider": { Demo: CompareSliderDemo, minHeight: 440 },
   "liquid-magnifier": { Demo: LiquidMagnifierDemo, minHeight: 480 },
+  "scratch-to-reveal": { Demo: ScratchToRevealDemo, minHeight: 460 },
 };
 
 /** A component's demo, with fixed sample props. */

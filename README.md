@@ -37,6 +37,7 @@ All motion respects `prefers-reduced-motion`.
 | [Letter](https://ovioui.vercel.app/docs/letter)                               | Available | A newsletter issue as a letter, sent as a paper plane, sealed envelope, Morse wire or mailbox drop. |
 | [Compare Slider](https://ovioui.vercel.app/docs/compare-slider)               | Available | Two versions of anything, one over the other, split by a divider you drag.                          |
 | [Liquid Magnifier](https://ovioui.vercel.app/docs/liquid-magnifier)           | Available | A liquid lens that trails the pointer and magnifies whatever it covers.                             |
+| [Scratch to Reveal](https://ovioui.vercel.app/docs/scratch-to-reveal)         | Available | A coating you scratch away with a pointer or finger to find what is under it.                       |
 
 The catalogue lives in [`content/components.ts`](content/components.ts).
 

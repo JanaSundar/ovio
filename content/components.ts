@@ -768,6 +768,72 @@ export const COMPONENTS: ComponentDoc[] = [
       CL,
     ],
   },
+  {
+    slug: "scratch-to-reveal",
+    name: "Scratch to Reveal",
+    tech: "Canvas 2D · Motion for React (spring pop; Retro: stepped)",
+    description:
+      "A coating you scratch away with a pointer or finger. Past a threshold the rest clears by itself; Enter or Space reveals it all.",
+    exportName: "ScratchToReveal",
+    isNew: true,
+    usage: '  label="Invite code"\n  children={<code>LMN-7K2F-Q9</code>}',
+    props: [
+      {
+        name: "children",
+        type: "ReactNode",
+        description:
+          "What the coating hides. It stays inert, and hidden from assistive tech, until revealed. Images fill the pad.",
+      },
+      V,
+      {
+        name: "revealed / defaultRevealed",
+        type: "boolean",
+        description:
+          "Controlled, or the starting state. Setting it back to false puts a fresh coating on.",
+        default: "false",
+      },
+      {
+        name: "onRevealedChange",
+        type: "(revealed: boolean) => void",
+        description: "Fires when scratching, or Enter or Space, reveals it.",
+      },
+      {
+        name: "onProgress",
+        type: "(share: number) => void",
+        description: "Fires while scratching, with the share scratched away from 0 to 1.",
+      },
+      {
+        name: "threshold",
+        type: "number",
+        description: "The share to scratch, 0–1, before the rest of the coating clears by itself.",
+        default: "0.5",
+      },
+      {
+        name: "hint",
+        type: "string",
+        description: "Printed on the coating until the first scratch.",
+        default: '"Scratch to reveal"',
+      },
+      {
+        name: "label",
+        type: "string",
+        description: "Accessible name for the pad, printed by the worlds.",
+        default: '"Hidden content"',
+      },
+      {
+        name: "aspectRatio",
+        type: "string",
+        description: "CSS aspect ratio of the pad.",
+        default: '"3 / 2"',
+      },
+      {
+        name: "disabled",
+        type: "boolean",
+        description: "Ignores scratching and keys; the coating stays on.",
+      },
+      CL,
+    ],
+  },
 ];
 
 export const getComponent = (slug: string) => COMPONENTS.find((c) => c.slug === slug);

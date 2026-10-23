@@ -27,6 +27,7 @@ const PITCHES: Record<string, { glyph: string; pitch: string }> = {
   letter: { glyph: "✉", pitch: "A newsletter issue, sent four different ways." },
   "compare-slider": { glyph: "◧", pitch: "Two versions of anything, one divider." },
   "liquid-magnifier": { glyph: "◍", pitch: "A liquid lens that magnifies what it covers." },
+  "scratch-to-reveal": { glyph: "▒", pitch: "A coating you scratch away to find what's under it." },
 };
 
 /** The components the catalog shows when nothing new leads it. */

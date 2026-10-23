@@ -1,5 +1,11 @@
 import type { ReactNode } from "react";
-import { isAccentBar, SAMPLE_RELEASE } from "@/content/samples";
+import {
+  cellsUnder,
+  clearedShare,
+  gridFor,
+  percentOf,
+} from "@/components/ovio/scratch-to-reveal/scratch";
+import { isAccentBar, SAMPLE_INVITE, SAMPLE_RELEASE } from "@/content/samples";
 import { ArtCard, ink, Label, mono, muted, sans } from "./card";
 
 /** The olive-to-lime ramp from the brand card, quiet to busy. */
@@ -772,6 +778,93 @@ function Magnifier() {
   );
 }
 
+const PAD = { w: 340, h: 210, cell: 10, brush: 18 };
+/** A zigzag scratched across the middle of the pad, in pad px. */
+const STROKE = [
+  { x: 24, y: 76 },
+  { x: 318, y: 70 },
+  { x: 22, y: 112 },
+  { x: 318, y: 120 },
+  { x: 60, y: 156 },
+];
+const PAD_GRID = gridFor(PAD.w, PAD.h, PAD.cell);
+/** The cells the zigzag clears, measured the way the component measures them. */
+const SCRATCHED = new Set(
+  STROKE.slice(1).flatMap((b, i) => cellsUnder(STROKE[i], b, PAD.brush, PAD_GRID, PAD.w, PAD.h)),
+);
+const SCRATCHED_PERCENT = percentOf(clearedShare(SCRATCHED.size, PAD_GRID));
+
+/** The sample invite under a grey coating, half scratched through, with a lime progress bar. */
+function Scratch() {
+  const { cols, rows } = PAD_GRID;
+  // Each row of coating as runs of unscratched cells.
+  const runs = Array.from({ length: rows }, (_, r) => {
+    const out: [number, number][] = [];
+    for (let c = 0; c < cols; c++) {
+      if (SCRATCHED.has(r * cols + c)) continue;
+      const lastRun = out[out.length - 1];
+      if (lastRun && lastRun[0] + lastRun[1] === c) lastRun[1]++;
+      else out.push([c, 1]);
+    }
+    return out;
+  });
+  return (
+    <div style={{ ...col, gap: 16, width: PAD.w }}>
+      <div
+        style={{
+          display: "flex",
+          position: "relative",
+          width: PAD.w,
+          height: PAD.h,
+          borderRadius: 16,
+          overflow: "hidden",
+          background: "#ffffff",
+          border: `2px solid ${line}`,
+        }}
+      >
+        <div
+          style={{
+            ...col,
+            position: "absolute",
+            inset: 0,
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 8,
+          }}
+        >
+          <Label color={muted} size={13}>
+            {`${SAMPLE_INVITE.label} · ${SAMPLE_INVITE.title}`.toUpperCase()}
+          </Label>
+          <span style={{ fontFamily: sans, fontSize: 40, fontWeight: 600, color: ink }}>
+            {SAMPLE_INVITE.code}
+          </span>
+        </div>
+        {runs.flatMap((rowRuns, r) =>
+          rowRuns.map(([c, n]) => (
+            <div
+              key={`${r}-${c}`}
+              style={{
+                display: "flex",
+                position: "absolute",
+                left: (c * PAD.w) / cols,
+                top: (r * PAD.h) / rows,
+                width: (n * PAD.w) / cols + 0.5,
+                height: PAD.h / rows + 0.5,
+                background: "#c6c5bd",
+              }}
+            />
+          )),
+        )}
+      </div>
+      <div style={{ display: "flex", height: 6, borderRadius: 3, background: line }}>
+        <div
+          style={{ width: `${SCRATCHED_PERCENT}%`, height: 6, borderRadius: 3, background: lime }}
+        />
+      </div>
+    </div>
+  );
+}
+
 type Art = { label: string; metric?: string; footer?: string[]; draw: () => ReactNode };
 
 const ARTS: Record<string, Art> = {
@@ -882,6 +975,12 @@ const ARTS: Record<string, Art> = {
     metric: `${ZOOM}× ZOOM`,
     footer: ["HOVER", "PINCH", "KEYS"],
     draw: Magnifier,
+  },
+  "scratch-to-reveal": {
+    label: "Scratch to reveal",
+    metric: `${SCRATCHED_PERCENT}% SCRATCHED`,
+    footer: ["SCRATCH", "RUB", "KEYS"],
+    draw: Scratch,
   },
 };
 

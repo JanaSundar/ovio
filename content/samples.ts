@@ -62,3 +62,11 @@ export const SAMPLE_RELEASE = {
 
 /** Every third bar of the finished card takes the accent. */
 export const isAccentBar = (i: number) => i % 3 === 2;
+
+/** lumen's beta invite, under the coating in the Scratch to Reveal demo and its share image. */
+export const SAMPLE_INVITE = {
+  label: "lumen 3.0 beta",
+  title: "Invite code",
+  code: "LMN-7K2F-Q9",
+  note: "One seat · until Nov 30",
+};

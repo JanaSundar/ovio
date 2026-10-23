@@ -4553,6 +4553,246 @@
       ]
     },
     {
+      "name": "scratch-to-reveal",
+      "type": "registry:ui",
+      "title": "Scratch to Reveal",
+      "description": "A coating you scratch away with a pointer or finger. Past a threshold the rest clears by itself; Enter or Space reveals it all.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/scratch-to-reveal/scratch-to-reveal.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/scratch-to-reveal/scratch-to-reveal.tsx"
+        },
+        {
+          "path": "components/ovio/scratch-to-reveal/scratch.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/scratch-to-reveal/scratch.ts"
+        },
+        {
+          "path": "components/ovio/scratch-to-reveal/use-scratch.ts",
+          "type": "registry:hook",
+          "target": "components/ovio/scratch-to-reveal/use-scratch.ts"
+        },
+        {
+          "path": "components/ovio/scratch-to-reveal/parts.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/scratch-to-reveal/parts.tsx"
+        },
+        {
+          "path": "components/ovio/scratch-to-reveal/worlds/index.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/scratch-to-reveal/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/scratch-to-reveal/worlds/minimal.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/scratch-to-reveal/worlds/minimal.tsx"
+        },
+        {
+          "path": "components/ovio/scratch-to-reveal/worlds/craft.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/scratch-to-reveal/worlds/craft.tsx"
+        },
+        {
+          "path": "components/ovio/scratch-to-reveal/worlds/retro.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/scratch-to-reveal/worlds/retro.tsx"
+        },
+        {
+          "path": "components/ovio/scratch-to-reveal/worlds/toy.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/scratch-to-reveal/worlds/toy.tsx"
+        }
+      ]
+    },
+    {
+      "name": "scratch-to-reveal-minimal",
+      "type": "registry:ui",
+      "title": "Scratch to Reveal — Minimal",
+      "description": "Scratch to Reveal in the Minimal world alone, without the other three. Add scratch-to-reveal for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/scratch-to-reveal/scratch-to-reveal.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/scratch-to-reveal/scratch-to-reveal.tsx"
+        },
+        {
+          "path": "components/ovio/scratch-to-reveal/scratch.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/scratch-to-reveal/scratch.ts"
+        },
+        {
+          "path": "components/ovio/scratch-to-reveal/use-scratch.ts",
+          "type": "registry:hook",
+          "target": "components/ovio/scratch-to-reveal/use-scratch.ts"
+        },
+        {
+          "path": "components/ovio/scratch-to-reveal/parts.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/scratch-to-reveal/parts.tsx"
+        },
+        {
+          "path": "registry/worlds/minimal.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/scratch-to-reveal/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/scratch-to-reveal/worlds/minimal.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/scratch-to-reveal/worlds/minimal.tsx"
+        }
+      ]
+    },
+    {
+      "name": "scratch-to-reveal-craft",
+      "type": "registry:ui",
+      "title": "Scratch to Reveal — Craft",
+      "description": "Scratch to Reveal in the Craft world alone, without the other three. Add scratch-to-reveal for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/scratch-to-reveal/scratch-to-reveal.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/scratch-to-reveal/scratch-to-reveal.tsx"
+        },
+        {
+          "path": "components/ovio/scratch-to-reveal/scratch.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/scratch-to-reveal/scratch.ts"
+        },
+        {
+          "path": "components/ovio/scratch-to-reveal/use-scratch.ts",
+          "type": "registry:hook",
+          "target": "components/ovio/scratch-to-reveal/use-scratch.ts"
+        },
+        {
+          "path": "components/ovio/scratch-to-reveal/parts.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/scratch-to-reveal/parts.tsx"
+        },
+        {
+          "path": "registry/worlds/craft.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/scratch-to-reveal/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/scratch-to-reveal/worlds/craft.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/scratch-to-reveal/worlds/craft.tsx"
+        }
+      ]
+    },
+    {
+      "name": "scratch-to-reveal-retro",
+      "type": "registry:ui",
+      "title": "Scratch to Reveal — Retro",
+      "description": "Scratch to Reveal in the Retro world alone, without the other three. Add scratch-to-reveal for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/scratch-to-reveal/scratch-to-reveal.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/scratch-to-reveal/scratch-to-reveal.tsx"
+        },
+        {
+          "path": "components/ovio/scratch-to-reveal/scratch.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/scratch-to-reveal/scratch.ts"
+        },
+        {
+          "path": "components/ovio/scratch-to-reveal/use-scratch.ts",
+          "type": "registry:hook",
+          "target": "components/ovio/scratch-to-reveal/use-scratch.ts"
+        },
+        {
+          "path": "components/ovio/scratch-to-reveal/parts.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/scratch-to-reveal/parts.tsx"
+        },
+        {
+          "path": "registry/worlds/retro.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/scratch-to-reveal/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/scratch-to-reveal/worlds/retro.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/scratch-to-reveal/worlds/retro.tsx"
+        }
+      ]
+    },
+    {
+      "name": "scratch-to-reveal-toy",
+      "type": "registry:ui",
+      "title": "Scratch to Reveal — Toy",
+      "description": "Scratch to Reveal in the Toy world alone, without the other three. Add scratch-to-reveal for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/scratch-to-reveal/scratch-to-reveal.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/scratch-to-reveal/scratch-to-reveal.tsx"
+        },
+        {
+          "path": "components/ovio/scratch-to-reveal/scratch.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/scratch-to-reveal/scratch.ts"
+        },
+        {
+          "path": "components/ovio/scratch-to-reveal/use-scratch.ts",
+          "type": "registry:hook",
+          "target": "components/ovio/scratch-to-reveal/use-scratch.ts"
+        },
+        {
+          "path": "components/ovio/scratch-to-reveal/parts.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/scratch-to-reveal/parts.tsx"
+        },
+        {
+          "path": "registry/worlds/toy.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/scratch-to-reveal/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/scratch-to-reveal/worlds/toy.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/scratch-to-reveal/worlds/toy.tsx"
+        }
+      ]
+    },
+    {
       "name": "all",
       "type": "registry:item",
       "title": "All Ovio components",

@@ -4793,6 +4793,271 @@
       ]
     },
     {
+      "name": "dial-menu",
+      "type": "registry:ui",
+      "title": "Dial Menu",
+      "description": "A radial menu that opens around the pointer on right-click, long-press or click, or stays open in place. Aim by direction and flick to pick; items with children fan out a second ring.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/dial-menu/dial-menu.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/dial-menu/dial-menu.tsx"
+        },
+        {
+          "path": "components/ovio/dial-menu/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/dial-menu/types.ts"
+        },
+        {
+          "path": "components/ovio/dial-menu/dial.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/dial-menu/dial.ts"
+        },
+        {
+          "path": "components/ovio/dial-menu/use-dial.ts",
+          "type": "registry:hook",
+          "target": "components/ovio/dial-menu/use-dial.ts"
+        },
+        {
+          "path": "components/ovio/dial-menu/parts.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/dial-menu/parts.tsx"
+        },
+        {
+          "path": "components/ovio/dial-menu/worlds/index.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/dial-menu/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/dial-menu/worlds/minimal.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/dial-menu/worlds/minimal.tsx"
+        },
+        {
+          "path": "components/ovio/dial-menu/worlds/craft.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/dial-menu/worlds/craft.tsx"
+        },
+        {
+          "path": "components/ovio/dial-menu/worlds/retro.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/dial-menu/worlds/retro.tsx"
+        },
+        {
+          "path": "components/ovio/dial-menu/worlds/toy.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/dial-menu/worlds/toy.tsx"
+        }
+      ]
+    },
+    {
+      "name": "dial-menu-minimal",
+      "type": "registry:ui",
+      "title": "Dial Menu — Minimal",
+      "description": "Dial Menu in the Minimal world alone, without the other three. Add dial-menu for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/dial-menu/dial-menu.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/dial-menu/dial-menu.tsx"
+        },
+        {
+          "path": "components/ovio/dial-menu/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/dial-menu/types.ts"
+        },
+        {
+          "path": "components/ovio/dial-menu/dial.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/dial-menu/dial.ts"
+        },
+        {
+          "path": "components/ovio/dial-menu/use-dial.ts",
+          "type": "registry:hook",
+          "target": "components/ovio/dial-menu/use-dial.ts"
+        },
+        {
+          "path": "components/ovio/dial-menu/parts.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/dial-menu/parts.tsx"
+        },
+        {
+          "path": "registry/worlds/minimal.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/dial-menu/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/dial-menu/worlds/minimal.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/dial-menu/worlds/minimal.tsx"
+        }
+      ]
+    },
+    {
+      "name": "dial-menu-craft",
+      "type": "registry:ui",
+      "title": "Dial Menu — Craft",
+      "description": "Dial Menu in the Craft world alone, without the other three. Add dial-menu for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/dial-menu/dial-menu.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/dial-menu/dial-menu.tsx"
+        },
+        {
+          "path": "components/ovio/dial-menu/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/dial-menu/types.ts"
+        },
+        {
+          "path": "components/ovio/dial-menu/dial.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/dial-menu/dial.ts"
+        },
+        {
+          "path": "components/ovio/dial-menu/use-dial.ts",
+          "type": "registry:hook",
+          "target": "components/ovio/dial-menu/use-dial.ts"
+        },
+        {
+          "path": "components/ovio/dial-menu/parts.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/dial-menu/parts.tsx"
+        },
+        {
+          "path": "registry/worlds/craft.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/dial-menu/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/dial-menu/worlds/craft.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/dial-menu/worlds/craft.tsx"
+        }
+      ]
+    },
+    {
+      "name": "dial-menu-retro",
+      "type": "registry:ui",
+      "title": "Dial Menu — Retro",
+      "description": "Dial Menu in the Retro world alone, without the other three. Add dial-menu for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/dial-menu/dial-menu.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/dial-menu/dial-menu.tsx"
+        },
+        {
+          "path": "components/ovio/dial-menu/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/dial-menu/types.ts"
+        },
+        {
+          "path": "components/ovio/dial-menu/dial.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/dial-menu/dial.ts"
+        },
+        {
+          "path": "components/ovio/dial-menu/use-dial.ts",
+          "type": "registry:hook",
+          "target": "components/ovio/dial-menu/use-dial.ts"
+        },
+        {
+          "path": "components/ovio/dial-menu/parts.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/dial-menu/parts.tsx"
+        },
+        {
+          "path": "registry/worlds/retro.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/dial-menu/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/dial-menu/worlds/retro.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/dial-menu/worlds/retro.tsx"
+        }
+      ]
+    },
+    {
+      "name": "dial-menu-toy",
+      "type": "registry:ui",
+      "title": "Dial Menu — Toy",
+      "description": "Dial Menu in the Toy world alone, without the other three. Add dial-menu for all four.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "utils",
+        "JanaSundar/ovio/theme",
+        "JanaSundar/ovio/world",
+        "JanaSundar/ovio/motion"
+      ],
+      "files": [
+        {
+          "path": "components/ovio/dial-menu/dial-menu.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/dial-menu/dial-menu.tsx"
+        },
+        {
+          "path": "components/ovio/dial-menu/types.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/dial-menu/types.ts"
+        },
+        {
+          "path": "components/ovio/dial-menu/dial.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/dial-menu/dial.ts"
+        },
+        {
+          "path": "components/ovio/dial-menu/use-dial.ts",
+          "type": "registry:hook",
+          "target": "components/ovio/dial-menu/use-dial.ts"
+        },
+        {
+          "path": "components/ovio/dial-menu/parts.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/dial-menu/parts.tsx"
+        },
+        {
+          "path": "registry/worlds/toy.ts",
+          "type": "registry:lib",
+          "target": "components/ovio/dial-menu/worlds/index.ts"
+        },
+        {
+          "path": "components/ovio/dial-menu/worlds/toy.tsx",
+          "type": "registry:ui",
+          "target": "components/ovio/dial-menu/worlds/toy.tsx"
+        }
+      ]
+    },
+    {
       "name": "all",
       "type": "registry:item",
       "title": "All Ovio components",

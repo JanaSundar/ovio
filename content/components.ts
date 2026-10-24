@@ -834,6 +834,68 @@ export const COMPONENTS: ComponentDoc[] = [
       CL,
     ],
   },
+  {
+    slug: "dial-menu",
+    name: "Dial Menu",
+    tech: "SVG · React portal · Motion for React (springs; Retro: stepped)",
+    description:
+      "A radial menu that opens around the pointer on right-click, long-press or click, or stays open in place. Aim by direction and flick to pick; items with children fan out a second ring.",
+    exportName: "DialMenu",
+    isNew: true,
+    usage:
+      '  items={[{ id: "share", label: "Share", icon: <ShareIcon />, items: [...] }]}\n  onSelect={(item) => run(item.id)}\n  children={<Canvas />}',
+    props: [
+      {
+        name: "items",
+        type: "{ id: string; label: string; icon?: ReactNode; shortcut?: string; disabled?: boolean; items?: DialMenuItem[] }[]",
+        description:
+          "Round the ring from 12 o'clock, clockwise; up to eight read best. Items with `items` fan out up to five children past the ring. Icons take currentColor; without one, the label's first letter.",
+      },
+      V,
+      {
+        name: "trigger",
+        type: '"contextmenu" | "click" | "inline"',
+        description:
+          "Right-click, long-press, or the ContextMenu key (Shift F10) on the children; a click on them; or always open in place, with no children.",
+        default: '"contextmenu"',
+      },
+      {
+        name: "children",
+        type: "ReactNode",
+        description: "What opens it: the area to right-click, or the button to click.",
+      },
+      {
+        name: "open / defaultOpen",
+        type: "boolean",
+        description:
+          "Controlled, or the starting state. Opened from outside, it centres on the children.",
+      },
+      {
+        name: "onOpenChange",
+        type: "(open: boolean) => void",
+        description:
+          "Fires as it opens, and as it closes on a pick, Escape, a click on the hub or outside, or a scroll.",
+      },
+      {
+        name: "onSelect",
+        type: "(item: DialMenuItem, parent?: DialMenuItem) => void",
+        description:
+          "Fires with the item picked, and its parent for a child: on release after a flick, a click, or Enter.",
+      },
+      {
+        name: "label",
+        type: "string",
+        description: "Accessible name for the menu, shown in the hub while nothing is aimed at.",
+        default: '"Quick actions"',
+      },
+      {
+        name: "disabled",
+        type: "boolean",
+        description: "Never opens; inline, it ignores the pointer and keys.",
+      },
+      CL,
+    ],
+  },
 ];
 
 export const getComponent = (slug: string) => COMPONENTS.find((c) => c.slug === slug);

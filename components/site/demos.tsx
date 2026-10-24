@@ -5,6 +5,7 @@ import { BundleSizeDemo } from "@/components/ovio/bundle-size/demo";
 import { ChangelogDemo } from "@/components/ovio/changelog/demo";
 import { CompareSliderDemo } from "@/components/ovio/compare-slider/demo";
 import { ContributionGraphDemo } from "@/components/ovio/contribution-graph/demo";
+import { DialMenuDemo } from "@/components/ovio/dial-menu/demo";
 import { DeveloperIdCardDemo } from "@/components/ovio/developer-id-card/demo";
 import { EventTicketDemo } from "@/components/ovio/event-ticket/demo";
 import { GitBranchVisualizerDemo } from "@/components/ovio/git-branch-visualizer/demo";
@@ -42,6 +43,7 @@ export const DEMOS: Record<string, { Demo: ComponentType; minHeight: number }> =
   "compare-slider": { Demo: CompareSliderDemo, minHeight: 440 },
   "liquid-magnifier": { Demo: LiquidMagnifierDemo, minHeight: 480 },
   "scratch-to-reveal": { Demo: ScratchToRevealDemo, minHeight: 460 },
+  "dial-menu": { Demo: DialMenuDemo, minHeight: 500 },
 };
 
 /** A component's demo, with fixed sample props. */

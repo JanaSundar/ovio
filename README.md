@@ -38,6 +38,7 @@ All motion respects `prefers-reduced-motion`.
 | [Compare Slider](https://ovioui.vercel.app/docs/compare-slider)               | Available | Two versions of anything, one over the other, split by a divider you drag.                          |
 | [Liquid Magnifier](https://ovioui.vercel.app/docs/liquid-magnifier)           | Available | A liquid lens that trails the pointer and magnifies whatever it covers.                             |
 | [Scratch to Reveal](https://ovioui.vercel.app/docs/scratch-to-reveal)         | Available | A coating you scratch away with a pointer or finger to find what is under it.                       |
+| [Dial Menu](https://ovioui.vercel.app/docs/dial-menu)                         | Available | A radial menu that opens around the pointer; aim by direction and flick to pick.                    |
 
 The catalogue lives in [`content/components.ts`](content/components.ts).
 

@@ -1,11 +1,20 @@
 import type { ReactNode } from "react";
 import {
+  angleOf,
+  childAngle,
+  MENU_SIZE,
+  polar,
+  RADIAL,
+  sectorPath,
+  stepOf,
+} from "@/components/ovio/dial-menu/dial";
+import {
   cellsUnder,
   clearedShare,
   gridFor,
   percentOf,
 } from "@/components/ovio/scratch-to-reveal/scratch";
-import { isAccentBar, SAMPLE_INVITE, SAMPLE_RELEASE } from "@/content/samples";
+import { isAccentBar, SAMPLE_DIAL, SAMPLE_INVITE, SAMPLE_RELEASE } from "@/content/samples";
 import { ArtCard, ink, Label, mono, muted, sans } from "./card";
 
 /** The olive-to-lime ramp from the brand card, quiet to busy. */
@@ -865,6 +874,62 @@ function Scratch() {
   );
 }
 
+/** The sample menu open on Share, its first child aimed. */
+const DIAL_AIM = { main: SAMPLE_DIAL.findIndex((i) => i.id === "share"), sub: 0 };
+
+/** The sample menu as it opens: the ring, the aimed slice in lime, and the branch past it. */
+function Dial() {
+  const c = MENU_SIZE / 2;
+  const n = SAMPLE_DIAL.length;
+  const parent = angleOf(DIAL_AIM.main, n);
+  const kids = SAMPLE_DIAL[DIAL_AIM.main].items ?? [];
+  const mark = (at: { x: number; y: number }, on: boolean, size = 16) =>
+    `<rect x="${at.x - size / 2}" y="${at.y - size / 2}" width="${size}" height="${size}" rx="4" fill="none" stroke="${on ? ink : "#8a8b84"}" stroke-width="2"/>`;
+  const body =
+    `<path d="${sectorPath(c, RADIAL.band.inner, RADIAL.band.outer, parent, kids.length * RADIAL.childStep)}" fill="#ffffff" stroke="${line}" stroke-width="1.5"/>` +
+    `<path d="${sectorPath(c, RADIAL.band.inner + 3, RADIAL.band.outer - 3, childAngle(parent, DIAL_AIM.sub, kids.length), RADIAL.childStep - 4)}" fill="${lime}"/>` +
+    kids
+      .map((_, k) =>
+        mark(
+          polar(c, RADIAL.band.icon, childAngle(parent, k, kids.length)),
+          k === DIAL_AIM.sub,
+          14,
+        ),
+      )
+      .join("") +
+    `<circle cx="${c}" cy="${c}" r="${RADIAL.outer}" fill="#ffffff" stroke="${line}" stroke-width="1.5"/>` +
+    `<path d="${sectorPath(c, RADIAL.hub + 4, RADIAL.outer - 4, parent, stepOf(n) - 3)}" fill="#ecebe5"/>` +
+    SAMPLE_DIAL.map((_, i) => mark(polar(c, RADIAL.icon, angleOf(i, n)), i === DIAL_AIM.main)).join(
+      "",
+    ) +
+    `<circle cx="${c}" cy="${c}" r="${RADIAL.hub}" fill="${ink}"/>`;
+  return (
+    <div style={{ display: "flex", position: "relative", width: MENU_SIZE, height: MENU_SIZE }}>
+      <img alt="" src={svg(body, MENU_SIZE, MENU_SIZE)} width={MENU_SIZE} height={MENU_SIZE} />
+      <div
+        style={{
+          ...col,
+          position: "absolute",
+          left: c - RADIAL.hub,
+          top: c - RADIAL.hub,
+          width: 2 * RADIAL.hub,
+          height: 2 * RADIAL.hub,
+          alignItems: "center",
+          justifyContent: "center",
+          gap: 2,
+        }}
+      >
+        <span style={{ fontFamily: sans, fontSize: 13, color: "#f6f5f0" }}>
+          {kids[DIAL_AIM.sub].label}
+        </span>
+        <Label color="#a9aa9f" size={10}>
+          {kids[DIAL_AIM.sub].shortcut ?? ""}
+        </Label>
+      </div>
+    </div>
+  );
+}
+
 type Art = { label: string; metric?: string; footer?: string[]; draw: () => ReactNode };
 
 const ARTS: Record<string, Art> = {
@@ -975,6 +1040,12 @@ const ARTS: Record<string, Art> = {
     metric: `${ZOOM}× ZOOM`,
     footer: ["HOVER", "PINCH", "KEYS"],
     draw: Magnifier,
+  },
+  "dial-menu": {
+    label: "Dial menu",
+    metric: `${SAMPLE_DIAL.length} ACTIONS`,
+    footer: ["RIGHT-CLICK", "FLICK", "KEYS"],
+    draw: Dial,
   },
   "scratch-to-reveal": {
     label: "Scratch to reveal",

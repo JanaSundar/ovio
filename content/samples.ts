@@ -1,3 +1,4 @@
+import type { DialMenuItem } from "@/components/ovio/dial-menu/types";
 import type { DownloadWeek } from "@/components/ovio/npm-downloads/npm-downloads";
 import type { Repository } from "@/components/ovio/repository-card/repository-card";
 import { seeded } from "@/components/site/seeded";
@@ -70,3 +71,41 @@ export const SAMPLE_INVITE = {
   code: "LMN-7K2F-Q9",
   note: "One seat · until Nov 30",
 };
+
+/** Quick actions on a lumen doc, round the Dial Menu demo and its share image; the demo adds icons. */
+export const SAMPLE_DIAL: DialMenuItem[] = [
+  {
+    id: "new",
+    label: "New",
+    shortcut: "N",
+    items: [
+      { id: "doc", label: "Doc" },
+      { id: "task", label: "Task" },
+      { id: "board", label: "Board" },
+      { id: "channel", label: "Channel" },
+    ],
+  },
+  { id: "search", label: "Search", shortcut: "⌘K" },
+  { id: "comment", label: "Comment", shortcut: "C" },
+  {
+    id: "share",
+    label: "Share",
+    items: [
+      { id: "link", label: "Copy link", shortcut: "⌘L" },
+      { id: "invite", label: "Invite people" },
+      { id: "export", label: "Export as PDF" },
+    ],
+  },
+  {
+    id: "assign",
+    label: "Assign",
+    items: [
+      { id: "ada", label: "Ada Park" },
+      { id: "theo", label: "Theo Lin" },
+      { id: "mira", label: "Mira Okafor" },
+    ],
+  },
+  { id: "pin", label: "Pin to sidebar", shortcut: "P" },
+  { id: "archive", label: "Archive", disabled: true },
+  { id: "settings", label: "Doc settings", shortcut: "⌘," },
+];

@@ -5,7 +5,7 @@ import { LiveDemo } from "@/components/site/live-demo";
 import { NowPlaying, type Track } from "./now-playing";
 
 /** The sample: what Ada Park has on while working on lumen. */
-const QUEUE: Track[] = [
+export const QUEUE: Track[] = [
   { title: "Midnight Compile", artist: "The Linters", album: "Hot Reload", duration: 228 },
   {
     title: "Merge Conflict",

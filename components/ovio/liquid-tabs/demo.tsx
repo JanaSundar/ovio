@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import { useReducedMotionSafe } from "@/lib/motion";
 import { LiquidTabs, type DeployStatus } from "./liquid-tabs";
 
-const TABS = ["Overview", "Commits", "Issues", "Releases"];
-const PANELS = [
+export const TABS = ["Overview", "Commits", "Issues", "Releases"];
+export const PANELS = [
   "README · 4 min read",
   "1,248 commits on main",
   "37 open · 412 closed",

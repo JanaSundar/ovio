@@ -4,7 +4,7 @@ import { isAccentBar, SAMPLE_RELEASE } from "@/content/samples";
 import { CompareSlider } from "./compare-slider";
 
 /** The sample release card, as a wireframe (v1) or finished (v2), in the world's own colours. */
-function ReleaseCard({ finished }: { finished?: boolean }) {
+export function ReleaseCard({ finished }: { finished?: boolean }) {
   const outline = "border border-dashed border-(--ovio-faint)";
   const ink = finished ? "bg-(--ovio-ink)" : outline;
   const accent = finished ? "bg-(--ovio-accent)" : outline;

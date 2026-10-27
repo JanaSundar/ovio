@@ -40,8 +40,8 @@ function buildHistory(): StarHistoryPoint[] {
   return out;
 }
 
-const DATA = buildHistory();
-const ANNOTATIONS: StarHistoryAnnotation[] = [
+export const DATA = buildHistory();
+export const ANNOTATIONS: StarHistoryAnnotation[] = [
   { date: "2025-07-14", label: "hit the HN front page!" },
 ];
 

@@ -3,7 +3,7 @@
 import { LiveDemo } from "@/components/site/live-demo";
 import { Changelog, type Release } from "./changelog";
 
-const RELEASES: Release[] = [
+export const RELEASES: Release[] = [
   {
     version: "2.4.0",
     date: "2026-09-30",

@@ -2,7 +2,7 @@
 
 import { EventTicket, type TicketEvent } from "./event-ticket";
 
-const FRAME: TicketEvent = {
+export const FRAME: TicketEvent = {
   name: "FRAME/26",
   title: "Get early access",
   date: "2026-10-28",
@@ -19,7 +19,7 @@ const FRAME: TicketEvent = {
   ],
 };
 
-const reserve = () => new Promise<void>((resolve) => setTimeout(resolve, 1400));
+export const reserve = () => new Promise<void>((resolve) => setTimeout(resolve, 1400));
 
 export function EventTicketDemo() {
   return <EventTicket event={FRAME} ticketId="FRM-260918" onBook={reserve} />;

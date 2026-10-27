@@ -8,7 +8,7 @@ import { GitBranchVisualizer, type GitCommit } from "./git-branch-visualizer";
  * The sample: lumen's last few weeks, a login feature, a parser fix branched off it, and the
  * 1.0 release.
  */
-const COMMITS: GitCommit[] = [
+export const COMMITS: GitCommit[] = [
   {
     id: "3c1e9a0d27f4b18e6a52c9d03e7b4f1a8c6d2e90",
     branch: "main",

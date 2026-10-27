@@ -25,7 +25,7 @@ const GUIDES: [number, string][] = [
 ];
 
 /** A type specimen in the world's own face: huge letters, hairline guides, print too fine to read. */
-function Specimen() {
+export function Specimen() {
   return (
     <svg
       viewBox="0 0 420 315"

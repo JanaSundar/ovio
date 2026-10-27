@@ -2,6 +2,7 @@
 @import "./ovio.css";
 @import "./site.css";
 @import "./not-found.css";
+@import "./registry.css";
 @import "lenis/dist/lenis.css";
 
 @theme inline {

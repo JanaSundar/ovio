@@ -1,0 +1,87 @@
+/*
+ * The interaction registry (/registry): a dark developer tool around the components.
+ * Surfaces step up from void to deck to raised; seams separate regions; accents stay rare.
+ */
+
+@theme inline {
+  --color-void: #08080a;
+  --color-deck: #0e0e11;
+  --color-raised: #15151a;
+  --color-lift: #1c1c22;
+  --color-seam: #222228;
+  --color-seam-2: #2e2e36;
+  --color-snow: #ededf0;
+  --color-mist: #a9a9b3;
+  --color-haze: #75757f;
+  --color-violet: #9b8cff;
+  --color-azure: #6b9bff;
+  --color-cyan: #5fd4e6;
+  --color-signal: #7ee2a8;
+
+  --font-editorial: var(--font-instrument-serif), Georgia, serif;
+}
+
+@layer base {
+  body:has(.reg-app) {
+    background: var(--color-void);
+    color-scheme: dark;
+  }
+
+  .reg-app {
+    color: var(--color-snow);
+    font-family: var(--font-geist), system-ui, sans-serif;
+  }
+
+  .reg-app :focus-visible {
+    outline: 2px solid var(--color-violet);
+    outline-offset: 2px;
+  }
+
+  /* Ovio components draw no focus ring of their own; inside the registry they get the shell's. */
+  .reg-app [data-ovio-world] :focus-visible {
+    outline: 2px solid var(--color-violet);
+  }
+
+  .reg-app ::selection {
+    background: color-mix(in oklab, var(--color-violet) 40%, transparent);
+  }
+}
+
+@layer components {
+  /* The soft light behind a selected preview: two accents, low and off-centre. */
+  .reg-glow {
+    background:
+      radial-gradient(60% 70% at 30% 20%, rgb(155 140 255 / 0.14), transparent 70%),
+      radial-gradient(50% 60% at 80% 90%, rgb(95 212 230 / 0.09), transparent 70%),
+      var(--color-deck);
+  }
+
+  .reg-canvas-light {
+    background: #f4f3ef;
+    background-image: radial-gradient(circle, rgb(0 0 0 / 0.06) 1px, transparent 1.2px);
+    background-size: 18px 18px;
+  }
+
+  .reg-canvas-dark {
+    background-color: var(--color-deck);
+    background-image:
+      radial-gradient(circle, rgb(255 255 255 / 0.05) 1px, transparent 1.2px),
+      radial-gradient(60% 70% at 30% 15%, rgb(155 140 255 / 0.12), transparent 70%),
+      radial-gradient(50% 60% at 85% 95%, rgb(95 212 230 / 0.07), transparent 70%);
+    background-size:
+      18px 18px,
+      100% 100%,
+      100% 100%;
+  }
+
+  .reg-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-seam-2) transparent;
+  }
+
+  /* Code inside the registry sits on the deck, not the site's ink. */
+  .reg-code {
+    background: var(--color-void);
+    color: #d9d9e0;
+  }
+}

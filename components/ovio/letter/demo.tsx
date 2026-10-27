@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Letter, type LetterContent } from "./letter";
 
-const ISSUE: LetterContent = {
+export const ISSUE: LetterContent = {
   name: "The Weekly Diff",
   issue: 42,
   date: "2026-10-09",
@@ -16,7 +16,7 @@ const ISSUE: LetterContent = {
 };
 
 /** Stands in for a newsletter service: a short wait, then subscribed. */
-const subscribe = () => new Promise<void>((resolve) => setTimeout(resolve, 700));
+export const subscribe = () => new Promise<void>((resolve) => setTimeout(resolve, 700));
 
 export function LetterDemo() {
   const [round, setRound] = useState(0);

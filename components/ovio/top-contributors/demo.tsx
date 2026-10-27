@@ -8,7 +8,7 @@ import { TopContributors, type Contributor } from "./top-contributors";
  * The sample: lumen's contributors, each in the top six of at least one window. The ranking
  * shifts between windows: Mei leads the last 30 days.
  */
-const CONTRIBUTORS: Contributor[] = [
+export const CONTRIBUTORS: Contributor[] = [
   { login: "ada-dev", name: "Ada Okafor", commits: 1248, byPeriod: { "30d": 61, "90d": 212 } },
   { login: "meitanaka", name: "Mei Tanaka", commits: 812, byPeriod: { "30d": 74, "90d": 168 } },
   { login: "jweber", name: "Jonas Weber", commits: 604, byPeriod: { "30d": 18, "90d": 97 } },

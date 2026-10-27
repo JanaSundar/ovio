@@ -6,7 +6,7 @@ import { SponsorWall, type Sponsor } from "./sponsor-wall";
 const SITE = "https://janasundar.vercel.app";
 
 /** Who keeps lumen going. The companies are fictional, so their links go to the author's site. */
-const SPONSORS: Sponsor[] = [
+export const SPONSORS: Sponsor[] = [
   { name: "Northwind", tier: "platinum", url: SITE },
   { name: "Kestrel Cloud", tier: "platinum", url: SITE },
   { name: "Orbit", tier: "gold", url: SITE },

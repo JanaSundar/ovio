@@ -5,7 +5,7 @@ import { SAMPLE_INVITE } from "@/content/samples";
 import { ScratchToReveal } from "./scratch-to-reveal";
 
 /** lumen's beta invite, in the world's own face and colours. */
-function Invite() {
+export function Invite() {
   return (
     <div className="flex flex-col items-center justify-center gap-1.5 bg-(--ovio-surface) p-4 text-center text-(--ovio-ink)">
       <span className="font-(family-name:--ovio-mono) text-[11px] tracking-[0.18em] text-(--ovio-muted) uppercase">

@@ -2,7 +2,7 @@
 
 import { OvioToaster, ovioToast } from "./toast";
 
-const TRIGGERS: [label: string, fire: () => void][] = [
+export const TRIGGERS: [label: string, fire: () => void][] = [
   [
     "Rate limited",
     () =>

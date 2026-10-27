@@ -12,7 +12,7 @@ const DAYS = 371;
  * a three-week break in spring, a release sprint in summer and a busier autumn. Only active days are
  * listed; the graph fills the gaps with zero.
  */
-const SAMPLE: ContributionDay[] = (() => {
+export const SAMPLE: ContributionDay[] = (() => {
   const rnd = seeded(20261007);
   const out: ContributionDay[] = [];
   for (let i = 0; i < DAYS; i++) {

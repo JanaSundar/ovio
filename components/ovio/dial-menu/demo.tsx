@@ -45,7 +45,7 @@ const ICONS: Record<string, ReactNode> = {
 };
 
 const withIcon = <T extends { id: string }>(item: T) => ({ ...item, icon: ICONS[item.id] });
-const ITEMS: DialMenuItem[] = SAMPLE_DIAL.map((item) => ({
+export const ITEMS: DialMenuItem[] = SAMPLE_DIAL.map((item) => ({
   ...withIcon(item),
   items: item.items?.map(withIcon),
 }));

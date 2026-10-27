@@ -6,8 +6,12 @@ import { LiquidTabs } from "@/components/ovio/liquid-tabs/liquid-tabs";
 import { AUTHOR_URL, DOCS_HREF, GITHUB_URL } from "@/content/components";
 import { LogoLink } from "./logo";
 
+/** The interaction registry draws its own full-width shell, without the site's column and bar. */
+const isRegistry = (pathname: string) => pathname.startsWith("/registry");
+
 /** The wrap every page sits in: the 1280px column with dotted rules down each side. */
 export function Page({ children }: { children: ReactNode }) {
+  if (isRegistry(usePathname())) return children;
   return (
     <div className="page">
       <div className="wrap">
@@ -30,6 +34,11 @@ const PAGES = [
  */
 export function SiteNav() {
   const pathname = usePathname();
+  if (isRegistry(pathname)) return null;
+  return <SiteNavBar pathname={pathname} />;
+}
+
+function SiteNavBar({ pathname }: { pathname: string }) {
   const router = useRouter();
   const current = pathname.startsWith("/docs") ? 1 : 0;
   // Moves the indicator at once; the route catches up, and back/forward bring it along too.
